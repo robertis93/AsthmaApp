@@ -1,4 +1,4 @@
-package com.example.asthmaapp.list
+package com.example.asthmaapp.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.databinding.CustomRowBinding
+import com.example.asthmaapp.view.fragments.ListFragmentDirections
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     private var measureList  = emptyList<MeasureOfDay>()

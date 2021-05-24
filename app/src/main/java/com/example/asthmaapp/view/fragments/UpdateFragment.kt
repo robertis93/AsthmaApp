@@ -1,4 +1,4 @@
-package com.example.asthmaapp.update
+package com.example.asthmaapp.view.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -9,10 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.asthmaapp.R
-import com.example.asthmaapp.databinding.FragmentAddBinding
 import com.example.asthmaapp.databinding.FragmentUpdateBinding
 import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.viewmodel.MeasureOfDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import kotlinx.android.synthetic.main.fragment_update.view.*
 
 

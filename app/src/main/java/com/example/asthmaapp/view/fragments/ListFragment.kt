@@ -1,4 +1,4 @@
-package com.example.asthmaapp.list
+package com.example.asthmaapp.view.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -10,13 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
-import com.example.asthmaapp.viewmodel.MeasureOfDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.databinding.FragmentListBinding
+import com.example.asthmaapp.view.adapters.ListAdapter
 
 
 class ListFragment : Fragment() {
 
     private lateinit var mMeasureViewModel: MeasureOfDayViewModel
+
 
     lateinit var binding: FragmentListBinding
     override fun onCreateView(
@@ -26,6 +28,7 @@ class ListFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,8 +50,12 @@ class ListFragment : Fragment() {
         binding.floatingActionButton?.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
+
+
+
+
         //add menu
-        setHasOptionsMenu(true)
+            setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

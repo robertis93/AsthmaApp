@@ -1,4 +1,4 @@
-package com.example.asthmaapp
+package com.example.asthmaapp.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.asthmaapp.R
 import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.viewmodel.MeasureOfDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.databinding.FragmentAddBinding
 
 

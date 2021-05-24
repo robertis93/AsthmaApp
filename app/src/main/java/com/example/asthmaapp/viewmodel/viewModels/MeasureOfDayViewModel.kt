@@ -1,11 +1,11 @@
-package com.example.asthmaapp.viewmodel
+package com.example.asthmaapp.viewmodel.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.asthmaapp.data.MeasureDataBase
-import com.example.asthmaapp.repository.MeasureOfDayRepository
+import com.example.asthmaapp.model.database.MeasureDataBase
+import com.example.asthmaapp.viewmodel.repository.MeasureOfDayRepository
 import com.example.asthmaapp.model.MeasureOfDay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

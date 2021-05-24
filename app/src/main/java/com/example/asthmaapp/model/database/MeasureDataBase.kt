@@ -1,4 +1,4 @@
-package com.example.asthmaapp.data
+package com.example.asthmaapp.model.database
 
 import android.content.Context
 import androidx.room.Database
