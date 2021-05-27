@@ -12,7 +12,6 @@ import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentUpdateBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
-import kotlinx.android.synthetic.main.fragment_update.view.*
 
 
 class UpdateFragment : Fragment() {
@@ -35,11 +34,11 @@ class UpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-        view.time1Update.setText(args.currentMeasure.firstTime)
-        view.time2Update.setText(args.currentMeasure.secondTime)
-        view.time3Update.setText(args.currentMeasure.thirdTime)
+        binding.time1Update.setText(args.currentMeasure.firstTime)
+        binding.time2Update.setText(args.currentMeasure.secondTime)
+        binding.time3Update.setText(args.currentMeasure.thirdTime)
 
-        view.saveBtnUpdate.setOnClickListener {
+        binding.saveBtnUpdate.setOnClickListener {
             updateItem()
         }
         //addMenu

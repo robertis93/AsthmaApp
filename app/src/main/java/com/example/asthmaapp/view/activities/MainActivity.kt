@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.asthmaapp.R
@@ -18,8 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
+        binding = ActivityMainBinding.inflate(getLayoutInflater())
+        val view = binding.getRoot()
         setContentView(view)
 
         Log.i(TAG, "oncreate MainActivity")
@@ -27,14 +28,16 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = binding.btnNavigationList
         //ответственный чтобы заменять фрагменты в navhostfragment
-        val navController = findNavController(R.id.fragmentContainer)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        val navController = navHostFragment.navController
+            // val navController = findNavController(R.id.fragmentContainer)
 //Метод setupWithNavController вешает листенер на BottomNavigationView и
 // выполняет навигацию при нажатии на его элементы.
         bottomNavigationView.setupWithNavController(navController)
 
 
 //actionbar менялся
-        setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
+       // setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
 
     }
 

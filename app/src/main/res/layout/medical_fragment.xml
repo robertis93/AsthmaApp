@@ -10,7 +10,7 @@
 
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextMedicalInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -35,7 +35,7 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editTextNumberDoz"
+            android:id="@+id/editTextMedicalDose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="4"
@@ -57,7 +57,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewEntity"
+            android:id="@+id/textViewFrequencyMedical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -65,7 +65,7 @@
             android:textSize="16dp" />
 
         <EditText
-            android:id="@+id/editTextNumberEntity"
+            android:id="@+id/editFrequencyMedical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="4"
@@ -85,6 +85,7 @@
 
 
     <Button
+        android:id="@+id/btnSaveMedicalInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_rounded_corners"

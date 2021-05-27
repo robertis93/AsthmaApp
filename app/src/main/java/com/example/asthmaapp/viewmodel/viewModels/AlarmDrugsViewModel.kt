@@ -4,39 +4,42 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.database.AlarmDataBase
+import com.example.asthmaapp.model.database.AlarmDrugsDataBase
 import com.example.asthmaapp.model.database.MeasureDataBase
 import com.example.asthmaapp.model.models.Alarm
+import com.example.asthmaapp.model.models.DrugsAlarm
+import com.example.asthmaapp.viewmodel.repository.AlarmDrugsRepository
 import com.example.asthmaapp.viewmodel.repository.AlarmRepository
 import com.example.asthmaapp.viewmodel.repository.MeasureOfDayRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AlarmViewModel(application: Application) : AndroidViewModel(application) {
+class AlarmDrugsViewModel(application: Application) : AndroidViewModel(application) {
 
-    val readAllData: LiveData<List<Alarm>>
-    private val repository: AlarmRepository
+    val readAllData: LiveData<List<DrugsAlarm>>
+    private val repository: AlarmDrugsRepository
 
     init {
-        val alarmDao = AlarmDataBase.getDataBase(application).alarmDao()
-        repository = AlarmRepository(alarmDao)
+        val alarmDrugsDao = AlarmDrugsDataBase.getDataBase(application).alarmDrugsDao()
+        repository = AlarmDrugsRepository(alarmDrugsDao)
         readAllData = repository.readAllData
     }
 
-    fun addAlarm(alarm: Alarm) {
+    fun addAlarm(drugsAlarm : DrugsAlarm) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addAlarm(alarm)
+            repository.addAlarm(drugsAlarm)
         }
     }
 
-    fun updateAlarm(alarm: Alarm){
+    fun updateAlarm(drugsAlarm : DrugsAlarm){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateAlarm(alarm)
+            repository.updateAlarm(drugsAlarm)
         }
     }
 
-    fun deleteAlarm(alarm: Alarm){
+    fun deleteAlarm(drugsAlarm : DrugsAlarm){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAlarm(alarm)
+            repository.deleteAlarm(drugsAlarm)
         }
     }
 

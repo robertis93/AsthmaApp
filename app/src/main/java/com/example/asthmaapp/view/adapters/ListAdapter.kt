@@ -22,13 +22,16 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
        val currentItem = measureList[position]
-        holder.binding.editTextDate.text = currentItem.id.toString()
-        holder.binding.firstTimeList.text = currentItem.firstTime
-        holder.binding.secondTimeList.text = currentItem.secondTime
-        holder.binding.thirdTimeList.text = currentItem.thirdTime
-        holder.binding.measuteTextList.text = currentItem.measureM.toString()
-        holder.binding.measure2TextList.text = currentItem.measureD.toString()
-        holder.binding.measure3TextList.text = currentItem.measureE.toString()
+        with(holder.binding) {
+            editTextDate.text = currentItem.id.toString()
+            firstTimeList.text = currentItem.firstTime
+            secondTimeList.text = currentItem.secondTime
+            thirdTimeList.text = currentItem.thirdTime
+            measuteTextList.text = currentItem.measureM.toString()
+            measure2TextList.text = currentItem.measureD.toString()
+            measure3TextList.text = currentItem.measureE.toString()
+        }
+
 
         holder.binding.rowLayout.setOnClickListener{
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)

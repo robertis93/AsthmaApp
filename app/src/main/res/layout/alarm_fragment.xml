@@ -105,7 +105,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btn_drugs_alarm"
+                android:id="@+id/floatingActionBtnDrugs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -124,27 +124,12 @@
             android:orientation="horizontal"
             android:paddingTop="14dp">
 
-            <TextView
-                android:id="@+id/textview_first_time_grugs"
-                android:layout_width="match_parent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_drugs"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="14dp"
-                android:text="__:__"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:listitem="@layout/item_alarm" />
 
-
-            <Button
-                android:id="@+id/btn_first_time_frugs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/custom_rounded_corners"
-                android:text="Установить"
-                app:backgroundTint="@color/blue_med"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="133dp" />
 
         </LinearLayout>
 

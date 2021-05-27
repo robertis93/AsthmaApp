@@ -2,20 +2,18 @@ package com.example.asthmaapp.view.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.ItemAlarmBinding
-import com.example.asthmaapp.model.models.Alarm
-import com.example.asthmaapp.viewmodel.viewModels.AlarmViewModel
+import com.example.asthmaapp.model.models.DrugsAlarm
+import com.example.asthmaapp.viewmodel.viewModels.AlarmDrugsViewModel
 
-class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) : RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
-    private var alarmsList = emptyList<Alarm>()
+class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) : RecyclerView.Adapter<AlarmDrugsAdapter.AlarmViewHolder>() {
+    private var alarmsList = emptyList<DrugsAlarm>()
 
     // определили интерфейс слушателя события нажатия
-    interface OnAlarmClickListener {
-        fun onAlarmClick(alarm: Alarm, position: Int)
+    interface OnAlarmDrugsClickListener {
+        fun onAlarmClick(drugsAlarm: DrugsAlarm, position: Int)
     }
 
     //var onClickAlarmListener: OnAlarmClickListener? = null
@@ -26,7 +24,7 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) : RecyclerVie
 //            notifyDataSetChanged()
 //        }
 
-    private lateinit var mAlarmViewModel: AlarmViewModel
+    private lateinit var mAlarmDrugsViewModel: AlarmDrugsViewModel
 
 
     class AlarmViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -49,7 +47,7 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) : RecyclerVie
         holder.binding.imageDeleteAlarm.setOnClickListener {
             // вызываем метод слушателя, передавая ему данные
             Log.v("myLogs","AlarmAdapter setOnClickListener")
-            onClickAlarmListener?.onAlarmClick(currentItem, position)
+            onClickAlarmDrugsListener?.onAlarmClick(currentItem, position)
         }
 //        holder.binding.imageDeleteAlarm.setOnClickListener {
 //            alarmsList.removeAt(position)
@@ -64,8 +62,8 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) : RecyclerVie
 
 
     //передаем данные и оповещаем адаптер о необходимости обновления списка
-    fun refreshAlarms(alarm: List<Alarm>) {
-        this.alarmsList = alarm
+    fun refreshDrugAlarms(drugsAlarm: List<DrugsAlarm>) {
+        this.alarmsList = drugsAlarm
         //указывает адаптеру, что полученные ранее данные изменились и следует перерисовать список на экране
         notifyDataSetChanged()
     }
