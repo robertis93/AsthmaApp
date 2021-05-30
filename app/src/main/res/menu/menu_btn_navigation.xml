@@ -11,7 +11,7 @@
         android:title="alarm"/>
     <item
         android:id="@+id/medicalFragment"
-        android:icon="@drawable/ic_baseline_science_24"
+        android:icon="@drawable/ic_astmaicon"
         android:title="drugs"/>
 
 </menu>

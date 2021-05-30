@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.asthmaapp.R
@@ -29,6 +31,7 @@ class MedicalFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = MedicalFragmentBinding.inflate(inflater, container, false)
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         return binding.root
     }
 
@@ -42,6 +45,42 @@ class MedicalFragment : Fragment() {
             insertDataToDataBase()
             Log.i("myLogs", "MedicalFragment binding.btnSaveMedicalInfo.setOnClickListener ")
         }
+
+//заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
+         mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
+             binding.editTextMedicalInfo.setText(
+                 try {
+                     medication.last().nameOfMedicine
+                 }
+             catch (e : NoSuchElementException) {
+                 "Введите ваше лкарство"
+             })
+         //adapter.refreshAlarms(alarm)
+        })
+
+        mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
+            binding.editTextMedicalDose.setText(
+                try {
+                    medication.last().doseMedicine.toString()
+                }
+                catch (e : NoSuchElementException) {
+                    "0"
+                })
+            //adapter.refreshAlarms(alarm)
+        })
+
+        mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
+            binding.editFrequencyMedical.setText(
+                try {
+                    medication.last().frequencyMedicine.toString()
+                }
+                catch (e : NoSuchElementException) {
+                    "0"
+                })
+            //adapter.refreshAlarms(alarm)
+        })
+
+
 
     }
 

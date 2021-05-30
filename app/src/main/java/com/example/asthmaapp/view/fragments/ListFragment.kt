@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
-import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.databinding.FragmentListBinding
 import com.example.asthmaapp.view.adapters.ListAdapter
+import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 
 
 class ListFragment : Fragment() {
@@ -47,24 +47,23 @@ class ListFragment : Fragment() {
             adapter.setData(measure)
         })
 
-        binding.floatingActionButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
-        }
-
-
-
-
         //add menu
-            setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)
+        super.onCreateOptionsMenu(menu,inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_delete) {
             deleteAllMeasure()
+        }
+        if (item.itemId == R.id.menu_add) {
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
         return super.onOptionsItemSelected(item)
     }

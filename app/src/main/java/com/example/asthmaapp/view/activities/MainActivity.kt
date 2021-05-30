@@ -37,12 +37,13 @@ class MainActivity : AppCompatActivity() {
 
 
 //actionbar менялся
-       // setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
+       setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
 
     }
 
 //This method is called whenever the user chooses to navigate Up
 // within your application's activity hierarchy from the action bar.
+    ///Этот метод вызывается всякий раз, когда пользователь решает перейти Вверх
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragmentContainer)
         return navController.navigateUp() || super.onSupportNavigateUp()
