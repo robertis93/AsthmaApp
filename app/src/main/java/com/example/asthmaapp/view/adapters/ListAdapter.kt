@@ -23,7 +23,8 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
        val currentItem = measureList[position]
         with(holder.binding) {
-            editTextDate.text = currentItem.id.toString()
+
+            texDaytDate.text = currentItem.dayOfMeasure
             firstTimeList.text = currentItem.firstTime
             secondTimeList.text = currentItem.secondTime
             thirdTimeList.text = currentItem.thirdTime

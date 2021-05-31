@@ -39,25 +39,25 @@ class UpdateFragment : Fragment() {
         binding.time3Update.setText(args.currentMeasure.thirdTime)
 
         binding.saveBtnUpdate.setOnClickListener {
-            updateItem()
+           // updateItem()
         }
         //addMenu
         setHasOptionsMenu(true)
     }
 
-    private fun updateItem() {
-        val firstTime = binding.time1Update.text.toString()
-        val secondTime = binding.time2Update.text.toString()
-        val thirdTime = binding.time3Update.text.toString()
-        val updateMeasure =
-            MeasureOfDay(args.currentMeasure.id, 100, 11, 111, firstTime, secondTime, thirdTime)
-        mMeasureViewModel.updateMeasure(updateMeasure)
-
-        Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_SHORT).show()
-
-        //navigate back
-        findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-    }
+//    private fun updateItem() {
+//        val firstTime = binding.time1Update.text.toString()
+//        val secondTime = binding.time2Update.text.toString()
+//        val thirdTime = binding.time3Update.text.toString()
+//        val updateMeasure =
+//            MeasureOfDay(args.currentMeasure.id, "25 December 2021",100, 11, 111, firstTime, secondTime, thirdTime)
+//        mMeasureViewModel.updateMeasure(updateMeasure)
+//
+//        Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_SHORT).show()
+//
+//        //navigate back
+//        findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)

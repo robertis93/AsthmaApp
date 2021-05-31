@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 data class MeasureOfDay(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    // val dayOfMeasure: String,
+    val dayOfMeasure: String,
     val measureM: Int,
     val measureD: Int,
     val measureE: Int,

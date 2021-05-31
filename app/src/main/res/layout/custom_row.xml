@@ -14,7 +14,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/editTextDate"
+            android:id="@+id/texDaytDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
