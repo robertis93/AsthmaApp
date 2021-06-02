@@ -6,7 +6,6 @@ import com.example.asthmaapp.model.MeasureOfDay
 
 @Dao
 interface MeasureDao {
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMeasureOfDay(measureOfDay: MeasureOfDay)
 

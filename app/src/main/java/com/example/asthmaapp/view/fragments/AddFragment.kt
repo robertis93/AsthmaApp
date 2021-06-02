@@ -1,11 +1,6 @@
 package com.example.asthmaapp.view.fragments
 
-import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
-import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -16,19 +11,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.asthmaapp.R
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.databinding.FragmentAddBinding
-import com.example.asthmaapp.model.models.Alarm
-import com.example.asthmaapp.viewmodel.AstmaBroadcastReceiver
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
 
 class AddFragment : Fragment() {
-
+    val args: AddFragmentArgs by navArgs()
     private lateinit var mMeasureViewModel: MeasureOfDayViewModel
     lateinit var sdf : String
     var yearMeasure by Delegates.notNull<Int>()
@@ -47,6 +41,10 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        if (args.dateTime != null){
+//            //фокус на нужное время stateFocus
+//        }
 
         mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 

@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.asthmaapp.NavGraphDirections
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.ActivityMainBinding
 
@@ -39,6 +40,14 @@ class MainActivity : AppCompatActivity() {
 //actionbar менялся
        setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
 
+        //обрабатываем intent, если MainActivity открывается при нажатии на уведомление, то
+        // переходит на AddFragment, если нет - то открывается MainActivity, соответственно проверяется через ntent,
+        //если в нем что то есть или нет
+        val dateTime = intent.getStringExtra("dateTime")
+        if (dateTime!=null) {
+            val action = NavGraphDirections.goToAddFragmentAction(dateTime)
+            navController.navigate(action)
+        }
     }
 
 //This method is called whenever the user chooses to navigate Up

@@ -11,15 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MeasureOfDayViewModel(application: Application) : AndroidViewModel(application) {
-
-    val readAllData: LiveData<List<MeasureOfDay>>
-    private val repository: MeasureOfDayRepository
-
-    init {
-        val measureDao = MeasureDataBase.getDataBase(application).measureDao()
-        repository = MeasureOfDayRepository(measureDao)
-        readAllData = repository.readAllData
-    }
+    val measureDao = MeasureDataBase.getDataBase(application).measureDao()
+    private val repository: MeasureOfDayRepository= MeasureOfDayRepository(measureDao)
+    val readAllData: LiveData<List<MeasureOfDay>> = repository.readAllData
 
     fun addMeasure(measureOfDay: MeasureOfDay) {
         viewModelScope.launch(Dispatchers.IO) {

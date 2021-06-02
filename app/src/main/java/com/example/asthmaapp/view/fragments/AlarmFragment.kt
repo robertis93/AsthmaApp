@@ -1,9 +1,7 @@
 package com.example.asthmaapp.view.fragments
 
-import android.app.AlarmManager
-import android.app.PendingIntent
+import android.app.*
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
@@ -18,18 +16,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.*
 import com.example.asthmaapp.databinding.AlarmFragmentBinding
 import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.model.models.DrugsAlarm
+import com.example.asthmaapp.utils.NotificationsHelper
 import com.example.asthmaapp.view.adapters.AlarmAdapter
 import com.example.asthmaapp.view.adapters.AlarmAdapter.OnAlarmClickListener
 import com.example.asthmaapp.view.adapters.AlarmDrugsAdapter
-import com.example.asthmaapp.viewmodel.AstmaBroadcastReceiver
 import com.example.asthmaapp.viewmodel.viewModels.AlarmDrugsViewModel
 import com.example.asthmaapp.viewmodel.viewModels.AlarmViewModel
-import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
-import kotlin.random.Random.Default.nextInt
+import java.util.concurrent.TimeUnit
 
 
 class AlarmFragment : Fragment() {
@@ -55,7 +56,6 @@ class AlarmFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.v("myLogs", "AlarmFragment OnViewCreated")
@@ -65,8 +65,11 @@ class AlarmFragment : Fragment() {
         // определяем слушателя нажатия элемента в списке
         val alarmClickListener: OnAlarmClickListener =
             object : OnAlarmClickListener {
-                override fun onAlarmClick(alarm: Alarm, position: Int) {
+                override fun onDeleteAlarmClick(alarm: Alarm, position: Int) {
                     mAlarmViewModel.deleteAlarm(alarm)
+                    //Отмена задачи
+                    WorkManager.getInstance(requireContext())
+                        .cancelWorkById(UUID.fromString(alarm.id))
                     Log.v("myLogs", "AlarmFragment mAlarmViewModel.delete(alarm)")
 
                     Toast.makeText(context, "Hi there! This is a Toast.", Toast.LENGTH_LONG).show()
@@ -125,35 +128,12 @@ class AlarmFragment : Fragment() {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-
-                var id = Math.random().toInt()
-                var hourAlarm = timePicker.hour
-                var minuteAlarm = timePicker.minute
+                val hourAlarm = timePicker.hour
+                val minuteAlarm = timePicker.minute
+                val id = setAlarm(hourAlarm, minuteAlarm, "Сделайте замер")
                 val alarm = Alarm(id, hour, minute)
                 mAlarmViewModel.addAlarm(alarm)
                 Log.v("myLogs", "AlarmFragment mAlarmViewModel.addAlarm(alarm) ")
-                //A PendingIntent указывает действие, которое необходимо предпринять в будущем.
-                //С помощью AlarmManager вы можете запланировать выполнение кода в будущем.
-                alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                alarmIntent = Intent(context, AstmaBroadcastReceiver::class.java).let { intent ->
-                    PendingIntent.getBroadcast(
-                        context, id, intent, FLAG_UPDATE_CURRENT
-                    )
-                }
-
-                val calendar: java.util.Calendar = java.util.Calendar.getInstance().apply {
-                    timeInMillis = System.currentTimeMillis()
-                    set(java.util.Calendar.HOUR_OF_DAY, hourAlarm)
-                    set(java.util.Calendar.MINUTE, minuteAlarm)
-
-                }
-
-                alarmMgr?.set(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    alarmIntent
-                )
-                Log.v("myLogs", "AlarmFragment alarmMgr")
             }
 
 
@@ -205,18 +185,13 @@ class AlarmFragment : Fragment() {
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
 
-                var idDrugs = Math.random().toInt()
-                var hourAlarmDrugs = timePicker.hour
-                var minuteAlarmDrugs = timePicker.minute
+                val idDrugs = Math.random().toInt()
+                val hourAlarmDrugs = timePicker.hour
+                val minuteAlarmDrugs = timePicker.minute
+                //val id = setAlarm(hourAlarm, minuteAlarm, "Примите лекарство")
                 val alarmDrugs = DrugsAlarm(idDrugs, hourAlarmDrugs, minuteAlarmDrugs)
                 mAlarmDrugsViewModel.addAlarm(alarmDrugs)
 
-                alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                alarmIntent = Intent(context, AstmaBroadcastReceiver::class.java).let { intent ->
-                    PendingIntent.getBroadcast(
-                        context, idDrugs, intent, FLAG_UPDATE_CURRENT
-                    )
-                }
 
                 val calendar: java.util.Calendar = java.util.Calendar.getInstance().apply {
                     timeInMillis = System.currentTimeMillis()
@@ -243,7 +218,46 @@ class AlarmFragment : Fragment() {
 
         }
     }
+
+    //устанавливаем оповещение
+    fun setAlarm(hour: Int, minute: Int, message: String): String {
+        val now = LocalDateTime.now() // настоящее время
+        // время в которое нужно запустить уведомление
+        var alarmTime =
+            LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.of(hour, minute))
+        if (!alarmTime.isAfter(now)) { //??? !
+            //add one day
+        }
+        //SheduleJob оберачиваем в WorkRequest:
+        //WorkRequest позволяет нам задать условия запуска и входные параметры к задаче
+        // для многократного выполнения через определенный период времени нужно использовать PeriodicWorkRequest:
+        val workRequest = PeriodicWorkRequest.Builder(SheduleJob::class.java, 1, TimeUnit.DAYS)
+            .setInputData( //передача данных в запрос SheduleJob
+                workDataOf(
+                    //передача по ключу
+                    "message" to message,
+                )
+            )
+            //настройка исходной задержки, даст нужное время исполнения
+            //нужно высчитать через сколько наступит время срабатывания оповещения с момента настоящего времени
+            .setInitialDelay(Duration.between(now, alarmTime).seconds, TimeUnit.SECONDS)
+            .build()
+        //запускаем задачу:
+        //Берем WorkManager и в его метод enqueue передаем WorkRequest. После этого задача будет запущена.
+        WorkManager.getInstance(requireContext())
+            .enqueue(workRequest) //requireContext - если внутри фрагмента
+        return workRequest.id.toString()
+    }
 }
+
+class SheduleJob(val context: Context, params: WorkerParameters) : Worker(context, params) {
+    override fun doWork(): Result {
+        //В метод doWork нам предлагается поместить код, который будет выполнен.
+        NotificationsHelper.showNotification(context, inputData.getString("message") ?: "")
+        return Result.success()
+    }
+}
+
 
 
 

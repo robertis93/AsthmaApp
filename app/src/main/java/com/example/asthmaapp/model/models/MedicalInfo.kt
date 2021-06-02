@@ -11,5 +11,6 @@ data class MedicalInfo(
     var id: Int,
     var nameOfMedicine: String,
     var frequencyMedicine: Int,
-    var doseMedicine: Int
+    var doseMedicine: Int,
+    //var dateTime: String
 )

@@ -2,20 +2,19 @@ package com.example.asthmaapp.view.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.viewmodel.viewModels.AlarmViewModel
 
-class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) : RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
+class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
+    RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
     private var alarmsList = emptyList<Alarm>()
 
     // определили интерфейс слушателя события нажатия
     interface OnAlarmClickListener {
-        fun onAlarmClick(alarm: Alarm, position: Int)
+        fun onDeleteAlarmClick(alarm: Alarm, position: Int)
     }
 
     //var onClickAlarmListener: OnAlarmClickListener? = null
@@ -41,15 +40,16 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) : RecyclerVie
 
     //связывает views с содержимым
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
-        Log.v("myLogs","AlarmAdapter onBindViewHolder")
+        Log.v("myLogs", "AlarmAdapter onBindViewHolder")
 
         val currentItem = alarmsList[position]
         //holder.timeTextView?.text = alarmes[position]
-        holder.binding.itemTxt.text = "${currentItem.hour.toString()} : ${currentItem.minute}"
+        holder.binding.itemTxt.text =
+            "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.minuteShow(currentItem.minute)}"
         holder.binding.imageDeleteAlarm.setOnClickListener {
             // вызываем метод слушателя, передавая ему данные
-            Log.v("myLogs","AlarmAdapter setOnClickListener")
-            onClickAlarmListener?.onAlarmClick(currentItem, position)
+            Log.v("myLogs", "AlarmAdapter setOnClickListener")
+            onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)
         }
 //        holder.binding.imageDeleteAlarm.setOnClickListener {
 //            alarmsList.removeAt(position)
