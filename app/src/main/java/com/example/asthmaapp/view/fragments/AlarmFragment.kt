@@ -64,7 +64,7 @@ class AlarmFragment : Fragment() {
 // определяем слушателя нажатия элемента в списке
         // определяем слушателя нажатия элемента в списке
         val alarmClickListener: OnAlarmClickListener =
-            object : OnAlarmClickListener {
+            object : OnAlarmClickListener {   //
                 override fun onDeleteAlarmClick(alarm: Alarm, position: Int) {
                     mAlarmViewModel.deleteAlarm(alarm)
                     //Отмена задачи
@@ -72,7 +72,7 @@ class AlarmFragment : Fragment() {
                         .cancelWorkById(UUID.fromString(alarm.id))
                     Log.v("myLogs", "AlarmFragment mAlarmViewModel.delete(alarm)")
 
-                    Toast.makeText(context, "Hi there! This is a Toast.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Alarm was deleted", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -155,27 +155,7 @@ class AlarmFragment : Fragment() {
                 true
             ).show()
         }
-//
-//        binding.floatingActionBtnAlarm.setOnClickListener {
-//            val cal = Calendar.getInstance()
-//            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-//                cal.set(Calendar.HOUR_OF_DAY, hour)
-//                cal.set(Calendar.MINUTE, minute)
-//                // binding.root.item_txt?.text = SimpleDateFormat("HH:mm").format(cal.time)
-//                //var hourAlarm = timePicker.hour
-//                //var minuteAlarm = timePicker.hour
-//                val alarm = Alarm(0, hour, minute)
-//                mAlarmViewModel.addAlarm(alarm)
-//            }
-//
-//            val timePicker = TimePickerDialog(
-//                context,
-//                timeSetListener,
-//                cal.get(Calendar.HOUR_OF_DAY),
-//                cal.get(Calendar.MINUTE),
-//                true
-//            ).show()
-//        }
+
 
         //оповещение о принятие лекарства, все аналогично замеру
         binding.floatingActionBtnDrugs.setOnClickListener {
@@ -184,28 +164,11 @@ class AlarmFragment : Fragment() {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
-
-                val idDrugs = Math.random().toInt()
                 val hourAlarmDrugs = timePicker.hour
                 val minuteAlarmDrugs = timePicker.minute
-                //val id = setAlarm(hourAlarm, minuteAlarm, "Примите лекарство")
+                val idDrugs = setAlarm(hourAlarmDrugs, minuteAlarmDrugs, "Примите лекарство")
                 val alarmDrugs = DrugsAlarm(idDrugs, hourAlarmDrugs, minuteAlarmDrugs)
                 mAlarmDrugsViewModel.addAlarm(alarmDrugs)
-
-
-                val calendar: java.util.Calendar = java.util.Calendar.getInstance().apply {
-                    timeInMillis = System.currentTimeMillis()
-                    set(java.util.Calendar.HOUR_OF_DAY, hourAlarmDrugs)
-                    set(java.util.Calendar.MINUTE, minuteAlarmDrugs)
-
-                }
-
-                alarmMgr?.set(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    alarmIntent
-                )
-                Log.v("myLogs", "AlarmFragment alarmMgr")
             }
 
             TimePickerDialog(
@@ -215,7 +178,6 @@ class AlarmFragment : Fragment() {
                 cal.get(Calendar.MINUTE),
                 true
             ).show()
-
         }
     }
 
@@ -225,9 +187,9 @@ class AlarmFragment : Fragment() {
         // время в которое нужно запустить уведомление
         var alarmTime =
             LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.of(hour, minute))
-        if (!alarmTime.isAfter(now)) { //??? !
-            //add one day
-        }
+        if (alarmTime.isBefore(now)) // для переноса на завтра, если время уже прошло
+            alarmTime = LocalDateTime.of(now.toLocalDate().plusDays(1), LocalTime.of(hour, minute))
+
         //SheduleJob оберачиваем в WorkRequest:
         //WorkRequest позволяет нам задать условия запуска и входные параметры к задаче
         // для многократного выполнения через определенный период времени нужно использовать PeriodicWorkRequest:

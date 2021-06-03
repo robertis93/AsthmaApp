@@ -42,8 +42,10 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        if (args.dateTime != null){
-//            //фокус на нужное время stateFocus
+//       if (args.dateTime != null){   // пришли из notification
+//            //фокус на нужный EditText ля записи замера
+//           binding.firstMeasure.setFocusableInTouchMode(true);
+//           binding.firstMeasure.requestFocus();
 //        }
 
         mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
