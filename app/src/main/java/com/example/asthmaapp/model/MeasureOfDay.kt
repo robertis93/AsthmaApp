@@ -11,16 +11,28 @@ data class MeasureOfDay(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val dayOfMeasure: String,
-    val measureOne: Int?,
-    val measureTwo: Int?,
-    val measureThree: Int?,
-    val measureFour: Int?,
-    val measureFive: Int?,
-    val measureSix: Int?,
-    val firstTime: String?,
-    val secondTime: String?,
-    val thirdTime: String?,
-    val fourthTime: String?,
-    val fifthTime: String?,
-    val sixTime: String?
+    //val listOfTimeMeasure: List<TimeAndMeasure>,
+  //  val listOfTimeOfMedicament: List<MedicamentTime>,
+    val nameMedicamentaion: String?,
+    val doza : Int?,
+    val frequency : Int?,
+//сюда нужно будет добавить список из TimeAndMeasure
 ) : Parcelable
+
+@Entity(tableName = "time_measure_table")
+data class TimeAndMeasure(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
+    var hour: Int,
+    var minute: Int,
+    var measure : Int
+)
+
+@Entity(tableName = "medicament_time_table")
+data class MedicamentTime(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
+    var hour: Int,
+    var minute: Int,
+    var check: Boolean
+)

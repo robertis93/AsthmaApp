@@ -27,15 +27,15 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
        val currentItem = measureList[position]
         with(holder.binding) {
             texDaytDate.text = currentItem.dayOfMeasure
-            firstTimeList.text = currentItem.firstTime
-            secondTimeList.text = currentItem.secondTime
-            thirdTimeList.text = currentItem.thirdTime
-            measuteTextList.text = currentItem.measureOne.toString()
-            measure2TextList.text = currentItem.measureTwo.toString()
-            measure3TextList.text = currentItem.measureThree.toString()
-            if (currentItem.measureThree!! > 1) {
-                measure3TextList.setBackgroundColor(R.color.purple_200)
-            }
+//            firstTimeList.text = currentItem.firstTime
+//            secondTimeList.text = currentItem.secondTime
+//            thirdTimeList.text = currentItem.thirdTime
+//            measuteTextList.text = currentItem.measureOne.toString()
+//            measure2TextList.text = currentItem.measureTwo.toString()
+//            measure3TextList.text = currentItem.measureThree.toString()
+//            if (currentItem.measureThree!! > 1) {
+//                measure3TextList.setBackgroundColor(R.color.purple_200)
+//            }
         }
 
 

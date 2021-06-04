@@ -34,9 +34,9 @@ class UpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-        binding.time1Update.setText(args.currentMeasure.firstTime)
-        binding.time2Update.setText(args.currentMeasure.secondTime)
-        binding.time3Update.setText(args.currentMeasure.thirdTime)
+//        binding.time1Update.setText(args.currentMeasure.firstTime)
+//        binding.time2Update.setText(args.currentMeasure.secondTime)
+//        binding.time3Update.setText(args.currentMeasure.thirdTime)
 
         binding.saveBtnUpdate.setOnClickListener {
            // updateItem()
@@ -65,27 +65,27 @@ class UpdateFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_delete) {
-            deleteMeasure()
+            //deleteMeasure()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteMeasure() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes") { _, _ ->
-            mMeasureViewModel.deleteMeasure(args.currentMeasure)
-            Toast.makeText(
-                requireContext(),
-                "Successfully removed: ${args.currentMeasure.firstTime}",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-        }
-        builder.setNegativeButton("No") { _, _ -> }
-        builder.setTitle("Delete ${args.currentMeasure.firstTime}?")
-        builder.setMessage("Are you sure want to delete ${args.currentMeasure.firstTime} ?")
-        builder.create().show()
-
-    }
+//    private fun deleteMeasure() {
+//        val builder = AlertDialog.Builder(requireContext())
+//        builder.setPositiveButton("Yes") { _, _ ->
+//            mMeasureViewModel.deleteMeasure(args.currentMeasure)
+//            Toast.makeText(
+//                requireContext(),
+//                "Successfully removed: ${args.currentMeasure.firstTime}",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//
+//            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+//        }
+//        builder.setNegativeButton("No") { _, _ -> }
+//        builder.setTitle("Delete ${args.currentMeasure.firstTime}?")
+//        builder.setMessage("Are you sure want to delete ${args.currentMeasure.firstTime} ?")
+//        builder.create().show()
+//
+//    }
 }

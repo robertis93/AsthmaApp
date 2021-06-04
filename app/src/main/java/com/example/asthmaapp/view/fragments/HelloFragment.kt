@@ -38,7 +38,7 @@ class HelloFragment : Fragment() {
             } else {
                 findNavController().navigate(R.id.action_helloFragment_to_viewPagerFragment)
             }
-        }, 3000)
+        }, 2000)
     }
 
     private fun onBoardingFinished(): Boolean {
