@@ -11,10 +11,16 @@ data class MeasureOfDay(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val dayOfMeasure: String,
-    val measureM: Int,
-    val measureD: Int,
-    val measureE: Int,
-    val firstTime: String,
-    val secondTime: String,
-    val thirdTime: String
+    val measureOne: Int?,
+    val measureTwo: Int?,
+    val measureThree: Int?,
+    val measureFour: Int?,
+    val measureFive: Int?,
+    val measureSix: Int?,
+    val firstTime: String?,
+    val secondTime: String?,
+    val thirdTime: String?,
+    val fourthTime: String?,
+    val fifthTime: String?,
+    val sixTime: String?
 ) : Parcelable

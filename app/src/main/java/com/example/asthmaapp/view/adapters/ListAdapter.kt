@@ -30,10 +30,10 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             firstTimeList.text = currentItem.firstTime
             secondTimeList.text = currentItem.secondTime
             thirdTimeList.text = currentItem.thirdTime
-            measuteTextList.text = currentItem.measureM.toString()
-            measure2TextList.text = currentItem.measureD.toString()
-            measure3TextList.text = currentItem.measureE.toString()
-            if (currentItem.measureE > 1) {
+            measuteTextList.text = currentItem.measureOne.toString()
+            measure2TextList.text = currentItem.measureTwo.toString()
+            measure3TextList.text = currentItem.measureThree.toString()
+            if (currentItem.measureThree!! > 1) {
                 measure3TextList.setBackgroundColor(R.color.purple_200)
             }
         }

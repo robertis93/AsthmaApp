@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.fragments.AddFragment">
+        tools:context=".view.fragments.AddFragment"
+        android:paddingBottom="32sp">
 
         <Button
             android:id="@+id/selectDayBtn"
@@ -60,11 +62,12 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/firstTime"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/text1ViewDoza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="мкг" />
+                android:text="л/мин" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,11 +100,12 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/secondTime"
                 app:layout_constraintTop_toBottomOf="@+id/firstMeasure" />
+
             <TextView
                 android:id="@+id/text2ViewDoza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="мкг" />
+                android:text="л/мин" />
         </LinearLayout>
 
         <LinearLayout
@@ -135,11 +139,137 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/thirdTime"
                 app:layout_constraintTop_toBottomOf="@+id/secondMeasure" />
+
             <TextView
                 android:id="@+id/text3ViewDoza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="мкг" />
+                android:text="л/мин" />
+
+            <ImageButton
+                android:id="@+id/thirdLineBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/green"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fourLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/fourTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="textPersonName"
+                android:text="23:00"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+
+            <EditText
+                android:id="@+id/fourMeasure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="textPersonName"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+            <TextView
+                android:id="@+id/text4ViewDoza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="л/мин" />
+
+
+            <ImageButton
+                android:id="@+id/fourLineBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/green"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fiveLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/fiveTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="textPersonName"
+                android:text="23:00"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+
+            <EditText
+                android:id="@+id/fiveMeasure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="textPersonName"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+            <TextView
+                android:id="@+id/text5ViewDoza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="л/мин" />
+
+
+            <ImageButton
+                android:id="@+id/fiveLineBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/green"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sixLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/sixTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="textPersonName"
+                android:text="23:00"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+
+            <EditText
+                android:id="@+id/sixMeasure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="textPersonName"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+            <TextView
+                android:id="@+id/text6ViewDoza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="л/мин" />
+
+
         </LinearLayout>
 
         <TextView
@@ -149,6 +279,52 @@
             android:paddingTop="8dp"
             android:text="время приема лекарства"
             android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/firstMed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:inputType="textPersonName"
+                android:text="08:00" />
+
+            <CheckBox
+                android:id="@+id/checkBoxMed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CheckBox" />
+
+            <ImageButton
+                android:id="@+id/addOneMedBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/green"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
+            <EditText
+                android:layout_marginStart="16sp"
+                android:id="@+id/secMed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:inputType="textPersonName"
+                android:text="16:00" />
+
+            <CheckBox
+                android:id="@+id/check2BoxMed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CheckBox" />
+
+
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/editTextMedicalInfo"
@@ -232,6 +408,10 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/custom_rounded_corners"
             android:text="Сохранить"
-            app:backgroundTint="@color/blue_med" />
+            app:backgroundTint="@color/blue_med"
+            />
+
+
+
     </LinearLayout>
 </ScrollView>
