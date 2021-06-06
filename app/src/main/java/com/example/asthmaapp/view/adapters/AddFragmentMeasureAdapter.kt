@@ -12,8 +12,8 @@ import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.view.fragments.ListFragmentDirections
 
-class AddFragmentMeasureAdapter(var onClickMeasureListener: OnMeasureClickListener): RecyclerView.Adapter<AddFragmentMeasureAdapter.MyViewHolder>() {
-    private var measuresList  = emptyList<TimeAndMeasure>()
+class AddFragmentMeasureAdapter(): RecyclerView.Adapter<AddFragmentMeasureAdapter.MyViewHolder>() {
+    private var measuresList  =  mutableListOf<TimeAndMeasure>()
 
     // определили интерфейс слушателя события нажатия
     interface OnMeasureClickListener {
@@ -36,10 +36,9 @@ class AddFragmentMeasureAdapter(var onClickMeasureListener: OnMeasureClickListen
             timeMeasure.text =  "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.minuteShow(currentItem.minute)}"
             measure.text = currentItem.measure.toString()
             deleteAlarm.setOnClickListener {
-                // вызываем метод слушателя, передавая ему данные
-                onClickMeasureListener?.onDeleteMeasureClick(currentItem, position)
+                deleteData(measuresList[position])
             }
-          //  measure.text = currentItem.measure
+
         }
 
     }
@@ -48,8 +47,25 @@ class AddFragmentMeasureAdapter(var onClickMeasureListener: OnMeasureClickListen
         return measuresList.size
     }
 
-    fun setData(timeAndMeasure: List<TimeAndMeasure>){
+    fun setData(timeAndMeasure: MutableList<TimeAndMeasure>){
         this.measuresList = timeAndMeasure
+        notifyDataSetChanged()
+    }
+
+    fun addData(timeAndMeasure: TimeAndMeasure){
+        // this.measuresMedList
+        measuresList.add(timeAndMeasure)
+        notifyDataSetChanged()
+    }
+
+    fun deleteData(timeAndMeasure: TimeAndMeasure){
+        // this.measuresMedList
+        measuresList.remove(timeAndMeasure)
+        notifyDataSetChanged()
+    }
+
+    fun getData() : MutableList<TimeAndMeasure> {
+        return measuresList
         notifyDataSetChanged()
     }
 }

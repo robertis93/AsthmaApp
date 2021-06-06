@@ -10,14 +10,15 @@ import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.model.models.Alarm
 
-class AddFragmentMedicamentTimeAdapter(var onClickAlarmListener: OnAlarmClickListener) :
+class AddFragmentMedicamentTimeAdapter() :
     RecyclerView.Adapter<AddFragmentMedicamentTimeAdapter.MyViewHolder>() {
-    private var measuresMedList = emptyList<MedicamentTime>()
+    private var measuresMedList = mutableListOf<MedicamentTime>()
+    val medicTimeList = mutableListOf<MedicamentTime>()
 
     // определили интерфейс слушателя события нажатия
-    interface OnAlarmClickListener {
-        fun onDeleteAlarmClick(medicamentTime: MedicamentTime, position: Int)
-    }
+//    interface OnAlarmClickListener {
+//        fun onDeleteAlarmClick(medicamentTime: MedicamentTime, position: Int)
+//    }
 
     class MyViewHolder(val binding: AddFragmentMedicamentTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -43,8 +44,9 @@ class AddFragmentMedicamentTimeAdapter(var onClickAlarmListener: OnAlarmClickLis
             checkBox2.isChecked = true
             checkBox2.isEnabled = false
             deleteAlarm.setOnClickListener {
+                deleteData(measuresMedList[position])
                 // вызываем метод слушателя, передавая ему данные
-                onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)
+               // onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)
             }
 
         }
@@ -55,8 +57,26 @@ class AddFragmentMedicamentTimeAdapter(var onClickAlarmListener: OnAlarmClickLis
         return measuresMedList.size
     }
 
-    fun setData(medicamentTime: List<MedicamentTime>) {
+    fun setData(medicamentTime: MutableList<MedicamentTime>) {
         this.measuresMedList = medicamentTime
+        notifyDataSetChanged()
+    }
+
+    fun addData(medicamentTime: MedicamentTime){
+       // this.measuresMedList
+        measuresMedList.add(medicamentTime)
+        notifyDataSetChanged()
+    }
+
+    fun deleteData(medicamentTime: MedicamentTime){
+        // this.measuresMedList
+        measuresMedList.remove(medicamentTime)
+        notifyDataSetChanged()
+    }
+
+    fun getData() {
+        // this.measuresMedList
+        measuresMedList
         notifyDataSetChanged()
     }
 }

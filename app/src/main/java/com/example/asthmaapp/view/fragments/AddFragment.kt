@@ -11,23 +11,25 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentAddBinding
 import com.example.asthmaapp.databinding.LayoutDialogAddFragmentBinding
 import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
+import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.utils.AddFragmentDialog
 import com.example.asthmaapp.view.adapters.AddFragmentMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddFragmentMedicamentTimeAdapter
-import com.example.asthmaapp.view.adapters.AlarmAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicamentTimeViewModel
 import com.example.asthmaapp.viewmodel.viewModels.TimeAndMeasureViewModel
-import java.lang.Exception
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -39,9 +41,14 @@ class AddFragment : Fragment() {
     private lateinit var mMedicamentTimeViewModel: MedicamentTimeViewModel
     private lateinit var mMedicalViewModel: MedicalViewModel
     lateinit var sdf: String
+    lateinit var day: String
     var yearMeasure by Delegates.notNull<Int>()
     var mounthMeasure by Delegates.notNull<Int>()
     var dayMeasure by Delegates.notNull<Int>()
+
+    //для времени и замера
+    val timeAndMeasureList = mutableListOf<TimeAndMeasure>()
+    val medicTimeList = mutableListOf<MedicamentTime>()
 
 
     lateinit var binding: FragmentAddBinding
@@ -57,81 +64,131 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // определяем слушателя нажатия элемента в списке
-        // определяем слушателя нажатия элемента в списке
-        val alarmClickListener: AddFragmentMedicamentTimeAdapter.OnAlarmClickListener =
-            object : AddFragmentMedicamentTimeAdapter.OnAlarmClickListener {   //
-                override fun onDeleteAlarmClick(medicamentTime: MedicamentTime, position: Int) {
-                    mMedicamentTimeViewModel.deleteMedicalTime(medicamentTime)
-                }
-            }
 
-        val timeMeasureListener: AddFragmentMeasureAdapter.OnMeasureClickListener =
-            object : AddFragmentMeasureAdapter.OnMeasureClickListener {   //
-                override fun onDeleteMeasureClick(timeAndMeasure: TimeAndMeasure, position: Int) {
-                    mTimeAndMeasureViewModel.deleteTimeMeasure(timeAndMeasure)
-                }
-            }
+        binding.textDate.setVisibility(View.GONE);
+
+        //val observable = Observable.from(arrayOf("one", "two", "three"))
+
+        // определяем слушателя нажатия элемента в списке
+        // определяем слушателя нажатия элемента в списке
+//        val alarmClickListener: AddFragmentMedicamentTimeAdapter.OnAlarmClickListener =
+//            object : AddFragmentMedicamentTimeAdapter.OnAlarmClickListener {   //
+//                override fun onDeleteAlarmClick(medicamentTime: MedicamentTime, position: Int) {
+//                    medicTimeList.removeAt(position)
+//
+//                    Log.v("myLogs", "AddFragment  medicTime.remove(medicamentTime) ")
+//
+//                //mMedicamentTimeViewModel.deleteMedicalTime(medicamentTime)
+//                }
+//            }
+
+//        val timeMeasureListener: AddFragmentMeasureAdapter.OnMeasureClickListener =
+//            object : AddFragmentMeasureAdapter.OnMeasureClickListener {   //
+//                override fun onDeleteMeasureClick(timeAndMeasure: TimeAndMeasure, position: Int) {
+//                    mTimeAndMeasureViewModel.deleteTimeMeasure(timeAndMeasure)
+//                }
+//            }
 
         //recycler
-        val addAdapter = AddFragmentMeasureAdapter(timeMeasureListener)
+        val addAdapter = AddFragmentMeasureAdapter()
         val recyclerViewAdd = binding.recyclerMeasure
         recyclerViewAdd.adapter = addAdapter
         recyclerViewAdd.layoutManager = LinearLayoutManager(requireContext())
 
         //recycler for MedicTime
-        val medicAdapter = AddFragmentMedicamentTimeAdapter(alarmClickListener)
+        val medicAdapter = AddFragmentMedicamentTimeAdapter()
         val recyclerViewMed = binding.recyclerMed
         recyclerViewMed.adapter = medicAdapter
         recyclerViewMed.layoutManager = LinearLayoutManager(requireContext())
+
 
 //MeasureViewModel
         //  mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
         mTimeAndMeasureViewModel = ViewModelProvider(this).get(TimeAndMeasureViewModel::class.java)
         mMedicamentTimeViewModel = ViewModelProvider(this).get(MedicamentTimeViewModel::class.java)
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
+        mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 
 
-        mTimeAndMeasureViewModel.readAllData.observe(
-            viewLifecycleOwner,
-            Observer { timeAndMeasure ->
-                addAdapter.setData(timeAndMeasure)
-            })
-
-        mMedicamentTimeViewModel.readAllData.observe(
-            viewLifecycleOwner,
-            Observer { medicamentTime ->
-                medicAdapter.setData(medicamentTime)
-            })
-
-
-
-//        binding.fourLine.visibility = View.GONE
-//        binding.fiveLine.visibility = View.GONE
-//        binding.sixLine.visibility = View.GONE
-//        binding.secMed.visibility = View.GONE
-//        binding.check2BoxMed.visibility = View.GONE
-//
-//        binding.thirdLineBtn.setOnClickListener {
-//            binding.thirdLineBtn.visibility = View.GONE
-//            binding.fourLine.visibility = View.VISIBLE
-//        }
-//
-//        binding.fourLineBtn.setOnClickListener {
-//            binding.fourLineBtn.visibility = View.GONE
-//            binding.fiveLine.visibility = View.VISIBLE
-//        }
-//
-//        binding.fiveLineBtn.setOnClickListener {
-//            binding.fiveLineBtn.visibility = View.GONE
-//            binding.sixLine.visibility = View.VISIBLE
-//        }
+        //Вреия и замер
         binding.addOneMeasureBtn.setOnClickListener {
-            openDialog()
+            //openDialog()
+
+            val builder = AlertDialog.Builder(requireContext())
+            val layoutInflater = LayoutInflater.from(requireContext())
+            val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
+            dialogFragment.timePicker.is24HourView
+            builder.setView(dialogFragment.root)
+            builder.setTitle("Measure")
+
+            //show dialog
+            val mAlertDialog = builder.show()
+            dialogFragment.timePicker.is24HourView
+
+            //сохраняем в бд замер
+            dialogFragment.btnSave.setOnClickListener {
+                // TODO: 04.06.2021 exception
+                //try {
+                mAlertDialog.dismiss()
+                dialogFragment.timePicker.is24HourView
+                val timeHour = dialogFragment.timePicker.hour
+                val timeMinute = dialogFragment.timePicker.minute
+                val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
+                val timeAndMeas = TimeAndMeasure(0, timeHour, timeMinute, measurePicf)
+                addAdapter.addData(timeAndMeas)
+
+                //     mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeas)
+//            } catch (e: Exception) {
+//                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+//                val manager = getActivity()?.getSupportFragmentManager()
+//                if (manager != null) {
+//                    myDialogFragment.show(manager, "myDialog")
+//                }
+//
+//            }
+            }
+
+            dialogFragment.btnCansel.setOnClickListener {
+                mAlertDialog.dismiss()
+            }
         }
 
         binding.addOneMedBtn.setOnClickListener {
-            openDialogMedical()
+            //openDialogMedical()
+            val builder = AlertDialog.Builder(requireContext())
+            val layoutInflater = LayoutInflater.from(requireContext())
+            val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
+            builder.setView(dialogFragment.root)
+            builder.setTitle("Measure")
+
+            //show dialog
+            val mAlertDialog = builder.show()
+            dialogFragment.timePicker.is24HourView
+
+            //сохраняем в бд замер
+            dialogFragment.btnSave.setOnClickListener {
+                try {
+                    mAlertDialog.dismiss()
+                    val timeHour = dialogFragment.timePicker.hour
+                    val timeMinute = dialogFragment.timePicker.minute
+                    val chekBox = true
+                    val medicamentTime = MedicamentTime(0, timeHour, timeMinute, chekBox)
+                    medicAdapter.addData(medicamentTime)
+
+                } catch (e: Exception) {
+                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+                    val manager = getActivity()?.getSupportFragmentManager()
+                    if (manager != null) {
+                        myDialogFragment.show(manager, "myDialog")
+                    }
+
+                }
+
+            }
+            dialogFragment.btnCansel.setOnClickListener {
+                Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
+                mAlertDialog.dismiss()
+            }
 
         }
 
@@ -144,7 +201,39 @@ class AddFragment : Fragment() {
 
 
         binding.saveBtn.setOnClickListener {
-            insertToDataToDataBase()
+            //insertToDataToDataBase()
+            try {
+                val nameMedicamentaion = binding.nameMedical.text.toString()
+                val doza = binding.editTextMedicalDoze.text.toString().toInt()
+                val frequency = binding.editFrequencyMedical.text.toString().toInt()
+                val lisis = addAdapter.getData()
+                val infoDay = MeasureOfDay(
+                    0,
+                    day,
+                    lisis,
+                    nameMedicamentaion,
+                    doza,
+                    frequency
+                )
+
+//navigate Back
+                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                mMeasureViewModel.addMeasure(infoDay)
+
+                for (medicTime in medicTimeList) {
+                    mMedicamentTimeViewModel.addMedicalTime(medicTime)
+                }
+                for (timeAndMeasure in timeAndMeasureList) {
+                    mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+                }
+
+            } catch (e: Exception) {
+                val myDialogFragment = AddFragmentDialog("Вы заполнили не все поля")
+                val manager = getActivity()?.getSupportFragmentManager()
+                if (manager != null) {
+                    myDialogFragment.show(manager, "myDialog")
+                }
+            }
         }
 
         binding.selectDayBtn.setOnClickListener {
@@ -164,6 +253,14 @@ class AddFragment : Fragment() {
                     mounthMeasure = datePicker.month
                     dayMeasure = datePicker.dayOfMonth
 
+                    day = "${dayMeasure}/${mounthMeasure}/${yearMeasure}"
+                    val current = LocalDateTime.now()
+                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                    sdf = current.format(formatter)
+                    binding.textDate.setVisibility(View.VISIBLE)
+                    binding.textDate.text = day
+                    // val formatted = current.format(formatter)
+
                 }
 
             context?.let { it1 ->
@@ -176,197 +273,133 @@ class AddFragment : Fragment() {
                 ).show()
             }
 
+
         }
+//        timeAndMeasure.toObservable()
+//
+//            .subscribeBy(
+//
+//                onNext = { addAdapter.setData(timeAndMeasure)},
+//                onError = { it.printStackTrace() },
+//                onComplete = { println("onComplete!") }
+//
+//            )
 
     }
 
     private fun insertToDataToDataBase() {
-        val day = sdf
-        val listOfTimeMeasure: List<TimeAndMeasure>
-        val listOfTimeOfMedicament: List<MedicamentTime>
-        val nameMedicamentaion = binding.nameMedical.text.toString()
-        val doza = binding.editTextMedicalDoze.text.toString()
-        val frequency = binding.editFrequencyMedical.text.toString()
-
-        //val infoDay = MeasureOfDay(
-//                0,
-//                //"25 December 2021",
-//                "${dayMeasure} / ${mounthMeasure} / ${yearMeasure} ",
-//                firstMeasure?.toInt(),
-//                secondMeasure?.toInt(),
-//                thirdMeasure?.toInt(),
-//                fourMeasure?.toInt(),
-//                fifeMeasure?.toInt(),
-//                sixMeasure?.toInt(),
-//                firstTime,
-//                secondTime,
-//                thirdTime,
-//                fourTime,
-//                fiveTime,
-//                sixTime
-//            )
+//        try {
+//            val nameMedicamentaion = binding.nameMedical.text.toString()
+//            val doza = binding.editTextMedicalDoze.text.toString().toInt()
+//            val frequency = binding.editFrequencyMedical.text.toString().toInt()
 //
+//            val infoDay = MeasureOfDay(
+//                0,
+//                day,
+//                nameMedicamentaion,
+//                doza,
+//                frequency
+//            )
 //
 ////navigate Back
 //            findNavController().navigate(R.id.action_addFragment_to_listFragment)
-//            mMeasureViewModel.addMeasure(measure)
-//        } catch (e: IllegalStateException) {
-//            val myDialogFragment = AddFragmentDialog()
+//            mMeasureViewModel.addMeasure(infoDay)
+//
+//            for (medicTime in medicTimeList) {
+//                mMedicamentTimeViewModel.addMedicalTime(medicTime)
+//            }
+//            for (timeAndMeasure in timeAndMeasureList) {
+//                mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+//            }
+//
+//        } catch (e: Exception) {
+//            val myDialogFragment = AddFragmentDialog("Вы заполнили не все поля")
 //            val manager = getActivity()?.getSupportFragmentManager()
 //            if (manager != null) {
 //                myDialogFragment.show(manager, "myDialog")
 //            }
 //        }
-//
+
     }
 
     private fun openDialogMedical() {
-
-        val builder = AlertDialog.Builder(requireContext())
-        val layoutInflater = LayoutInflater.from(requireContext())
-        val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
-        builder.setView(dialogFragment.root)
-        builder.setTitle("Measure")
-
-        //show dialog
-        val mAlertDialog = builder.show()
-        dialogFragment.timePicker.is24HourView
-
-        //сохраняем в бд замер
-        dialogFragment.btnSave.setOnClickListener {
-            try {
-                mAlertDialog.dismiss()
-                val timeHour = dialogFragment.timePicker.hour
-                val timeMinute = dialogFragment.timePicker.minute
-                val chekBox = true
-                val medicamentTime = MedicamentTime(0, timeHour, timeMinute, chekBox)
-                mMedicamentTimeViewModel.addMedicalTime(medicamentTime)
-            } catch (e: Exception) {
-                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-                val manager = getActivity()?.getSupportFragmentManager()
-                if (manager != null) {
-                    myDialogFragment.show(manager, "myDialog")
-                }
-
-            }
-
-        }
-            dialogFragment.btnCansel.setOnClickListener {
-                Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
-                mAlertDialog.dismiss()
-            }
-        }
-
+//
+//        val builder = AlertDialog.Builder(requireContext())
+//        val layoutInflater = LayoutInflater.from(requireContext())
+//        val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
+//        builder.setView(dialogFragment.root)
+//        builder.setTitle("Measure")
+//
+//        //show dialog
+//        val mAlertDialog = builder.show()
+//        dialogFragment.timePicker.is24HourView
+//
+//        //сохраняем в бд замер
+//        dialogFragment.btnSave.setOnClickListener {
+//            try {
+//                mAlertDialog.dismiss()
+//                val timeHour = dialogFragment.timePicker.hour
+//                val timeMinute = dialogFragment.timePicker.minute
+//                val chekBox = true
+//                val medicamentTime = MedicamentTime(0, timeHour, timeMinute, chekBox)
+//                mMedicamentTimeViewModel.addMedicalTime(medicamentTime)
+//            } catch (e: Exception) {
+//                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+//                val manager = getActivity()?.getSupportFragmentManager()
+//                if (manager != null) {
+//                    myDialogFragment.show(manager, "myDialog")
+//                }
+//
+//            }
+//
+//        }
+//        dialogFragment.btnCansel.setOnClickListener {
+//            Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
+//            mAlertDialog.dismiss()
+//        }
+    }
 
 
     //диалоговое окно
     private fun openDialog() {
 
-        val builder = AlertDialog.Builder(requireContext())
-        val layoutInflater = LayoutInflater.from(requireContext())
-        val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
-        dialogFragment.timePicker.is24HourView
-        builder.setView(dialogFragment.root)
-        builder.setTitle("Measure")
-
-        //show dialog
-        val mAlertDialog = builder.show()
-        dialogFragment.timePicker.is24HourView
-
-        //сохраняем в бд замер
-        dialogFragment.btnSave.setOnClickListener {
-            // TODO: 04.06.2021 exception
-            try {
-                mAlertDialog.dismiss()
-                dialogFragment.timePicker.is24HourView
-                val timeHour = dialogFragment.timePicker.hour
-                val timeMinute = dialogFragment.timePicker.minute
-                val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
-                val timeAndMeas = TimeAndMeasure(0, timeHour, timeMinute, measurePicf)
-                mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeas)
-            } catch (e: Exception) {
-                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-                val manager = getActivity()?.getSupportFragmentManager()
-                if (manager != null) {
-                    myDialogFragment.show(manager, "myDialog")
-                }
-
-            }
-        }
-
-            dialogFragment.btnCansel.setOnClickListener {
-                mAlertDialog.dismiss()
-            }
-
-
-//    private fun insertDataToDataBase() {
-//        try {
+//        val builder = AlertDialog.Builder(requireContext())
+//        val layoutInflater = LayoutInflater.from(requireContext())
+//        val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
+//        dialogFragment.timePicker.is24HourView
+//        builder.setView(dialogFragment.root)
+//        builder.setTitle("Measure")
 //
+//        //show dialog
+//        val mAlertDialog = builder.show()
+//        dialogFragment.timePicker.is24HourView
 //
-//            val firstTime = binding.firstTime?.text?.toString()
-//            val secondTime = binding.secondTime?.text?.toString()
-//            val thirdTime = binding.thirdTime?.text?.toString()
-//            val fourTime = binding.fourTime?.text?.toString()
-//            val fiveTime = binding.fiveTime?.text?.toString()
-//            val sixTime = binding.sixTime?.text?.toString()
-//            var firstMeasure = binding.firstMeasure?.text?.toString()
-//            if (firstMeasure == "") {
-//                firstMeasure = "0"
-//            }
-//            var secondMeasure = binding.secondMeasure?.text?.toString()
-//            if (secondMeasure == "") {
-//                secondMeasure = "0"
-//            }
-//            var thirdMeasure = binding.thirdMeasure?.text.toString()
-//            if (thirdMeasure == "") {
-//                thirdMeasure = "0"
-//            }
-//            var fourMeasure = binding.fourMeasure.text?.toString()
-//            if (fourMeasure == "") {
-//                fourMeasure = "0"
-//            }
-//            var fifeMeasure = binding.fiveMeasure.text?.toString()
-//            if (fifeMeasure == "") {
-//                fifeMeasure = "0"
-//            }
-//            var sixMeasure = binding.sixMeasure.text?.toString()
-//            if (sixMeasure == "") {
-//                sixMeasure = "0"
-//            }
-//
-//
-//            val measure = MeasureOfDay(
-//                0,
-//                //"25 December 2021",
-//                "${dayMeasure} / ${mounthMeasure} / ${yearMeasure} ",
-//                firstMeasure?.toInt(),
-//                secondMeasure?.toInt(),
-//                thirdMeasure?.toInt(),
-//                fourMeasure?.toInt(),
-//                fifeMeasure?.toInt(),
-//                sixMeasure?.toInt(),
-//                firstTime,
-//                secondTime,
-//                thirdTime,
-//                fourTime,
-//                fiveTime,
-//                sixTime
-//            )
-//
-//
-////navigate Back
-//            findNavController().navigate(R.id.action_addFragment_to_listFragment)
-//            mMeasureViewModel.addMeasure(measure)
-//        } catch (e: IllegalStateException) {
-//            val myDialogFragment = AddFragmentDialog()
-//            val manager = getActivity()?.getSupportFragmentManager()
-//            if (manager != null) {
-//                myDialogFragment.show(manager, "myDialog")
-//            }
+//        //сохраняем в бд замер
+//        dialogFragment.btnSave.setOnClickListener {
+//            // TODO: 04.06.2021 exception
+//            //try {
+//            mAlertDialog.dismiss()
+//            dialogFragment.timePicker.is24HourView
+//            val timeHour = dialogFragment.timePicker.hour
+//            val timeMinute = dialogFragment.timePicker.minute
+//            val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
+//            val timeAndMeas = TimeAndMeasure(0, timeHour, timeMinute, measurePicf)
+//            timeAndMeasureList.add(timeAndMeas)
+//            //addAdapter.setData(timeAndMeasure)
+//            //     mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeas)
+////            } catch (e: Exception) {
+////                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+////                val manager = getActivity()?.getSupportFragmentManager()
+////                if (manager != null) {
+////                    myDialogFragment.show(manager, "myDialog")
+////                }
+////
+////            }
 //        }
 //
-
-        //}
+//        dialogFragment.btnCansel.setOnClickListener {
+//            mAlertDialog.dismiss()
+//        }
     }
 }
 

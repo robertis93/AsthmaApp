@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.asthmaapp.model.ListOfTimeMeasureConverters
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
 
 @Database(entities = [MeasureOfDay::class], version = 1, exportSchema = false)
+@TypeConverters(ListOfTimeMeasureConverters::class)
 abstract class MeasureDataBase : RoomDatabase() {
 
     abstract fun measureDao(): MeasureDao

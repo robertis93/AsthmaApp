@@ -14,8 +14,8 @@ class AddFragmentDialog(var message: String) : DialogFragment()  {
             builder.setTitle("Важное сообщение!")
                 .setMessage(message)
                 //.setMessage("Вы забыли указать дату!")
-                .setIcon(R.drawable.alarmicon)
-                .setPositiveButton("ОК, сейчас установлю") {
+                .setIcon(R.drawable.attentionicon)
+                .setPositiveButton("ОК, сейчас сделаю") {
                         dialog, id ->  dialog.cancel()
                 }
             builder.create()

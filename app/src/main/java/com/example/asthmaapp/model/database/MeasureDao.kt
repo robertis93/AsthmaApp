@@ -33,6 +33,8 @@ interface MeasureDao {
      @Insert(onConflict = OnConflictStrategy.IGNORE)
      suspend fun addTimeAndMeasure(timeAndMeasure: TimeAndMeasure)
 
+
+
      @Update
      suspend fun updateTimeAndMeasure(timeAndMeasure: TimeAndMeasure)
 
@@ -45,6 +47,9 @@ interface MeasureDao {
 
      @Query("Select * From time_measure_table")
      fun readAllData(): LiveData<List<TimeAndMeasure>>
+
+     @Query("Select * From time_measure_table")
+     fun readNeedData(): LiveData<List<TimeAndMeasure>>
 
  }
 
@@ -64,7 +69,18 @@ interface MeasureDao {
      suspend fun deleteAllMedicalTime()
 
 
-     @Query("Select * From medicament_time_table")
+     @Query("Select * From medicament_time_table ")
      fun readAllData(): LiveData<List<MedicamentTime>>
 
  }
+
+// @Dao
+// interface MeasureDaoTimeAndMeasureDao {
+//
+//     @Query("Select * From MeasureOfDayTimeAndMeasure")
+//     fun readAllData(): LiveData<List<MeasureOfDayTimeAndMeasure>>
+//
+//     @Query("Select * From MeasureOfDayTimeAndMeasure WHERE idMeasureOfDay =:idMeasureOfDay")
+//     fun readAllData(idMeasureOfDay): LiveData<List<MeasureOfDayTimeAndMeasure>>
+//
+// }

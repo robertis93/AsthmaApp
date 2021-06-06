@@ -25,18 +25,17 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
        val currentItem = measureList[position]
-        with(holder.binding) {
-            texDaytDate.text = currentItem.dayOfMeasure
+            holder.binding.texDaytDate.text = currentItem.dayOfMeasure
+            holder.binding.firstTimeList.text = currentItem.listOfTimeMeasure.toString()
 //            firstTimeList.text = currentItem.firstTime
 //            secondTimeList.text = currentItem.secondTime
 //            thirdTimeList.text = currentItem.thirdTime
 //            measuteTextList.text = currentItem.measureOne.toString()
-//            measure2TextList.text = currentItem.measureTwo.toString()
+//            measure2TextList.text = currentItem.measureTw o.toString()
 //            measure3TextList.text = currentItem.measureThree.toString()
 //            if (currentItem.measureThree!! > 1) {
 //                measure3TextList.setBackgroundColor(R.color.purple_200)
 //            }
-        }
 
 
         holder.binding.rowLayout.setOnClickListener{
