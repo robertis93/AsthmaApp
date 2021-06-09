@@ -8,10 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.R
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.databinding.CustomRowBinding
+import com.example.asthmaapp.model.DayWithMeasures
+import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.view.fragments.ListFragmentDirections
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     private var measureList  = emptyList<MeasureOfDay>()
+    private var dayMeasureList  = emptyList<DayWithMeasures>()
+    private var timeMeasureList  = emptyList<TimeAndMeasure>()
 
     class MyViewHolder(val binding : CustomRowBinding): RecyclerView.ViewHolder(binding.root){
 
@@ -24,9 +28,15 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-       val currentItem = measureList[position]
-            holder.binding.texDaytDate.text = currentItem.dayOfMeasure
-            holder.binding.firstTimeList.text = currentItem.listOfTimeMeasure.toString()
+       //val currentItem = measureList[position]
+      val daycurrentItem = dayMeasureList[position]
+
+           // holder.binding.texDaytDate.text = currentItem.dayOfMeasure
+            //holder.binding.firstTimeList.text = currentItem.doza.toString()
+
+       //     holder.binding.firstTimeList.text = daycurrentItem.measures.toString()
+            holder.binding.firstTimeList.text = daycurrentItem.day.nameMedicamentaion
+            holder.binding.secondTimeList.text = daycurrentItem.measures.toString()
 //            firstTimeList.text = currentItem.firstTime
 //            secondTimeList.text = currentItem.secondTime
 //            thirdTimeList.text = currentItem.thirdTime
@@ -38,10 +48,10 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 //            }
 
 
-        holder.binding.rowLayout.setOnClickListener{
-            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
-            holder.itemView.findNavController().navigate(action)
-        }
+//        holder.binding.rowLayout.setOnClickListener{
+//            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
+//            holder.itemView.findNavController().navigate(action)
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -50,6 +60,16 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     fun setData(measure: List<MeasureOfDay>){
         this.measureList = measure
+        notifyDataSetChanged()
+    }
+
+    fun setDayData(dayWithMeasures: List<DayWithMeasures>){
+        this.dayMeasureList = dayWithMeasures
+        notifyDataSetChanged()
+    }
+
+    fun setTimeMeasure(timeAndMeasure: List<TimeAndMeasure>){
+        this.timeMeasureList = timeAndMeasure
         notifyDataSetChanged()
     }
 }

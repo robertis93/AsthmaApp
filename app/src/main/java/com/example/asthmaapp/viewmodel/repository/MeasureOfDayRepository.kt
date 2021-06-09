@@ -1,6 +1,7 @@
 package com.example.asthmaapp.viewmodel.repository
 
 import androidx.lifecycle.LiveData
+import com.example.asthmaapp.model.DayWithMeasures
 import com.example.asthmaapp.model.database.MeasureDao
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
@@ -11,6 +12,7 @@ import com.example.asthmaapp.model.database.TimeAndMeasureDao
 class MeasureOfDayRepository(private val measureDao: MeasureDao) {
 
     val readAllData: LiveData<List<MeasureOfDay>> = measureDao.readAllData()
+    val dayWithMeasure= measureDao.getDaysWithMeasures()
 
     suspend fun addMeasure(measureOfDay: MeasureOfDay){
         measureDao.addMeasureOfDay(measureOfDay)

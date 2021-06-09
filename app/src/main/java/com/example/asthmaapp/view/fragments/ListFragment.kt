@@ -12,13 +12,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentListBinding
+import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.view.adapters.ListAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.TimeAndMeasureViewModel
 
 
 class ListFragment : Fragment() {
 
     private lateinit var mMeasureViewModel: MeasureOfDayViewModel
+    private lateinit var timeAndMeasureViewModel: TimeAndMeasureViewModel
 
 
     lateinit var binding: FragmentListBinding
@@ -49,6 +52,23 @@ class ListFragment : Fragment() {
         mMeasureViewModel.readAllData.observe(viewLifecycleOwner, Observer { measure ->
             adapter.setData(measure)
         })
+
+        mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+        mMeasureViewModel.readDayWithMeasu.observe(viewLifecycleOwner, Observer { measure ->
+            adapter.setDayData(measure)
+        })
+
+        mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+        mMeasureViewModel.readAllMeasures.observe(viewLifecycleOwner, Observer { measure ->
+            adapter.setTimeMeasure(measure)
+        })
+
+//        timeAndMeasureViewModel = ViewModelProvider(this).get(TimeAndMeasureViewModel::class.java)
+//        timeAndMeasureViewModel.readAllData.observe(viewLifecycleOwner, Observer { timeM ->
+//            adapter.setTimeMeasure(timeM)
+//        })
+
+
 
         //add menu
         setHasOptionsMenu(true)

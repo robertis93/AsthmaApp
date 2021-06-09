@@ -2,6 +2,7 @@
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.asthmaapp.model.DayWithMeasures
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
@@ -10,6 +11,14 @@ import com.example.asthmaapp.model.TimeAndMeasure
 interface MeasureDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMeasureOfDay(measureOfDay: MeasureOfDay)
+
+     @Transaction
+     @Query("SELECT * FROM measure_of_day_table")
+     fun getDaysWithMeasures(): LiveData<List<DayWithMeasures>>
+
+//     @Transaction
+//     @Query("SELECT * FROM measure_of_day_table WHERE measureOfDayId = :measureOfDayId")
+//     suspend fun getDaysWithMeasures(measureOfDayId : Int): List<DayWithMeasures>
 
     @Update
     suspend fun updateMeasure(measureOfDay: MeasureOfDay)

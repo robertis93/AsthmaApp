@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -36,7 +35,7 @@ import kotlin.properties.Delegates
 
 class AddFragment : Fragment() {
     val args: AddFragmentArgs by navArgs()
-    private lateinit var mMeasureViewModel: MeasureOfDayViewModel
+    private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
     private lateinit var mTimeAndMeasureViewModel: TimeAndMeasureViewModel
     private lateinit var mMedicamentTimeViewModel: MedicamentTimeViewModel
     private lateinit var mMedicalViewModel: MedicalViewModel
@@ -107,7 +106,7 @@ class AddFragment : Fragment() {
         mTimeAndMeasureViewModel = ViewModelProvider(this).get(TimeAndMeasureViewModel::class.java)
         mMedicamentTimeViewModel = ViewModelProvider(this).get(MedicamentTimeViewModel::class.java)
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-        mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+        mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 
 
         //Вреия и замер
@@ -210,7 +209,6 @@ class AddFragment : Fragment() {
                 val infoDay = MeasureOfDay(
                     0,
                     day,
-                    lisis,
                     nameMedicamentaion,
                     doza,
                     frequency
@@ -218,13 +216,13 @@ class AddFragment : Fragment() {
 
 //navigate Back
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
-                mMeasureViewModel.addMeasure(infoDay)
+                mDayMeasureViewModel.addMeasure(infoDay)
 
                 for (medicTime in medicTimeList) {
                     mMedicamentTimeViewModel.addMedicalTime(medicTime)
                 }
                 for (timeAndMeasure in timeAndMeasureList) {
-                    mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+                    mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
                 }
 
             } catch (e: Exception) {
