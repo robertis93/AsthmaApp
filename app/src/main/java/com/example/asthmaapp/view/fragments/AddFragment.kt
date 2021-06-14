@@ -25,8 +25,6 @@ import com.example.asthmaapp.view.adapters.AddFragmentMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddFragmentMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
-import com.example.asthmaapp.viewmodel.viewModels.MedicamentTimeViewModel
-import com.example.asthmaapp.viewmodel.viewModels.TimeAndMeasureViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -36,11 +34,14 @@ import kotlin.properties.Delegates
 class AddFragment : Fragment() {
     val args: AddFragmentArgs by navArgs()
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
-    private lateinit var mTimeAndMeasureViewModel: TimeAndMeasureViewModel
-    private lateinit var mMedicamentTimeViewModel: MedicamentTimeViewModel
     private lateinit var mMedicalViewModel: MedicalViewModel
     lateinit var sdf: String
     lateinit var day: String
+    var idAddM: Long = -1
+
+    //var idAddM by Delegates.notNull<Int>()
+
+    lateinit var timeAndMeasure: TimeAndMeasure
     var yearMeasure by Delegates.notNull<Int>()
     var mounthMeasure by Delegates.notNull<Int>()
     var dayMeasure by Delegates.notNull<Int>()
@@ -63,7 +64,7 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        val idMed = UUID.randomUUID().toString()
         binding.textDate.setVisibility(View.GONE);
 
         //val observable = Observable.from(arrayOf("one", "two", "three"))
@@ -94,6 +95,7 @@ class AddFragment : Fragment() {
         recyclerViewAdd.adapter = addAdapter
         recyclerViewAdd.layoutManager = LinearLayoutManager(requireContext())
 
+
         //recycler for MedicTime
         val medicAdapter = AddFragmentMedicamentTimeAdapter()
         val recyclerViewMed = binding.recyclerMed
@@ -103,8 +105,6 @@ class AddFragment : Fragment() {
 
 //MeasureViewModel
         //  mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-        mTimeAndMeasureViewModel = ViewModelProvider(this).get(TimeAndMeasureViewModel::class.java)
-        mMedicamentTimeViewModel = ViewModelProvider(this).get(MedicamentTimeViewModel::class.java)
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
         mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 
@@ -133,8 +133,16 @@ class AddFragment : Fragment() {
                 val timeHour = dialogFragment.timePicker.hour
                 val timeMinute = dialogFragment.timePicker.minute
                 val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
-                val timeAndMeas = TimeAndMeasure(0, timeHour, timeMinute, measurePicf)
-                addAdapter.addData(timeAndMeas)
+                timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
+                timeAndMeasureList.add(timeAndMeasure)
+
+                // val timeAndMeasureDao = MeasureDataBase.getDataBase(requireContext()).timeAndMeasureDao()
+                //val id = timeAndMeasureDao.addTimeAndMeasure(timeAndMeasure)
+                // idAddM =  mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+
+                addAdapter.addData(timeAndMeasure)  //знаю что неправильно, должно быть что то одно,
+                // но не получается иначе,
+                // тогда теряются значения
 
                 //     mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeas)
 //            } catch (e: Exception) {
@@ -171,7 +179,7 @@ class AddFragment : Fragment() {
                     val timeHour = dialogFragment.timePicker.hour
                     val timeMinute = dialogFragment.timePicker.minute
                     val chekBox = true
-                    val medicamentTime = MedicamentTime(0, timeHour, timeMinute, chekBox)
+                    val medicamentTime = MedicamentTime(0, timeHour, timeMinute, day, chekBox)
                     medicAdapter.addData(medicamentTime)
 
                 } catch (e: Exception) {
@@ -201,37 +209,54 @@ class AddFragment : Fragment() {
 
         binding.saveBtn.setOnClickListener {
             //insertToDataToDataBase()
-            try {
-                val nameMedicamentaion = binding.nameMedical.text.toString()
-                val doza = binding.editTextMedicalDoze.text.toString().toInt()
-                val frequency = binding.editFrequencyMedical.text.toString().toInt()
-                val lisis = addAdapter.getData()
-                val infoDay = MeasureOfDay(
-                    0,
-                    day,
-                    nameMedicamentaion,
-                    doza,
-                    frequency
-                )
+            // try {
+            val nameMedicamentaion = binding.nameMedical.text.toString()
+            val doza = binding.editTextMedicalDoze.text.toString().toInt()
+            val frequency = binding.editFrequencyMedical.text.toString().toInt()
+            //val lisis = addAdapter.getData()
+            // val lisis = addAdapter.getDataTest()
+//            val idNeed = idAddM.toString().toInt()
+            val infoDay = MeasureOfDay(
+                idMed,
+                day,
+                nameMedicamentaion,
+                doza,
+                frequency
+            )
+//                for (measure in timeAndMeasureList){
+//                    mDayMeasureViewModel.addTimeAndMeasure(measure)
+//                }
+
+            //insert time and measure
+            val measuresOneDay = addAdapter.getData()
+            for (measure in measuresOneDay) {
+                // idAddM =  mDayMeasureViewModel.addTimeAndMeasure(measure).toString().toInt()
+                mDayMeasureViewModel.addTimeAndMeasure(measure)
+            }
+
+            //insert Day
+            mDayMeasureViewModel.addMeasure(infoDay)
+
+            //     mDayMeasureViewModel.addTimeAndMeasures(measuresOneDay)
+            //  mDayMeasureViewModel.addTimeAndMeasure(lisis)
+//                for (medicTime in medicTimeList) {
+//                    mMedicamentTimeViewModel.addMedicalTime(medicTime)
+//                }
+//                for (timeAndMeasure in timeAndMeasureList) {
+//                    mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+//                }
 
 //navigate Back
-                findNavController().navigate(R.id.action_addFragment_to_listFragment)
-                mDayMeasureViewModel.addMeasure(infoDay)
+            findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
-                for (medicTime in medicTimeList) {
-                    mMedicamentTimeViewModel.addMedicalTime(medicTime)
-                }
-                for (timeAndMeasure in timeAndMeasureList) {
-                    mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
-                }
 
-            } catch (e: Exception) {
-                val myDialogFragment = AddFragmentDialog("Вы заполнили не все поля")
-                val manager = getActivity()?.getSupportFragmentManager()
-                if (manager != null) {
-                    myDialogFragment.show(manager, "myDialog")
-                }
-            }
+//            } catch (e: Exception) {
+//                val myDialogFragment = AddFragmentDialog("Вы заполнили не все поля")
+//                val manager = getActivity()?.getSupportFragmentManager()
+//                if (manager != null) {
+//                    myDialogFragment.show(manager, "myDialog")
+//                }
+//            }
         }
 
         binding.selectDayBtn.setOnClickListener {

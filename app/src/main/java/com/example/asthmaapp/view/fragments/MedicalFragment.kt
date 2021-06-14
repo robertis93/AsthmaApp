@@ -97,7 +97,8 @@ class MedicalFragment : Fragment() {
             )
         mMedicalViewModel.addMedicalInfo(medicalInfo)
 
-        Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_LONG).show()
+        Log.i("myLogs", "MedicalFragment  Toast Updated success ")
     }
 
 }

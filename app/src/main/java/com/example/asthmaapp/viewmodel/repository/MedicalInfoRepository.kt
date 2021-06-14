@@ -1,13 +1,9 @@
 package com.example.asthmaapp.viewmodel.repository
 
 import androidx.lifecycle.LiveData
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.database.AlarmDao
-import com.example.asthmaapp.model.database.AlarmDrugsDao
-import com.example.asthmaapp.model.database.MeasureDao
+
 import com.example.asthmaapp.model.database.MedicalInfoDao
-import com.example.asthmaapp.model.models.Alarm
-import com.example.asthmaapp.model.models.DrugsAlarm
+
 import com.example.asthmaapp.model.models.MedicalInfo
 
 

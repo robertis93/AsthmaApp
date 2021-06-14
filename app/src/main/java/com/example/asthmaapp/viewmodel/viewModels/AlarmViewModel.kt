@@ -2,12 +2,9 @@ package com.example.asthmaapp.viewmodel.viewModels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.database.AlarmDataBase
 import com.example.asthmaapp.model.database.MeasureDataBase
 import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.viewmodel.repository.AlarmRepository
-import com.example.asthmaapp.viewmodel.repository.MeasureOfDayRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,7 +14,7 @@ class AlarmViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: AlarmRepository
 
     init {
-        val alarmDao = AlarmDataBase.getDataBase(application).alarmDao()
+        val alarmDao = MeasureDataBase.getDataBase(application).alarmDao()
         repository = AlarmRepository(alarmDao)
         readAllData = repository.readAllData
     }

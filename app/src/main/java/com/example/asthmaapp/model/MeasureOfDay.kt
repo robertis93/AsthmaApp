@@ -2,33 +2,40 @@ package com.example.asthmaapp.model
 
 import android.os.Parcelable
 import androidx.room.*
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import androidx.room.ForeignKey.CASCADE
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
-import java.sql.Time
+
 
 @Parcelize
-@Entity(tableName = "measure_of_day_table")
-data class MeasureOfDay(
-    @PrimaryKey(autoGenerate = true)
-    val measureOfDayId: Int,
-    val dayOfMeasure: String,
-    val nameMedicamentaion: String?,
+@Entity(tableName = "medicament_day_table")
+data class MeasureOfDay(   // = class MedicalInfo
+    @PrimaryKey
+    val id: String,
+    val day : String,
+    val nameMedicament: String?,
     val doza: Int?,
     val frequency: Int?,
 ) : Parcelable
 
-@Entity(tableName = "time_measure_table")
+
+@Entity(
+    tableName = "time_measure_table")
 data class TimeAndMeasure(
     @PrimaryKey(autoGenerate = true)
-    var timeAndMeasureId : Int,
-    // var dayTimeAndMeasure : String,
+    var idMeasure: Int,
     var hour: Int,
     var minute: Int,
     var measure: Int,
-    //  @ColumnInfo(name = "measure_of_day_id")
-    // var measureOofDdayId: Int
+    var idMed: String
+)
+
+data class MedWithMeasures(
+    @Embedded val day: MeasureOfDay,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "idMed"
+    )
+    val measures: List<TimeAndMeasure>
 )
 
 
@@ -38,17 +45,28 @@ data class MedicamentTime(
     var id: Int,
     var hour: Int,
     var minute: Int,
+    val day : String,
     var check: Boolean,
 //    @ColumnInfo(name = "measure_of_day_id")
 //    var measureOofDdayId: Int
 )
 
 
-data class DayWithMeasures(
-    @Embedded val day : MeasureOfDay,
-    @Relation(
-        parentColumn = "measureOfDayId",
-        entityColumn = "timeAndMeasureId"
-    )
-    val measures : List<TimeAndMeasure>
-)
+//data class DayWithMeasures(
+//    @Embedded val day : MeasureOfDay,
+//    @Relation(
+//        parentColumn = "dayId",
+//        entityColumn = "measureId"
+//    )
+//    val measures : List<TimeAndMeasure>
+//)
+
+
+//data class SchoolWithStudents(
+//    @Embedded val day: MeasureOfDay,
+//    @Relation(
+//        parentColumn = "dayOfMeasure",
+//        entityColumn = "dayOfMeasure"
+//    )
+//    val measures: List<TimeAndMeasure>
+//)

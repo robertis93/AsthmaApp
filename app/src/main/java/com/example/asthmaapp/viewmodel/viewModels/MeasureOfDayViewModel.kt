@@ -4,113 +4,121 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.asthmaapp.model.DayWithMeasures
 import com.example.asthmaapp.model.database.MeasureDataBase
-import com.example.asthmaapp.viewmodel.repository.MeasureOfDayRepository
 import com.example.asthmaapp.model.MeasureOfDay
+import com.example.asthmaapp.model.MedWithMeasures
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.viewmodel.repository.MedicamentTimeRepository
-import com.example.asthmaapp.viewmodel.repository.TimeAndMeasureRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MeasureOfDayViewModel(application: Application) : AndroidViewModel(application) {
-    val measureDao = MeasureDataBase.getDataBase(application).dayDao()
-    private val repository: MeasureOfDayRepository= MeasureOfDayRepository(measureDao)
-    val readAllData: LiveData<List<MeasureOfDay>> = repository.readAllData
-    val readDayWithMeasu: LiveData<List<DayWithMeasures>> = repository.dayWithMeasure
+    private val medMeasureDao = MeasureDataBase.getDataBase(application).MedAndMeasureDao()
 
-    //timeAndMeasure
-    val timeAndMeasureDao = MeasureDataBase.getDataBase(application).timeAndMeasureDao()
-    private val repositoryMeasure: TimeAndMeasureRepository= TimeAndMeasureRepository(timeAndMeasureDao)
-    val readAllMeasures: LiveData<List<TimeAndMeasure>> = repositoryMeasure.readAllData
-    //
+    //переделать на iveData
+//    fun medicamentWithMeasures() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            medMeasureDao.getMedicamentAndMeasures()
+//        }
+//    }
+//считываем все три списка
+    val readAllMedicament: LiveData<List<MeasureOfDay>> = medMeasureDao.readAllMedicament()
+    val readAllTimeAndMeasure: LiveData<List<TimeAndMeasure>> = medMeasureDao.readAllTimeAndMeasure()
+    val readMedicamentAndMeasure: LiveData<List<MedWithMeasures>> = medMeasureDao.getMedicamentAndMeasures()
 
     fun addMeasure(measureOfDay: MeasureOfDay) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addMeasure(measureOfDay)
+            medMeasureDao.insertMedicament(measureOfDay)
         }
     }
-
-    fun updateMeasure(measureOfDay: MeasureOfDay){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateMeasure(measureOfDay)
-        }
-    }
-
-    fun deleteMeasure(measureOfDay: MeasureOfDay){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteMeasure(measureOfDay)
-        }
-    }
-
-    fun deleteAllMeasure(){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllMeasures()
-        }
-    }
-
-
-
 
     fun addTimeAndMeasure(timeAndMeasure: TimeAndMeasure) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryMeasure.addTimeMeasure(timeAndMeasure)
+            medMeasureDao.insertTimeAndMeasure(timeAndMeasure)
         }
     }
 
-    fun updateTimeMeasure(timeAndMeasure: TimeAndMeasure){
+    fun updateMeasure(measureOfDay: MeasureOfDay) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryMeasure.updateTimeMeasure(timeAndMeasure)
+            medMeasureDao.updateMedicament(measureOfDay)
         }
     }
 
-    fun deleteTimeMeasure(timeAndMeasure: TimeAndMeasure){
+    fun deleteMeasure(measureOfDay: MeasureOfDay) {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryMeasure.deleteTimeMeasure(timeAndMeasure)
+            medMeasureDao.deleteMedicament(measureOfDay)
         }
     }
 
-    fun deleteAllTimeMeasure(){
+    fun deleteAllMeasure() {
         viewModelScope.launch(Dispatchers.IO) {
-            repositoryMeasure.deleteAllTimeMeasures()
+            medMeasureDao.deleteAllMeasure()
         }
     }
-}
 
+    fun updateTimeMeasure(timeAndMeasure: TimeAndMeasure) {
+        viewModelScope.launch(Dispatchers.IO) {
+            medMeasureDao.updateTimeAndMeasure(timeAndMeasure)
+        }
+    }
 
+    fun deleteTimeMeasure(timeAndMeasure: TimeAndMeasure) {
+        viewModelScope.launch(Dispatchers.IO) {
+            medMeasureDao.deleteTimeAndMeasure(timeAndMeasure)
+        }
+    }
 
-class TimeAndMeasureViewModel(application: Application) : AndroidViewModel(application) {
-
-}
-
-class MedicamentTimeViewModel(application: Application) : AndroidViewModel(application) {
-    val medicamentTimeDao = MeasureDataBase.getDataBase(application).medicamentTimeDao()
-    private val repository: MedicamentTimeRepository = MedicamentTimeRepository(medicamentTimeDao)
-    val readAllData: LiveData<List<MedicamentTime>> = repository.readAllData
+    fun deleteAllTimeMeasure() {
+        viewModelScope.launch(Dispatchers.IO) {
+            medMeasureDao.deleteAllTimeAndMeasure()
+        }
+    }
 
     fun addMedicalTime(medicamentTime: MedicamentTime) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addTimeMeasure(medicamentTime)
+            medMeasureDao.addMedicalTime(medicamentTime)
         }
     }
 
-    fun updateMedicalTime(medicamentTime: MedicamentTime){
+    fun updateMedicalTime(medicamentTime: MedicamentTime) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateTimeMeasure(medicamentTime)
+            medMeasureDao.updateMedicalTime(medicamentTime)
         }
     }
 
-    fun deleteMedicalTime(medicamentTime: MedicamentTime){
+    fun deleteMedicalTime(medicamentTime: MedicamentTime) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteTimeMeasure(medicamentTime)
+            medMeasureDao.deleteMedicalTime(medicamentTime)
         }
     }
 
-    fun deleteAllMedicalTime(){
+    fun deleteAllMedicalTime() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllTimeMeasures()
+            medMeasureDao.deleteAllMedicalTime()
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+//    fun addTimeAndMeasure(timeAndMeasure: TimeAndMeasure) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val resultId = repositoryMeasure.addTimeMeasure(timeAndMeasure)
+//            if (resultId >= 0) {
+//                // TODO: handle success
+//            } else {
+//                // TODO: handle error
+//            }
+//        }
+//    }
+
+
+
+

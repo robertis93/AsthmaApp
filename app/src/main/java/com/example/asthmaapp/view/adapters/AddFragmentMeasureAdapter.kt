@@ -58,14 +58,24 @@ class AddFragmentMeasureAdapter(): RecyclerView.Adapter<AddFragmentMeasureAdapte
         notifyDataSetChanged()
     }
 
+    fun getData() : MutableList<TimeAndMeasure> {
+        return measuresList
+        notifyDataSetChanged()
+    }
+
     fun deleteData(timeAndMeasure: TimeAndMeasure){
         // this.measuresMedList
         measuresList.remove(timeAndMeasure)
         notifyDataSetChanged()
     }
 
-    fun getData() : MutableList<TimeAndMeasure> {
-        return measuresList
-        notifyDataSetChanged()
-    }
+
+
+//    fun getDataTest() : TimeAndMeasure {
+//        val time  = TimeAndMeasure(0, 22,33,200)
+//        return time
+//        notifyDataSetChanged()
+//    }
+
+
 }

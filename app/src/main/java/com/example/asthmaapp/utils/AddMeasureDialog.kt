@@ -42,77 +42,13 @@ class AddMeasureDialog : DialogFragment() {
 
             binding.btnCansel.setOnClickListener {
                 Log.v("myLogs", "AlarmFragment binding.floatingActionBtnAlarm.setOnClickListener ")
-                mAlertDialog.dismiss() //not working why??
+                mAlertDialog.dismiss()
 
             }
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
         }
-
-
     }
 
-
-
-
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        binding = LayoutDialogAddFragmentBinding.inflate(inflater, container, false)
-//        val mDialogView =
-//            LayoutInflater.from(requireContext())
-//                .inflate(R.layout.layout_dialog_add_fragment, null)
-//
-//        val builder = AlertDialog.Builder(requireContext())
-//            .setView(mDialogView)
-//            .setTitle("Measure")
-//
-//        //show dialog
-//        val mAlertDialog = builder.show()
-//
-//        binding.btnSave.setOnClickListener {
-//            mAlertDialog.dismiss()
-//            val time = binding.timePicker
-//            val measure = binding.measureDialog.text
-//
-//        }
-//
-//        binding.btnCansel.setOnClickListener {
-//            mAlertDialog.dismiss()
-//        }
-//        return binding.root
-//    }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//
-//        val mDialogView =
-//            LayoutInflater.from(requireContext())
-//                .inflate(R.layout.layout_dialog_add_fragment, null)
-//
-//        val builder = AlertDialog.Builder(requireContext())
-//            .setView(mDialogView)
-//            .setTitle("Measure")
-//
-//        //show dialog
-//        val mAlertDialog = builder.show()
-//
-//        binding.btnSave.setOnClickListener {
-//            mAlertDialog.dismiss()
-//            val time = binding.timePicker
-//            val measure = binding.measureDialog.text
-//
-//        }
-//
-//        binding.btnCansel.setOnClickListener {
-//            mAlertDialog.dismiss()
-//        }
-//
-//
-//
-//    }
 

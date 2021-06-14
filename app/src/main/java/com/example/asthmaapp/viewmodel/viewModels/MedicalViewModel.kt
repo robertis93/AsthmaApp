@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.asthmaapp.model.database.MedicalIndoDataBase
+import com.example.asthmaapp.model.database.MeasureDataBase
 import com.example.asthmaapp.model.models.MedicalInfo
 import com.example.asthmaapp.viewmodel.repository.MedicalInfoRepository
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ class MedicalViewModel(application: Application) : AndroidViewModel(application)
     private val repository: MedicalInfoRepository
 
     init {
-        val medicalIndoDao = MedicalIndoDataBase.getDataBase(application).medicalInfoDao()
+        val medicalIndoDao = MeasureDataBase.getDataBase(application).medicalInfoDao()
         repository = MedicalInfoRepository(medicalIndoDao)
         readAllData = repository.readAllData
     }

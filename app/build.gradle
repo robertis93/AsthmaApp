@@ -105,6 +105,9 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 
+    //datavae
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+
 
 
 
