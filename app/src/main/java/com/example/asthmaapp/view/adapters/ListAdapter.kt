@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.CustomRowBinding
-import com.example.asthmaapp.model.MedWithMeasures
+import com.example.asthmaapp.model.MedWithMeasuresAndMedicamentTime
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    private var dayMeasureList  = emptyList<MedWithMeasures>()
+    private var dayMeasureList  = emptyList<MedWithMeasuresAndMedicamentTime>()
 
     class MyViewHolder(val binding : CustomRowBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -26,20 +26,30 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         holder.binding.texDaytDate.text = dayCurrentItem.day.day.toString()
 
-        val student = dayCurrentItem.measures
+        val measuresAll = dayCurrentItem.measures
 
-        //recycler
-        val adapter = InnerAdapter(student)
+        //recycler Measures
+        val adapter = InnerAdapter(measuresAll)
         val recyclerView = holder.binding.reyclerRow
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(holder.binding.reyclerRow.context, 2, LinearLayoutManager.HORIZONTAL,false)
+
+        val timeDrugs = dayCurrentItem.medicamentTime
+        //recyclerTimeDrugs
+
+        val medTimeAdapter = InnerMedTimeAdapter(timeDrugs)
+        val recyclerViewMedTime = holder.binding.recyclerTimeMedical
+        recyclerViewMedTime.adapter = medTimeAdapter
+        recyclerViewMedTime.layoutManager = GridLayoutManager(holder.binding.recyclerTimeMedical.context, 2, LinearLayoutManager.HORIZONTAL,false)
+
+
     }
 
     override fun getItemCount(): Int {
         return dayMeasureList.size
     }
 
-    fun setDayData(dayWithMeasures: List<MedWithMeasures>){
+    fun setDayData(dayWithMeasures: List<MedWithMeasuresAndMedicamentTime>){
         this.dayMeasureList = dayWithMeasures
         notifyDataSetChanged()
     }

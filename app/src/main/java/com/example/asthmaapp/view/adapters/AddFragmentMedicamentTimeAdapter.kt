@@ -74,9 +74,9 @@ class AddFragmentMedicamentTimeAdapter() :
         notifyDataSetChanged()
     }
 
-    fun getData() {
-        // this.measuresMedList
-        measuresMedList
+
+    fun getDataMedTime() : MutableList<MedicamentTime> {
+        return measuresMedList
         notifyDataSetChanged()
     }
 }

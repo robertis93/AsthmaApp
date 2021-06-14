@@ -4,11 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.asthmaapp.model.*
 import com.example.asthmaapp.model.database.MeasureDataBase
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedWithMeasures
-import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.model.TimeAndMeasure
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -24,7 +21,7 @@ class MeasureOfDayViewModel(application: Application) : AndroidViewModel(applica
 //считываем все три списка
     val readAllMedicament: LiveData<List<MeasureOfDay>> = medMeasureDao.readAllMedicament()
     val readAllTimeAndMeasure: LiveData<List<TimeAndMeasure>> = medMeasureDao.readAllTimeAndMeasure()
-    val readMedicamentAndMeasure: LiveData<List<MedWithMeasures>> = medMeasureDao.getMedicamentAndMeasures()
+    val readMedicamentAndMeasure: LiveData<List<MedWithMeasuresAndMedicamentTime>> = medMeasureDao.getMedicamentAndMeasures()
 
     fun addMeasure(measureOfDay: MeasureOfDay) {
         viewModelScope.launch(Dispatchers.IO) {

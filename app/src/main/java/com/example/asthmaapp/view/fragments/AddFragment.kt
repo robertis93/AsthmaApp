@@ -179,7 +179,7 @@ class AddFragment : Fragment() {
                     val timeHour = dialogFragment.timePicker.hour
                     val timeMinute = dialogFragment.timePicker.minute
                     val chekBox = true
-                    val medicamentTime = MedicamentTime(0, timeHour, timeMinute, day, chekBox)
+                    val medicamentTime = MedicamentTime(0, timeHour, timeMinute, day, idMed, chekBox)
                     medicAdapter.addData(medicamentTime)
 
                 } catch (e: Exception) {
@@ -237,6 +237,10 @@ class AddFragment : Fragment() {
             //insert Day
             mDayMeasureViewModel.addMeasure(infoDay)
 
+           val medicamentTime = medicAdapter.getDataMedTime()
+            for (medicTime in medicamentTime) {
+                mDayMeasureViewModel.addMedicalTime(medicTime)
+            }
             //     mDayMeasureViewModel.addTimeAndMeasures(measuresOneDay)
             //  mDayMeasureViewModel.addTimeAndMeasure(lisis)
 //                for (medicTime in medicTimeList) {

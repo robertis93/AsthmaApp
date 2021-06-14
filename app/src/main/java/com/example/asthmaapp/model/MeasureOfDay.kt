@@ -29,13 +29,18 @@ data class TimeAndMeasure(
     var idMed: String
 )
 
-data class MedWithMeasures(
+data class MedWithMeasuresAndMedicamentTime(
     @Embedded val day: MeasureOfDay,
     @Relation(
         parentColumn = "id",
         entityColumn = "idMed"
     )
-    val measures: List<TimeAndMeasure>
+    val measures: List<TimeAndMeasure>,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "idMed"
+    )
+    val medicamentTime: List<MedicamentTime>
 )
 
 
@@ -46,6 +51,7 @@ data class MedicamentTime(
     var hour: Int,
     var minute: Int,
     val day : String,
+    var idMed: String,
     var check: Boolean,
 //    @ColumnInfo(name = "measure_of_day_id")
 //    var measureOofDdayId: Int

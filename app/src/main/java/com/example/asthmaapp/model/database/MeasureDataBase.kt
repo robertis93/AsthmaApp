@@ -38,7 +38,7 @@ abstract class MeasureDataBase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MeasureDataBase::class.java,
-                    "Robert_huyovaya_database"
+                    "database"
                 ).build()
                 INSTANCE = instance
                 return instance

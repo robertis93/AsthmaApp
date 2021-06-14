@@ -38,43 +38,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textTimeDrugs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:ems="10"
+            android:text="прием лекарства"/>
 
-            <TextView
-                android:id="@+id/firstTimeList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-
-                android:ems="4"
-
-                android:text="8:00" />
-
-            <TextView
-                android:id="@+id/secondTimeList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="4"
-
-                 />
-
-            <TextView
-                android:id="@+id/thirdTimeList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="4"
-                />
-
-            <SeekBar
-                android:id="@+id/seekBar3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerTimeMedical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
 
         <LinearLayout

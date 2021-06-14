@@ -2,17 +2,14 @@ package com.example.asthmaapp.model.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedWithMeasures
-import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.model.TimeAndMeasure
+import com.example.asthmaapp.model.*
 
 
 @Dao
 interface DayDao {
 
     @Query("SELECT * FROM medicament_day_table")
-    fun getMedicamentAndMeasures(): LiveData<List<MedWithMeasures>>
+    fun getMedicamentAndMeasures(): LiveData<List<MedWithMeasuresAndMedicamentTime>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMedicament(measureOfDay: MeasureOfDay)
