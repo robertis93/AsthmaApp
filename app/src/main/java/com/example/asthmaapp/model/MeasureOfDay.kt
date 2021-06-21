@@ -4,22 +4,25 @@ import android.os.Parcelable
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 
 @Parcelize
 @Entity(tableName = "medicament_day_table")
-data class MeasureOfDay(   // = class MedicalInfo
+data class MeasureOfDay(
+    // = class MedicalInfo
     @PrimaryKey
     val id: String,
-    val day : String,
+    val day: Long,
     val nameMedicament: String?,
     val doza: Int?,
     val frequency: Int?,
 ) : Parcelable
 
-
+@Parcelize
 @Entity(
-    tableName = "time_measure_table")
+    tableName = "time_measure_table"
+)
 data class TimeAndMeasure(
     @PrimaryKey(autoGenerate = true)
     var idMeasure: Int,
@@ -27,8 +30,9 @@ data class TimeAndMeasure(
     var minute: Int,
     var measure: Int,
     var idMed: String
-)
+) : Parcelable
 
+@Parcelize
 data class MedWithMeasuresAndMedicamentTime(
     @Embedded val day: MeasureOfDay,
     @Relation(
@@ -41,38 +45,20 @@ data class MedWithMeasuresAndMedicamentTime(
         entityColumn = "idMed"
     )
     val medicamentTime: List<MedicamentTime>
-)
+) : Parcelable
 
-
+@Parcelize
 @Entity(tableName = "medicament_time_table")
 data class MedicamentTime(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     var hour: Int,
     var minute: Int,
-    val day : String,
+    val day: Long,
     var idMed: String,
     var check: Boolean,
 //    @ColumnInfo(name = "measure_of_day_id")
 //    var measureOofDdayId: Int
-)
+) : Parcelable
 
 
-//data class DayWithMeasures(
-//    @Embedded val day : MeasureOfDay,
-//    @Relation(
-//        parentColumn = "dayId",
-//        entityColumn = "measureId"
-//    )
-//    val measures : List<TimeAndMeasure>
-//)
-
-
-//data class SchoolWithStudents(
-//    @Embedded val day: MeasureOfDay,
-//    @Relation(
-//        parentColumn = "dayOfMeasure",
-//        entityColumn = "dayOfMeasure"
-//    )
-//    val measures: List<TimeAndMeasure>
-//)

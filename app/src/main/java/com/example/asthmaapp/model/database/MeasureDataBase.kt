@@ -13,7 +13,6 @@ import com.example.asthmaapp.model.models.MedicalInfo
 
 
 @Database(entities = [MeasureOfDay::class, TimeAndMeasure::class, MedicamentTime::class, Alarm::class, DrugsAlarm::class, MedicalInfo::class] , version = 1, exportSchema = false)
-
 abstract class MeasureDataBase : RoomDatabase() {
 
     abstract fun MedAndMeasureDao() : DayDao

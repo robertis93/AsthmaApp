@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_listFragment_to_medicalFragment2"
             app:destination="@id/medicalFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_updateFragment2"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -48,8 +51,8 @@
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment" />
         <argument
-            android:name="currentMeasure"
-            app:argType="com.example.asthmaapp.model.MeasureOfDay" />
+            android:name="currentItemDay"
+            app:argType="com.example.asthmaapp.model.MedWithMeasuresAndMedicamentTime" />
     </fragment>
     <fragment
         android:id="@+id/alarmFragment"
@@ -100,6 +103,9 @@
             app:destination="@id/listFragment"
             app:popUpTo="@id/viewPagerFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_medicalFragment"
+            app:destination="@id/medicalFragment" />
     </fragment>
     <activity
         android:id="@+id/helloActivity"

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <TextView
+    <EditText
         android:id="@+id/hourText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
        />
 
 
-    <TextView
+    <EditText
         android:id="@+id/minuteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
        />
 
 
-    <TextView
+    <EditText
         android:id="@+id/measureText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,8 +57,13 @@
         android:text="л/мин"
         android:textSize="16sp"
         android:paddingStart="8dp"/>
-
-
+        <ImageView
+            android:id="@+id/image_delete_alarm"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/delete_24"
+            />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

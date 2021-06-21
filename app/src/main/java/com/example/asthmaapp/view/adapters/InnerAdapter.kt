@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.InnerItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
+import com.example.asthmaapp.utils.AddFragmentDialog
 
 
-class InnerAdapter(var measures: List<TimeAndMeasure>) :
+class InnerAdapter(var measures: List<TimeAndMeasure>, timeAndMeasure: List<TimeAndMeasure>) :
     RecyclerView.Adapter<InnerAdapter.MyViewHolder>() {
 
+    val timeAndMeasureList = timeAndMeasure
 
     class MyViewHolder(val binding: InnerItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -22,26 +25,25 @@ class InnerAdapter(var measures: List<TimeAndMeasure>) :
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = measures[position]
+        var max = timeAndMeasureList[0].measure
+        for (i in timeAndMeasureList .indices)
+            if (timeAndMeasureList [i].measure > max)
+                max = timeAndMeasureList[i].measure
+
+        var control = max *0.85
+        val controlHigh = max *0.75
 
         holder.binding.hourText.text = currentItem.hour.toString()
-        holder.binding.minuteText.text = currentItem.minute.toString()
-        holder.binding.measureText.text = currentItem.measure.toString()
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.minuteShow(currentItem.minute)
+        val measurenow = currentItem.measure
+        if (measurenow < control)
+            holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))
+        if (measurenow < controlHigh)
+            holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.red))
+            holder.binding.measureText.text = currentItem.measure.toString()
     }
 
     override fun getItemCount(): Int {
         return measures.size
     }
 }
-
-// val currentItem = measures[position]
-//        var measureList: MutableList<Int> = mutableListOf()
-//        var summa : Int = 0
-//        for (i in 0..measures.size-1){
-//            summa += currentItem.measure
-//           //measureList.add(currentItem.measure)
-//        }
-//        var control = summa / measures.size
-//
-//        holder.binding.hourText.text = currentItem.hour.toString()
-//        holder.binding.minuteText.text = currentItem.minute.toString()
-//        if (currentItem.measure < control)

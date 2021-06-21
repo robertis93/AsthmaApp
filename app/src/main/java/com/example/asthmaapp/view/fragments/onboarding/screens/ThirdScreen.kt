@@ -23,7 +23,7 @@ class ThirdScreen : Fragment() {
         binding = FragmentThirdScreenBinding.inflate(inflater, container, false)
         Log.v("myLogs", "ThirdScreen onCreateView")
         binding.finishOnboardingBtn.setOnClickListener {
-findNavController().navigate(R.id.action_viewPagerFragment_to_listFragment)
+findNavController().navigate(R.id.action_viewPagerFragment_to_medicalFragment)
             onBoardingFinished()
         }
 

@@ -50,6 +50,7 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
             // вызываем метод слушателя, передавая ему данные
             Log.v("myLogs", "AlarmAdapter setOnClickListener")
             onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)
+            notifyDataSetChanged()
         }
 //        holder.binding.imageDeleteAlarm.setOnClickListener {
 //            alarmsList.removeAt(position)

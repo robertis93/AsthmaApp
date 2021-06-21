@@ -1,7 +1,7 @@
 package com.example.asthmaapp.view.fragments
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,8 +25,7 @@ import com.example.asthmaapp.view.adapters.AddFragmentMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddFragmentMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -35,12 +34,9 @@ class AddFragment : Fragment() {
     val args: AddFragmentArgs by navArgs()
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
     private lateinit var mMedicalViewModel: MedicalViewModel
-    lateinit var sdf: String
     lateinit var day: String
-    var idAddM: Long = -1
-
-    //var idAddM by Delegates.notNull<Int>()
-
+    lateinit var dateMeasure: Calendar
+    var dateMilli by Delegates.notNull<Long>()
     lateinit var timeAndMeasure: TimeAndMeasure
     var yearMeasure by Delegates.notNull<Int>()
     var mounthMeasure by Delegates.notNull<Int>()
@@ -61,6 +57,7 @@ class AddFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -122,7 +119,7 @@ class AddFragment : Fragment() {
 
             //show dialog
             val mAlertDialog = builder.show()
-            dialogFragment.timePicker.is24HourView
+            dialogFragment.timePicker.setIs24HourView(true)
 
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
@@ -170,26 +167,27 @@ class AddFragment : Fragment() {
 
             //show dialog
             val mAlertDialog = builder.show()
-            dialogFragment.timePicker.is24HourView
+            dialogFragment.timePicker.setIs24HourView(true)
 
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
-                try {
-                    mAlertDialog.dismiss()
-                    val timeHour = dialogFragment.timePicker.hour
-                    val timeMinute = dialogFragment.timePicker.minute
-                    val chekBox = true
-                    val medicamentTime = MedicamentTime(0, timeHour, timeMinute, day, idMed, chekBox)
-                    medicAdapter.addData(medicamentTime)
+                //try {
+                mAlertDialog.dismiss()
+                val timeHour = dialogFragment.timePicker.hour
+                val timeMinute = dialogFragment.timePicker.minute
+                val chekBox = true
+                val medicamentTime =
+                    MedicamentTime(0, timeHour, timeMinute, dateMilli, idMed, chekBox)
+                medicAdapter.addData(medicamentTime)
 
-                } catch (e: Exception) {
-                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-                    val manager = getActivity()?.getSupportFragmentManager()
-                    if (manager != null) {
-                        myDialogFragment.show(manager, "myDialog")
-                    }
-
-                }
+//                } catch (e: Exception) {
+//                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+//                    val manager = getActivity()?.getSupportFragmentManager()
+//                    if (manager != null) {
+//                        myDialogFragment.show(manager, "myDialog")
+//                    }
+//
+//                }
 
             }
             dialogFragment.btnCansel.setOnClickListener {
@@ -209,40 +207,40 @@ class AddFragment : Fragment() {
 
         binding.saveBtn.setOnClickListener {
             //insertToDataToDataBase()
-            // try {
-            val nameMedicamentaion = binding.nameMedical.text.toString()
-            val doza = binding.editTextMedicalDoze.text.toString().toInt()
-            val frequency = binding.editFrequencyMedical.text.toString().toInt()
-            //val lisis = addAdapter.getData()
-            // val lisis = addAdapter.getDataTest()
+            try {
+                val nameMedicamentaion = binding.nameMedical.text.toString()
+                val doza = binding.editTextMedicalDoze.text.toString().toInt()
+                val frequency = binding.editFrequencyMedical.text.toString().toInt()
+                //val lisis = addAdapter.getData()
+                // val lisis = addAdapter.getDataTest()
 //            val idNeed = idAddM.toString().toInt()
-            val infoDay = MeasureOfDay(
-                idMed,
-                day,
-                nameMedicamentaion,
-                doza,
-                frequency
-            )
+                val infoDay = MeasureOfDay(
+                    idMed,
+                    dateMilli,
+                    nameMedicamentaion,
+                    doza,
+                    frequency
+                )
 //                for (measure in timeAndMeasureList){
 //                    mDayMeasureViewModel.addTimeAndMeasure(measure)
 //                }
 
-            //insert time and measure
-            val measuresOneDay = addAdapter.getData()
-            for (measure in measuresOneDay) {
-                // idAddM =  mDayMeasureViewModel.addTimeAndMeasure(measure).toString().toInt()
-                mDayMeasureViewModel.addTimeAndMeasure(measure)
-            }
+                //insert time and measure
+                val measuresOneDay = addAdapter.getData()
+                for (measure in measuresOneDay) {
+                    // idAddM =  mDayMeasureViewModel.addTimeAndMeasure(measure).toString().toInt()
+                    mDayMeasureViewModel.addTimeAndMeasure(measure)
+                }
 
-            //insert Day
-            mDayMeasureViewModel.addMeasure(infoDay)
+                //insert Day
+                mDayMeasureViewModel.addMeasure(infoDay)
 
-           val medicamentTime = medicAdapter.getDataMedTime()
-            for (medicTime in medicamentTime) {
-                mDayMeasureViewModel.addMedicalTime(medicTime)
-            }
-            //     mDayMeasureViewModel.addTimeAndMeasures(measuresOneDay)
-            //  mDayMeasureViewModel.addTimeAndMeasure(lisis)
+                val medicamentTime = medicAdapter.getDataMedTime()
+                for (medicTime in medicamentTime) {
+                    mDayMeasureViewModel.addMedicalTime(medicTime)
+                }
+                //     mDayMeasureViewModel.addTimeAndMeasures(measuresOneDay)
+                //  mDayMeasureViewModel.addTimeAndMeasure(lisis)
 //                for (medicTime in medicTimeList) {
 //                    mMedicamentTimeViewModel.addMedicalTime(medicTime)
 //                }
@@ -251,16 +249,16 @@ class AddFragment : Fragment() {
 //                }
 
 //navigate Back
-            findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
 
-//            } catch (e: Exception) {
-//                val myDialogFragment = AddFragmentDialog("Вы заполнили не все поля")
-//                val manager = getActivity()?.getSupportFragmentManager()
-//                if (manager != null) {
-//                    myDialogFragment.show(manager, "myDialog")
-//                }
-//            }
+            } catch (e: Exception) {
+                val myDialogFragment = AddFragmentDialog("Вы заполнили не все поля")
+                val manager = activity?.getSupportFragmentManager()
+                if (manager != null) {
+                    myDialogFragment.show(manager, "myDialog")
+                }
+            }
         }
 
         binding.selectDayBtn.setOnClickListener {
@@ -273,21 +271,29 @@ class AddFragment : Fragment() {
                     cal.set(Calendar.MONTH, monthOfYear)
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                    val myFormat = "dd.MM.yyyy" // mention the format you need
-                    sdf = SimpleDateFormat(myFormat, Locale.US).toString()
-
                     yearMeasure = datePicker.year
                     mounthMeasure = datePicker.month
                     dayMeasure = datePicker.dayOfMonth
 
-                    day = "${dayMeasure}/${mounthMeasure}/${yearMeasure}"
-                    val current = LocalDateTime.now()
-                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                    sdf = current.format(formatter)
-                    binding.textDate.setVisibility(View.VISIBLE)
-                    binding.textDate.text = day
-                    // val formatted = current.format(formatter)
 
+//                    val stamp = Timestamp.valueOf("${yearMeasure}-${mounthMeasure}-${dayMeasure}")
+                    val dateCalendar: Calendar = GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
+                    dateMilli  = dateCalendar.time.time
+
+                    //format date
+                    val currentDate = Date(dateMilli)
+                    val dateFormat = SimpleDateFormat("dd MMM YYYY")
+                    val ddate = dateFormat.format(currentDate)
+
+
+//                    dateMeasure = GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
+//
+//                    day =
+//                        "${com.example.asthmaapp.utils.minuteShow(dayMeasure)}/${mounthMeasure + 1}/${yearMeasure}"
+
+
+                    binding.textDate.setVisibility(View.VISIBLE)
+                    binding.textDate.text = ddate.toString()
                 }
 
             context?.let { it1 ->

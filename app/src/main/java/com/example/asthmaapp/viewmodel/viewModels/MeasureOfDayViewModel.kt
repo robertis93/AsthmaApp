@@ -23,6 +23,12 @@ class MeasureOfDayViewModel(application: Application) : AndroidViewModel(applica
     val readAllTimeAndMeasure: LiveData<List<TimeAndMeasure>> = medMeasureDao.readAllTimeAndMeasure()
     val readMedicamentAndMeasure: LiveData<List<MedWithMeasuresAndMedicamentTime>> = medMeasureDao.getMedicamentAndMeasures()
 
+    fun getAllTimeAndMeasures() {
+        viewModelScope.launch(Dispatchers.IO) {
+            this@MeasureOfDayViewModel.medMeasureDao.getAllTimeAndMeasure()
+        }
+    }
+
     fun addMeasure(measureOfDay: MeasureOfDay) {
         viewModelScope.launch(Dispatchers.IO) {
             medMeasureDao.insertMedicament(measureOfDay)

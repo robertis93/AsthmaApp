@@ -8,7 +8,7 @@ import com.example.asthmaapp.model.*
 @Dao
 interface DayDao {
 
-    @Query("SELECT * FROM medicament_day_table")
+    @Query("SELECT * FROM medicament_day_table ORDER BY day")
     fun getMedicamentAndMeasures(): LiveData<List<MedWithMeasuresAndMedicamentTime>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -33,6 +33,9 @@ interface DayDao {
     //TimeAndMeasure read, update, delete, deleteAll
     @Query("SELECT * FROM time_measure_table")
     fun readAllTimeAndMeasure(): LiveData<List<TimeAndMeasure>>
+
+    @Query("SELECT * FROM time_measure_table")
+    fun getAllTimeAndMeasure(): List<TimeAndMeasure>
 
     @Update
     suspend fun updateTimeAndMeasure(timeAndMeasure: TimeAndMeasure)

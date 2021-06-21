@@ -1,266 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragments.AddFragment">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints">
-
-        <EditText
-            android:id="@+id/editTextDateUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:inputType="date"
-            android:text="22 января 2021"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/time1Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:inputType="number"
-                android:text="08:00"
-                tools:layout_editor_absoluteX="-8dp"
-                tools:layout_editor_absoluteY="120dp" />
-
-            <EditText
-                android:id="@+id/editTextNumber2Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="100"
-                tools:layout_editor_absoluteX="191dp"
-                tools:layout_editor_absoluteY="116dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/time2Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="15:00"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="204dp" />
-
-            <EditText
-                android:id="@+id/editTextNumber4Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="120"
-                tools:layout_editor_absoluteX="216dp"
-                tools:layout_editor_absoluteY="196dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/time3Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="23:00"
-                tools:layout_editor_absoluteX="-8dp"
-                tools:layout_editor_absoluteY="311dp" />
-
-            <EditText
-                android:id="@+id/editTextNumber6Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="99"
-                tools:layout_editor_absoluteX="211dp"
-                tools:layout_editor_absoluteY="315dp" />
-        </LinearLayout>
+        android:paddingBottom="32sp"
+        tools:context=".view.fragments.AddFragment">
 
         <TextView
-            android:layout_marginTop="12dp"
-            android:id="@+id/gragsUpdate"
+            android:id="@+id/textDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:inputType="textPersonName"
-            android:text="Прием лекарства"
             android:textSize="24sp"
-            />
+            android:text="24 января 2020"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textTimeMeasure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="8dp"
+                android:text="время замера"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/addOneMeasureBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_rounded_corners_green"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/recyclerMeasure"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center">
-
+            android:layout_gravity="center">>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Лекарство:"
-                android:textSize="24sp"
-                android:layout_marginEnd="24sp"/>
+                android:layout_gravity="center"
+                android:paddingTop="8dp"
+                android:text="время приема лекарства"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/addOneMedTimeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_rounded_corners_green"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2Update"
+            android:id="@+id/nameMedical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:inputType="textPersonName"
-            android:text="Intal"
-             />
-
-        </LinearLayout>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Планировалось"
-    android:textSize="24sp"
-    android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:paddingTop="8dp"
+            android:text="название лекарства"
+            android:textSize="24sp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editTextNumber8Update"
+            <TextView
+                android:id="@+id/textViewDoza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="250"
-                tools:layout_editor_absoluteX="218dp"
-                tools:layout_editor_absoluteY="501dp" />
+                android:text="Кол- во лекарства"
+                android:textSize="16sp" />
 
+            <EditText
+                android:id="@+id/editTextMedicalDoze"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:inputType="number" />
 
             <TextView
-                android:id="@+id/textView3Update"
+                android:id="@+id/textViewEntityDoza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="мкг/доза"
-                tools:layout_editor_absoluteX="269dp"
-                tools:layout_editor_absoluteY="433dp" />
+                android:text="мкг" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editTextNumber7Update"
+            <TextView
+                android:id="@+id/textViewFrequencyMedical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="2"
-                tools:layout_editor_absoluteY="501dp" />
+
+                android:text="Частота приема"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/editFrequencyMedical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:inputType="number" />
 
             <TextView
-                android:id="@+id/textView2Update"
+                android:id="@+id/drugPerDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="раз в день"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="438dp" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextNumberEntity"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="272dp" />
 
         </LinearLayout>
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Планировалось"
-            android:textSize="24sp"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/dozaDidUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="250"
-                tools:layout_editor_absoluteX="218dp"
-                tools:layout_editor_absoluteY="501dp" />
-
-
-            <TextView
-                android:id="@+id/mdPerDayUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="мкг/доза"
-                tools:layout_editor_absoluteX="269dp"
-                tools:layout_editor_absoluteY="433dp" />
-        </LinearLayout>
-
-        <LinearLayout
+        <Button
+            android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/didPerDayUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="2"
-                tools:layout_editor_absoluteY="501dp" />
-
-            <TextView
-                android:id="@+id/PerDayUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="раз в день"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="438dp" />
-
-        </LinearLayout>
-
-
-
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/custom_rounded_corners"
+            android:text="Сохранить"
+            app:backgroundTint="@color/blue_med" />
 
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/saveBtnUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

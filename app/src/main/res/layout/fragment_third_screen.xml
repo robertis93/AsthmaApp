@@ -9,14 +9,17 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="47dp"
-        android:text="Не пропускайте замеры и во время принимайте лекарства и чувствуйте себя хорошо"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Не пропускайте замеры и вовремя
+        принимайте лекарства и чувствуйте себя хорошо"
         android:textColor="@color/blue_med"
-        android:textSize="24sp"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
@@ -34,10 +37,73 @@
         android:id="@+id/imageView4"
         android:layout_width="198dp"
         android:layout_height="222dp"
-        android:layout_marginTop="108dp"
-        android:src="@drawable/changing"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/icon_asthma_warm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="80 л/мин"
+            android:background="@color/red"
+            tools:layout_editor_absoluteX="91dp"
+            tools:layout_editor_absoluteY="527dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:text= "если ваш замер закрашен красным цветом,
+            то Вам следуют увеличть дозировку принимаемого лекарства"
+            tools:layout_editor_absoluteX="91dp"
+            tools:layout_editor_absoluteY="574dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="150 л/мин"
+            android:background="@color/yelow"
+
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="526dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:text="если ваш замер закрашен желтым цветом,
+            то Вам следуют увеличть дозировку принимаемого лекарства"
+            tools:layout_editor_absoluteX="13dp"
+            tools:layout_editor_absoluteY="576dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

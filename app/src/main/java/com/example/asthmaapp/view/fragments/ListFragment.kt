@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentListBinding
@@ -43,7 +44,8 @@ class ListFragment : Fragment() {
         val adapter = ListAdapter()
         val recyclerView = binding.listRecycler
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager =GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL,false)
+
 
         //MeasureViewModel
 
@@ -56,6 +58,11 @@ class ListFragment : Fragment() {
         mMeasureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer { measure ->
             adapter.setDayData(measure)
 
+        })
+
+        mMeasureViewModel.readAllTimeAndMeasure.observe(viewLifecycleOwner, Observer {
+            timeMeasure ->
+            adapter.addTimeAndMeasure(timeMeasure)
         })
 
 //        mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
