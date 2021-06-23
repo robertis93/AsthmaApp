@@ -49,6 +49,11 @@ class UpdateFragment : Fragment() {
         binding.editTextMedicalDoze.setText(args.currentItemDay.day.doza.toString())
         binding.editFrequencyMedical.setText(args.currentItemDay.day.frequency.toString())
 
+//        mMeasureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer {
+//                timeMeasure ->  binding.editFrequencyMedical.setText(timeMeasure.size.toString())
+//
+//        })
+
         val idMed = args.currentItemDay.day.id
 
         val measuresList = args.currentItemDay.measures
@@ -102,26 +107,6 @@ class UpdateFragment : Fragment() {
         recyclerViewMedTime.layoutManager =
             GridLayoutManager(binding.recyclerMed.context, 1, LinearLayoutManager.HORIZONTAL, false)
 
-        // определяем слушателя нажатия элемента в списке
-        // определяем слушателя нажатия элемента в списке
-//        val alarmClickListener: AddFragmentMedicamentTimeAdapter.OnAlarmClickListener =
-//            object : AddFragmentMedicamentTimeAdapter.OnAlarmClickListener {   //
-//                override fun onDeleteAlarmClick(medicamentTime: MedicamentTime, position: Int) {
-//                    medicTimeList.removeAt(position)
-//
-//                    Log.v("myLogs", "AddFragment  medicTime.remove(medicamentTime) ")
-//
-//                //mMedicamentTimeViewModel.deleteMedicalTime(medicamentTime)
-//                }
-//            }
-
-//        val timeMeasureListener: AddFragmentMeasureAdapter.OnMeasureClickListener =
-//            object : AddFragmentMeasureAdapter.OnMeasureClickListener {   //
-//                override fun onDeleteMeasureClick(timeAndMeasure: TimeAndMeasure, position: Int) {
-//                    mTimeAndMeasureViewModel.deleteTimeMeasure(timeAndMeasure)
-//                }
-//            }
-
 
         binding.saveBtn.setOnClickListener {
             val dayMeasure = args.currentItemDay.day.day
@@ -162,12 +147,6 @@ class UpdateFragment : Fragment() {
 
 
         binding.addOneMeasureBtn.setOnClickListener {
-
-//            adapter.notifyItemInserted(adapter.itemCount - 1)
-//            adapter.refresh()
-//            Log.v("myLogs", "UpdateFragment  binding.addOneMeasureBtn.setOnClickListener ")
-            //openDialog()
-
             val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
             val layoutInflater = LayoutInflater.from(requireContext())
             val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
@@ -231,9 +210,17 @@ class UpdateFragment : Fragment() {
                 val timeMinute = dialogFragment.timePicker.minute
                 val chekBox = true
                 val medicamentTime =
-                    MedicamentTime(0, timeHour, timeMinute, args.currentItemDay.day.day, idMed, chekBox)
+                    MedicamentTime(
+                        0,
+                        timeHour,
+                        timeMinute,
+                        args.currentItemDay.day.day,
+                        idMed,
+                        chekBox
+                    )
                 medTimeAdapter.addData(medicamentTime)
                 mMeasureViewModel.addMedicalTime(medicamentTime)
+               // binding.editFrequencyMedical.setText(args.currentItemDay.day.frequency.toString())
 
 //                } catch (e: Exception) {
 //                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
@@ -265,23 +252,4 @@ class UpdateFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-//    private fun deleteMeasure() {
-//        val builder = AlertDialog.Builder(requireContext())
-//        builder.setPositiveButton("Yes") { _, _ ->
-//            mMeasureViewModel.deleteMeasure(args.currentMeasure)
-//            Toast.makeText(
-//                requireContext(),
-//                "Successfully removed: ${args.currentMeasure.firstTime}",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//
-//            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-//        }
-//        builder.setNegativeButton("No") { _, _ -> }
-//        builder.setTitle("Delete ${args.currentMeasure.firstTime}?")
-//        builder.setMessage("Are you sure want to delete ${args.currentMeasure.firstTime} ?")
-//        builder.create().show()
-//
-//    }
 }

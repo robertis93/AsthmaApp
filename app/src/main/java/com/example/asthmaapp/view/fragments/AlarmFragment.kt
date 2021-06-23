@@ -21,6 +21,7 @@ import com.example.asthmaapp.databinding.AlarmFragmentBinding
 import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.model.models.DrugsAlarm
 import com.example.asthmaapp.utils.NotificationsHelper
+import com.example.asthmaapp.view.activities.MainActivity
 import com.example.asthmaapp.view.adapters.AlarmAdapter
 import com.example.asthmaapp.view.adapters.AlarmAdapter.OnAlarmClickListener
 import com.example.asthmaapp.view.adapters.AlarmDrugsAdapter
@@ -40,10 +41,6 @@ class AlarmFragment : Fragment() {
     var alarmAdapter: AlarmAdapter? = null
     private var alarmMgr: AlarmManager? = null
     private lateinit var alarmIntent: PendingIntent
-
-//    companion object {
-//        fun newInstance() = AlarmFragment()
-//    }
 
     lateinit var binding: AlarmFragmentBinding
 
@@ -214,7 +211,22 @@ class AlarmFragment : Fragment() {
 
 class SheduleJob(val context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
+
+//        val intent = Intent(context, MainActivity::class.java).apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        }
+//        // передаем время которое сейчас
+//        intent.putExtra("dateTime", LocalDateTime.now().toString())
+
+       // val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
         //В метод doWork нам предлагается поместить код, который будет выполнен.
+//        val intent = Intent(context, HelloFragment::class.java).apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        }
+//        // передаем время которое сейчас
+//        intent.putExtra("dateTime", LocalDateTime.now().toString())
+        //val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
         NotificationsHelper.showNotification(context, inputData.getString("message") ?: "")
         return Result.success()
     }

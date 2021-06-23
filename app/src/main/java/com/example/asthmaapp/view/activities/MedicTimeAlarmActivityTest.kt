@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.databinding.ActivityAlarmTestBinding
+import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
 import com.example.asthmaapp.model.MeasureOfDay
+import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.model.models.MedicalInfo
 import com.example.asthmaapp.view.adapters.AlarmActivityTestAdapter
@@ -20,25 +22,44 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AlarmActivityTest : AppCompatActivity() {
+class MedicTimeAlarmActivityTest : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAlarmTestBinding
+    private lateinit var binding: TimeMedActivityAlarmTestBinding
     private lateinit var medicamentList: List<MedicalInfo>
 
     //инициализируем ViewModel ленивым способом
     // private val mMedicalViewModel by lazy { ViewModelProviders.of(this).get(MedicalViewModel::class.java)}
     private lateinit var mMedicalViewModel: MedicalViewModel
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
-    private var medicalInfo = mutableListOf<MedicalInfo>()
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //обрабатываем intent, если MainActivity открывается при нажатии на уведомление, то
+        // переходит на AddFragment, если нет - то открывается MainActivity, соответственно проверяется через ntent,
+        //если в нем что то есть или нет
 
-        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
+        //подписываем адаптер на изменения списка
+        // Get the view model
+        // mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
 
-        //        supportActionBar?.hide()
-        binding = ActivityAlarmTestBinding.inflate(getLayoutInflater())
+
+        // Create the observer which updates the ui
+        //  val randomNumberObserver = Observer<MedicalInfo>{newNumber->
+//            // Update the ui with current data
+//            binding.timeAlarm.text = "Current Number : $newNumber"
+//        }
+//
+//
+//        mMedicalViewModel.readAllData.observe(this, Observer {
+//            it?.let {
+//                adapter.refreshUsers(it)
+//            }
+//        })
+//        val dateTime = intent.getStringExtra("dateTime")
+//
+//        supportActionBar?.hide()
+        binding = TimeMedActivityAlarmTestBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot())
         mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 //
@@ -67,29 +88,19 @@ class AlarmActivityTest : AppCompatActivity() {
         val dayMilliId = dateDayCalendar.time.time
         // binding.textDate.setText(dayMilli.toString())
         binding.textDate.setText(ddate)
+        val isCheck = binding.checkBox.onCheckIsTextEditor()
 
+
+//            val measureOfDay = MeasureOfDay(idMed, dateMilli,
+//        val id: String,
+//        val day: Long,
+//        val nameMedicament: String?,
+//        val doza: Int?,
+//        val frequency: Int?,
 
 
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
         //заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
-
-        //recycler
-        val adapterMeasure = AlarmActivityTestAdapter()
-        val recyclerView = binding.recyclerMeasure
-        recyclerView.adapter = adapterMeasure
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-
-        mMedicalViewModel.readAllData.observe(this) { measure ->
-            // Update the cached copy of the words in the adapter.
-            adapterMeasure.addMedicalInfo(measure)
-            medicalInfo.addAll(measure)
-            Log.i("myLogs", "adapterMeasure.addMedicalInfo(measure)")
-        }
-
-        // binding.measure.setText(medicamentList.get(medicamentList.size-1).nameOfMedicine)
-
-        Log.i("myLogs", "binding.measure.setText(adapterMeasure.getMedical().toString())")
-
 
 
         binding.saveBtn.setOnClickListener {
@@ -100,48 +111,31 @@ class AlarmActivityTest : AppCompatActivity() {
 //        timeAndMeasureList.add(timeAndMeasure)
             val timeHour = dateFormatTimeHour.format(currentTime)
             val timeMinute = dateFormatTimeMinute.format(currentTime)
-            binding.measure.setFocusableInTouchMode(true);
-            binding.measure.requestFocus();
-            val measurePicf = binding.measure.text.toString().toInt()
-            val idMed = UUID.randomUUID().toString()
-            //  val idMed
-            val timeAndMeasure =
-                TimeAndMeasure(
-                    0,
-                    timeHour.toInt(),
-                    timeMinute.toInt(),
-                    measurePicf,
-                    dayMilliId.toString()
-                )
 
-            val index = medicalInfo.lastIndex
-            val nameMed = medicalInfo.get(index).nameOfMedicine
-            val dozaMed = medicalInfo.get(index).doseMedicine
-            val freqMed = medicalInfo.get(index).frequencyMedicine
+
+            val medicamentTime = MedicamentTime(
+                0,
+                timeHour.toInt(),
+                timeMinute.toInt(),
+                dateMilli,
+                dayMilliId.toString(),
+                isCheck
+            )
 
             val infoDay = MeasureOfDay(
                 dayMilliId.toString(),
                 dateMilli,
-                nameMed,
-                dozaMed,
-                freqMed
+                "aspirin",
+                250,
+                3
             )
 
-            mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+            mDayMeasureViewModel.addMedicalTime(medicamentTime)
             mDayMeasureViewModel.addMeasure(infoDay)
             //выйти из приложения
             this.finishAffinity()
             // WorkManager.getInstance(applicationContext).cancelWorkById()
         }
 
-
-        //обрабатываем intent, если MainActivity открывается при нажатии на уведомление, то
-        // переходит на AddFragment, если нет - то открывается MainActivity, соответственно проверяется через ntent,
-        //если в нем что то есть или нет
-//        val dateTime = intent.getStringExtra("dateTime")
-//        if (dateTime!=null) {
-//            val action = NavGraphDirections.goToAddFragmentAction(dateTime)
-//            navController.navigate(action)
-//        }
     }
 }

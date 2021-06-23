@@ -6,21 +6,39 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.asthmaapp.view.activities.AlarmActivityTest
 import com.example.asthmaapp.view.activities.MainActivity
+import com.example.asthmaapp.view.activities.MedicTimeAlarmActivityTest
+import com.example.asthmaapp.view.fragments.AlarmFragment
+import com.example.asthmaapp.view.fragments.HelloFragment
 import java.time.LocalDateTime
 
-object NotificationsHelper {
+object  NotificationsHelper {
     const val CHANNEL_ID = "1"
     fun showNotification(context: Context, message: String) {
         createNotificationChannel(context)
 
+        var intent = Intent()
+
         //intent для перехода при нажатие на уведомление
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        if (message == "Примите лекарство"){
+            Log.i("myLogs", "intent = Intent(context, MedicTimeAlarmActivityTest::class.java).apply ")
+            intent = Intent(context, MedicTimeAlarmActivityTest::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
         }
-        intent.putExtra("dateTime", LocalDateTime.now().toString())
+        else if (message == "Сделайте замер") {
+            intent = Intent(context, AlarmActivityTest::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                Log.i("myLogs", "intent =  Intent(context, AlarmActivityTest::class.java")
+            }
+        }
+        // передаем время которое сейчас
+        //intent.putExtra("dateTime", LocalDateTime.now().toString())
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         // Создаём уведомление

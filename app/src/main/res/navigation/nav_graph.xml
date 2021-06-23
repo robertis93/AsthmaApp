@@ -111,4 +111,24 @@
         android:id="@+id/helloActivity"
         android:name="com.example.asthmaapp.view.activities.HelloActivity"
         android:label="HelloActivity" />
+    <activity
+        android:id="@+id/alarmActivityTest"
+        android:name="com.example.asthmaapp.view.activities.AlarmActivityTest"
+        android:label="AlarmActivityTest" >
+        <argument
+            android:name="dateTime"
+            app:argType="string"
+            app:nullable="true" />
+    </activity>
+    <fragment
+        android:id="@+id/alarmShowFragment"
+        android:name="com.example.asthmaapp.AlarmShowFragment"
+        android:label="fragment_alarm_show"
+        tools:layout="@layout/fragment_alarm_show" >
+        <argument
+            android:name="dateTime"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <action android:id="@+id/action_global_alarmShowFragment" app:destination="@id/alarmShowFragment" />
 </navigation>

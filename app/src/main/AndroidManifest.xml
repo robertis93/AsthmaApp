@@ -13,6 +13,7 @@
         android:theme="@style/Theme.AsthmaApp">
         <activity android:name=".view.activities.HelloActivity"></activity>
         <activity android:name=".view.activities.AlarmActivityTest" />
+        <activity android:name=".view.activities.MedicTimeAlarmActivityTest" />
         <activity android:name=".view.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +22,7 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".viewmodel.AstmaBroadcastReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+
     </application>
 
 </manifest>

@@ -20,14 +20,10 @@ class MeasureOfDayViewModel(application: Application) : AndroidViewModel(applica
 //    }
 //считываем все три списка
     val readAllMedicament: LiveData<List<MeasureOfDay>> = medMeasureDao.readAllMedicament()
-    val readAllTimeAndMeasure: LiveData<List<TimeAndMeasure>> = medMeasureDao.readAllTimeAndMeasure()
-    val readMedicamentAndMeasure: LiveData<List<MedWithMeasuresAndMedicamentTime>> = medMeasureDao.getMedicamentAndMeasures()
-
-    fun getAllTimeAndMeasures() {
-        viewModelScope.launch(Dispatchers.IO) {
-            this@MeasureOfDayViewModel.medMeasureDao.getAllTimeAndMeasure()
-        }
-    }
+    val readAllTimeAndMeasure: LiveData<List<TimeAndMeasure>> =
+        medMeasureDao.readAllTimeAndMeasure()
+    val readMedicamentAndMeasure: LiveData<List<MedWithMeasuresAndMedicamentTime>> =
+        medMeasureDao.getMedicamentAndMeasures()
 
     fun addMeasure(measureOfDay: MeasureOfDay) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -101,14 +97,6 @@ class MeasureOfDayViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 }
-
-
-
-
-
-
-
-
 
 
 //    fun addTimeAndMeasure(timeAndMeasure: TimeAndMeasure) {

@@ -23,7 +23,6 @@ interface MedicalInfoDao {
     @Query("DELETE FROM medical_table")
     suspend fun deleteAllMedicalInfo()
 
-
     @Query("Select * From medical_table")
     fun readAllData(): LiveData<List<MedicalInfo>>
 

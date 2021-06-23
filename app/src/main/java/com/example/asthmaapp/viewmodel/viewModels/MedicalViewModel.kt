@@ -27,19 +27,19 @@ class MedicalViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun updateMedicalInfo(medicalInfo: MedicalInfo){
+    fun updateMedicalInfo(medicalInfo: MedicalInfo) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateMedicalInfo(medicalInfo)
         }
     }
 
-    fun deleteMedicalInfo(medicalInfo: MedicalInfo){
+    fun deleteMedicalInfo(medicalInfo: MedicalInfo) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteMedicalInfo(medicalInfo)
         }
     }
 
-    fun deleteAllMedicalInfo(){
+    fun deleteAllMedicalInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllMedicalInfo()
         }

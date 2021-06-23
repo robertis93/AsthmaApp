@@ -85,14 +85,16 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        //обрабатываем intent, если MainActivity открывается при нажатии на уведомление, то
-        // переходит на AddFragment, если нет - то открывается MainActivity, соответственно проверяется через ntent,
-        //если в нем что то есть или нет
-        val dateTime = intent.getStringExtra("dateTime")
-        if (dateTime!=null) {
-            val action = NavGraphDirections.goToAddFragmentAction(dateTime)
-            navController.navigate(action)
-        }
+//        //обрабатываем intent, если MainActivity открывается при нажатии на уведомление, то
+//        // переходит на AddFragment, если нет - то открывается MainActivity, соответственно проверяется через ntent,
+//        //если в нем что то есть или нет
+//
+//        Log.i("myLogs", " val action = NavGraphDirections.actionGlobalAlarmShowFragment(dateTime)")
+//        val dateTime = intent.getStringExtra("dateTime")
+//        if (dateTime!=null) {
+//            val action = NavGraphDirections.actionGlobalAlarmShowFragment(dateTime)
+//            navController.navigate(action)
+//        }
     }
 
 

@@ -31,6 +31,7 @@ import kotlin.properties.Delegates
 
 
 class AddFragment : Fragment() {
+    //аргументы если бы при нажатию на оповещение вызыввалось активити, если там что то лежит dateTime != null -> addFragment
     val args: AddFragmentArgs by navArgs()
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
     private lateinit var mMedicalViewModel: MedicalViewModel
@@ -124,32 +125,32 @@ class AddFragment : Fragment() {
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
                 // TODO: 04.06.2021 exception
-                //try {
-                mAlertDialog.dismiss()
-                dialogFragment.timePicker.is24HourView
-                val timeHour = dialogFragment.timePicker.hour
-                val timeMinute = dialogFragment.timePicker.minute
-                val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
-                timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
-                timeAndMeasureList.add(timeAndMeasure)
+                try {
+                    mAlertDialog.dismiss()
+                    dialogFragment.timePicker.is24HourView
+                    val timeHour = dialogFragment.timePicker.hour
+                    val timeMinute = dialogFragment.timePicker.minute
+                    val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
+                    timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
+                    timeAndMeasureList.add(timeAndMeasure)
 
-                // val timeAndMeasureDao = MeasureDataBase.getDataBase(requireContext()).timeAndMeasureDao()
-                //val id = timeAndMeasureDao.addTimeAndMeasure(timeAndMeasure)
-                // idAddM =  mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+                    // val timeAndMeasureDao = MeasureDataBase.getDataBase(requireContext()).timeAndMeasureDao()
+                    //val id = timeAndMeasureDao.addTimeAndMeasure(timeAndMeasure)
+                    // idAddM =  mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
 
-                addAdapter.addData(timeAndMeasure)  //знаю что неправильно, должно быть что то одно,
-                // но не получается иначе,
-                // тогда теряются значения
+                    addAdapter.addData(timeAndMeasure)  //знаю что неправильно, должно быть что то одно,
+                    // но не получается иначе,
+                    // тогда теряются значения
 
-                //     mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeas)
-//            } catch (e: Exception) {
-//                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-//                val manager = getActivity()?.getSupportFragmentManager()
-//                if (manager != null) {
-//                    myDialogFragment.show(manager, "myDialog")
-//                }
-//
-//            }
+                    //     mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeas)
+                } catch (e: Exception) {
+                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+                    val manager = getActivity()?.getSupportFragmentManager()
+                    if (manager != null) {
+                        myDialogFragment.show(manager, "myDialog")
+                    }
+
+                }
             }
 
             dialogFragment.btnCansel.setOnClickListener {
@@ -171,23 +172,23 @@ class AddFragment : Fragment() {
 
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
-                //try {
-                mAlertDialog.dismiss()
-                val timeHour = dialogFragment.timePicker.hour
-                val timeMinute = dialogFragment.timePicker.minute
-                val chekBox = true
-                val medicamentTime =
-                    MedicamentTime(0, timeHour, timeMinute, dateMilli, idMed, chekBox)
-                medicAdapter.addData(medicamentTime)
+                try {
+                    mAlertDialog.dismiss()
+                    val timeHour = dialogFragment.timePicker.hour
+                    val timeMinute = dialogFragment.timePicker.minute
+                    val chekBox = true
+                    val medicamentTime =
+                        MedicamentTime(0, timeHour, timeMinute, dateMilli, idMed, chekBox)
+                    medicAdapter.addData(medicamentTime)
 
-//                } catch (e: Exception) {
-//                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-//                    val manager = getActivity()?.getSupportFragmentManager()
-//                    if (manager != null) {
-//                        myDialogFragment.show(manager, "myDialog")
-//                    }
-//
-//                }
+                } catch (e: Exception) {
+                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+                    val manager = getActivity()?.getSupportFragmentManager()
+                    if (manager != null) {
+                        myDialogFragment.show(manager, "myDialog")
+                    }
+
+                }
 
             }
             dialogFragment.btnCansel.setOnClickListener {
@@ -239,14 +240,6 @@ class AddFragment : Fragment() {
                 for (medicTime in medicamentTime) {
                     mDayMeasureViewModel.addMedicalTime(medicTime)
                 }
-                //     mDayMeasureViewModel.addTimeAndMeasures(measuresOneDay)
-                //  mDayMeasureViewModel.addTimeAndMeasure(lisis)
-//                for (medicTime in medicTimeList) {
-//                    mMedicamentTimeViewModel.addMedicalTime(medicTime)
-//                }
-//                for (timeAndMeasure in timeAndMeasureList) {
-//                    mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
-//                }
 
 //navigate Back
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -277,20 +270,14 @@ class AddFragment : Fragment() {
 
 
 //                    val stamp = Timestamp.valueOf("${yearMeasure}-${mounthMeasure}-${dayMeasure}")
-                    val dateCalendar: Calendar = GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
-                    dateMilli  = dateCalendar.time.time
+                    val dateCalendar: Calendar =
+                        GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
+                    dateMilli = dateCalendar.time.time
 
                     //format date
                     val currentDate = Date(dateMilli)
                     val dateFormat = SimpleDateFormat("dd MMM YYYY")
                     val ddate = dateFormat.format(currentDate)
-
-
-//                    dateMeasure = GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
-//
-//                    day =
-//                        "${com.example.asthmaapp.utils.minuteShow(dayMeasure)}/${mounthMeasure + 1}/${yearMeasure}"
-
 
                     binding.textDate.setVisibility(View.VISIBLE)
                     binding.textDate.text = ddate.toString()
@@ -308,15 +295,7 @@ class AddFragment : Fragment() {
 
 
         }
-//        timeAndMeasure.toObservable()
-//
-//            .subscribeBy(
-//
-//                onNext = { addAdapter.setData(timeAndMeasure)},
-//                onError = { it.printStackTrace() },
-//                onComplete = { println("onComplete!") }
-//
-//            )
+
 
     }
 
