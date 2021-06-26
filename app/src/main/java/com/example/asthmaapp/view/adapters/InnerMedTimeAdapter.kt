@@ -23,8 +23,8 @@ class InnerMedTimeAdapter(var timesMedicament: List<MedicamentTime>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = timesMedicament[position]
 
-        holder.binding.hourText.text = currentItem.hour.toString()
-        holder.binding.minuteText.text = currentItem.minute.toString()
+        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
 
     }
 

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.ListFragment"
+    android:background="@color/white"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/white">
+    tools:context=".view.fragments.ListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_recycler"
@@ -19,6 +19,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/listFragmentAddMeasure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="160dp"
+        android:gravity="center"
+        style="@style/Text"
+        android:textSize="24sp"
+        android:text="@string/list_fragment_add_first_measure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#03A9F4"
+        android:text="@string/add"
+        android:textAllCaps="false"
+        android:visibility="invisible"
+        app:backgroundTint="@color/blue_med"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listFragmentAddMeasure" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,14 +4,14 @@
     <item
         android:id="@+id/listFragment"
         android:icon="@drawable/list"
-        android:title="list"/>
+        android:title="@string/diary"/>
     <item
         android:id="@+id/alarmFragment"
         android:icon="@drawable/ic_baseline_access_alarm_24"
-        android:title="alarm"/>
+        android:title="@string/notification"/>
     <item
         android:id="@+id/medicalFragment"
         android:icon="@drawable/ic_astmaicon"
-        android:title="drugs"/>
+        android:title="@string/medicament"/>
 
 </menu>

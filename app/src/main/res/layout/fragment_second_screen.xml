@@ -7,13 +7,12 @@
     tools:context=".view.fragments.onboarding.screens.SecondScreen">
 
 
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="198dp"
         android:layout_height="222dp"
-        android:layout_marginTop="108dp"
-        android:src="@drawable/alarm_icon"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/second_screen_alarm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,21 +21,28 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="47dp"
-        android:text="перейдите во вкладку alarms, и становите время оповещения"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="24sp"
+        android:layout_marginTop="48dp"
         android:gravity="center"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/second_screen_desc"
         android:textColor="@color/blue_med"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSecondScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_rounded_corners"
-        android:text="Далее"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#03A9F4"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/blue_med"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

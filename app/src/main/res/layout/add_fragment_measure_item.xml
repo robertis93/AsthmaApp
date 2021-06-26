@@ -5,47 +5,46 @@
     android:id="@+id/rowLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="8sp"
+    android:layout_gravity="center_horizontal"
     android:orientation="horizontal"
-    android:layout_gravity="center_horizontal">
+    android:padding="8sp">
 
 
+    <TextView
+        android:id="@+id/timeMeasure"
+        style="@style/Text.DarkGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="8:00"
+        android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/timeMeasure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="8:00"
-                android:textSize="24sp"
-                />
+    <TextView
+        android:id="@+id/measure"
+        style="@style/Text.DarkGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:text="120"
+        android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/measure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="24sp"
-                android:layout_marginStart="16dp"
-                android:text="120" />
-
-            <TextView
-                android:id="@+id/value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="л/мин"
-                android:layout_marginStart="16dp"/>
+    <TextView
+        android:id="@+id/value"
+        style="@style/Text.DarkGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/lpermin" />
 
     <ImageView
         android:id="@+id/delete_alarm"
-        android:layout_marginStart="8dp"
-        android:layout_width="42dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
         app:srcCompat="@drawable/delete_24"
         />
 
 
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

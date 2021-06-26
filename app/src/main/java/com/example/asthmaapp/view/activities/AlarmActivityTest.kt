@@ -4,16 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.databinding.ActivityAlarmTestBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.model.models.MedicalInfo
 import com.example.asthmaapp.view.adapters.AlarmActivityTestAdapter
-import com.example.asthmaapp.view.adapters.ListAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 import java.text.SimpleDateFormat
@@ -34,12 +31,11 @@ class AlarmActivityTest : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-
-        //        supportActionBar?.hide()
         binding = ActivityAlarmTestBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot())
+
+        supportActionBar?.hide()
+        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
         mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 //
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
@@ -60,7 +56,6 @@ class AlarmActivityTest : AppCompatActivity() {
         val currentDate = Date(dateMilli)
         val dateFormat = SimpleDateFormat("dd MMM YYYY")
         val ddate = dateFormat.format(currentDate)
-        val new = Date(2021, 6, 23).getTime()
 
 
         val dateDayCalendar: Calendar = GregorianCalendar(year, month, day)
@@ -86,18 +81,11 @@ class AlarmActivityTest : AppCompatActivity() {
             Log.i("myLogs", "adapterMeasure.addMedicalInfo(measure)")
         }
 
-        // binding.measure.setText(medicamentList.get(medicamentList.size-1).nameOfMedicine)
-
         Log.i("myLogs", "binding.measure.setText(adapterMeasure.getMedical().toString())")
 
 
 
         binding.saveBtn.setOnClickListener {
-//            val index = adapterMeasure.getMedical().lastIndex
-//            val nameMedicament = adapterMeasure.getMedical().get(index).nameOfMedicine
-//            val frequenscyMed = adapterMeasure.getMedical().get(index).frequencyMedicine
-//            val dozeMed = adapterMeasure.getMedical().get(index).doseMedicine
-//        timeAndMeasureList.add(timeAndMeasure)
             val timeHour = dateFormatTimeHour.format(currentTime)
             val timeMinute = dateFormatTimeMinute.format(currentTime)
             binding.measure.setFocusableInTouchMode(true);
@@ -133,15 +121,5 @@ class AlarmActivityTest : AppCompatActivity() {
             this.finishAffinity()
             // WorkManager.getInstance(applicationContext).cancelWorkById()
         }
-
-
-        //обрабатываем intent, если MainActivity открывается при нажатии на уведомление, то
-        // переходит на AddFragment, если нет - то открывается MainActivity, соответственно проверяется через ntent,
-        //если в нем что то есть или нет
-//        val dateTime = intent.getStringExtra("dateTime")
-//        if (dateTime!=null) {
-//            val action = NavGraphDirections.goToAddFragmentAction(dateTime)
-//            navController.navigate(action)
-//        }
     }
 }

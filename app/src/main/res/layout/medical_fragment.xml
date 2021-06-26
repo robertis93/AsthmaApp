@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,91 +7,82 @@
     android:orientation="vertical"
     tools:context=".view.fragments.MedicalFragment">
 
-
-    <EditText
-        android:id="@+id/editTextMedicalInfo"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextMedicalInfoLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="48dp"
-        android:text="Название лекарства"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="24dp"
+        android:background="@color/black_gray"
+        android:hint="@string/write_name_medicament"
+        app:boxBackgroundColor="@color/white">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextMedicalInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextMedicalDoseLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="24dp"
+        android:hint="@string/quantity_take_medicament"
+        app:boxBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:suffixText="@string/mkg">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textViewDoza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Кол- во лекарства"
-            android:textSize="16sp" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextMedicalDose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="4"
-            android:inputType="number" />
+            style="@style/Text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        <TextView
-            android:id="@+id/textViewEntityDoza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="мкг" />
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editFrequencyMedicalLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_marginRight="24dp"
+        android:hint="@string/frequency"
+        app:boxBackgroundColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:suffixText ="@string/per_in_day"
+        >
 
-        <TextView
-            android:id="@+id/textViewFrequencyMedical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="Частота приема"
-            android:textSize="16dp" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editFrequencyMedical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="4"
-            android:inputType="number" />
+            style="@style/Text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        <TextView
-            android:id="@+id/drugPerDay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="раз в день"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNumberEntity"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="272dp" />
-
-    </LinearLayout>
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveMedicalInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_rounded_corners"
-        android:text="Сохранить"
-        app:backgroundTint="@color/blue_med"
         android:layout_gravity="center"
-        android:layout_marginTop="48dp"/>
-
-
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#03A9F4"
+        android:text="@string/save_btn"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/blue_med"
+        app:cornerRadius="16dp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

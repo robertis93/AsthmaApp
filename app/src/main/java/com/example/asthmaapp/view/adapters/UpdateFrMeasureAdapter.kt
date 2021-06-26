@@ -3,14 +3,11 @@ package com.example.asthmaapp.view.adapters
 import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.UpdateMeasuresInnerItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
-import java.lang.NumberFormatException
 
 
 class UpdateFrMeasureAdapter(
@@ -44,7 +41,7 @@ class UpdateFrMeasureAdapter(
 
         holder.binding.hourText.setText(currentItem.hour.toString())
         // holder.binding.hourText.doAfterTextChanged{  }
-        holder.binding.minuteText.setText(com.example.asthmaapp.utils.minuteShow(currentItem.minute))
+        holder.binding.minuteText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.minute))
         holder.binding.measureText.setText(currentItem.measure.toString())
 
         holder.binding.hourText.addTextChangedListener(object : TextWatcher {

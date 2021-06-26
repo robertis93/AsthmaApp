@@ -13,15 +13,8 @@ class HelloActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getSupportActionBar()?.hide();
-
+        getSupportActionBar()?.hide()
         binding = ActivityHelloBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot())
-
-//        binding.helloBtn.setOnClickListener {
-//
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//        }
     }
 }

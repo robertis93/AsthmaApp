@@ -1,16 +1,18 @@
 package com.example.asthmaapp.utils
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-fun minuteShow(minute: Int): String {
-    if (minute < 10) {
-        return "0" + minute
+fun timeConvert(minute: Int): String {
+    return if (minute < 10) {
+        "0" + minute
     } else
-        return "${minute}"
+        "${minute}"
 }
 
+@SuppressLint("SimpleDateFormat")
 fun longToStringCalendar(millisecond: Long): String {
     //format date
     val currentDate = Date(millisecond)
@@ -18,12 +20,5 @@ fun longToStringCalendar(millisecond: Long): String {
     return dateFormat.format(currentDate)
 }
 
-//    val dateCalendar: Calendar = GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
-//    val dateMilli  = dateCalendar.time.time
-//
-//    //format date
-//    val currentDate = Date(dateMilli)
-//    val dateFormat = SimpleDateFormat("dd MMM YYYY")
-//    val ddate = dateFormat.format(currentDate)
 
 

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentListBinding
-
 import com.example.asthmaapp.view.adapters.ListAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 
@@ -21,9 +20,6 @@ import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 class ListFragment : Fragment() {
 
     private lateinit var mMeasureViewModel: MeasureOfDayViewModel
-
-
-
     lateinit var binding: FragmentListBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,50 +40,44 @@ class ListFragment : Fragment() {
         val adapter = ListAdapter()
         val recyclerView = binding.listRecycler
         recyclerView.adapter = adapter
-        recyclerView.layoutManager =GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL,false)
+        recyclerView.layoutManager =
+            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
 
         //MeasureViewModel
-
-//        mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-//        mMeasureViewModel.readAllData.observe(viewLifecycleOwner, Observer { measure ->
-//            adapter.setData(measure)
-//        })
-
         mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
         mMeasureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer { measure ->
             adapter.setDayData(measure)
+            if (adapter.itemCount == 0) {
+                binding.buttonAdd.visibility = View.VISIBLE
+                binding.listFragmentAddMeasure.visibility = View.VISIBLE
+            }
+            else if (adapter.itemCount > 0){
+                binding.buttonAdd.visibility = View.GONE
+                binding.listFragmentAddMeasure.visibility = View.GONE
+            }
 
         })
 
-        mMeasureViewModel.readAllTimeAndMeasure.observe(viewLifecycleOwner, Observer {
-            timeMeasure ->
-            adapter.addTimeAndMeasure(timeMeasure)
-        })
-
-//        mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-//        //при вызове adapter.setTimeMeasure(measure) срабатывает mMeasureViewModel.readAllMeasures,
-//        // в качетсве measure - readAllData
-//        mMeasureViewModel.readAllMeasures.observe(viewLifecycleOwner, Observer { measure ->
-//            adapter.setTimeMeasure(measure)
-//        })
-
-//        timeAndMeasureViewModel = ViewModelProvider(this).get(TimeAndMeasureViewModel::class.java)
-//        timeAndMeasureViewModel.readAllData.observe(viewLifecycleOwner, Observer { timeM ->
-//            adapter.setTimeMeasure(timeM)
-//        })
-
-
+        mMeasureViewModel.readAllTimeAndMeasure.observe(
+            viewLifecycleOwner,
+            Observer { timeMeasure ->
+                adapter.addTimeAndMeasure(timeMeasure)
+            })
 
         //add menu
         setHasOptionsMenu(true)
-    }
 
+
+        binding.buttonAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)
-        super.onCreateOptionsMenu(menu,inflater)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -102,24 +92,20 @@ class ListFragment : Fragment() {
 
     private fun deleteAllMeasure() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton(R.string.yes) { _, _ ->
             mMeasureViewModel.deleteAllMeasure()
             mMeasureViewModel.deleteAllTimeMeasure()
             mMeasureViewModel.deleteAllMedicalTime()
 
-
             Toast.makeText(
                 requireContext(),
-                "Successfully all removed",
+                R.string.all_deleted,
                 Toast.LENGTH_SHORT
             ).show()
 
         }
-        builder.setNegativeButton("No") { _, _ -> }
-        builder.setTitle("Delete all?")
-        builder.setMessage("Are you sure want to delete all ?")
+        builder.setNegativeButton(R.string.no) { _, _ -> }
+        builder.setMessage(R.string.are_you_sure_delete_all)
         builder.create().show()
     }
-
-
 }

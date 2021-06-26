@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.UpdateItemMedtimeBinding
 import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.model.TimeAndMeasure
 
 class UpdateFrTimeAdapter(
     var timesMedicament: List<MedicamentTime>,
@@ -38,7 +37,7 @@ class UpdateFrTimeAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = timeList[position]
         holder.binding.hourText.setText(currentItem.hour.toString())
-        holder.binding.minuteText.setText(com.example.asthmaapp.utils.minuteShow(currentItem.minute))
+        holder.binding.minuteText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.minute))
 
         holder.binding.hourText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -74,16 +73,6 @@ class UpdateFrTimeAdapter(
         })
 
 
-//        try {
-//            holder.binding.minuteText.doAfterTextChanged { it: Editable? ->
-//                timeAndMeasureList[position].minute =
-//                    it?.toString()?.toInt() ?: 0// Do your stuff here
-//            }
-//        } catch (e: NumberFormatException) {
-//            throw NumberFormatException()
-//        }
-
-
         holder.binding.hourText.setOnClickListener {
             //  updateData(position, currentItem)
         }
@@ -107,11 +96,6 @@ class UpdateFrTimeAdapter(
         return timeList.size
     }
 
-//    fun updateData(position : Int, timeAndMeasure: TimeAndMeasure){
-//        // this.measuresMedList
-//        timeAndMeasureList.set(position, timeAndMeasure)
-////        notifyDataSetChanged()
-//    }
 
     fun getData(): MutableList<MedicamentTime> {
         return timeList
@@ -131,31 +115,3 @@ class UpdateFrTimeAdapter(
     }
 
 }
-
-
-//class UpdateFrTimeAdapter(var timesMedicament: List<MedicamentTime>) :
-//    RecyclerView.Adapter<UpdateFrTimeAdapter.MyViewHolder>() {
-//
-//
-//    class MyViewHolder(val binding: UpdateItemMedtimeBinding) :
-//        RecyclerView.ViewHolder(binding.root)
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-//        val binding =
-//            UpdateItemMedtimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        return MyViewHolder(binding)
-//    }
-//
-//    @SuppressLint("ResourceAsColor")
-//    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-//        val currentItem = timesMedicament[position]
-//
-//        holder.binding.hourText.setText(currentItem.hour.toString())
-//        holder.binding.minuteText.setText(currentItem.minute.toString())
-//
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return timesMedicament.size
-//    }
-//}

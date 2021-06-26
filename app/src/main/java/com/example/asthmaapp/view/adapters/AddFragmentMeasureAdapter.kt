@@ -3,22 +3,12 @@ package com.example.asthmaapp.view.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.AddFragmentMeasureItemBinding
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.view.fragments.ListFragmentDirections
 
 class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapter.MyViewHolder>() {
     private var measuresList = mutableListOf<TimeAndMeasure>()
-
-    // определили интерфейс слушателя события нажатия
-    interface OnMeasureClickListener {
-        fun onDeleteMeasureClick(timeAndMeasure: TimeAndMeasure, position: Int)
-    }
 
     class MyViewHolder(val binding: AddFragmentMeasureItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -34,12 +24,12 @@ class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapt
         return MyViewHolder(binding)
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = measuresList[position]
         with(holder.binding) {
-            timeMeasure.text = "${currentItem.hour.toString()} : ${
-                com.example.asthmaapp.utils.minuteShow(currentItem.minute)
+            timeMeasure.text = "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
+                com.example.asthmaapp.utils.timeConvert(currentItem.minute)
             }"
             measure.text = currentItem.measure.toString()
             deleteAlarm.setOnClickListener {
@@ -52,11 +42,6 @@ class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapt
 
     override fun getItemCount(): Int {
         return measuresList.size
-    }
-
-    fun setData(timeAndMeasure: MutableList<TimeAndMeasure>) {
-        this.measuresList = timeAndMeasure
-        notifyDataSetChanged()
     }
 
     fun addData(timeAndMeasure: TimeAndMeasure) {
@@ -74,13 +59,4 @@ class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapt
         measuresList.remove(timeAndMeasure)
         notifyDataSetChanged()
     }
-
-
-//    fun getDataTest() : TimeAndMeasure {
-//        val time  = TimeAndMeasure(0, 22,33,200)
-//        return time
-//        notifyDataSetChanged()
-//    }
-
-
 }

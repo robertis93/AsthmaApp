@@ -1,9 +1,7 @@
 package com.example.asthmaapp.view.fragments
 
 import android.app.*
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
-import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.*
 import com.example.asthmaapp.databinding.AlarmFragmentBinding
 import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.model.models.DrugsAlarm
 import com.example.asthmaapp.utils.NotificationsHelper
-import com.example.asthmaapp.view.activities.MainActivity
 import com.example.asthmaapp.view.adapters.AlarmAdapter
 import com.example.asthmaapp.view.adapters.AlarmAdapter.OnAlarmClickListener
 import com.example.asthmaapp.view.adapters.AlarmDrugsAdapter
@@ -38,10 +36,6 @@ class AlarmFragment : Fragment() {
 
     private lateinit var mAlarmViewModel: AlarmViewModel
     private lateinit var mAlarmDrugsViewModel: AlarmDrugsViewModel
-    var alarmAdapter: AlarmAdapter? = null
-    private var alarmMgr: AlarmManager? = null
-    private lateinit var alarmIntent: PendingIntent
-
     lateinit var binding: AlarmFragmentBinding
 
     override fun onCreateView(
@@ -75,11 +69,11 @@ class AlarmFragment : Fragment() {
 
         //recycler
         val adapter = AlarmAdapter(alarmClickListener)
-        Log.v("myLogs", "AlarmFragment val adapter = AlarmAdapter(alarmClickListener) ")
-
         val recyclerView = binding.recyclerAlarm
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+       // recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager =
+            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
         //инициализация
         mAlarmViewModel = ViewModelProvider(this).get(AlarmViewModel::class.java)
 
@@ -109,7 +103,7 @@ class AlarmFragment : Fragment() {
         val drugsAdapter = AlarmDrugsAdapter(alarmDrugClickListener)
         val drugsRecyclerView = binding.recyclerDrugs
         drugsRecyclerView.adapter = drugsAdapter
-        drugsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        drugsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
         mAlarmDrugsViewModel = ViewModelProvider(this).get(AlarmDrugsViewModel::class.java)
 
@@ -211,22 +205,6 @@ class AlarmFragment : Fragment() {
 
 class SheduleJob(val context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
-
-//        val intent = Intent(context, MainActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        }
-//        // передаем время которое сейчас
-//        intent.putExtra("dateTime", LocalDateTime.now().toString())
-
-       // val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-        //В метод doWork нам предлагается поместить код, который будет выполнен.
-//        val intent = Intent(context, HelloFragment::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        }
-//        // передаем время которое сейчас
-//        intent.putExtra("dateTime", LocalDateTime.now().toString())
-        //val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
         NotificationsHelper.showNotification(context, inputData.getString("message") ?: "")
         return Result.success()
     }

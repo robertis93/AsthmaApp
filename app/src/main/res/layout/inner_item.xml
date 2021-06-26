@@ -22,10 +22,12 @@
         android:layout_height="wrap_content"
         android:text="22 :"
         android:textSize="16sp"
+        style="@style/Text.DarkGray"
        />
 
     <TextView
         android:id="@+id/pointDouble"
+        style="@style/Text.DarkGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" :"
@@ -38,6 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="44"
+        style="@style/Text.DarkGray"
         android:textSize="16sp"
        />
 
@@ -47,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="150"
+        style="@style/Text.DarkGray"
         android:textSize="16sp"
         android:paddingStart="8dp"/>
 
@@ -54,7 +58,8 @@
         android:id="@+id/measuress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="л/мин"
+        android:text="@string/l_per_min"
+        style="@style/Text.DarkGray"
         android:textSize="16sp"
         android:paddingStart="8dp"/>
 

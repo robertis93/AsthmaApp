@@ -8,6 +8,16 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="198dp"
+        android:layout_height="222dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/third_screen_lungs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
@@ -15,41 +25,25 @@
         android:layout_gravity="center"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:text="Не пропускайте замеры и вовремя
-        принимайте лекарства и чувствуйте себя хорошо"
+        android:text="@string/third_screen_desc"
         android:textColor="@color/blue_med"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-    <Button
-        android:id="@+id/finishOnboardingBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_rounded_corners"
-        android:text="Начать пользоваться"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="198dp"
-        android:layout_height="222dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/icon_asthma_warm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
         android:layout_marginBottom="32sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
@@ -58,8 +52,9 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="80 л/мин"
+            android:layout_marginStart="8dp"
             android:background="@color/red"
+            android:text="@string/thirs_screen_example_red"
             tools:layout_editor_absoluteX="91dp"
             tools:layout_editor_absoluteY="527dp" />
 
@@ -68,8 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16sp"
-            android:text= "если ваш замер закрашен красным цветом,
-            то Вам следуют увеличть дозировку принимаемого лекарства"
+            android:text="@string/third_screen_red"
             tools:layout_editor_absoluteX="91dp"
             tools:layout_editor_absoluteY="574dp" />
     </LinearLayout>
@@ -88,9 +82,9 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="150 л/мин"
+            android:layout_marginStart="8dp"
             android:background="@color/yelow"
-
+            android:text="@string/third_screen_example_yellow"
             tools:layout_editor_absoluteX="12dp"
             tools:layout_editor_absoluteY="526dp" />
 
@@ -99,11 +93,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16sp"
-            android:text="если ваш замер закрашен желтым цветом,
-            то Вам следуют увеличть дозировку принимаемого лекарства"
+            android:text="@string/third_screen_yellow"
             tools:layout_editor_absoluteX="13dp"
             tools:layout_editor_absoluteY="576dp" />
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/finishOnboardingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#03A9F4"
+        android:text="@string/start_app"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/blue_med"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

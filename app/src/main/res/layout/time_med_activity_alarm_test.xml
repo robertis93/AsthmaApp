@@ -70,16 +70,17 @@
             android:layout_gravity="center"
             android:orientation="horizontal" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/custom_rounded_corners"
-            android:text="Сохранить"
-            app:backgroundTint="@color/blue_med" />
-
+            android:layout_marginTop="48dp"
+            android:backgroundTint="#03A9F4"
+            android:text="@string/save_btn"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/blue_med"
+            app:cornerRadius="16dp" />
 
     </LinearLayout>
 </ScrollView>

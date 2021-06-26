@@ -8,9 +8,8 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.asthmaapp.view.fragments.ListFragment"
-        android:label="Список замеров"
-        tools:layout="@layout/fragment_list"
-        app:startDestination="@id/action_listFragment_to_alarmFragment">
+        android:label="@string/diary"
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment" />
@@ -23,12 +22,6 @@
         <action
             android:id="@+id/action_listFragment_to_medicalFragment"
             app:destination="@id/medicalFragment" />
-        <action
-            android:id="@+id/action_listFragment_to_medicalFragment2"
-            app:destination="@id/medicalFragment" />
-        <action
-            android:id="@+id/action_listFragment_to_updateFragment2"
-            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -57,7 +50,7 @@
     <fragment
         android:id="@+id/alarmFragment"
         android:name="com.example.asthmaapp.view.fragments.AlarmFragment"
-        android:label="Установите оповещение" >
+        android:label="@string/notif" >
         <action
             android:id="@+id/action_alarmFragment_to_listFragment"
             app:destination="@id/listFragment" />
@@ -68,7 +61,7 @@
     <fragment
         android:id="@+id/medicalFragment"
         android:name="com.example.asthmaapp.view.fragments.MedicalFragment"
-        android:label="Информация о лекарстве"
+        android:label="@string/medicament"
         tools:layout="@layout/medical_fragment" >
         <action
             android:id="@+id/action_medicalFragment_to_listFragment"
@@ -120,15 +113,4 @@
             app:argType="string"
             app:nullable="true" />
     </activity>
-    <fragment
-        android:id="@+id/alarmShowFragment"
-        android:name="com.example.asthmaapp.AlarmShowFragment"
-        android:label="fragment_alarm_show"
-        tools:layout="@layout/fragment_alarm_show" >
-        <argument
-            android:name="dateTime"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
-    <action android:id="@+id/action_global_alarmShowFragment" app:destination="@id/alarmShowFragment" />
 </navigation>

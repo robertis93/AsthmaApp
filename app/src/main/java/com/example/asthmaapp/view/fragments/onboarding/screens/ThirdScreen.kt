@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.asthmaapp.R
-import com.example.asthmaapp.databinding.FragmentListBinding
 import com.example.asthmaapp.databinding.FragmentThirdScreenBinding
 
 

@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.asthmaapp.R
-import com.example.asthmaapp.databinding.FragmentListBinding
 import com.example.asthmaapp.databinding.FragmentViewPagerBinding
 import com.example.asthmaapp.view.fragments.onboarding.screens.FirstScreen
 import com.example.asthmaapp.view.fragments.onboarding.screens.SecondScreen
@@ -25,6 +23,12 @@ class ViewPagerFragment : Fragment() {
         binding = FragmentViewPagerBinding.inflate(inflater, container, false)
         Log.v("myLogs", "ViewPagerFragment  onCreateView")
 
+        //indicator
+        val springDotsIndicator = binding.springDotsIndicator
+        val viewPager = binding.viewPager
+
+
+
         val fragmentList = arrayListOf<Fragment>(
             FirstScreen(),
             SecondScreen(),
@@ -33,11 +37,11 @@ class ViewPagerFragment : Fragment() {
 
         val adapter = ViewPagerAdapter(
             fragmentList,
-
             requireActivity().supportFragmentManager,
             lifecycle
         )
         binding.viewPager.adapter = adapter
+        springDotsIndicator.setViewPager2(viewPager)
         // Страницы, выходящие за пределы этого ограничения, будут удалены из иерархии представлений
         binding.viewPager.offscreenPageLimit = 1
         return binding.root

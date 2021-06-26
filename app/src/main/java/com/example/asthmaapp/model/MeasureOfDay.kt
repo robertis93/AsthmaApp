@@ -2,9 +2,7 @@ package com.example.asthmaapp.model
 
 import android.os.Parcelable
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 
 @Parcelize
@@ -57,8 +55,6 @@ data class MedicamentTime(
     val day: Long,
     var idMed: String,
     var check: Boolean,
-//    @ColumnInfo(name = "measure_of_day_id")
-//    var measureOofDdayId: Int
 ) : Parcelable
 
 

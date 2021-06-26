@@ -17,13 +17,6 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
         fun onDeleteAlarmClick(alarm: Alarm, position: Int)
     }
 
-    //var onClickAlarmListener: OnAlarmClickListener? = null
-
-//    var alarmList = mutableListOf<Alarm>()
-//        set(value) {
-//            field = value
-//            notifyDataSetChanged()
-//        }
 
     private lateinit var mAlarmViewModel: AlarmViewModel
 
@@ -45,17 +38,13 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
         val currentItem = alarmsList[position]
         //holder.timeTextView?.text = alarmes[position]
         holder.binding.itemTxt.text =
-            "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.minuteShow(currentItem.minute)}"
+            "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
         holder.binding.imageDeleteAlarm.setOnClickListener {
             // вызываем метод слушателя, передавая ему данные
             Log.v("myLogs", "AlarmAdapter setOnClickListener")
             onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)
             notifyDataSetChanged()
         }
-//        holder.binding.imageDeleteAlarm.setOnClickListener {
-//            alarmsList.removeAt(position)
-//            notifyDataSetChanged()
-//        }
 
     }
 
@@ -70,6 +59,4 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
         //указывает адаптеру, что полученные ранее данные изменились и следует перерисовать список на экране
         notifyDataSetChanged()
     }
-
-
 }

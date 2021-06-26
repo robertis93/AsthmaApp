@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentFirstScreenBinding
-import com.example.asthmaapp.databinding.FragmentListBinding
-
 
 class FirstScreen : Fragment() {
 

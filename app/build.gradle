@@ -107,6 +107,8 @@ dependencies {
 
     //datavae
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+//indicator onBoarding
+    implementation 'com.tbuonomo:dotsindicator:4.2'
 
 
 

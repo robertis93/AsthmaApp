@@ -12,5 +12,4 @@ data class MedicalInfo(
     var nameOfMedicine: String,
     var frequencyMedicine: Int,
     var doseMedicine: Int,
-    //var dateTime: String
 )

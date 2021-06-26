@@ -35,31 +35,9 @@ class MedicTimeAlarmActivityTest : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //обрабатываем intent, если MainActivity открывается при нажатии на уведомление, то
-        // переходит на AddFragment, если нет - то открывается MainActivity, соответственно проверяется через ntent,
-        //если в нем что то есть или нет
-
-        //подписываем адаптер на изменения списка
-        // Get the view model
-        // mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-
-
-        // Create the observer which updates the ui
-        //  val randomNumberObserver = Observer<MedicalInfo>{newNumber->
-//            // Update the ui with current data
-//            binding.timeAlarm.text = "Current Number : $newNumber"
-//        }
-//
-//
-//        mMedicalViewModel.readAllData.observe(this, Observer {
-//            it?.let {
-//                adapter.refreshUsers(it)
-//            }
-//        })
-//        val dateTime = intent.getStringExtra("dateTime")
-//
-//        supportActionBar?.hide()
         binding = TimeMedActivityAlarmTestBinding.inflate(getLayoutInflater())
+        setContentView(binding.getRoot())
+
         setContentView(binding.getRoot())
         mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 //
@@ -91,24 +69,11 @@ class MedicTimeAlarmActivityTest : AppCompatActivity() {
         val isCheck = binding.checkBox.onCheckIsTextEditor()
 
 
-//            val measureOfDay = MeasureOfDay(idMed, dateMilli,
-//        val id: String,
-//        val day: Long,
-//        val nameMedicament: String?,
-//        val doza: Int?,
-//        val frequency: Int?,
-
-
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
         //заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
 
 
         binding.saveBtn.setOnClickListener {
-//            val index = adapterMeasure.getMedical().lastIndex
-//            val nameMedicament = adapterMeasure.getMedical().get(index).nameOfMedicine
-//            val frequenscyMed = adapterMeasure.getMedical().get(index).frequencyMedicine
-//            val dozeMed = adapterMeasure.getMedical().get(index).doseMedicine
-//        timeAndMeasureList.add(timeAndMeasure)
             val timeHour = dateFormatTimeHour.format(currentTime)
             val timeMinute = dateFormatTimeMinute.format(currentTime)
 

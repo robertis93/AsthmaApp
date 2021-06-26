@@ -18,7 +18,7 @@
         tools:ignore="UnknownId"
         android:scrollbarAlwaysDrawVerticalTrack="true"/>
 
-    <EditText
+    L<EditText
         android:id="@+id/measureDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,20 +39,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_rounded_corners"
-            android:text="Сохранить" />
-
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCansel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#03A9F4"
+            android:text="@string/canсel"
             android:layout_marginStart="16sp"
-            android:background="@drawable/custom_rounded_corners"
-            android:text="Отменить" />
+            android:textAllCaps="false"
+            app:backgroundTint="@color/blue_med"
+            app:cornerRadius="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#03A9F4"
+            android:text="@string/save_btn"
+            android:enabled="false"
+            android:layout_marginStart="16sp"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/blue_med"
+            app:cornerRadius="16dp" />
+
+
 
     </LinearLayout>
 </LinearLayout>

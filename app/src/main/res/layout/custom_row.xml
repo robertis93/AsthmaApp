@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--XML implementation of Card Layout
         Keep the width of card layout to match parent-->
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rowLayout"
@@ -8,36 +8,43 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    android:foreground="@drawable/custom_rounded_corners_blue"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="5dp"
+    app:strokeColor="@color/blue_med"
+    app:strokeWidth="2dp">
 
     <LinearLayout
-        tools:ignore="MissingConstraints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/texDaytDate"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
             android:gravity="center"
             android:text="15.06.2021"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/texMeasure"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:ems="10"
-            android:text="замеры" />
+            android:gravity="center"
+            android:text="@string/measure"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reyclerRow"
@@ -46,12 +53,14 @@
 
         <TextView
             android:id="@+id/textTimeDrugs"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:ems="10"
-            android:text="прием лекарства" />
+            android:gravity="center"
+            android:text="@string/take_medicament"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerTimeMedical"
@@ -64,4 +73,4 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

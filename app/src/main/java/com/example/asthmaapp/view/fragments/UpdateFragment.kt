@@ -20,6 +20,7 @@ import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.model.models.Alarm
+import com.example.asthmaapp.utils.AddFragmentDialog
 import com.example.asthmaapp.view.adapters.*
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 
@@ -48,11 +49,6 @@ class UpdateFragment : Fragment() {
         binding.nameMedical.setText(args.currentItemDay.day.nameMedicament)
         binding.editTextMedicalDoze.setText(args.currentItemDay.day.doza.toString())
         binding.editFrequencyMedical.setText(args.currentItemDay.day.frequency.toString())
-
-//        mMeasureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer {
-//                timeMeasure ->  binding.editFrequencyMedical.setText(timeMeasure.size.toString())
-//
-//        })
 
         val idMed = args.currentItemDay.day.id
 
@@ -152,7 +148,7 @@ class UpdateFragment : Fragment() {
             val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
             dialogFragment.timePicker.is24HourView
             builder.setView(dialogFragment.root)
-            builder.setTitle("Measure")
+            builder.setTitle(R.string.measure_alarm_frag)
 
             //show dialog
             val mAlertDialog = builder.show()
@@ -161,7 +157,7 @@ class UpdateFragment : Fragment() {
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
                 // TODO: 04.06.2021 exception
-                //try {
+                try {
                 mAlertDialog.dismiss()
                 dialogFragment.timePicker.is24HourView
                 val timeHour = dialogFragment.timePicker.hour
@@ -173,15 +169,15 @@ class UpdateFragment : Fragment() {
                 mMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
 
 
-                //     mTimeAndMeasureViewModel.addTimeAndMeasure(timeAndMeas)
-//            } catch (e: Exception) {
-//                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-//                val manager = getActivity()?.getSupportFragmentManager()
-//                if (manager != null) {
-//                    myDialogFragment.show(manager, "myDialog")
-//                }
-//
-//            }
+
+            } catch (e: Exception) {
+                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+                val manager = getActivity()?.getSupportFragmentManager()
+                if (manager != null) {
+                    myDialogFragment.show(manager, "myDialog")
+                }
+
+            }
             }
 
             dialogFragment.btnCansel.setOnClickListener {
@@ -196,7 +192,7 @@ class UpdateFragment : Fragment() {
             val layoutInflater = LayoutInflater.from(requireContext())
             val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
             builder.setView(dialogFragment.root)
-            builder.setTitle("Measure")
+            builder.setTitle(R.string.take_medicament)
 
             //show dialog
             val mAlertDialog = builder.show()

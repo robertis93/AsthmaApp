@@ -1,30 +1,25 @@
 package com.example.asthmaapp.view.fragments
 
-import android.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.asthmaapp.R
-import com.example.asthmaapp.databinding.FragmentUpdateBinding
+import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.MedicalFragmentBinding
-import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.models.MedicalInfo
-import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
+import com.example.asthmaapp.utils.AddFragmentDialog
+import com.example.asthmaapp.utils.MedicalDialog
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 
 class MedicalFragment : Fragment() {
 
     lateinit var binding: MedicalFragmentBinding
-
     private lateinit var mMedicalViewModel: MedicalViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,45 +38,22 @@ class MedicalFragment : Fragment() {
 
         binding.btnSaveMedicalInfo.setOnClickListener {
             insertDataToDataBase()
-            Log.i("myLogs", "MedicalFragment binding.btnSaveMedicalInfo.setOnClickListener ")
+            val myDialogFragment = MedicalDialog("успешно сохранено")
+            val manager = activity?.getSupportFragmentManager()
+            if (manager != null) {
+                myDialogFragment.show(manager, "myDialog")
+
+            }
         }
 
 //заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
-         mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
-             binding.editTextMedicalInfo.setText(
-                 try {
-                     medication.last().nameOfMedicine
-                 }
-             catch (e : NoSuchElementException) {
-                 "Введите ваше лкарство"
-             })
-         //adapter.refreshAlarms(alarm)
-        })
-
         mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
-            binding.editTextMedicalDose.setText(
-                try {
-                    medication.last().doseMedicine.toString()
-                }
-                catch (e : NoSuchElementException) {
-                    "0"
-                })
-            //adapter.refreshAlarms(alarm)
+            if (medication.size > 0) {
+                binding.editTextMedicalInfo.setText(medication.last().nameOfMedicine)
+                binding.editFrequencyMedical.setText(medication.last().frequencyMedicine.toString())
+                binding.editTextMedicalDose.setText(medication.last().doseMedicine.toString())
+            }
         })
-
-        mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
-            binding.editFrequencyMedical.setText(
-                try {
-                    medication.last().frequencyMedicine.toString()
-                }
-                catch (e : NoSuchElementException) {
-                    "0"
-                })
-            //adapter.refreshAlarms(alarm)
-        })
-
-
-
     }
 
     private fun insertDataToDataBase() {
@@ -96,9 +68,5 @@ class MedicalFragment : Fragment() {
                 doseMedication
             )
         mMedicalViewModel.addMedicalInfo(medicalInfo)
-
-        Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_LONG).show()
-        Log.i("myLogs", "MedicalFragment  Toast Updated success ")
     }
-
 }

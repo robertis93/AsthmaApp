@@ -8,23 +8,15 @@ import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.models.DrugsAlarm
 import com.example.asthmaapp.viewmodel.viewModels.AlarmDrugsViewModel
 
-class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) : RecyclerView.Adapter<AlarmDrugsAdapter.AlarmViewHolder>() {
+class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
+    RecyclerView.Adapter<AlarmDrugsAdapter.AlarmViewHolder>() {
     private var alarmsList = emptyList<DrugsAlarm>()
+    private lateinit var mAlarmDrugsViewModel: AlarmDrugsViewModel
 
     // определили интерфейс слушателя события нажатия
     interface OnAlarmDrugsClickListener {
         fun onAlarmClick(drugsAlarm: DrugsAlarm, position: Int)
     }
-
-    //var onClickAlarmListener: OnAlarmClickListener? = null
-
-//    var alarmList = mutableListOf<Alarm>()
-//        set(value) {
-//            field = value
-//            notifyDataSetChanged()
-//        }
-
-    private lateinit var mAlarmDrugsViewModel: AlarmDrugsViewModel
 
 
     class AlarmViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -39,27 +31,22 @@ class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener
 
     //связывает views с содержимым
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
-        Log.v("myLogs","AlarmAdapter onBindViewHolder")
+        Log.v("myLogs", "AlarmAdapter onBindViewHolder")
 
         val currentItem = alarmsList[position]
         //holder.timeTextView?.text = alarmes[position]
-        holder.binding.itemTxt.text = "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.minuteShow(currentItem.minute)}"
+        holder.binding.itemTxt.text =
+            "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
         holder.binding.imageDeleteAlarm.setOnClickListener {
             // вызываем метод слушателя, передавая ему данные
-            Log.v("myLogs","AlarmAdapter setOnClickListener")
+            Log.v("myLogs", "AlarmAdapter setOnClickListener")
             onClickAlarmDrugsListener?.onAlarmClick(currentItem, position)
         }
-//        holder.binding.imageDeleteAlarm.setOnClickListener {
-//            alarmsList.removeAt(position)
-//            notifyDataSetChanged()
-//        }
-
     }
 
     override fun getItemCount(): Int {
         return alarmsList.size
     }
-
 
     //передаем данные и оповещаем адаптер о необходимости обновления списка
     fun refreshDrugAlarms(drugsAlarm: List<DrugsAlarm>) {

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.InnerItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.utils.AddFragmentDialog
 
 
 class InnerAdapter(var measures: List<TimeAndMeasure>, timeAndMeasure: List<TimeAndMeasure>) :
@@ -33,8 +32,8 @@ class InnerAdapter(var measures: List<TimeAndMeasure>, timeAndMeasure: List<Time
         var control = max *0.85
         val controlHigh = max *0.75
 
-        holder.binding.hourText.text = currentItem.hour.toString()
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.minuteShow(currentItem.minute)
+        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
         val measurenow = currentItem.measure
         if (measurenow < control)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))

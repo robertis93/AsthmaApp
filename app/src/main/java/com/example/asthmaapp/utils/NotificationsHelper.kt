@@ -10,11 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.asthmaapp.view.activities.AlarmActivityTest
-import com.example.asthmaapp.view.activities.MainActivity
 import com.example.asthmaapp.view.activities.MedicTimeAlarmActivityTest
-import com.example.asthmaapp.view.fragments.AlarmFragment
-import com.example.asthmaapp.view.fragments.HelloFragment
-import java.time.LocalDateTime
 
 object  NotificationsHelper {
     const val CHANNEL_ID = "1"
