@@ -1,12 +1,12 @@
 package com.example.asthmaapp.view.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,7 +19,6 @@ import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.utils.AddFragmentDialog
 import com.example.asthmaapp.view.adapters.*
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
@@ -86,8 +85,8 @@ class UpdateFragment : Fragment() {
         //удаление времени при нажатии кнопки удалить
 // определяем слушателя нажатия элемента в списке
         // определяем слушателя нажатия элемента в списке TimeAndMeasure
-        val timeClickListener: UpdateFrTimeAdapter.OnClickListener =
-            object : UpdateFrTimeAdapter.OnClickListener {   //
+        val timeClickListener: UpdatemMedicamentTimeAdapter.OnClickListener =
+            object : UpdatemMedicamentTimeAdapter.OnClickListener {   //
                 override fun onDeleteClick(medicamentTime: MedicamentTime, position: Int) {
                     mMeasureViewModel.deleteMedicalTime(medicamentTime)
                     Toast.makeText(
@@ -97,11 +96,13 @@ class UpdateFragment : Fragment() {
                 }
             }
 
-        val medTimeAdapter = UpdateFrTimeAdapter(timeList, timeClickListener)
+        val medTimeAdapter = UpdatemMedicamentTimeAdapter(timeList, timeClickListener)
         val recyclerViewMedTime = binding.recyclerMed
         recyclerViewMedTime.adapter = medTimeAdapter
         recyclerViewMedTime.layoutManager =
-            GridLayoutManager(binding.recyclerMed.context, 1, LinearLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(binding.recyclerMed.context, 2, LinearLayoutManager.HORIZONTAL, false)
+
+       val medicamentTimeQuantity =  medTimeAdapter.itemCount
 
 
         binding.saveBtn.setOnClickListener {
@@ -154,6 +155,12 @@ class UpdateFragment : Fragment() {
             val mAlertDialog = builder.show()
             dialogFragment.timePicker.setIs24HourView(true)
 
+            dialogFragment.measureDialog.doAfterTextChanged { it: Editable? ->
+                if (dialogFragment.measureDialog.getText().toString().length > 1)
+                    dialogFragment.btnSave.setEnabled(true)
+                else dialogFragment.btnSave.isEnabled = false
+            }
+
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
                 // TODO: 04.06.2021 exception
@@ -200,33 +207,19 @@ class UpdateFragment : Fragment() {
 
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
-                //try {
                 mAlertDialog.dismiss()
                 val timeHour = dialogFragment.timePicker.hour
                 val timeMinute = dialogFragment.timePicker.minute
-                val chekBox = true
                 val medicamentTime =
                     MedicamentTime(
                         0,
                         timeHour,
                         timeMinute,
                         args.currentItemDay.day.day,
-                        idMed,
-                        chekBox
+                        idMed
                     )
                 medTimeAdapter.addData(medicamentTime)
                 mMeasureViewModel.addMedicalTime(medicamentTime)
-               // binding.editFrequencyMedical.setText(args.currentItemDay.day.frequency.toString())
-
-//                } catch (e: Exception) {
-//                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-//                    val manager = getActivity()?.getSupportFragmentManager()
-//                    if (manager != null) {
-//                        myDialogFragment.show(manager, "myDialog")
-//                    }
-//
-//                }
-
             }
             dialogFragment.btnCansel.setOnClickListener {
                 Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
@@ -237,15 +230,4 @@ class UpdateFragment : Fragment() {
         }
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_delete) {
-            //deleteMeasure()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

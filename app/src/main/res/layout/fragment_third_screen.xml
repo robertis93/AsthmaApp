@@ -53,8 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@color/red"
+            android:background="@drawable/corner_rounded_red"
             android:text="@string/thirs_screen_example_red"
+            app:cornerRadius="16dp"
             tools:layout_editor_absoluteX="91dp"
             tools:layout_editor_absoluteY="527dp" />
 
@@ -83,7 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@color/yelow"
+            android:background="@drawable/corner_rounded_yellow"
+            app:cornerRadius="16dp"
             android:text="@string/third_screen_example_yellow"
             tools:layout_editor_absoluteX="12dp"
             tools:layout_editor_absoluteY="526dp" />

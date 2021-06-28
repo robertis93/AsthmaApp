@@ -5,9 +5,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
+import com.example.asthmaapp.R
+import com.example.asthmaapp.databinding.LayoutDialogAddFragmentBinding
 import com.example.asthmaapp.databinding.UpdateMeasuresInnerItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
+import com.example.asthmaapp.utils.AddFragmentDialog
 
 
 class UpdateFrMeasureAdapter(
@@ -43,79 +48,60 @@ class UpdateFrMeasureAdapter(
         // holder.binding.hourText.doAfterTextChanged{  }
         holder.binding.minuteText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.minute))
         holder.binding.measureText.setText(currentItem.measure.toString())
+        val idMed = currentItem.idMed
 
-        holder.binding.hourText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                try {
-                    timeAndMeasureList[position].hour = s.toString().toInt()
-                } catch (e: Exception) {
-                    return
-                }
+        holder.binding.imageEditAlarm.setOnClickListener {
+            val builder =
+                androidx.appcompat.app.AlertDialog.Builder(holder.binding.imageEditAlarm.context)
+            val layoutInflater = LayoutInflater.from(holder.binding.imageEditAlarm.context)
+            val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
+            dialogFragment.timePicker.is24HourView
+            builder.setView(dialogFragment.root)
+            builder.setTitle(R.string.measure_alarm_frag)
+
+            //show dialog
+            val mAlertDialog = builder.show()
+            dialogFragment.timePicker.setIs24HourView(true)
+            //listener EditText
+            dialogFragment.measureDialog.doAfterTextChanged { it: Editable? ->
+                if (dialogFragment.measureDialog.getText().toString().length > 1)
+                    dialogFragment.btnSave.setEnabled(true)
+                else dialogFragment.btnSave.isEnabled = false
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            dialogFragment.timePicker.hour = currentItem.hour
+            dialogFragment.timePicker.minute = currentItem.minute
+//            dialogFragment.measureDialog.setText(currentItem.measure)
+
+            //сохраняем в бд замер
+            dialogFragment.btnSave.setOnClickListener {
+                mAlertDialog.dismiss()
+                dialogFragment.timePicker.is24HourView
+                val timeHour = dialogFragment.timePicker.hour
+                val timeMinute = dialogFragment.timePicker.minute
+                val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
+
+                holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(timeHour)
+                holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(timeMinute)
+                holder.binding.measureText.text = measurePicf.toString()
+                timeAndMeasureList[position].hour = timeHour
+                timeAndMeasureList[position].minute = timeMinute
+                timeAndMeasureList[position].measure = measurePicf
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            dialogFragment.btnCansel.setOnClickListener {
+                mAlertDialog.dismiss()
             }
-        })
-
-        holder.binding.minuteText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                try {
-                    timeAndMeasureList[position].minute = s.toString().toInt()
-                } catch (e: Exception) {
-                    return
-                }
-                //timeAndMeasureList.set(position, currentItem)
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        holder.binding.measureText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                try {
-                    timeAndMeasureList[position].measure = s.toString().toInt()
-                } catch (e: Exception) {
-                    return
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-//        try {
-//            holder.binding.minuteText.doAfterTextChanged { it: Editable? ->
-//                timeAndMeasureList[position].minute =
-//                    it?.toString()?.toInt() ?: 0// Do your stuff here
-//            }
-//        } catch (e: NumberFormatException) {
-//            throw NumberFormatException()
-//        }
-
-
-        holder.binding.hourText.setOnClickListener {
-            //  updateData(position, currentItem)
         }
 
         holder.binding.imageDeleteAlarm.setOnClickListener {
             deleteData(timeAndMeasureList[position])
-//        holder.binding.imageDeleteAlarm.setOnClickListener {
-//            // вызываем метод слушателя, передавая ему данные
+
             onClickListener?.onDeleteClick(currentItem, position)
         }
     }
 
     fun deleteData(timeAndMeasure: TimeAndMeasure) {
-        // this.measuresMedList
         timeAndMeasureList.remove(timeAndMeasure)
         notifyDataSetChanged()
     }
@@ -125,26 +111,13 @@ class UpdateFrMeasureAdapter(
         return timeAndMeasureList.size
     }
 
-//    fun updateData(position : Int, timeAndMeasure: TimeAndMeasure){
-//        // this.measuresMedList
-//        timeAndMeasureList.set(position, timeAndMeasure)
-////        notifyDataSetChanged()
-//    }
-
     fun getData(): MutableList<TimeAndMeasure> {
         return timeAndMeasureList
 
     }
 
     fun addData(timeAndMeasure: TimeAndMeasure) {
-        // this.measuresMedList
         timeAndMeasureList.add(timeAndMeasure)
-        notifyDataSetChanged()
-    }
-
-    fun addAllData(timeAndMeasure: List<TimeAndMeasure>) {
-        // this.measuresMedList
-        timeAndMeasureList.addAll(timeAndMeasure)
         notifyDataSetChanged()
     }
 

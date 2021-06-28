@@ -36,7 +36,6 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
         Log.v("myLogs", "AlarmAdapter onBindViewHolder")
 
         val currentItem = alarmsList[position]
-        //holder.timeTextView?.text = alarmes[position]
         holder.binding.itemTxt.text =
             "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
         holder.binding.imageDeleteAlarm.setOnClickListener {

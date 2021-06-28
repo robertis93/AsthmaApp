@@ -12,7 +12,7 @@ class MedicalDialog(var message: String) : DialogFragment()  {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            builder.setTitle("оповещение")
+            builder
                 .setMessage(message)
                 //.setMessage("Вы забыли указать дату!")
                 .setIcon(R.drawable.succsess)

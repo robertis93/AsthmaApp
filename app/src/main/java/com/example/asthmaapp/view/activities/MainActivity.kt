@@ -1,21 +1,18 @@
 package com.example.asthmaapp.view.activities
 
+import android.app.ActionBar
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.asthmaapp.NavGraphDirections
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.ActivityMainBinding
-import com.example.asthmaapp.view.fragments.HelloFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -95,6 +92,16 @@ class MainActivity : AppCompatActivity() {
 //            val action = NavGraphDirections.actionGlobalAlarmShowFragment(dateTime)
 //            navController.navigate(action)
 //        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val actionBar: ActionBar? = actionBar
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(false) // Disable the button
+            actionBar.setDisplayHomeAsUpEnabled(false) // Remove the left caret
+            actionBar.setDisplayShowHomeEnabled(false) // Remove the icon
+        }
+        return super.onCreateOptionsMenu(menu)
     }
 
 

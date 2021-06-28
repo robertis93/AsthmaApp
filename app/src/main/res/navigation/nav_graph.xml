@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.asthmaapp.view.fragments.AddFragment"
+        android:name="com.example.asthmaapp.view.fragments.AddMeasuresFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" >
         <action
@@ -106,7 +106,7 @@
         android:label="HelloActivity" />
     <activity
         android:id="@+id/alarmActivityTest"
-        android:name="com.example.asthmaapp.view.activities.AlarmActivityTest"
+        android:name="com.example.asthmaapp.view.activities.AlarmMeasureActivity"
         android:label="AlarmActivityTest" >
         <argument
             android:name="dateTime"

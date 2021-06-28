@@ -1,19 +1,19 @@
 package com.example.asthmaapp.view.adapters
 
 import android.annotation.SuppressLint
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.asthmaapp.R
+import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.databinding.UpdateItemMedtimeBinding
 import com.example.asthmaapp.model.MedicamentTime
 
-class UpdateFrTimeAdapter(
+class UpdatemMedicamentTimeAdapter(
     var timesMedicament: List<MedicamentTime>,
     var onClickListener: OnClickListener
 ) :
-    RecyclerView.Adapter<UpdateFrTimeAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<UpdatemMedicamentTimeAdapter.MyViewHolder>() {
 
     interface OnClickListener {
         fun onDeleteClick(medicamentTime: MedicamentTime, position: Int)
@@ -39,54 +39,47 @@ class UpdateFrTimeAdapter(
         holder.binding.hourText.setText(currentItem.hour.toString())
         holder.binding.minuteText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.minute))
 
-        holder.binding.hourText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                try {
-                    timeList[position].hour = s.toString().toInt()
-                } catch (e: Exception) {
-                    return
-                }
+        holder.binding.imageEditAlarm.setOnClickListener {
+            val builder =
+                androidx.appcompat.app.AlertDialog.Builder(holder.binding.imageEditAlarm.context)
+            val layoutInflater = LayoutInflater.from(holder.binding.imageEditAlarm.context)
+            val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
+            dialogFragment.timePicker.is24HourView
+            builder.setView(dialogFragment.root)
+            builder.setTitle(R.string.measure_alarm_frag)
+
+            //show dialog
+            val mAlertDialog = builder.show()
+            dialogFragment.timePicker.setIs24HourView(true)
+
+            dialogFragment.timePicker.hour = currentItem.hour
+            dialogFragment.timePicker.minute = currentItem.minute
+
+            //сохраняем в бд замер
+            dialogFragment.btnSave.setOnClickListener {
+                mAlertDialog.dismiss()
+                dialogFragment.timePicker.is24HourView
+                val timeHour = dialogFragment.timePicker.hour
+                val timeMinute = dialogFragment.timePicker.minute
+
+                holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(timeHour)
+                holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(timeMinute)
+                timeList[position].hour = timeHour
+                timeList[position].minute = timeMinute
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            dialogFragment.btnCansel.setOnClickListener {
+                mAlertDialog.dismiss()
             }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        holder.binding.minuteText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                try {
-                    timeList[position].minute = s.toString().toInt()
-                } catch (e: Exception) {
-                    return
-                }
-                //timeAndMeasureList.set(position, currentItem)
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-
-        holder.binding.hourText.setOnClickListener {
-            //  updateData(position, currentItem)
         }
 
-        holder.binding.imageDeleteAlarm.setOnClickListener {
+        holder.binding.imageDelete.setOnClickListener {
             deleteData(timeList[position])
-//        holder.binding.imageDeleteAlarm.setOnClickListener {
-//            // вызываем метод слушателя, передавая ему данные
             onClickListener?.onDeleteClick(currentItem, position)
         }
     }
 
     fun deleteData(medicamentTime: MedicamentTime) {
-        // this.measuresMedList
         timeList.remove(medicamentTime)
         notifyDataSetChanged()
     }
@@ -105,12 +98,6 @@ class UpdateFrTimeAdapter(
     fun addData(medicamentTime: MedicamentTime) {
         // this.measuresMedList
         timeList.add(medicamentTime)
-        notifyDataSetChanged()
-    }
-
-    fun addAllData(medicamentTime: List<MedicamentTime>) {
-        // this.measuresMedList
-        timeList.addAll(medicamentTime)
         notifyDataSetChanged()
     }
 

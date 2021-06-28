@@ -12,9 +12,7 @@ class AddFragmentMedicamentTimeAdapter() :
     private var measuresMedList = mutableListOf<MedicamentTime>()
 
     class MyViewHolder(val binding: AddFragmentMedicamentTimeItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = AddFragmentMedicamentTimeItemBinding.inflate(
@@ -49,7 +47,6 @@ class AddFragmentMedicamentTimeAdapter() :
 
 
     fun addData(medicamentTime: MedicamentTime) {
-        // this.measuresMedList
         measuresMedList.add(medicamentTime)
         notifyDataSetChanged()
     }

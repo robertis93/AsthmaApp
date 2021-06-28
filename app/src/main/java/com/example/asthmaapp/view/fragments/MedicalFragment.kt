@@ -56,6 +56,7 @@ class MedicalFragment : Fragment() {
         })
     }
 
+
     private fun insertDataToDataBase() {
         val nameMedication = binding.editTextMedicalInfo.text.toString()
         val frequencyMedication = binding.editFrequencyMedical.text.toString().toInt()

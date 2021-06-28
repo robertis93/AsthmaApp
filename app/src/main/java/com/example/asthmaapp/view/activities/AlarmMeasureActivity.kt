@@ -2,51 +2,41 @@ package com.example.asthmaapp.view.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.databinding.ActivityAlarmTestBinding
-import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
 import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.model.models.MedicalInfo
-import com.example.asthmaapp.view.adapters.AlarmActivityTestAdapter
-import com.example.asthmaapp.view.adapters.ListAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MedicTimeAlarmActivityTest : AppCompatActivity() {
+class AlarmMeasureActivity : AppCompatActivity() {
 
-    private lateinit var binding: TimeMedActivityAlarmTestBinding
+    private lateinit var binding: ActivityAlarmTestBinding
     private lateinit var medicamentList: List<MedicalInfo>
-
-    //инициализируем ViewModel ленивым способом
-    // private val mMedicalViewModel by lazy { ViewModelProviders.of(this).get(MedicalViewModel::class.java)}
     private lateinit var mMedicalViewModel: MedicalViewModel
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
+    private var medicalInfo = mutableListOf<MedicalInfo>()
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = TimeMedActivityAlarmTestBinding.inflate(getLayoutInflater())
+        binding = ActivityAlarmTestBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot())
 
-        setContentView(binding.getRoot())
+        supportActionBar?.hide()
+        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
         mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-//
+
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         val dateMilli = dateCalendar.time.time
         val year = dateCalendar.time.year
         val month = dateCalendar.time.month
         val day = dateCalendar.time.day
-
         val timeMilli = dateCalendar.time.time
         val dateFormatTime = SimpleDateFormat("HH:mm")
         val dateFormatTimeMinute = SimpleDateFormat("mm")
@@ -59,14 +49,13 @@ class MedicTimeAlarmActivityTest : AppCompatActivity() {
         val currentDate = Date(dateMilli)
         val dateFormat = SimpleDateFormat("dd MMM YYYY")
         val ddate = dateFormat.format(currentDate)
-        val new = Date(2021, 6, 23).getTime()
 
 
         val dateDayCalendar: Calendar = GregorianCalendar(year, month, day)
         val dayMilliId = dateDayCalendar.time.time
         // binding.textDate.setText(dayMilli.toString())
         binding.textDate.setText(ddate)
-        val isCheck = binding.checkBox.onCheckIsTextEditor()
+
 
 
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
@@ -76,31 +65,37 @@ class MedicTimeAlarmActivityTest : AppCompatActivity() {
         binding.saveBtn.setOnClickListener {
             val timeHour = dateFormatTimeHour.format(currentTime)
             val timeMinute = dateFormatTimeMinute.format(currentTime)
+            binding.measure.setFocusableInTouchMode(true);
+            binding.measure.requestFocus();
+            val measurePicf = binding.measure.text.toString().toInt()
+            val idMed = UUID.randomUUID().toString()
+            //  val idMed
+            val timeAndMeasure =
+                TimeAndMeasure(
+                    0,
+                    timeHour.toInt(),
+                    timeMinute.toInt(),
+                    measurePicf,
+                    dayMilliId.toString()
+                )
 
-
-            val medicamentTime = MedicamentTime(
-                0,
-                timeHour.toInt(),
-                timeMinute.toInt(),
-                dateMilli,
-                dayMilliId.toString(),
-                isCheck
-            )
+            val index = medicalInfo.lastIndex
+            val nameMed = medicalInfo.get(index).nameOfMedicine
+            val dozaMed = medicalInfo.get(index).doseMedicine
+            val freqMed = medicalInfo.get(index).frequencyMedicine
 
             val infoDay = MeasureOfDay(
                 dayMilliId.toString(),
                 dateMilli,
-                "aspirin",
-                250,
-                3
+                nameMed,
+                dozaMed,
+                freqMed
             )
 
-            mDayMeasureViewModel.addMedicalTime(medicamentTime)
+            mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
             mDayMeasureViewModel.addMeasure(infoDay)
             //выйти из приложения
             this.finishAffinity()
-            // WorkManager.getInstance(applicationContext).cancelWorkById()
         }
-
     }
 }

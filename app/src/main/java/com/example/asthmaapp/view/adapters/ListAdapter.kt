@@ -19,6 +19,8 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(val binding : CustomRowBinding): RecyclerView.ViewHolder(binding.root)
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = CustomRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
@@ -30,6 +32,25 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         holder.binding.texDaytDate.text = com.example.asthmaapp.utils.longToStringCalendar(dayCurrentItem.day.day)
 
+        //удаление времени при нажатии кнопки удалить
+// определяем слушателя нажатия элемента в списке
+        // определяем слушателя нажатия элемента в списке
+        val clickListener: InnerMeasureAdapter.OnClickListener =
+            object : InnerMeasureAdapter.OnClickListener {   //
+                override fun actionClick() {
+                    val action = ListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
+                    holder.binding.root.findNavController().navigate(action)
+                }
+            }
+
+        val clickListenerMedTime: InnerMedTimeAdapter.OnClickListener =
+            object : InnerMedTimeAdapter.OnClickListener {   //
+                override fun actionClick() {
+                    val action = ListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
+                    holder.binding.root.findNavController().navigate(action)
+                }
+            }
+
         holder.binding.rowLayout.setOnClickListener {
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
             holder.binding.root.findNavController().navigate(action)
@@ -38,7 +59,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val measuresAll = dayCurrentItem.measures
 
         //recycler Measures
-        val adapter = InnerAdapter(measuresAll, timeMeasureList)
+        val adapter = InnerMeasureAdapter(measuresAll, timeMeasureList, clickListener)
         val recyclerView = holder.binding.reyclerRow
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(holder.binding.reyclerRow.context, 1, LinearLayoutManager.VERTICAL,false)
@@ -46,7 +67,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val timeDrugs = dayCurrentItem.medicamentTime
         //recyclerTimeDrugs
 
-        val medTimeAdapter = InnerMedTimeAdapter(timeDrugs)
+        val medTimeAdapter = InnerMedTimeAdapter(timeDrugs, clickListenerMedTime)
         val recyclerViewMedTime = holder.binding.recyclerTimeMedical
         recyclerViewMedTime.adapter = medTimeAdapter
         recyclerViewMedTime.layoutManager = GridLayoutManager(holder.binding.recyclerTimeMedical.context, 1, LinearLayoutManager.HORIZONTAL,false)

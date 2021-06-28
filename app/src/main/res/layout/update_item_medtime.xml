@@ -14,43 +14,58 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+
+
+        <TextView
+            android:layout_marginStart="8dp"
             android:id="@+id/hourText"
+            style="@style/Text.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="22 :"
-            android:textSize="16sp" />
+            android:text="22"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/pointDouble"
+            style="@style/Text.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" :"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
 
-        <EditText
+        <TextView
             android:id="@+id/minuteText"
+            style="@style/Text.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="44"
-            android:textSize="16sp"/>
-
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true" />
+            android:layout_marginStart="8dp"
+            android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/image_delete_alarm"
-            android:layout_width="42dp"
+            android:id="@+id/image_edit_alarm"
+            style="@style/Text.DarkGray"
+            android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/delete_24"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            app:srcCompat="@drawable/edit_icon"
+            android:tint="@color/black_gray"
+
             />
+
+        <ImageView
+            android:id="@+id/image_delete"
+            style="@style/Text.DarkGray"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            android:tint="@color/black_gray"
+            app:srcCompat="@drawable/delete_24" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

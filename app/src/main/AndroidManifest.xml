@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AsthmaApp">
         <activity android:name=".view.activities.HelloActivity"></activity>
-        <activity android:name=".view.activities.AlarmActivityTest" />
-        <activity android:name=".view.activities.MedicTimeAlarmActivityTest" />
+        <activity android:name=".view.activities.AlarmMeasureActivity" />
+        <activity android:name=".view.activities.AlarmMedicamentActivity" />
         <activity android:name=".view.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

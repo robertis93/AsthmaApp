@@ -11,9 +11,7 @@ class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapt
     private var measuresList = mutableListOf<TimeAndMeasure>()
 
     class MyViewHolder(val binding: AddFragmentMeasureItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = AddFragmentMeasureItemBinding.inflate(
@@ -45,7 +43,6 @@ class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapt
     }
 
     fun addData(timeAndMeasure: TimeAndMeasure) {
-        // this.measuresMedList
         measuresList.add(timeAndMeasure)
         notifyDataSetChanged()
     }
@@ -55,7 +52,6 @@ class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapt
     }
 
     fun deleteData(timeAndMeasure: TimeAndMeasure) {
-        // this.measuresMedList
         measuresList.remove(timeAndMeasure)
         notifyDataSetChanged()
     }

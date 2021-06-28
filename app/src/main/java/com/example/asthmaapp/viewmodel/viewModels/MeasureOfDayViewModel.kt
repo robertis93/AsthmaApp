@@ -99,17 +99,6 @@ class MeasureOfDayViewModel(application: Application) : AndroidViewModel(applica
 }
 
 
-//    fun addTimeAndMeasure(timeAndMeasure: TimeAndMeasure) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val resultId = repositoryMeasure.addTimeMeasure(timeAndMeasure)
-//            if (resultId >= 0) {
-//                // TODO: handle success
-//            } else {
-//                // TODO: handle error
-//            }
-//        }
-//    }
-
 
 
 

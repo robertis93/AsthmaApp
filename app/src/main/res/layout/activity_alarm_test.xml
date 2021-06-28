@@ -11,14 +11,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingBottom="32sp"
-        tools:context=".view.fragments.AddFragment">
+        tools:context=".view.fragments.AddMeasuresFragment">
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="76dp"
             android:layout_height="73dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_baseline_access_alarm_24" />
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/second_screen_alarm" />
 
         <TextView
             android:id="@+id/textDate"
@@ -26,7 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="24 sep 2021"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            style="@style/Text"
+            android:layout_marginTop="16dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -39,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="08:00"
+                style="@style/Text.DarkGray"
                 android:textSize="24sp" />
 
             <EditText
@@ -46,30 +50,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                style="@style/Text.DarkGray"/>
 
             <TextView
                 android:id="@+id/lMin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="л/мин"
-                android:textSize="16sp" />
+                android:text="@string/lmin"
+                android:textSize="16sp"
+                style="@style/Text.DarkGray"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="замер пикфлометром"
-            android:textSize="24sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerMeasure"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,15 +75,20 @@
             android:layout_gravity="center"
             android:orientation="horizontal" />
 
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/custom_rounded_corners_blue"
-            android:text="Сохранить"
-            app:backgroundTint="@color/blue_med" />
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#03A9F4"
+            android:text="@string/save_btn"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/blue_med"
+            app:boxBackgroundColor="@color/white"
+            app:cornerRadius="16dp" />
+
 
 
     </LinearLayout>

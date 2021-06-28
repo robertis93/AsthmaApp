@@ -9,10 +9,19 @@ import com.example.asthmaapp.databinding.InnerItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
 
 
-class InnerAdapter(var measures: List<TimeAndMeasure>, timeAndMeasure: List<TimeAndMeasure>) :
-    RecyclerView.Adapter<InnerAdapter.MyViewHolder>() {
+class InnerMeasureAdapter(
+    var measures: List<TimeAndMeasure>,
+    timeAndMeasure: List<TimeAndMeasure>,
+    var onClickListener: OnClickListener
+) :
+    RecyclerView.Adapter<InnerMeasureAdapter.MyViewHolder>() {
 
     val timeAndMeasureList = timeAndMeasure
+
+    // определили интерфейс слушателя события нажатия
+    interface OnClickListener {
+        fun actionClick()
+    }
 
     class MyViewHolder(val binding: InnerItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -25,12 +34,12 @@ class InnerAdapter(var measures: List<TimeAndMeasure>, timeAndMeasure: List<Time
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = measures[position]
         var max = timeAndMeasureList[0].measure
-        for (i in timeAndMeasureList .indices)
-            if (timeAndMeasureList [i].measure > max)
+        for (i in timeAndMeasureList.indices)
+            if (timeAndMeasureList[i].measure > max)
                 max = timeAndMeasureList[i].measure
 
-        var control = max *0.85
-        val controlHigh = max *0.75
+        var control = max * 0.85
+        val controlHigh = max * 0.75
 
         holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
         holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
@@ -39,7 +48,10 @@ class InnerAdapter(var measures: List<TimeAndMeasure>, timeAndMeasure: List<Time
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))
         if (measurenow < controlHigh)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.red))
-            holder.binding.measureText.text = currentItem.measure.toString()
+        holder.binding.measureText.text = currentItem.measure.toString()
+        holder.itemView.setOnClickListener {
+            onClickListener?.actionClick()
+        }
     }
 
     override fun getItemCount(): Int {

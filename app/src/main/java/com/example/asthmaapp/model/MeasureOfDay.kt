@@ -53,8 +53,7 @@ data class MedicamentTime(
     var hour: Int,
     var minute: Int,
     val day: Long,
-    var idMed: String,
-    var check: Boolean,
+    var idMed: String
 ) : Parcelable
 
 
