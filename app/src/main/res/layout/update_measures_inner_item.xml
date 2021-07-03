@@ -24,7 +24,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/pointDouble"
+            android:id="@+id/pointDoubleText"
             style="@style/Text.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,15 +61,14 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/image_edit_alarm"
-            style="@style/Text.DarkGray"
+            android:id="@+id/editAlarmImage"
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:textSize="18sp"
             app:srcCompat="@drawable/edit_icon"
-            android:tint="@color/black_gray"
+
 
             />
 
@@ -81,7 +80,6 @@
             android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:textSize="18sp"
-            android:tint="@color/black_gray"
             app:srcCompat="@drawable/delete_24" />
     </LinearLayout>
 

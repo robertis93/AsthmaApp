@@ -7,16 +7,15 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         android:timePickerMode="spinner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeTextView"
-        tools:ignore="UnknownId"
-        android:scrollbarAlwaysDrawVerticalTrack="true"/>
+        tools:ignore="UnknownId" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -25,25 +24,23 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCansel"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#03A9F4"
             android:text="@string/canсel"
             android:textAllCaps="false"
-            app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#03A9F4"
-            android:text="@string/save_btn"
             android:layout_marginStart="16sp"
+            android:text="@string/ok"
             android:textAllCaps="false"
-            app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
 
     </LinearLayout>

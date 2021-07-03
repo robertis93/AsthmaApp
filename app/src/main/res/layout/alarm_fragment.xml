@@ -15,88 +15,120 @@
         android:focusable="true"
         android:orientation="vertical">
 
+
         <TextView
-            android:id="@+id/textView_describe"
-            style="@style/Text"
+            android:id="@+id/textSelectAlarm"
+            style="@style/Text.SemiBold18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:gravity="center"
-            android:layout_marginTop="16dp"
+            android:paddingTop="16dp"
             android:text="@string/select_time_notification"
             android:textSize="24sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="350dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/light_blue_med"
+            />
+
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="8dp"
+            android:background="@color/lightest_blue_med"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
+                android:id="@+id/recommendationFirstIcon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_baseline_error_24" />
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/recommendationFirstTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recommendationFirstTextView"
+                app:srcCompat="@drawable/ic_alert_sign" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/recommendationFirstTextView"
+                style="@style/Text"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                style="@style/Text.DarkGray"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:gravity="center"
                 android:text="@string/need_take_time_between_measure_drugs"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/recommendationFirstIcon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
+            <ImageView
+                android:id="@+id/recommendationSecondIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/recommendationSecondTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recommendationSecondTextView"
+                app:srcCompat="@drawable/ic_alert_sign" />
 
-                android:textColor="@color/dark_yelow"
+            <TextView
+                android:id="@+id/recommendationSecondTextView"
+                style="@style/Text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
                 android:text="@string/recommend_three_hours"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/recommendationSecondIcon"
+                app:layout_constraintTop_toBottomOf="@+id/recommendationFirstTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp">
+            android:layout_marginTop="16dp">
 
 
             <TextView
-                android:id="@+id/textView2"
-                style="@style/Text"
+                android:id="@+id/measurePicflometr"
+                style="@style/Text.SemiBold18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/measure_alarm_frag"
                 android:textSize="24sp"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floatingActionBtnAlarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/white"
-                android:clickable="true"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus_add" />
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:layout_marginStart="18dp"
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/measurePicflometr"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,8 +136,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="14dp">
+            android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_alarm"
@@ -124,35 +155,39 @@
 
             <TextView
                 android:id="@+id/drugs_alarm"
+                style="@style/Text.SemiBold18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/take_medicament"
                 android:textSize="24sp"
-                style="@style/Text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floatingActionBtnDrugs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:background="@color/white"
-                android:clickable="true"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:layout_marginStart="18dp"
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/drugs_alarm"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus_add" />
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="14dp">
+            android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_drugs"

@@ -11,6 +11,7 @@
     <string name="frequency">receiving frequency</string>
     <string name="per_in_day"> times a day</string>
     <string name="save_btn">save</string>
+    <string name="successful_added">"Successful added"</string>
     <string name="select_time_notification">Set the notification time</string>
     <string name="need_take_time_between_measure_drugs">it should take at least 4 hours after taking the medicine and measuring</string>
     <string name="recommend_three_hours">it is recommended to make at least 3 measurements per day</string>
@@ -48,5 +49,6 @@
     <string name="notif">alerts</string>
     <string name="lmin">l/min</string>
     <string name="important_message">Important message!</string>
+    <string name="message">Message!</string>
     <string name="ok_i_do_it">OK, I will do it now</string>
 </resources>

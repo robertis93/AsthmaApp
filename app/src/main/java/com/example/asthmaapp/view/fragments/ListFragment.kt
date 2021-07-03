@@ -34,7 +34,6 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //был виден action bar
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
 
         //recycler
         val adapter = ListAdapter()
@@ -49,12 +48,15 @@ class ListFragment : Fragment() {
         mMeasureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer { measure ->
             adapter.setDayData(measure)
             if (adapter.itemCount == 0) {
-                binding.buttonAdd.visibility = View.VISIBLE
+                binding.addButton.visibility = View.VISIBLE
                 binding.listFragmentAddMeasure.visibility = View.VISIBLE
-            }
-            else if (adapter.itemCount > 0){
-                binding.buttonAdd.visibility = View.GONE
+                binding.addFloatingActionButton.visibility = View.GONE
+                binding.deleteFloatingActionButton.visibility = View.GONE
+            } else if (adapter.itemCount > 0) {
+                binding.addButton.visibility = View.GONE
                 binding.listFragmentAddMeasure.visibility = View.GONE
+                binding.addFloatingActionButton.visibility = View.VISIBLE
+                binding.deleteFloatingActionButton.visibility = View.VISIBLE
             }
 
         })
@@ -68,26 +70,17 @@ class ListFragment : Fragment() {
         //add menu
         setHasOptionsMenu(true)
 
-
-        binding.buttonAdd.setOnClickListener {
+        binding.addButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
-    }
 
+        binding.addFloatingActionButton.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_delete) {
+        binding.deleteFloatingActionButton.setOnClickListener {
             deleteAllMeasure()
         }
-        if (item.itemId == R.id.menu_add) {
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun deleteAllMeasure() {
@@ -102,7 +95,6 @@ class ListFragment : Fragment() {
                 R.string.all_deleted,
                 Toast.LENGTH_SHORT
             ).show()
-
         }
         builder.setNegativeButton(R.string.no) { _, _ -> }
         builder.setMessage(R.string.are_you_sure_delete_all)

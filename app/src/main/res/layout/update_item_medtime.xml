@@ -14,8 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-
         <TextView
             android:layout_marginStart="8dp"
             android:id="@+id/hourText"
@@ -26,11 +24,11 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/pointDouble"
+            android:id="@+id/pointDoubleText"
             style="@style/Text.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" :"
+            android:text=" : "
             android:textSize="18sp" />
 
 
@@ -44,27 +42,23 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/image_edit_alarm"
+            android:id="@+id/editAlarmImage"
             style="@style/Text.DarkGray"
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:textSize="18sp"
-            app:srcCompat="@drawable/edit_icon"
-            android:tint="@color/black_gray"
-
-            />
+            app:srcCompat="@drawable/edit_icon"/>
 
         <ImageView
-            android:id="@+id/image_delete"
+            android:id="@+id/deleteImage"
             style="@style/Text.DarkGray"
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:textSize="18sp"
-            android:tint="@color/black_gray"
             app:srcCompat="@drawable/delete_24" />
     </LinearLayout>
 

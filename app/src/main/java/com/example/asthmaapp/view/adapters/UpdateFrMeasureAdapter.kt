@@ -50,10 +50,10 @@ class UpdateFrMeasureAdapter(
         holder.binding.measureText.setText(currentItem.measure.toString())
         val idMed = currentItem.idMed
 
-        holder.binding.imageEditAlarm.setOnClickListener {
+        holder.binding.editAlarmImage.setOnClickListener {
             val builder =
-                androidx.appcompat.app.AlertDialog.Builder(holder.binding.imageEditAlarm.context)
-            val layoutInflater = LayoutInflater.from(holder.binding.imageEditAlarm.context)
+                androidx.appcompat.app.AlertDialog.Builder(holder.binding.editAlarmImage.context)
+            val layoutInflater = LayoutInflater.from(holder.binding.editAlarmImage.context)
             val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
             dialogFragment.timePicker.is24HourView
             builder.setView(dialogFragment.root)

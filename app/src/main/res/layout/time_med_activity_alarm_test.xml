@@ -19,7 +19,7 @@
             android:layout_height="73dp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            app:srcCompat="@drawable/second_screen_alarm" />
+            app:srcCompat="@drawable/alarm_clock" />
 
         <TextView
             android:id="@+id/textDate"

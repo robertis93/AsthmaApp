@@ -12,21 +12,23 @@
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         android:timePickerMode="spinner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeTextView"
-        tools:ignore="UnknownId"
-        android:scrollbarAlwaysDrawVerticalTrack="true"/>
+        tools:ignore="UnknownId" />
 
-    L<EditText
+    L
+
+    <EditText
         android:id="@+id/measureDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="numberSigned"
         tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="254dp"
-        android:backgroundTint="@android:color/holo_red_dark" />
+        tools:layout_editor_absoluteY="254dp" />
 
     <TextView
         android:id="@+id/timeDialog"
@@ -41,29 +43,27 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCansel"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#03A9F4"
-            android:text="@string/canсel"
             android:layout_marginStart="16sp"
+            android:text="@string/canсel"
             android:textAllCaps="false"
-            app:backgroundTint="@color/blue_med"
+            android:textColor="@color/blue_med"
             app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#03A9F4"
-            android:text="@string/save_btn"
-            android:enabled="false"
             android:layout_marginStart="16sp"
+            android:enabled="false"
+            android:text="@string/ok"
             android:textAllCaps="false"
-            app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
-
 
 
     </LinearLayout>

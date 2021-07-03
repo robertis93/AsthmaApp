@@ -10,9 +10,8 @@ class AddFragmentDialog(var message: String) : DialogFragment()  {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            builder.setTitle(R.string.important_message)
-                .setMessage(message)
-                .setIcon(R.drawable.attentionicon)
+            builder.setTitle(message)
+                .setIcon(R.drawable.ic_alert_sign)
                 .setPositiveButton(R.string.ok_i_do_it) {
                         dialog, id ->  dialog.cancel()
                 }

@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/texDaytDate"
-            style="@style/Text"
+            style="@style/Text.Bold16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -35,16 +35,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/blue_med"
+            />
+
         <TextView
             android:id="@+id/texMeasure"
-            style="@style/Text"
+            style="@style/Text.SemiBold18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
             android:gravity="center"
             android:text="@string/measure"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_blue_med"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reyclerRow"
@@ -53,14 +65,20 @@
 
         <TextView
             android:id="@+id/textTimeDrugs"
-            style="@style/Text"
+            style="@style/Text.SemiBold18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
             android:gravity="center"
             android:text="@string/take_medicament"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_blue_med"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerTimeMedical"

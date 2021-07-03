@@ -9,33 +9,59 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageHappy"
         android:layout_width="198dp"
         android:layout_height="222dp"
         android:layout_marginTop="48dp"
-        android:src="@drawable/third_screen_lungs"
+        android:src="@drawable/affection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textDescribe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        style="@style/Text.Bold24"
         android:text="@string/third_screen_desc"
         android:textColor="@color/blue_med"
-        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imageHappy" />
 
+    <TextView
+        android:id="@+id/textYellow"
+        style="@style/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/corner_rounded_yellow"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/third_screen_example_yellow"
+        android:textColor="@color/black"
+        app:cornerRadius="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDescribe" />
 
-
-
-
+    <TextView
+        android:id="@+id/textYellowDescripe"
+        style="@style/Text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/third_screen_yellow"
+        android:textColor="@color/dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textYellow"
+        app:layout_constraintTop_toBottomOf="@+id/textDescribe" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -48,25 +74,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/corner_rounded_red"
-            android:text="@string/thirs_screen_example_red"
-            app:cornerRadius="16dp"
-            tools:layout_editor_absoluteX="91dp"
-            tools:layout_editor_absoluteY="527dp" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16sp"
-            android:text="@string/third_screen_red"
-            tools:layout_editor_absoluteX="91dp"
-            tools:layout_editor_absoluteY="574dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,27 +84,8 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8">
+        app:layout_constraintTop_toBottomOf="@+id/textDescribe">
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/corner_rounded_yellow"
-            app:cornerRadius="16dp"
-            android:text="@string/third_screen_example_yellow"
-            tools:layout_editor_absoluteX="12dp"
-            tools:layout_editor_absoluteY="526dp" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16sp"
-            android:text="@string/third_screen_yellow"
-            tools:layout_editor_absoluteX="13dp"
-            tools:layout_editor_absoluteY="576dp" />
 
     </LinearLayout>
 
@@ -107,13 +95,39 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="4dp"
-        android:backgroundTint="#03A9F4"
+        style="@style/Button.Blue"
         android:text="@string/start_app"
         android:textAllCaps="false"
-        app:backgroundTint="@color/blue_med"
-        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textRedDescribe"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="8dp"
+        style="@style/Text"
+        android:text="@string/third_screen_red"
+        android:textColor="@color/dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textYellowDescripe" />
+
+    <TextView
+        android:id="@+id/textDescribeRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/corner_rounded_red"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        style="@style/Text"
+        android:textColor="@color/black"
+        android:text="@string/thirs_screen_example_red"
+        app:cornerRadius="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textYellow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

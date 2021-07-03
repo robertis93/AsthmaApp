@@ -21,7 +21,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextMedicalInfo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            style="@style/Text.SemiBold18"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -32,6 +33,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="24dp"
+        style="@style/Text.SemiBold18"
         android:hint="@string/quantity_take_medicament"
         app:boxBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +43,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextMedicalDose"
-            style="@style/Text"
+            style="@style/Text.SemiBold18"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
@@ -57,6 +59,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="24dp"
         android:hint="@string/frequency"
+        style="@style/Text.SemiBold18"
         app:boxBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,10 +69,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editFrequencyMedical"
-            style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            style="@style/Text.SemiBold18"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,6 +85,7 @@
         android:backgroundTint="#03A9F4"
         android:text="@string/save_btn"
         android:textAllCaps="false"
+        style="@style/Button.Blue"
         app:backgroundTint="@color/blue_med"
         app:cornerRadius="16dp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

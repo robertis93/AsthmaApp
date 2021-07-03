@@ -39,7 +39,7 @@ object  NotificationsHelper {
         // Создаём уведомление
         val notification =
             NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(com.example.asthmaapp.R.drawable.ic_free_icon_inhaler_3654855)
+                .setSmallIcon(com.example.asthmaapp.R.drawable.ic_astmaicon)
                 .setContentTitle("Напоминание")
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

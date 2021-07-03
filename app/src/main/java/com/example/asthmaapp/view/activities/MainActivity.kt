@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
 
 //actionbar менялся
-       setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
+            // setupActionBarWithNavController(findNavController(R.id.fragmentContainer))
 
 
             navController.addOnDestinationChangedListener { _, destination, _ ->

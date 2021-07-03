@@ -42,7 +42,8 @@
                 android:layout_marginStart="8dp"
                 android:text="12:09"
                 android:textSize="18sp"
-                style="@style/Text.DarkGray"/>
+
+                style="@style/Text"/>
 
             <ImageView
                 android:id="@+id/image_delete_alarm"

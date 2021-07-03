@@ -72,10 +72,9 @@ class UpdateFragment : Fragment() {
         val adapter = UpdateFrMeasureAdapter(measuresList, timeAndMeasureClickListener)
         val recyclerView = binding.recyclerMeasure
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(
+        recyclerView.layoutManager = LinearLayoutManager(
             binding.recyclerMeasure.context,
-            2,
-            LinearLayoutManager.HORIZONTAL,
+            LinearLayoutManager.VERTICAL,
             false
         )
 

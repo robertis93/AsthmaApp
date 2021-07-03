@@ -65,7 +65,7 @@ class AddMeasuresFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val idMed = UUID.randomUUID().toString()
-        binding.textDate.setVisibility(View.GONE)
+        //binding.textDate.setVisibility(View.GONE)
 
 
         //recycler
@@ -87,6 +87,11 @@ class AddMeasuresFragment : Fragment() {
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         val dayMilli = dateCalendar.time.time
 
+        //format date
+        val currentDate = Date(dayMilli)
+        val dateFormat = SimpleDateFormat("dd MMM YYYY")
+        val dayToday = dateFormat.format(currentDate)
+binding.textDate.text = dayToday
 
 //MeasureViewModel
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
@@ -101,7 +106,7 @@ class AddMeasuresFragment : Fragment() {
             val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
             dialogFragment.timePicker.is24HourView
             builder.setView(dialogFragment.root)
-            builder.setTitle("Measure")
+            builder.setTitle(R.string.measure_alarm_frag)
 
             //show dialog
             val mAlertDialog = builder.show()
@@ -116,7 +121,6 @@ class AddMeasuresFragment : Fragment() {
 
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
-                // TODO: 04.06.2021 exception
                 try {
                     mAlertDialog.dismiss()
                     dialogFragment.timePicker.is24HourView
@@ -226,7 +230,7 @@ class AddMeasuresFragment : Fragment() {
             }
         }
 
-        binding.selectDayBtn.setOnClickListener {
+        binding.changeButton.setOnClickListener {
             Log.v("myLogs", "AlarmFragment binding.floatingActionBtnAlarm.setOnClickListener ")
             val cal = Calendar.getInstance()
 

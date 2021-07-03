@@ -36,13 +36,13 @@ class UpdatemMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = timeList[position]
-        holder.binding.hourText.setText(currentItem.hour.toString())
+        holder.binding.hourText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.hour))
         holder.binding.minuteText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.minute))
 
-        holder.binding.imageEditAlarm.setOnClickListener {
+        holder.binding.editAlarmImage.setOnClickListener {
             val builder =
-                androidx.appcompat.app.AlertDialog.Builder(holder.binding.imageEditAlarm.context)
-            val layoutInflater = LayoutInflater.from(holder.binding.imageEditAlarm.context)
+                androidx.appcompat.app.AlertDialog.Builder(holder.binding.editAlarmImage.context)
+            val layoutInflater = LayoutInflater.from(holder.binding.editAlarmImage.context)
             val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
             dialogFragment.timePicker.is24HourView
             builder.setView(dialogFragment.root)
@@ -73,7 +73,7 @@ class UpdatemMedicamentTimeAdapter(
             }
         }
 
-        holder.binding.imageDelete.setOnClickListener {
+        holder.binding.deleteImage.setOnClickListener {
             deleteData(timeList[position])
             onClickListener?.onDeleteClick(currentItem, position)
         }

@@ -1,18 +1,16 @@
 package com.example.asthmaapp.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.MedicalFragmentBinding
 import com.example.asthmaapp.model.models.MedicalInfo
-import com.example.asthmaapp.utils.AddFragmentDialog
 import com.example.asthmaapp.utils.MedicalDialog
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 
@@ -38,7 +36,7 @@ class MedicalFragment : Fragment() {
 
         binding.btnSaveMedicalInfo.setOnClickListener {
             insertDataToDataBase()
-            val myDialogFragment = MedicalDialog("успешно сохранено")
+            val myDialogFragment = MedicalDialog(R.string.successful_added)
             val manager = activity?.getSupportFragmentManager()
             if (manager != null) {
                 myDialogFragment.show(manager, "myDialog")

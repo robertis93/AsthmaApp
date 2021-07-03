@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginTop="24dp"
         android:paddingBottom="32sp"
         tools:context=".view.fragments.AddMeasuresFragment">
 
@@ -22,13 +23,18 @@
             android:text="@string/example_date"
             android:textSize="24sp" />
 
+        <View
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:background="@color/light_blue_med"
+            android:layout_height="2dp"></View>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textTimeMeasure"
-                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -41,25 +47,31 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addOneMeasureBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
                 android:layout_marginStart="4dp"
-                android:background="@color/white"
-                android:paddingTop="8dp"
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textTimeMeasure"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus_add" />
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMeasure"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,35 +79,42 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView2"
-                style="@style/Text"
+                android:id="@+id/measurePicflometr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time_take_medicament"
                 android:textSize="24sp"
+                android:paddingTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addOneMedTimeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
                 android:layout_marginStart="4dp"
-                android:background="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus_add" />
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/measurePicflometr"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_horizontal"/>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,6 +130,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameMedical"
+                style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -132,7 +152,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextMedicalDoze"
-                style="@style/Text"
+                style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal" />
@@ -155,7 +175,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editFrequencyMedical"
-                style="@style/Text"
+                style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal" />
@@ -169,12 +189,14 @@
             android:layout_gravity="center"
             android:layout_marginStart="16sp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="54dp"
             android:backgroundTint="#03A9F4"
+            style="@style/Button.Blue"
             android:text="@string/save_btn"
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"
-            app:cornerRadius="16dp" />
+            app:cornerRadius="16dp"
+            />
 
 
     </LinearLayout>

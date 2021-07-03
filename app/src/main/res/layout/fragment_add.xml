@@ -6,31 +6,40 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="32sp"
+        android:paddingBottom="32dp"
         tools:context=".view.fragments.AddMeasuresFragment">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectDayBtn"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="#03A9F4"
-            android:text="@string/select_day"
-            android:textAllCaps="false"
-            app:backgroundTint="@color/blue_med"
-            app:boxBackgroundColor="@color/white"
-            app:cornerRadius="16dp" />
+            android:layout_gravity="center">
 
         <TextView
             android:id="@+id/textDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:text="@string/ok"/>
+
+            <ImageButton
+                android:id="@+id/changeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@color/white"
+                app:srcCompat="@drawable/edit_icon" />
+
+        </LinearLayout>
+        <View
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:background="@color/light_blue_med"
+            android:layout_height="2dp"></View>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -41,25 +50,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingTop="8dp"
                 android:text="@string/time_measure"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addOneMeasureBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
                 android:layout_marginStart="4dp"
-                android:background="@color/white"
-                android:paddingTop="8dp"
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textTimeMeasure"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus_add" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,26 +85,31 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/measurePicflometr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time_take_medicament"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addOneMedBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
                 android:layout_marginStart="4dp"
-                android:background="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/plus_add" />
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/measurePicflometr"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,7 +134,7 @@
                 android:id="@+id/nameMedical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center" />
+                style="@style/Text.SemiBold18"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -134,15 +150,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:prefixText="@string/mkg">
+            app:suffixText="@string/mkg">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextMedicalDoze"
-                style="@style/Text"
+                style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="numberDecimal"
-                android:gravity="center" />
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -162,11 +177,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editFrequencyMedical"
-                style="@style/Text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal"
-                android:gravity="center" />
+                style="@style/Text.SemiBold18"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -178,10 +192,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="#03A9F4"
+            style="@style/Button.Blue"
             android:text="@string/save_btn"
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
+
+
 
     </LinearLayout>
 </ScrollView>
