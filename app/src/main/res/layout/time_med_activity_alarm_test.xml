@@ -14,7 +14,7 @@
         tools:context=".view.fragments.AddMeasuresFragment">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/alarmImage"
             android:layout_width="76dp"
             android:layout_height="73dp"
             android:layout_gravity="center"
@@ -22,7 +22,7 @@
             app:srcCompat="@drawable/alarm_clock" />
 
         <TextView
-            android:id="@+id/textDate"
+            android:id="@+id/dateTextView"
             android:layout_marginTop="16dp"
             style="@style/Text"
             android:layout_width="wrap_content"
@@ -33,18 +33,18 @@
 
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/takeMedicamentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/Text.DarkGray"
             android:layout_marginTop="16dp"
-            android:text="примите лекарство"
+            android:text="@string/take_drugs"
             android:textSize="24sp" />
 
 
             <TextView
-                android:id="@+id/timeAlarm"
+                android:id="@+id/timeAlarmText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="08:00"
@@ -61,6 +61,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#03A9F4"
             android:text="@string/save_btn"
+            style="@style/Button.Blue"
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />

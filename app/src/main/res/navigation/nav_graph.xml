@@ -106,7 +106,7 @@
         android:label="HelloActivity" />
     <activity
         android:id="@+id/alarmActivityTest"
-        android:name="com.example.asthmaapp.view.activities.AlarmMeasureActivity"
+        android:name="com.example.asthmaapp.view.activities.AlarmMeasureNotificationActivity"
         android:label="AlarmActivityTest" >
         <argument
             android:name="dateTime"

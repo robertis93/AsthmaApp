@@ -22,12 +22,14 @@ import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.utils.AddFragmentDialog
 import com.example.asthmaapp.view.adapters.*
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
+import kotlin.properties.Delegates
 
 
 class UpdateFragment : Fragment() {
 
     private val args by navArgs<UpdateFragmentArgs>()
-
+    var counter = 0
+    private var frequencyMedicament by Delegates.notNull<Int>()
     lateinit var binding: FragmentUpdateBinding
 
     private lateinit var mMeasureViewModel: MeasureOfDayViewModel
@@ -44,10 +46,12 @@ class UpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-        binding.textDate.setText(com.example.asthmaapp.utils.longToStringCalendar(args.currentItemDay.day.day))
+        binding.dateTextView.setText(com.example.asthmaapp.utils.longToStringCalendar(args.currentItemDay.day.day))
         binding.nameMedical.setText(args.currentItemDay.day.nameMedicament)
         binding.editTextMedicalDoze.setText(args.currentItemDay.day.doza.toString())
         binding.editFrequencyMedical.setText(args.currentItemDay.day.frequency.toString())
+
+        var frequencyTakeMedicament = args.currentItemDay.day.frequency
 
         val idMed = args.currentItemDay.day.id
 
@@ -67,7 +71,6 @@ class UpdateFragment : Fragment() {
                 }
             }
 
-
         //recycler Measures
         val adapter = UpdateFrMeasureAdapter(measuresList, timeAndMeasureClickListener)
         val recyclerView = binding.recyclerMeasure
@@ -80,7 +83,6 @@ class UpdateFragment : Fragment() {
 
         val timeList = args.currentItemDay.medicamentTime
 
-
         //удаление времени при нажатии кнопки удалить
 // определяем слушателя нажатия элемента в списке
         // определяем слушателя нажатия элемента в списке TimeAndMeasure
@@ -88,6 +90,8 @@ class UpdateFragment : Fragment() {
             object : UpdatemMedicamentTimeAdapter.OnClickListener {   //
                 override fun onDeleteClick(medicamentTime: MedicamentTime, position: Int) {
                     mMeasureViewModel.deleteMedicalTime(medicamentTime)
+                    frequencyTakeMedicament = frequencyTakeMedicament?.minus(1)
+                    binding.editFrequencyMedical.setText(frequencyTakeMedicament.toString())
                     Toast.makeText(
                         requireContext(), "Успешно удалено",
                         Toast.LENGTH_SHORT
@@ -100,9 +104,6 @@ class UpdateFragment : Fragment() {
         recyclerViewMedTime.adapter = medTimeAdapter
         recyclerViewMedTime.layoutManager =
             GridLayoutManager(binding.recyclerMed.context, 2, LinearLayoutManager.HORIZONTAL, false)
-
-       val medicamentTimeQuantity =  medTimeAdapter.itemCount
-
 
         binding.saveBtn.setOnClickListener {
             val dayMeasure = args.currentItemDay.day.day
@@ -132,7 +133,6 @@ class UpdateFragment : Fragment() {
             mMeasureViewModel.updateMeasure(updateMeasure)
             //mMeasureViewModel.updateTimeMeasure()
 
-
             Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_SHORT).show()
 
             //navigate back
@@ -140,7 +140,6 @@ class UpdateFragment : Fragment() {
         }
         //addMenu
         setHasOptionsMenu(true)
-
 
         binding.addOneMeasureBtn.setOnClickListener {
             val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
@@ -164,34 +163,30 @@ class UpdateFragment : Fragment() {
             dialogFragment.btnSave.setOnClickListener {
                 // TODO: 04.06.2021 exception
                 try {
-                mAlertDialog.dismiss()
-                dialogFragment.timePicker.is24HourView
-                val timeHour = dialogFragment.timePicker.hour
-                val timeMinute = dialogFragment.timePicker.minute
-                val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
-                val timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
+                    mAlertDialog.dismiss()
+                    dialogFragment.timePicker.is24HourView
+                    val timeHour = dialogFragment.timePicker.hour
+                    val timeMinute = dialogFragment.timePicker.minute
+                    val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
+                    val timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
 
-                adapter.addData(timeAndMeasure)
-                mMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+                    adapter.addData(timeAndMeasure)
+                    mMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
 
 
-
-            } catch (e: Exception) {
-                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
-                val manager = getActivity()?.getSupportFragmentManager()
-                if (manager != null) {
-                    myDialogFragment.show(manager, "myDialog")
+                } catch (e: Exception) {
+                    val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+                    val manager = getActivity()?.getSupportFragmentManager()
+                    if (manager != null) {
+                        myDialogFragment.show(manager, "myDialog")
+                    }
                 }
-
-            }
             }
 
-            dialogFragment.btnCansel.setOnClickListener {
+            dialogFragment.cancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
             }
-
         }
-
 
         binding.addOneMedTimeBtn.setOnClickListener {
             val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
@@ -219,14 +214,17 @@ class UpdateFragment : Fragment() {
                     )
                 medTimeAdapter.addData(medicamentTime)
                 mMeasureViewModel.addMedicalTime(medicamentTime)
+
+
+                //frequency take medicament
+                frequencyTakeMedicament = frequencyTakeMedicament?.plus(1)
+                binding.editFrequencyMedical.setText(frequencyTakeMedicament.toString())
+                counter++
             }
-            dialogFragment.btnCansel.setOnClickListener {
+            dialogFragment.cancelBtn.setOnClickListener {
                 Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
                 mAlertDialog.dismiss()
             }
-
-
         }
     }
-
 }

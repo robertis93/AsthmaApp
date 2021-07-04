@@ -36,9 +36,9 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
         Log.v("myLogs", "AlarmAdapter onBindViewHolder")
 
         val currentItem = alarmsList[position]
-        holder.binding.itemTxt.text =
+        holder.binding.timeDayTextView.text =
             "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
-        holder.binding.imageDeleteAlarm.setOnClickListener {
+        holder.binding.alarmImageView.setOnClickListener {
             // вызываем метод слушателя, передавая ему данные
             Log.v("myLogs", "AlarmAdapter setOnClickListener")
             onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)

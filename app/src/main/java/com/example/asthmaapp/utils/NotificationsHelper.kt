@@ -9,8 +9,8 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.asthmaapp.view.activities.AlarmMeasureActivity
-import com.example.asthmaapp.view.activities.AlarmMedicamentActivity
+import com.example.asthmaapp.view.activities.AlarmMeasureNotificationActivity
+import com.example.asthmaapp.view.activities.AlarmMedicamentNotificationActivity
 
 object  NotificationsHelper {
     const val CHANNEL_ID = "1"
@@ -22,12 +22,12 @@ object  NotificationsHelper {
 
         if (message == "Примите лекарство"){
             Log.i("myLogs", "intent = Intent(context, MedicTimeAlarmActivityTest::class.java).apply ")
-            intent = Intent(context, AlarmMedicamentActivity::class.java).apply {
+            intent = Intent(context, AlarmMedicamentNotificationActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
         }
         else if (message == "Сделайте замер") {
-            intent = Intent(context, AlarmMeasureActivity::class.java).apply {
+            intent = Intent(context, AlarmMeasureNotificationActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 Log.i("myLogs", "intent =  Intent(context, AlarmActivityTest::class.java")
             }

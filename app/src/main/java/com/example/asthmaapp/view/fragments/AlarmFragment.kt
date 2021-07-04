@@ -101,7 +101,7 @@ class AlarmFragment : Fragment() {
             }
 
         val drugsAdapter = AlarmDrugsAdapter(alarmDrugClickListener)
-        val drugsRecyclerView = binding.recyclerDrugs
+        val drugsRecyclerView = binding.drugsRecyclerView
         drugsRecyclerView.adapter = drugsAdapter
         drugsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 

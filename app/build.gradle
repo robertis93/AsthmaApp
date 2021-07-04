@@ -110,6 +110,10 @@ dependencies {
 //indicator onBoarding
     implementation 'com.tbuonomo:dotsindicator:4.2'
 
+    implementation 'com.github.imtuann:FloatingActionButtonExpandable:1.1.2'
+
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
+
 
 
 

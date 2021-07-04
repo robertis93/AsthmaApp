@@ -89,12 +89,12 @@ class UpdateFrMeasureAdapter(
                 timeAndMeasureList[position].measure = measurePicf
             }
 
-            dialogFragment.btnCansel.setOnClickListener {
+            dialogFragment.cancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
             }
         }
 
-        holder.binding.imageDeleteAlarm.setOnClickListener {
+        holder.binding.deleteIcon.setOnClickListener {
             deleteData(timeAndMeasureList[position])
 
             onClickListener?.onDeleteClick(currentItem, position)

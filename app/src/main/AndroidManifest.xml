@@ -6,14 +6,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_inhaler"
         android:supportsRtl="true"
         android:theme="@style/Theme.AsthmaApp">
         <activity android:name=".view.activities.HelloActivity"></activity>
-        <activity android:name=".view.activities.AlarmMeasureActivity" />
-        <activity android:name=".view.activities.AlarmMedicamentActivity" />
+        <activity android:name=".view.activities.AlarmMeasureNotificationActivity" />
+        <activity android:name=".view.activities.AlarmMedicamentNotificationActivity" />
         <activity android:name=".view.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

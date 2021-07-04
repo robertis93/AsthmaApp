@@ -15,7 +15,7 @@
         tools:context=".view.fragments.AddMeasuresFragment">
 
         <TextView
-            android:id="@+id/textDate"
+            android:id="@+id/dateTextView"
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textTimeMeasure"
+                android:id="@+id/timeMeasureTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -59,7 +59,7 @@
                 android:tint="@color/white"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textTimeMeasure"
+                app:layout_constraintStart_toEndOf="@+id/timeMeasureTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/measurePicflometr"
+                android:id="@+id/timeTakeMedicamentTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time_take_medicament"
@@ -103,7 +103,7 @@
                 android:tint="@color/white"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/measurePicflometr"
+                app:layout_constraintStart_toEndOf="@+id/timeTakeMedicamentTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

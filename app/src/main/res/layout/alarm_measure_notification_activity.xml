@@ -14,7 +14,7 @@
         tools:context=".view.fragments.AddMeasuresFragment">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/alarmImage"
             android:layout_width="76dp"
             android:layout_height="73dp"
             android:layout_gravity="center"
@@ -22,7 +22,7 @@
             app:srcCompat="@drawable/alarm_clock" />
 
         <TextView
-            android:id="@+id/textDate"
+            android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,7 +38,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/timeAlarm"
+                android:id="@+id/timeAlarmText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="08:00"
@@ -46,7 +46,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/measure"
+                android:id="@+id/addMeasureText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -54,7 +54,7 @@
                 style="@style/Text.DarkGray"/>
 
             <TextView
-                android:id="@+id/lMin"
+                android:id="@+id/lMinText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -85,6 +85,7 @@
             android:backgroundTint="#03A9F4"
             android:text="@string/save_btn"
             android:textAllCaps="false"
+            style="@style/Button.Blue"
             app:backgroundTint="@color/blue_med"
             app:boxBackgroundColor="@color/white"
             app:cornerRadius="16dp" />

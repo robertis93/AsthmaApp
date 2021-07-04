@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "onCreate MainActivity")
 
 
-        val bottomNavigationView = binding.btnNavigationList
+        val bottomNavigationView = binding.navigationListBtn
         //ответственный чтобы заменять фрагменты в navhostfragment
 
             // val navController = findNavController(R.id.fragmentContainer)
@@ -72,10 +72,10 @@ class MainActivity : AppCompatActivity() {
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.listFragment -> binding.btnNavigationList.visibility = View.VISIBLE
-                    R.id.alarmFragment -> binding.btnNavigationList.visibility = View.VISIBLE
-                    R.id.medicalFragment -> binding.btnNavigationList.visibility = View.VISIBLE
-                    R.id.helloFragment-> binding.btnNavigationList.visibility = View.GONE
+                    R.id.listFragment -> binding.navigationListBtn.visibility = View.VISIBLE
+                    R.id.alarmFragment -> binding.navigationListBtn.visibility = View.VISIBLE
+                    R.id.medicalFragment -> binding.navigationListBtn.visibility = View.VISIBLE
+                    R.id.helloFragment-> binding.navigationListBtn.visibility = View.GONE
 
 
             }

@@ -19,8 +19,6 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     class MyViewHolder(val binding : CustomRowBinding): RecyclerView.ViewHolder(binding.root)
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = CustomRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
@@ -30,7 +28,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
     val dayCurrentItem = dayMeasureList[position]
 
-        holder.binding.texDaytDate.text = com.example.asthmaapp.utils.longToStringCalendar(dayCurrentItem.day.day)
+        holder.binding.dayTextView.text = com.example.asthmaapp.utils.longToStringCalendar(dayCurrentItem.day.day)
 
         //удаление времени при нажатии кнопки удалить
 // определяем слушателя нажатия элемента в списке
@@ -60,17 +58,17 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         //recycler Measures
         val adapter = InnerMeasureAdapter(measuresAll, timeMeasureList, clickListener)
-        val recyclerView = holder.binding.reyclerRow
+        val recyclerView = holder.binding.rowRecyclerView
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(holder.binding.reyclerRow.context, 1, LinearLayoutManager.VERTICAL,false)
+        recyclerView.layoutManager = GridLayoutManager(holder.binding.rowRecyclerView.context, 1, LinearLayoutManager.VERTICAL,false)
 
         val timeDrugs = dayCurrentItem.medicamentTime
         //recyclerTimeDrugs
 
         val medTimeAdapter = InnerMedTimeAdapter(timeDrugs, clickListenerMedTime)
-        val recyclerViewMedTime = holder.binding.recyclerTimeMedical
+        val recyclerViewMedTime = holder.binding.timeMedicalRecyclerView
         recyclerViewMedTime.adapter = medTimeAdapter
-        recyclerViewMedTime.layoutManager = GridLayoutManager(holder.binding.recyclerTimeMedical.context, 1, LinearLayoutManager.HORIZONTAL,false)
+        recyclerViewMedTime.layoutManager = GridLayoutManager(holder.binding.timeMedicalRecyclerView.context, 3, LinearLayoutManager.HORIZONTAL,false)
 
 
     }

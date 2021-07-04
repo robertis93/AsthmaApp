@@ -52,4 +52,5 @@
     <string name="important_message">Важное сообщение!</string>
     <string name="message">Сообщение!</string>
     <string name="ok_i_do_it">"ОК, сейчас сделаю"</string>
+    <string name="take_drugs">Примите лекарство</string>
 </resources>

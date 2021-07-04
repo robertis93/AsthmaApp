@@ -22,7 +22,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/texDaytDate"
+            android:id="@+id/dayTextView"
             style="@style/Text.Bold16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             />
 
         <TextView
-            android:id="@+id/texMeasure"
+            android:id="@+id/measuresTextView"
             style="@style/Text.SemiBold18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,12 +59,12 @@
             />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/reyclerRow"
+            android:id="@+id/rowRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/textTimeDrugs"
+            android:id="@+id/timeDrugsTextView"
             style="@style/Text.SemiBold18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerTimeMedical"
+            android:id="@+id/timeMedicalRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

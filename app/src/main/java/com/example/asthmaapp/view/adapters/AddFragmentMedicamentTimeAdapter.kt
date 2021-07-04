@@ -7,9 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMedicamentTimeItemBinding
 import com.example.asthmaapp.model.MedicamentTime
 
-class AddFragmentMedicamentTimeAdapter() :
+class AddFragmentMedicamentTimeAdapter(var onClickDeleteListener: OnDeleteClickListener) :
     RecyclerView.Adapter<AddFragmentMedicamentTimeAdapter.MyViewHolder>() {
     private var measuresMedList = mutableListOf<MedicamentTime>()
+
+    // определили интерфейс слушателя события нажатия
+    interface OnDeleteClickListener {
+        fun onDeleteAlarmClick()
+    }
 
     class MyViewHolder(val binding: AddFragmentMedicamentTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -27,16 +32,15 @@ class AddFragmentMedicamentTimeAdapter() :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = measuresMedList[position]
         with(holder.binding) {
-            timeMeasure.text = "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
-                com.example.asthmaapp.utils.timeConvert(currentItem.minute)
-            }"
+            timeMeasureText.text =
+                "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
+                    com.example.asthmaapp.utils.timeConvert(currentItem.minute)
+                }"
 
-            deleteAlarm.setOnClickListener {
+            deleteAlarmIcon.setOnClickListener {
                 deleteData(measuresMedList[position])
-                // вызываем метод слушателя, передавая ему данные
-                // onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)
+                onClickDeleteListener?.onDeleteAlarmClick()
             }
-
         }
 
     }

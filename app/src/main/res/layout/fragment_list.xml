@@ -17,7 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="64dp"/>
 
     <TextView
         android:id="@+id/listFragmentAddMeasure"
@@ -59,6 +60,7 @@
         android:clickable="true"
         android:src="@drawable/ic_baseline_add_white"
         android:visibility="invisible"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/deleteFloatingActionButton" />
 

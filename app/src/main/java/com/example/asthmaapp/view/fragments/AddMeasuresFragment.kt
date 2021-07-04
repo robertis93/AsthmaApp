@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
@@ -36,6 +35,10 @@ import kotlin.properties.Delegates
 
 class AddMeasuresFragment : Fragment() {
 
+    lateinit var idMed : String
+    var dayMilli by Delegates.notNull<Long>()
+    private var frequencyMedicament by Delegates.notNull<Int>()
+    var counter = 0
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
     private lateinit var mMedicalViewModel: MedicalViewModel
 
@@ -64,8 +67,7 @@ class AddMeasuresFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val idMed = UUID.randomUUID().toString()
-        //binding.textDate.setVisibility(View.GONE)
+
 
 
         //recycler
@@ -75,28 +77,102 @@ class AddMeasuresFragment : Fragment() {
         recyclerViewAdd.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
+        //удаление времени при нажатии кнопки удалить
+        // определяем слушателя нажатия элемента в списке
+        // определяем слушателя нажатия элемента в списке
+
+        val deleteClickListener: AddFragmentMedicamentTimeAdapter.OnDeleteClickListener =
+            object : AddFragmentMedicamentTimeAdapter.OnDeleteClickListener {   //
+                override fun onDeleteAlarmClick() {
+
+                    frequencyMedicament-- - 1
+                    binding.editFrequencyMedical.setText(frequencyMedicament.toString())
+                }
+            }
 
         //recycler for MedicTime
-        val medicAdapter = AddFragmentMedicamentTimeAdapter()
+        val medicAdapter = AddFragmentMedicamentTimeAdapter(deleteClickListener)
         val recyclerViewMed = binding.recyclerMed
         recyclerViewMed.adapter = medicAdapter
         recyclerViewMed.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
+
+
+
         //создаем настояющую дату для ограничения по датам DatePicker
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        val dayMilli = dateCalendar.time.time
+        dayMilli = dateCalendar.time.time
+        val yearToday: Int = dateCalendar.get(Calendar.YEAR)
+        val monthToday: Int = dateCalendar.get(Calendar.MONTH)
+        val dayOfMonthToday: Int = dateCalendar.get(Calendar.DAY_OF_MONTH)
+        val justDayCalendar: Calendar =
+            GregorianCalendar(yearToday, monthToday, dayOfMonthToday)
+        var justDayMilli = justDayCalendar.time.time
+
+        idMed = justDayMilli.toString()
 
         //format date
         val currentDate = Date(dayMilli)
         val dateFormat = SimpleDateFormat("dd MMM YYYY")
         val dayToday = dateFormat.format(currentDate)
-binding.textDate.text = dayToday
+        binding.dateTextView.text = dayToday
 
 //MeasureViewModel
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
         mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
 
+        mMedicalViewModel.readAllData.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { listMedicalInfo ->
+
+                binding.nameMedical.setText(listMedicalInfo.last().nameOfMedicine)
+                binding.editFrequencyMedical.setText(listMedicalInfo.last().frequencyMedicine.toString())
+                binding.editTextMedicalDoze.setText(listMedicalInfo.last().doseMedicine.toString())
+            })
+
+
+        binding.changeDayButton.setOnClickListener {
+            Log.v("myLogs", "AlarmFragment binding.floatingActionBtnAlarm.setOnClickListener ")
+            val cal = Calendar.getInstance()
+
+            val dateSetListener =
+                DatePickerDialog.OnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    cal.add(Calendar.DAY_OF_MONTH, 1)
+
+                    yearMeasure = datePicker.year
+                    mounthMeasure = datePicker.month
+                    dayMeasure = datePicker.dayOfMonth
+
+                    val dateCalendar: Calendar =
+                        GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
+                    dateMilli = dateCalendar.time.time
+
+                    idMed = dateMilli.toString()
+                    dayMilli = dateMilli
+                    //format date
+                    val currentDate = Date(dateMilli)
+                    val dateFormat = SimpleDateFormat("dd MMM YYYY")
+                    val ddate = dateFormat.format(currentDate)
+
+                    binding.dateTextView.setVisibility(View.VISIBLE)
+                    binding.dateTextView.text = ddate.toString()
+                }
+
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                dateSetListener,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
+
+            datePickerDialog.datePicker.setMaxDate(dayMilli)
+            datePickerDialog.show()
+        }
 
         //Вреия и замер
         binding.addOneMeasureBtn.setOnClickListener {
@@ -141,10 +217,11 @@ binding.textDate.text = dayToday
                 }
             }
 
-            dialogFragment.btnCansel.setOnClickListener {
+            dialogFragment.cancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
             }
         }
+
 
         binding.addOneMedBtn.setOnClickListener {
             //openDialogMedical()
@@ -165,7 +242,7 @@ binding.textDate.text = dayToday
                     val timeHour = dialogFragment.timePicker.hour
                     val timeMinute = dialogFragment.timePicker.minute
                     val medicamentTime =
-                        MedicamentTime(0, timeHour, timeMinute, dateMilli, idMed)
+                        MedicamentTime(0, timeHour, timeMinute, dayMilli, idMed)
                     medicAdapter.addData(medicamentTime)
 
                 } catch (e: Exception) {
@@ -177,14 +254,18 @@ binding.textDate.text = dayToday
                 }
             }
 
-            val frequencyMedicament = medicAdapter.itemCount
+            //frequency take medicament
+            frequencyMedicament = medicAdapter.itemCount + 1
             binding.editFrequencyMedical.setText(frequencyMedicament.toString())
+            counter++
 
-            dialogFragment.btnCansel.setOnClickListener {
+            dialogFragment.cancelBtn.setOnClickListener {
                 Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
                 mAlertDialog.dismiss()
             }
         }
+
+
 
         binding.saveBtn.setOnClickListener {
             //insertToDataToDataBase()
@@ -195,7 +276,7 @@ binding.textDate.text = dayToday
 
                 val infoDay = MeasureOfDay(
                     idMed,
-                    dateMilli,
+                    dayMilli,
                     nameMedicamentaion,
                     doza,
                     frequency
@@ -230,45 +311,7 @@ binding.textDate.text = dayToday
             }
         }
 
-        binding.changeButton.setOnClickListener {
-            Log.v("myLogs", "AlarmFragment binding.floatingActionBtnAlarm.setOnClickListener ")
-            val cal = Calendar.getInstance()
 
-            val dateSetListener =
-                DatePickerDialog.OnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
-                    cal.set(Calendar.YEAR, year)
-                    cal.set(Calendar.MONTH, monthOfYear)
-                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    cal.add(Calendar.DAY_OF_MONTH, 1)
-
-                    yearMeasure = datePicker.year
-                    mounthMeasure = datePicker.month
-                    dayMeasure = datePicker.dayOfMonth
-
-                    val dateCalendar: Calendar =
-                        GregorianCalendar(yearMeasure, mounthMeasure, dayMeasure)
-                    dateMilli = dateCalendar.time.time
-
-                    //format date
-                    val currentDate = Date(dateMilli)
-                    val dateFormat = SimpleDateFormat("dd MMM YYYY")
-                    val ddate = dateFormat.format(currentDate)
-
-                    binding.textDate.setVisibility(View.VISIBLE)
-                    binding.textDate.text = ddate.toString()
-                }
-
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                dateSetListener,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            )
-
-            datePickerDialog.datePicker.setMaxDate(dayMilli)
-            datePickerDialog.show()
-        }
     }
 }
 

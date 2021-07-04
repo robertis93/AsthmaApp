@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:id="@+id/timeMeasure"
+        android:id="@+id/timeMeasureText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -20,10 +20,11 @@
         style="@style/Text.DarkGray" />
 
     <ImageView
-        android:id="@+id/delete_alarm"
+        android:id="@+id/deleteAlarmIcon"
         android:layout_marginStart="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_weight="1"
         app:srcCompat="@drawable/delete_24"
         />
 

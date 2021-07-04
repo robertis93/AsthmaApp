@@ -26,16 +26,14 @@ class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapt
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = measuresList[position]
         with(holder.binding) {
-            timeMeasure.text = "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
+            timeMeasureText.text = "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
                 com.example.asthmaapp.utils.timeConvert(currentItem.minute)
             }"
-            measure.text = currentItem.measure.toString()
-            deleteAlarm.setOnClickListener {
+            addMeasureText.text = currentItem.measure.toString()
+            deleteAlarmIcon.setOnClickListener {
                 deleteData(measuresList[position])
             }
-
         }
-
     }
 
     override fun getItemCount(): Int {

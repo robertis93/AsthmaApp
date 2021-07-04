@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/textSelectAlarm"
+            android:id="@+id/selectAlarmTextView"
             style="@style/Text.SemiBold18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
 
 
             <TextView
-                android:id="@+id/measurePicflometr"
+                android:id="@+id/timeTakeMedicamentTextView"
                 style="@style/Text.SemiBold18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                 android:tint="@color/white"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/measurePicflometr"
+                app:layout_constraintStart_toEndOf="@+id/timeTakeMedicamentTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -154,7 +154,7 @@
 
 
             <TextView
-                android:id="@+id/drugs_alarm"
+                android:id="@+id/drugsAlarmTextView"
                 style="@style/Text.SemiBold18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -179,7 +179,7 @@
                 android:tint="@color/white"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/drugs_alarm"
+                app:layout_constraintStart_toEndOf="@+id/drugsAlarmTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -190,7 +190,7 @@
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_drugs"
+                android:id="@+id/drugsRecyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_alarm" />

@@ -6,9 +6,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:paddingBottom="32dp"
         tools:context=".view.fragments.AddMeasuresFragment">
@@ -18,16 +18,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/textDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="24sp"
-            android:text="@string/ok"/>
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/ok"
+                android:textSize="24sp" />
 
             <ImageButton
-                android:id="@+id/changeButton"
+                android:id="@+id/changeDayButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -35,18 +35,19 @@
                 app:srcCompat="@drawable/edit_icon" />
 
         </LinearLayout>
+
         <View
-            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
-            android:background="@color/light_blue_med"
-            android:layout_height="2dp"></View>
+            android:layout_height="2dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/light_blue_med" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textTimeMeasure"
+                android:id="@+id/timeMeasureTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -69,7 +70,7 @@
                 android:tint="@color/white"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textTimeMeasure"
+                app:layout_constraintStart_toEndOf="@+id/timeMeasureTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -85,7 +86,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/measurePicflometr"
+                android:id="@+id/timeTakeMedicamentTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time_take_medicament"
@@ -108,7 +109,7 @@
                 android:tint="@color/white"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/measurePicflometr"
+                app:layout_constraintStart_toEndOf="@+id/timeTakeMedicamentTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -132,9 +133,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameMedical"
+                style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="@style/Text.SemiBold18"/>
+                android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -177,27 +178,26 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editFrequencyMedical"
+                style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="numberDecimal"
-                style="@style/Text.SemiBold18"/>
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveBtn"
+            style="@style/Button.Blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="#03A9F4"
-            style="@style/Button.Blue"
             android:text="@string/save_btn"
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
-
 
 
     </LinearLayout>

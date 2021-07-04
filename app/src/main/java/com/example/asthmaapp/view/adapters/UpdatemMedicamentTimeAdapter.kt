@@ -68,7 +68,7 @@ class UpdatemMedicamentTimeAdapter(
                 timeList[position].minute = timeMinute
             }
 
-            dialogFragment.btnCansel.setOnClickListener {
+            dialogFragment.cancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
             }
         }
