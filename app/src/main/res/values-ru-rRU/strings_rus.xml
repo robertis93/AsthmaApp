@@ -47,7 +47,9 @@
     <string name="l_per_min">л/мин</string>
     <string name="measure">Замеры</string>
     <string name="notif">Оповещения</string>
+    <string name="you_dont_write_all_information">Вы заполнили не все поля!</string>
     <string name="lmin">л/мин</string>
+    <string name="you_forget_write_information_about_medication">"Вы не заполнили информацию о принимаемом лекарстве!"</string>
     <string name="important_message">Важное сообщение!</string>
     <string name="message">Сообщение!</string>
     <string name="ok_i_do_it">"ОК, сейчас сделаю"</string>

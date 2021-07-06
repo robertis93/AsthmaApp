@@ -46,9 +46,7 @@ class UpdateMeasureFragment : Fragment() {
         binding.dateTextView.setText(com.example.asthmaapp.utils.longToStringCalendar(args.currentItemDay.day.day))
         binding.nameMedical.setText(args.currentItemDay.day.nameMedicament)
         binding.editTextMedicalDoze.setText(args.currentItemDay.day.doza.toString())
-        binding.editFrequencyMedical.setText(args.currentItemDay.day.frequency.toString())
 
-        var frequencyTakeMedicament = args.currentItemDay.day.frequency
         val idMed = args.currentItemDay.day.id
         val measuresList = args.currentItemDay.measures
         val timeList = args.currentItemDay.medicamentTime
@@ -75,8 +73,6 @@ class UpdateMeasureFragment : Fragment() {
         val timeClickListener = object : UpdateMedicamentTimeAdapter.OnClickListener {   //
             override fun onDeleteClick(medicamentTime: MedicamentTime, position: Int) {
                 mMeasureViewModel.deleteMedicalTime(medicamentTime)
-                frequencyTakeMedicament = frequencyTakeMedicament?.minus(1)
-                binding.editFrequencyMedical.setText(frequencyTakeMedicament.toString())
                 Toast.makeText(
                     requireContext(), "Успешно удалено",
                     Toast.LENGTH_SHORT
@@ -95,7 +91,7 @@ class UpdateMeasureFragment : Fragment() {
         }
 
         binding.addTimeTakeMedicamentBtn.setOnClickListener {
-          addTimeTakeMedicament(updateMedicamentTimeAdapter, idMed, frequencyTakeMedicament)
+            addTimeTakeMedicament(updateMedicamentTimeAdapter, idMed)
         }
 
         binding.saveBtn.setOnClickListener {
@@ -103,7 +99,10 @@ class UpdateMeasureFragment : Fragment() {
         }
     }
 
-    private fun addTimeTakeMedicament(updateMedicamentTimeAdapter: UpdateMedicamentTimeAdapter, idMed: String, frequencyTakeMedicament: Int?) {
+    private fun addTimeTakeMedicament(
+        updateMedicamentTimeAdapter: UpdateMedicamentTimeAdapter,
+        idMed: String
+    ) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
         val layoutInflater = LayoutInflater.from(requireContext())
         val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
@@ -130,10 +129,7 @@ class UpdateMeasureFragment : Fragment() {
             updateMedicamentTimeAdapter.addData(medicamentTime)
             mMeasureViewModel.addMedicalTime(medicamentTime)
 
-            //frequency take medicament
-            var showFrequencyTakeMedicament = frequencyTakeMedicament.toString().toInt()
-            showFrequencyTakeMedicament++
-            binding.editFrequencyMedical.setText((showFrequencyTakeMedicament + frequencyTakeMedicament.toString().toInt()).toString())
+
         }
         dialogFragment.cancelBtn.setOnClickListener {
             Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
@@ -167,7 +163,7 @@ class UpdateMeasureFragment : Fragment() {
                 mMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
 
             } catch (e: Exception) {
-                val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")
+                val myDialogFragment = AddFragmentDialog(R.string.you_dont_write_all_information)
                 val manager = getActivity()?.getSupportFragmentManager()
                 if (manager != null) {
                     myDialogFragment.show(manager, "myDialog")
@@ -179,18 +175,20 @@ class UpdateMeasureFragment : Fragment() {
         }
     }
 
-    private fun saveMeasurementsPerDay(updateMeasureAdapter: UpdateMeasureAdapter, updateMedicamentTimeAdapter: UpdateMedicamentTimeAdapter) {
+    private fun saveMeasurementsPerDay(
+        updateMeasureAdapter: UpdateMeasureAdapter,
+        updateMedicamentTimeAdapter: UpdateMedicamentTimeAdapter
+    ) {
         val dayMeasure = args.currentItemDay.day.day
         val nameMed = binding.nameMedical.text.toString()
         val dozaMed = binding.editTextMedicalDoze.text.toString()
-        val freqMed = binding.editFrequencyMedical.text.toString()
         val updateMeasure =
             MeasureOfDay(
                 args.currentItemDay.day.id,
                 dayMeasure,
                 nameMed,
-                dozaMed.toInt(),
-                freqMed.toInt())
+                dozaMed.toInt()
+            )
         val timeAndMeasureInfo = updateMeasureAdapter.getData()
         for (timeAndMeasure in timeAndMeasureInfo)
             mMeasureViewModel.updateTimeMeasure(timeAndMeasure)

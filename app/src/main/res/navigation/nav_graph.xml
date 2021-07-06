@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/helloFragment">
+    app:startDestination="@id/listFragment">
 
     <fragment
         android:id="@+id/listFragment"
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/medicalFragment"
-        android:name="com.example.asthmaapp.view.fragments.MedicalFragment"
+        android:name="com.example.asthmaapp.view.fragments.MedicamentFragment"
         android:label="@string/medicament"
         tools:layout="@layout/medical_fragment">
         <action
@@ -111,9 +111,11 @@
             app:argType="string"
             app:nullable="true" />
     </activity>
-    <activity
-        android:id="@+id/splashActivity"
-        android:name="com.example.asthmaapp.view.activities.SplashActivity"
-        android:label="activity_splash"
-        tools:layout="@layout/activity_splash" />
+    <action android:id="@+id/action_global_viewPagerFragment4" app:destination="@id/viewPagerFragment" />
+    <action android:id="@+id/action_global_listFragment2" app:destination="@id/listFragment" />
+    <fragment
+        android:id="@+id/firstScreen"
+        android:name="com.example.asthmaapp.view.fragments.onboarding.screens.FirstScreen"
+        android:label="fragment_first_screen"
+        tools:layout="@layout/fragment_first_screen" />
 </navigation>

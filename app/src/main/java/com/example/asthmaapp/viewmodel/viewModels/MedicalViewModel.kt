@@ -5,14 +5,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.asthmaapp.model.database.MeasureDataBase
-import com.example.asthmaapp.model.models.MedicalInfo
+import com.example.asthmaapp.model.models.MedicamentlInfo
 import com.example.asthmaapp.viewmodel.repository.MedicalInfoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MedicalViewModel(application: Application) : AndroidViewModel(application) {
 
-    val readAllData: LiveData<List<MedicalInfo>>
+    val readAllData: LiveData<List<MedicamentlInfo>>
     private val repository: MedicalInfoRepository
 
     init {
@@ -21,21 +21,21 @@ class MedicalViewModel(application: Application) : AndroidViewModel(application)
         readAllData = repository.readAllData
     }
 
-    fun addMedicalInfo(medicalInfo: MedicalInfo) {
+    fun addMedicalInfo(medicamentlInfo: MedicamentlInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addMedicalInfo(medicalInfo)
+            repository.addMedicalInfo(medicamentlInfo)
         }
     }
 
-    fun updateMedicalInfo(medicalInfo: MedicalInfo) {
+    fun updateMedicalInfo(medicamentlInfo: MedicamentlInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateMedicalInfo(medicalInfo)
+            repository.updateMedicalInfo(medicamentlInfo)
         }
     }
 
-    fun deleteMedicalInfo(medicalInfo: MedicalInfo) {
+    fun deleteMedicalInfo(medicamentlInfo: MedicamentlInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteMedicalInfo(medicalInfo)
+            repository.deleteMedicalInfo(medicamentlInfo)
         }
     }
 

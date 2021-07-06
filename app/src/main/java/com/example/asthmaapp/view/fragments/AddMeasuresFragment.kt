@@ -34,7 +34,6 @@ class AddMeasuresFragment : Fragment() {
     lateinit var binding: FragmentAddBinding
     private lateinit var idMed: String
     private var dayMilliseconds by Delegates.notNull<Long>()
-    private var frequencyMedicament by Delegates.notNull<Int>()
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
     private lateinit var mMedicalViewModel: MedicalViewModel
     private var dateMilli by Delegates.notNull<Long>()
@@ -62,14 +61,7 @@ class AddMeasuresFragment : Fragment() {
         recyclerViewAdd.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        val deleteClickListener: AddMedicamentTimeAdapter.OnDeleteClickListener =
-            object : AddMedicamentTimeAdapter.OnDeleteClickListener {   //
-                override fun onDeleteAlarmClick() {
-                    frequencyMedicament -= 1
-                    binding.editFrequencyMedical.setText(frequencyMedicament.toString())
-                }
-            }
-        val addMedicamentTimeAdapter = AddMedicamentTimeAdapter(deleteClickListener)
+        val addMedicamentTimeAdapter = AddMedicamentTimeAdapter()
         val recyclerViewMed = binding.recyclerMed
         recyclerViewMed.adapter = addMedicamentTimeAdapter
         recyclerViewMed.layoutManager =
@@ -83,11 +75,10 @@ class AddMeasuresFragment : Fragment() {
         val dayOfMonthToday: Int = dateCalendar.get(Calendar.DAY_OF_MONTH)
         val justDayCalendar: Calendar =
             GregorianCalendar(yearToday, monthToday, dayOfMonthToday)
-        var justDayMilli = justDayCalendar.time.time
+        val justDayMilli = justDayCalendar.time.time
 
         idMed = justDayMilli.toString()
 
-        //format date
         val currentDate = Date(dayMilliseconds)
         val dateFormat = SimpleDateFormat("dd MMM YYYY")
         val dayToday = dateFormat.format(currentDate)
@@ -99,10 +90,15 @@ class AddMeasuresFragment : Fragment() {
         mMedicalViewModel.readAllData.observe(
             viewLifecycleOwner,
             { listMedicalInfo ->
-                // TODO: сделать, т.к. вылетает если ничего нету
-                binding.nameMedical.setText(listMedicalInfo.last().nameOfMedicine)
-                binding.editFrequencyMedical.setText(listMedicalInfo.last().frequencyMedicine.toString())
-                binding.editTextMedicalDoze.setText(listMedicalInfo.last().doseMedicine.toString())
+                try {
+                    binding.nameMedical.setText(listMedicalInfo.last().nameOfMedicine)
+                    binding.editTextMedicalDoze.setText(listMedicalInfo.last().doseMedicine.toString())
+                } catch (e: Exception) {
+                    val myDialogFragment =
+                        AddFragmentDialog(R.string.you_forget_write_information_about_medication)
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    myDialogFragment.show(fragmentManager, "myDialog")
+                }
             }
         )
 
@@ -131,14 +127,12 @@ class AddMeasuresFragment : Fragment() {
         try {
             val nameMedicamentation = binding.nameMedical.text.toString()
             val doza = binding.editTextMedicalDoze.text.toString().toInt()
-            val frequency = binding.editFrequencyMedical.text.toString().toInt()
 
             val infoDay = MeasureOfDay(
                 idMed,
                 dayMilliseconds,
                 nameMedicamentation,
-                doza,
-                frequency
+                doza
             )
             val measuresOneDay = addMeasureAdapter.getData()
             for (measure in measuresOneDay) {
@@ -154,7 +148,7 @@ class AddMeasuresFragment : Fragment() {
 
             findNavController().popBackStack()
         } catch (e: Exception) {
-            val myDialogFragment = AddFragmentDialog("Вы заполнили не все поля")
+            val myDialogFragment = AddFragmentDialog(R.string.you_dont_write_all_information)
             val fragmentManager = requireActivity().supportFragmentManager
             myDialogFragment.show(fragmentManager, "myDialog")
         }
@@ -181,12 +175,7 @@ class AddMeasuresFragment : Fragment() {
             addMedicamentTimeAdapter.addData(medicamentTime)
         }
 
-        //frequency take medicament
-        frequencyMedicament = addMedicamentTimeAdapter.itemCount + 1
-        binding.editFrequencyMedical.setText(frequencyMedicament.toString())
-
         dialogFragment.cancelBtn.setOnClickListener {
-            Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
             alertDialog.dismiss()
         }
     }
@@ -199,17 +188,14 @@ class AddMeasuresFragment : Fragment() {
         builder.setView(dialogFragment.root)
         builder.setTitle(R.string.measure_alarm_frag)
 
-        // show dialog
         val mAlertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
 
-        // listener EditText
         dialogFragment.measureDialog.doAfterTextChanged {
             dialogFragment.btnSave.isEnabled =
                 dialogFragment.measureDialog.text.toString().length > 1
         }
 
-        //сохраняем в бд замер
         dialogFragment.btnSave.setOnClickListener {
             mAlertDialog.dismiss()
             dialogFragment.timePicker.is24HourView
@@ -218,10 +204,8 @@ class AddMeasuresFragment : Fragment() {
             val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
             timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
             timeAndMeasureList.add(timeAndMeasure)
-
             addMeasureAdapter.addData(timeAndMeasure)
         }
-
         dialogFragment.cancelBtn.setOnClickListener {
             mAlertDialog.dismiss()
         }

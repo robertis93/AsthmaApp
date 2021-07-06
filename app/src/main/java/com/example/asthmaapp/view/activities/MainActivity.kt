@@ -1,13 +1,16 @@
 package com.example.asthmaapp.view.activities
 
 import android.app.ActionBar
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.asthmaapp.NavGraphDirections
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.ActivityMainBinding
 
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         val view = binding.getRoot()
         setContentView(view)
 
+
+
         val bottomNavigationView = binding.btnNavigationView
         //ответственный чтобы заменять фрагменты в navhostfragment
 
@@ -37,8 +42,25 @@ class MainActivity : AppCompatActivity() {
                 R.id.alarmFragment -> binding.btnNavigationView.visibility = View.VISIBLE
                 R.id.medicalFragment -> binding.btnNavigationView.visibility = View.VISIBLE
                 R.id.helloFragment -> binding.btnNavigationView.visibility = View.GONE
+                R.id.viewPagerFragment -> binding.btnNavigationView.visibility = View.INVISIBLE
             }
         }
+
+        if (onBoardingFinished()) {
+            val action = NavGraphDirections.actionGlobalListFragment2()
+            navController.navigate(action)
+
+
+        } else {
+            val action = NavGraphDirections.actionGlobalViewPagerFragment4()
+            navController.navigate(action)
+        }
+
+    }
+
+    private fun onBoardingFinished(): Boolean {
+        val sharedPref = applicationContext.getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
+        return sharedPref.getBoolean("Finished", false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

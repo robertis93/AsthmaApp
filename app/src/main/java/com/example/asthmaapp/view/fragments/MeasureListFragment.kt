@@ -34,7 +34,6 @@ class MeasureListFragment : Fragment() {
    // TODO: разделить логичные, простые, маленькие и понятные методы
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setHasOptionsMenu(true)
 
         binding.addMeasureButton.setOnClickListener {

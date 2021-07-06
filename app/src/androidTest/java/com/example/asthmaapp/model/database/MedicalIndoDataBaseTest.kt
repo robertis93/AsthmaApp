@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.asthmaapp.model.models.MedicalInfo
+import com.example.asthmaapp.model.models.MedicamentlInfo
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
 import org.junit.*
@@ -46,7 +46,7 @@ class MedicalIndoDataBaseTest : TestCase() {
     // is present in the db -- if the item is present then our test cases pass
     @Test
     fun writeAndReadLanguage() = runBlocking {
-        val medicament = MedicalInfo(0, "Pillow", 222, 2)
+        val medicament = MedicamentlInfo(0, "Pillow", 222, 2)
         dao.addMedicalInfo(medicament)
         val medicaments = dao.readAllData()
         var medicationItem = medicaments.value

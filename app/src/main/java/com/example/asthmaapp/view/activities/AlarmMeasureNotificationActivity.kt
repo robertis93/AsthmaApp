@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.AlarmMeasureNotificationActivityBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.model.models.MedicalInfo
+import com.example.asthmaapp.model.models.MedicamentlInfo
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 import java.text.SimpleDateFormat
@@ -17,10 +17,8 @@ import java.util.*
 class AlarmMeasureNotificationActivity : AppCompatActivity() {
 
     private lateinit var binding: AlarmMeasureNotificationActivityBinding
-    private lateinit var medicamentList: List<MedicalInfo>
     private lateinit var mMedicalViewModel: MedicalViewModel
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
-    private var medicalInfo = mutableListOf<MedicalInfo>()
     private lateinit var nameMedicament: String
     private lateinit var dozaMedicamnet : String
     private lateinit var frequencyMedicament: String
@@ -62,7 +60,6 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
         //заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
         mMedicalViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
             nameMedicament = listMedicament.last().nameOfMedicine
-            dozaMedicamnet = listMedicament.last().frequencyMedicine.toString()
             frequencyMedicament = listMedicament.last().doseMedicine.toString()
         })
 
@@ -87,8 +84,7 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
                 dayMilliId.toString(),
                 dateMilli,
                 nameMedicament,
-                dozaMedicamnet.toInt(),
-                frequencyMedicament.toInt()
+                dozaMedicamnet.toInt()
             )
 
             mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)

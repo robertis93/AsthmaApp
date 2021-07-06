@@ -2,9 +2,7 @@ package com.example.asthmaapp.model.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.models.Alarm
-import com.example.asthmaapp.model.models.MedicalInfo
+import com.example.asthmaapp.model.models.MedicamentlInfo
 
 
 //DAO (data access object)  отвечают за определение методов доступа к базе данных.
@@ -12,18 +10,18 @@ import com.example.asthmaapp.model.models.MedicalInfo
 interface MedicalInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addMedicalInfo(medicalInfo: MedicalInfo)
+    suspend fun addMedicalInfo(medicamentlInfo: MedicamentlInfo)
 
     @Update
-    suspend fun updateMedicalInfo(medicalInfo: MedicalInfo)
+    suspend fun updateMedicalInfo(medicamentlInfo: MedicamentlInfo)
 
     @Delete
-    suspend fun deleteMedicalInfo(medicalInfo: MedicalInfo)
+    suspend fun deleteMedicalInfo(medicamentlInfo: MedicamentlInfo)
 
     @Query("DELETE FROM medical_table")
     suspend fun deleteAllMedicalInfo()
 
     @Query("Select * From medical_table")
-    fun readAllData(): LiveData<List<MedicalInfo>>
+    fun readAllData(): LiveData<List<MedicamentlInfo>>
 
 }

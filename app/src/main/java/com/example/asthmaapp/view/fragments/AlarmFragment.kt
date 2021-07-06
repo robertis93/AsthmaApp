@@ -39,7 +39,7 @@ class AlarmFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = AlarmFragmentBinding.inflate(inflater, container, false)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+//        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         return binding.root
     }
 

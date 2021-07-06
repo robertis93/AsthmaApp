@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.MedicalFragmentBinding
-import com.example.asthmaapp.model.models.MedicalInfo
+import com.example.asthmaapp.model.models.MedicamentlInfo
 import com.example.asthmaapp.utils.MedicalDialog
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 
-class MedicalFragment : Fragment() {
+class MedicamentFragment : Fragment() {
 
     private lateinit var binding: MedicalFragmentBinding
     private lateinit var mMedicalViewModel: MedicalViewModel
@@ -24,7 +23,7 @@ class MedicalFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = MedicalFragmentBinding.inflate(inflater, container, false)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+//        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         return binding.root
     }
 
@@ -35,7 +34,6 @@ class MedicalFragment : Fragment() {
         mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
             if (medication.size > 0) {
                 binding.editTextMedicalInfo.setText(medication.last().nameOfMedicine)
-                binding.editFrequencyMedical.setText(medication.last().frequencyMedicine.toString())
                 binding.editTextMedicalDose.setText(medication.last().doseMedicine.toString())
             }
         })
@@ -52,15 +50,13 @@ class MedicalFragment : Fragment() {
 
     private fun insertDataToDataBase() {
         val nameMedication = binding.editTextMedicalInfo.text.toString()
-        val frequencyMedication = binding.editFrequencyMedical.text.toString().toInt()
         val doseMedication = binding.editTextMedicalDose.text.toString().toInt()
-        val medicalInfo =
-            MedicalInfo(
+        val medicamentlInfo =
+            MedicamentlInfo(
                 0,
                 nameMedication,
-                frequencyMedication,
                 doseMedication
             )
-        mMedicalViewModel.addMedicalInfo(medicalInfo)
+        mMedicalViewModel.addMedicalInfo(medicamentlInfo)
     }
 }

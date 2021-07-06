@@ -9,10 +9,10 @@ import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
 import com.example.asthmaapp.model.models.Alarm
 import com.example.asthmaapp.model.models.DrugsAlarm
-import com.example.asthmaapp.model.models.MedicalInfo
+import com.example.asthmaapp.model.models.MedicamentlInfo
 
 
-@Database(entities = [MeasureOfDay::class, TimeAndMeasure::class, MedicamentTime::class, Alarm::class, DrugsAlarm::class, MedicalInfo::class] , version = 1, exportSchema = false)
+@Database(entities = [MeasureOfDay::class, TimeAndMeasure::class, MedicamentTime::class, Alarm::class, DrugsAlarm::class, MedicamentlInfo::class] , version = 1, exportSchema = false)
 abstract class MeasureDataBase : RoomDatabase() {
 
     abstract fun MedAndMeasureDao() : DayDao

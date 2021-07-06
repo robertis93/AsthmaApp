@@ -161,30 +161,6 @@
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editFrequencyMedicalLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="24dp"
-            android:hint="@string/frequency"
-            app:boxBackgroundColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:suffixText="@string/per_in_day">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editFrequencyMedical"
-                style="@style/Text.SemiBold18"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveBtn"
             style="@style/Button.Blue"

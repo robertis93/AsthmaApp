@@ -13,8 +13,7 @@ data class MeasureOfDay(
     val id: String,
     val day: Long,
     val nameMedicament: String?,
-    val doza: Int?,
-    val frequency: Int?,
+    val doza: Int?
 ) : Parcelable
 
 @Parcelize

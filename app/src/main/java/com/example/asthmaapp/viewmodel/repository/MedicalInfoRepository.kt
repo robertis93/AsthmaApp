@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 import com.example.asthmaapp.model.database.MedicalInfoDao
 
-import com.example.asthmaapp.model.models.MedicalInfo
+import com.example.asthmaapp.model.models.MedicamentlInfo
 
 
 //Репозиторий управляет запросами и позволяет использовать несколько бэкендов.
@@ -15,18 +15,18 @@ import com.example.asthmaapp.model.models.MedicalInfo
 class MedicalInfoRepository(private val medicalInfoDao: MedicalInfoDao) {
 
 
-    val readAllData: LiveData<List<MedicalInfo>> = medicalInfoDao.readAllData()
+    val readAllData: LiveData<List<MedicamentlInfo>> = medicalInfoDao.readAllData()
 
-    suspend fun addMedicalInfo(medicalInfo: MedicalInfo) {
-        medicalInfoDao.addMedicalInfo(medicalInfo)
+    suspend fun addMedicalInfo(medicamentlInfo: MedicamentlInfo) {
+        medicalInfoDao.addMedicalInfo(medicamentlInfo)
     }
 
-    suspend fun updateMedicalInfo(medicalInfo: MedicalInfo) {
-        medicalInfoDao.updateMedicalInfo(medicalInfo)
+    suspend fun updateMedicalInfo(medicamentlInfo: MedicamentlInfo) {
+        medicalInfoDao.updateMedicalInfo(medicamentlInfo)
     }
 
-    suspend fun deleteMedicalInfo(medicalInfo: MedicalInfo) {
-        medicalInfoDao.deleteMedicalInfo(medicalInfo)
+    suspend fun deleteMedicalInfo(medicamentlInfo: MedicamentlInfo) {
+        medicalInfoDao.deleteMedicalInfo(medicamentlInfo)
     }
 
     suspend fun deleteAllMedicalInfo() {

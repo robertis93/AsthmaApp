@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.model.models.MedicalInfo
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
 import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 import java.text.SimpleDateFormat
@@ -64,7 +63,6 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
         mMedicalViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
             nameMedicament = listMedicament.last().nameOfMedicine
-            dozaMedicament = listMedicament.last().frequencyMedicine.toString()
             frequencyMedicament = listMedicament.last().doseMedicine.toString()
         })
 
@@ -84,8 +82,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
                 dayMilliId.toString(),
                 dateMilli,
                 nameMedicament,
-                dozaMedicament.toInt(),
-                frequencyMedicament.toInt()
+                dozaMedicament.toInt()
             )
 
             mDayMeasureViewModel.addMedicalTime(medicamentTime)
