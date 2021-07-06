@@ -6,12 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.models.DrugsAlarm
-import com.example.asthmaapp.viewmodel.viewModels.AlarmDrugsViewModel
 
 class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
     RecyclerView.Adapter<AlarmDrugsAdapter.AlarmViewHolder>() {
     private var alarmsList = emptyList<DrugsAlarm>()
-    private lateinit var mAlarmDrugsViewModel: AlarmDrugsViewModel
 
     // определили интерфейс слушателя события нажатия
     interface OnAlarmDrugsClickListener {
@@ -41,6 +39,7 @@ class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener
             // вызываем метод слушателя, передавая ему данные
             Log.v("myLogs", "AlarmAdapter setOnClickListener")
             onClickAlarmDrugsListener?.onAlarmClick(currentItem, position)
+            notifyDataSetChanged()
         }
     }
 
@@ -54,6 +53,4 @@ class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener
         //указывает адаптеру, что полученные ранее данные изменились и следует перерисовать список на экране
         notifyDataSetChanged()
     }
-
-
 }

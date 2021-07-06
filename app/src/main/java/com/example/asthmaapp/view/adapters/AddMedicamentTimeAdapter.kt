@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMedicamentTimeItemBinding
 import com.example.asthmaapp.model.MedicamentTime
 
-class AddFragmentMedicamentTimeAdapter(var onClickDeleteListener: OnDeleteClickListener) :
-    RecyclerView.Adapter<AddFragmentMedicamentTimeAdapter.MyViewHolder>() {
+class AddMedicamentTimeAdapter(var onClickDeleteListener: OnDeleteClickListener) :
+    RecyclerView.Adapter<AddMedicamentTimeAdapter.MyViewHolder>() {
     private var measuresMedList = mutableListOf<MedicamentTime>()
 
     // определили интерфейс слушателя события нажатия
@@ -38,11 +38,10 @@ class AddFragmentMedicamentTimeAdapter(var onClickDeleteListener: OnDeleteClickL
                 }"
 
             deleteAlarmIcon.setOnClickListener {
-                deleteData(measuresMedList[position])
+                deleteDate(measuresMedList[position])
                 onClickDeleteListener?.onDeleteAlarmClick()
             }
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -55,7 +54,7 @@ class AddFragmentMedicamentTimeAdapter(var onClickDeleteListener: OnDeleteClickL
         notifyDataSetChanged()
     }
 
-    fun deleteData(medicamentTime: MedicamentTime) {
+    fun deleteDate(medicamentTime: MedicamentTime) {
         // this.measuresMedList
         measuresMedList.remove(medicamentTime)
         notifyDataSetChanged()

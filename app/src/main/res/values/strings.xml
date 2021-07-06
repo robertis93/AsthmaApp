@@ -30,7 +30,7 @@
     <string name="third_screen_desc">Не пропускайте замеры и вовремя принимайте лекарства и чувствуйте себя хорошо</string>
     <string name="start_app">Начать</string>
     <string name="third_screen_red">Если ваш замер закрашен красным цветом, то немедленно примите бронхорасширяющий препарат и обратитесь к врачу</string>
-    <string name="third_screen_yellow">Если ваш замер закрашен желтым цветом, то Вам следуют увеличить дозировку базового лекарства</string>
+    <string name="third_screen_yellow">Если ваш замер закрашен желтым цветом, то Вам следует увеличить дозировку базового лекарства</string>
     <string name="diary">Дневник</string>
     <string name="notification">Оповещения</string>
     <string name="medicament">Лекарство</string>

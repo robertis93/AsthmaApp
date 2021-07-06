@@ -9,44 +9,41 @@ import com.example.asthmaapp.databinding.InnerItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
 
 
-class InnerMeasureAdapter(
+class MeasureAdapter(
     var measures: List<TimeAndMeasure>,
     timeAndMeasure: List<TimeAndMeasure>,
     var onClickListener: OnClickListener
 ) :
-    RecyclerView.Adapter<InnerMeasureAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() {
 
-    val timeAndMeasureList = timeAndMeasure
+    private val timeAndMeasureList = timeAndMeasure
 
-    // определили интерфейс слушателя события нажатия
     interface OnClickListener {
         fun actionClick()
     }
 
-    class MyViewHolder(val binding: InnerItemBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeasureViewHolder {
         val binding = InnerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(binding)
+        return MeasureViewHolder(binding)
     }
 
     @SuppressLint("ResourceAsColor")
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
         val currentItem = measures[position]
         var max = timeAndMeasureList[0].measure
         for (i in timeAndMeasureList.indices)
             if (timeAndMeasureList[i].measure > max)
                 max = timeAndMeasureList[i].measure
 
-        var control = max * 0.85
-        val controlHigh = max * 0.75
+        val controlValue = max * 0.85
+        val controlHighValue = max * 0.75
 
         holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
         holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
         val measurenow = currentItem.measure
-        if (measurenow < control)
+        if (measurenow < controlValue)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))
-        if (measurenow < controlHigh)
+        if (measurenow < controlHighValue)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.red))
         holder.binding.measureText.text = currentItem.measure.toString()
         holder.itemView.setOnClickListener {
@@ -57,4 +54,5 @@ class InnerMeasureAdapter(
     override fun getItemCount(): Int {
         return measures.size
     }
+    class MeasureViewHolder(val binding: InnerItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

@@ -1,31 +1,34 @@
 package com.example.asthmaapp.view.adapters
 
 import android.annotation.SuppressLint
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.R
-import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
-import com.example.asthmaapp.databinding.UpdateItemMedtimeBinding
-import com.example.asthmaapp.model.MedicamentTime
+import com.example.asthmaapp.databinding.LayoutDialogAddFragmentBinding
+import com.example.asthmaapp.databinding.UpdateMeasuresInnerItemBinding
+import com.example.asthmaapp.model.TimeAndMeasure
 
-class UpdatemMedicamentTimeAdapter(
-    var timesMedicament: List<MedicamentTime>,
+
+class UpdateMeasureAdapter(
+    timeAndMeasure: List<TimeAndMeasure>,
     var onClickListener: OnClickListener
 ) :
-    RecyclerView.Adapter<UpdatemMedicamentTimeAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<UpdateMeasureAdapter.MyViewHolder>() {
 
     interface OnClickListener {
-        fun onDeleteClick(medicamentTime: MedicamentTime, position: Int)
+        fun onDeleteClick(timeAndMeasure: TimeAndMeasure, position: Int)
     }
 
-    val timeList = timesMedicament.toMutableList()
+    val timeAndMeasureList = timeAndMeasure.toMutableList()
 
-    class MyViewHolder(val binding: UpdateItemMedtimeBinding) :
+    class MyViewHolder(val binding: UpdateMeasuresInnerItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = UpdateItemMedtimeBinding.inflate(
+        val binding = UpdateMeasuresInnerItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -35,15 +38,17 @@ class UpdatemMedicamentTimeAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = timeList[position]
-        holder.binding.hourText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.hour))
+        val currentItem = timeAndMeasureList[position]
+
+        holder.binding.hourText.setText(currentItem.hour.toString())
         holder.binding.minuteText.setText(com.example.asthmaapp.utils.timeConvert(currentItem.minute))
+        holder.binding.measureText.setText(currentItem.measure.toString())
 
         holder.binding.editAlarmImage.setOnClickListener {
             val builder =
                 androidx.appcompat.app.AlertDialog.Builder(holder.binding.editAlarmImage.context)
             val layoutInflater = LayoutInflater.from(holder.binding.editAlarmImage.context)
-            val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
+            val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
             dialogFragment.timePicker.is24HourView
             builder.setView(dialogFragment.root)
             builder.setTitle(R.string.measure_alarm_frag)
@@ -51,9 +56,16 @@ class UpdatemMedicamentTimeAdapter(
             //show dialog
             val mAlertDialog = builder.show()
             dialogFragment.timePicker.setIs24HourView(true)
+            //listener EditText
+            dialogFragment.measureDialog.doAfterTextChanged { it: Editable? ->
+                if (dialogFragment.measureDialog.getText().toString().length > 1)
+                    dialogFragment.btnSave.setEnabled(true)
+                else dialogFragment.btnSave.isEnabled = false
+            }
 
             dialogFragment.timePicker.hour = currentItem.hour
             dialogFragment.timePicker.minute = currentItem.minute
+//            dialogFragment.measureDialog.setText(currentItem.measure)
 
             //сохраняем в бд замер
             dialogFragment.btnSave.setOnClickListener {
@@ -61,11 +73,14 @@ class UpdatemMedicamentTimeAdapter(
                 dialogFragment.timePicker.is24HourView
                 val timeHour = dialogFragment.timePicker.hour
                 val timeMinute = dialogFragment.timePicker.minute
+                val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
 
                 holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(timeHour)
                 holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(timeMinute)
-                timeList[position].hour = timeHour
-                timeList[position].minute = timeMinute
+                holder.binding.measureText.text = measurePicf.toString()
+                timeAndMeasureList[position].hour = timeHour
+                timeAndMeasureList[position].minute = timeMinute
+                timeAndMeasureList[position].measure = measurePicf
             }
 
             dialogFragment.cancelBtn.setOnClickListener {
@@ -73,32 +88,29 @@ class UpdatemMedicamentTimeAdapter(
             }
         }
 
-        holder.binding.deleteImage.setOnClickListener {
-            deleteData(timeList[position])
+        holder.binding.deleteIcon.setOnClickListener {
+            deleteData(timeAndMeasureList[position])
+
             onClickListener?.onDeleteClick(currentItem, position)
         }
     }
 
-    fun deleteData(medicamentTime: MedicamentTime) {
-        timeList.remove(medicamentTime)
+    fun deleteData(timeAndMeasure: TimeAndMeasure) {
+        timeAndMeasureList.remove(timeAndMeasure)
         notifyDataSetChanged()
     }
-
 
     override fun getItemCount(): Int {
-        return timeList.size
+        return timeAndMeasureList.size
     }
 
-
-    fun getData(): MutableList<MedicamentTime> {
-        return timeList
+    fun getData(): MutableList<TimeAndMeasure> {
+        return timeAndMeasureList
 
     }
 
-    fun addData(medicamentTime: MedicamentTime) {
-        // this.measuresMedList
-        timeList.add(medicamentTime)
+    fun addData(timeAndMeasure: TimeAndMeasure) {
+        timeAndMeasureList.add(timeAndMeasure)
         notifyDataSetChanged()
     }
-
 }

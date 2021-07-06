@@ -1,7 +1,6 @@
 package com.example.asthmaapp.view.fragments.onboarding
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,31 +10,24 @@ import com.example.asthmaapp.view.fragments.onboarding.screens.FirstScreen
 import com.example.asthmaapp.view.fragments.onboarding.screens.SecondScreen
 import com.example.asthmaapp.view.fragments.onboarding.screens.ThirdScreen
 
-
-class ViewPagerFragment : Fragment() {
+class OnBoardingFragment : Fragment() {
 
     lateinit var binding: FragmentViewPagerBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentViewPagerBinding.inflate(inflater, container, false)
-        Log.v("myLogs", "ViewPagerFragment  onCreateView")
 
-        //indicator
         val springDotsIndicator = binding.springDotsIndicator
         val viewPager = binding.viewPager
 
-
-
-        val fragmentList = arrayListOf<Fragment>(
+        val fragmentList = arrayListOf(
             FirstScreen(),
             SecondScreen(),
             ThirdScreen()
         )
-
-        val adapter = ViewPagerAdapter(
+        val adapter = OnBoardingAdapter(
             fragmentList,
             requireActivity().supportFragmentManager,
             lifecycle

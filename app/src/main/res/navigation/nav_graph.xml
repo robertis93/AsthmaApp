@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.asthmaapp.view.fragments.ListFragment"
+        android:name="com.example.asthmaapp.view.fragments.MeasureListFragment"
         android:label="@string/diary"
-        tools:layout="@layout/fragment_list">
+        tools:layout="@layout/fragment_measure_list">
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment" />
@@ -27,7 +27,7 @@
         android:id="@+id/addFragment"
         android:name="com.example.asthmaapp.view.fragments.AddMeasuresFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" >
+        tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />
@@ -38,8 +38,8 @@
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.example.asthmaapp.view.fragments.UpdateFragment"
-        android:label="UpdateFragment" >
+        android:name="com.example.asthmaapp.view.fragments.UpdateMeasureFragment"
+        android:label="UpdateFragment">
         <action
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment" />
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/alarmFragment"
         android:name="com.example.asthmaapp.view.fragments.AlarmFragment"
-        android:label="@string/notif" >
+        android:label="@string/notif">
         <action
             android:id="@+id/action_alarmFragment_to_listFragment"
             app:destination="@id/listFragment" />
@@ -62,7 +62,7 @@
         android:id="@+id/medicalFragment"
         android:name="com.example.asthmaapp.view.fragments.MedicalFragment"
         android:label="@string/medicament"
-        tools:layout="@layout/medical_fragment" >
+        tools:layout="@layout/medical_fragment">
         <action
             android:id="@+id/action_medicalFragment_to_listFragment"
             app:destination="@id/listFragment" />
@@ -70,11 +70,13 @@
             android:id="@+id/action_medicalFragment_to_alarmFragment"
             app:destination="@id/alarmFragment" />
     </fragment>
-    <action android:id="@+id/goToAddFragmentAction" app:destination="@id/addFragment" />
+    <action
+        android:id="@+id/goToAddFragmentAction"
+        app:destination="@id/addFragment" />
     <fragment
         android:id="@+id/helloFragment"
         android:name="com.example.asthmaapp.view.fragments.HelloFragment"
-        android:label="HelloFragment" >
+        android:label="HelloFragment">
         <action
             android:id="@+id/action_helloFragment_to_listFragment"
             app:destination="@id/listFragment"
@@ -88,9 +90,9 @@
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
-        android:name="com.example.asthmaapp.view.fragments.onboarding.ViewPagerFragment"
+        android:name="com.example.asthmaapp.view.fragments.onboarding.OnBoardingFragment"
         android:label="fragment_view_pager"
-        tools:layout="@layout/fragment_view_pager" >
+        tools:layout="@layout/fragment_view_pager">
         <action
             android:id="@+id/action_viewPagerFragment_to_listFragment"
             app:destination="@id/listFragment"
@@ -101,16 +103,17 @@
             app:destination="@id/medicalFragment" />
     </fragment>
     <activity
-        android:id="@+id/helloActivity"
-        android:name="com.example.asthmaapp.view.activities.HelloActivity"
-        android:label="HelloActivity" />
-    <activity
         android:id="@+id/alarmActivityTest"
         android:name="com.example.asthmaapp.view.activities.AlarmMeasureNotificationActivity"
-        android:label="AlarmActivityTest" >
+        android:label="AlarmActivityTest">
         <argument
             android:name="dateTime"
             app:argType="string"
             app:nullable="true" />
     </activity>
+    <activity
+        android:id="@+id/splashActivity"
+        android:name="com.example.asthmaapp.view.activities.SplashActivity"
+        android:label="activity_splash"
+        tools:layout="@layout/activity_splash" />
 </navigation>

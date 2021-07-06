@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
@@ -18,12 +17,11 @@ import java.util.*
 class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
     private lateinit var binding: TimeMedActivityAlarmTestBinding
-    private lateinit var medicamentList: List<MedicalInfo>
     private lateinit var nameMedicament: String
-    private lateinit var dozaMedicamnet: String
+    private lateinit var dozaMedicament: String
     private lateinit var frequencyMedicament: String
 
-    //инициализируем ViewModel ленивым способом
+    // инициализируем ViewModel ленивым способом
     // private val mMedicalViewModel by lazy { ViewModelProviders.of(this).get(MedicalViewModel::class.java)}
     private lateinit var mMedicalViewModel: MedicalViewModel
     private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
@@ -36,7 +34,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
         setContentView(binding.getRoot())
         mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-//
+
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         val dateMilli = dateCalendar.time.time
         val year = dateCalendar.time.year
@@ -66,7 +64,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
         mMedicalViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
             nameMedicament = listMedicament.last().nameOfMedicine
-            dozaMedicamnet = listMedicament.last().frequencyMedicine.toString()
+            dozaMedicament = listMedicament.last().frequencyMedicine.toString()
             frequencyMedicament = listMedicament.last().doseMedicine.toString()
         })
 
@@ -86,7 +84,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
                 dayMilliId.toString(),
                 dateMilli,
                 nameMedicament,
-                dozaMedicamnet.toInt(),
+                dozaMedicament.toInt(),
                 frequencyMedicament.toInt()
             )
 

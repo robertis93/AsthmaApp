@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMeasureItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
 
-class AddFragmentMeasureAdapter() : RecyclerView.Adapter<AddFragmentMeasureAdapter.MyViewHolder>() {
+class AddMeasureAdapter() : RecyclerView.Adapter<AddMeasureAdapter.MyViewHolder>() {
     private var measuresList = mutableListOf<TimeAndMeasure>()
 
     class MyViewHolder(val binding: AddFragmentMeasureItemBinding) :

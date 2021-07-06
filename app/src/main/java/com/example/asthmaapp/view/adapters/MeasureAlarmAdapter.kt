@@ -6,20 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.models.Alarm
-import com.example.asthmaapp.viewmodel.viewModels.AlarmViewModel
 
-class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
-    RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
+class MeasureAlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
+    RecyclerView.Adapter<MeasureAlarmAdapter.AlarmViewHolder>() {
     private var alarmsList = emptyList<Alarm>()
 
     // определили интерфейс слушателя события нажатия
     interface OnAlarmClickListener {
         fun onDeleteAlarmClick(alarm: Alarm, position: Int)
     }
-
-
-    private lateinit var mAlarmViewModel: AlarmViewModel
-
 
     class AlarmViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
 //внутренний класс ViewHolder описывает элементы представления списка и привязку их к RecyclerView
@@ -38,13 +33,12 @@ class AlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
         val currentItem = alarmsList[position]
         holder.binding.timeDayTextView.text =
             "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
-        holder.binding.alarmImageView.setOnClickListener {
+        holder.binding.deleteIcon.setOnClickListener {
             // вызываем метод слушателя, передавая ему данные
             Log.v("myLogs", "AlarmAdapter setOnClickListener")
             onClickAlarmListener?.onDeleteAlarmClick(currentItem, position)
             notifyDataSetChanged()
         }
-
     }
 
     override fun getItemCount(): Int {

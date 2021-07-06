@@ -16,13 +16,13 @@ import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
 
 class MedicalFragment : Fragment() {
 
-    lateinit var binding: MedicalFragmentBinding
+    private lateinit var binding: MedicalFragmentBinding
     private lateinit var mMedicalViewModel: MedicalViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = MedicalFragmentBinding.inflate(inflater, container, false)
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         return binding.root
@@ -31,20 +31,7 @@ class MedicalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-
-        binding.btnSaveMedicalInfo.setOnClickListener {
-            insertDataToDataBase()
-            val myDialogFragment = MedicalDialog(R.string.successful_added)
-            val manager = activity?.getSupportFragmentManager()
-            if (manager != null) {
-                myDialogFragment.show(manager, "myDialog")
-
-            }
-        }
-
-//заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
         mMedicalViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
             if (medication.size > 0) {
                 binding.editTextMedicalInfo.setText(medication.last().nameOfMedicine)
@@ -52,8 +39,16 @@ class MedicalFragment : Fragment() {
                 binding.editTextMedicalDose.setText(medication.last().doseMedicine.toString())
             }
         })
-    }
 
+        binding.btnSaveMedicalInfo.setOnClickListener {
+            insertDataToDataBase()
+            val myDialogFragment = MedicalDialog(R.string.successful_added)
+            val manager = activity?.getSupportFragmentManager()
+            if (manager != null) {
+                myDialogFragment.show(manager, "myDialog")
+            }
+        }
+    }
 
     private fun insertDataToDataBase() {
         val nameMedication = binding.editTextMedicalInfo.text.toString()
