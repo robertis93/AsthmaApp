@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMeasureItemBinding
 import com.example.asthmaapp.model.TimeAndMeasure
 
-class AddMeasureAdapter() : RecyclerView.Adapter<AddMeasureAdapter.MyViewHolder>() {
-    private var measuresList = mutableListOf<TimeAndMeasure>()
-
+class AddMeasureAdapter(val measuresList: List<TimeAndMeasure>, val listener: Listener) : RecyclerView.Adapter<AddMeasureAdapter.MyViewHolder>() {
+    interface Listener{
+        fun onDeleteClick(timeAndMeasure: TimeAndMeasure)
+    }
     class MyViewHolder(val binding: AddFragmentMeasureItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -31,26 +32,12 @@ class AddMeasureAdapter() : RecyclerView.Adapter<AddMeasureAdapter.MyViewHolder>
             }"
             addMeasureText.text = currentItem.measure.toString()
             deleteAlarmIcon.setOnClickListener {
-                deleteData(measuresList[position])
+                listener.onDeleteClick(measuresList[position])
             }
         }
     }
 
     override fun getItemCount(): Int {
         return measuresList.size
-    }
-
-    fun addData(timeAndMeasure: TimeAndMeasure) {
-        measuresList.add(timeAndMeasure)
-        notifyDataSetChanged()
-    }
-
-    fun getData(): MutableList<TimeAndMeasure> {
-        return measuresList
-    }
-
-    fun deleteData(timeAndMeasure: TimeAndMeasure) {
-        measuresList.remove(timeAndMeasure)
-        notifyDataSetChanged()
     }
 }

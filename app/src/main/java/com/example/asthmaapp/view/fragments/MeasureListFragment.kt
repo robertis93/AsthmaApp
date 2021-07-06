@@ -56,8 +56,8 @@ class MeasureListFragment : Fragment() {
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
         measureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-
-        measureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer { measure ->
+       // TODO
+/*        measureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer { measure ->
             adapter.setDayData(measure)
             if (adapter.itemCount == 0) {
                 binding.addMeasureButton.visibility = View.VISIBLE
@@ -75,7 +75,7 @@ class MeasureListFragment : Fragment() {
         measureViewModel.readAllTimeAndMeasure.observe(
             viewLifecycleOwner,
             { timeMeasure -> adapter.addTimeAndMeasure(timeMeasure) }
-        )
+        )*/
     }
 
     private fun deleteAllMeasure() {

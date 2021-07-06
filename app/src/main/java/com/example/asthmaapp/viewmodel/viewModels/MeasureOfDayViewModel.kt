@@ -2,15 +2,50 @@ package com.example.asthmaapp.viewmodel.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.asthmaapp.model.*
 import com.example.asthmaapp.model.database.MeasureDataBase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MeasureOfDayViewModel(application: Application) : AndroidViewModel(application) {
+    val measureOfDayLiveData = MutableLiveData<MeasureOfDay>()
+    val timeMeasuresLiveData = MutableLiveData<List<TimeAndMeasure>>(emptyList())
+    val timeMedicineLiveData = MutableLiveData<List<MedicamentTime>>(emptyList())
+
     private val medMeasureDao = MeasureDataBase.getDataBase(application).MedAndMeasureDao()
+    private val medicalInfoDao = MeasureDataBase.getDataBase(application).medicalInfoDao()
+
+
+    init {
+        //создаем настояющую дату для ограничения по датам DatePicker
+        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
+        val dayMilliseconds = dateCalendar.time.time
+        val yearToday: Int = dateCalendar.get(Calendar.YEAR)
+        val monthToday: Int = dateCalendar.get(Calendar.MONTH)
+        val dayOfMonthToday: Int = dateCalendar.get(Calendar.DAY_OF_MONTH)
+        val justDayCalendar: Calendar =
+            GregorianCalendar(yearToday, monthToday, dayOfMonthToday)
+        var justDayMilli = justDayCalendar.time.time
+
+        val idMed = justDayMilli.toString()
+
+        viewModelScope.launch {
+            val medicament = medicalInfoDao.readAllDataSync().last()
+            val newMeasureOfDay = MeasureOfDay(
+                idMed,
+                dayMilliseconds,
+                medicament.nameOfMedicine,
+                medicament.doseMedicine,
+                medicament.frequencyMedicine
+            )
+            measureOfDayLiveData.value = newMeasureOfDay
+        }
+        }
+
 
     //переделать на iveData
 //    fun medicamentWithMeasures() {
@@ -19,21 +54,37 @@ class MeasureOfDayViewModel(application: Application) : AndroidViewModel(applica
 //        }
 //    }
 //считываем все три списка
-    val readAllMedicament: LiveData<List<MeasureOfDay>> = medMeasureDao.readAllMedicament()
+/*    val readAllMedicament: LiveData<List<MeasureOfDay>> = medMeasureDao.readAllMedicament()
     val readAllTimeAndMeasure: LiveData<List<TimeAndMeasure>> =
         medMeasureDao.readAllTimeAndMeasure()
     val readMedicamentAndMeasure: LiveData<List<MedWithMeasuresAndMedicamentTime>> =
-        medMeasureDao.getMedicamentAndMeasures()
+        medMeasureDao.getMedicamentAndMeasures()*/
 
-    fun addMeasure(measureOfDay: MeasureOfDay) {
+    fun changeDate(date: Long){
+        measureOfDayLiveData.value = measureOfDayLiveData.value?.copy(
+            day = date
+        )
+    }
+    fun save() {
         viewModelScope.launch(Dispatchers.IO) {
-            medMeasureDao.insertMedicament(measureOfDay)
+            val measureOfDay = measureOfDayLiveData.value
+            if (measureOfDay != null) {
+                medMeasureDao.insertMedicament(measureOfDay)
+                for (measureTimes in timeMeasuresLiveData.value?: emptyList()) {
+                    medMeasureDao.insertTimeAndMeasure(measureTimes)
+                }
+            }else{
+
+            }
         }
     }
 
-    fun addTimeAndMeasure(timeAndMeasure: TimeAndMeasure) {
-        viewModelScope.launch(Dispatchers.IO) {
-            medMeasureDao.insertTimeAndMeasure(timeAndMeasure)
+    fun addTimeAndMeasure(hour: Int, minute: Int, measurePicf: Int) {
+        val timeAndMeasure = TimeAndMeasure(0, hour, minute, measurePicf, measureOfDayLiveData.value?.id ?:"")
+        val newList = timeMeasuresLiveData.value?.toMutableList()
+        newList?.let{
+            newList.add(timeAndMeasure)
+            timeMeasuresLiveData.value =it
         }
     }
 

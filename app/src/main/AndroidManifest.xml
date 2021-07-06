@@ -10,14 +10,17 @@
         android:roundIcon="@drawable/ic_inhaler"
         android:supportsRtl="true"
         android:theme="@style/Theme.AsthmaApp">
-        <activity android:name=".view.activities.AlarmMeasureNotificationActivity" />
-        <activity android:name=".view.activities.AlarmMedicamentNotificationActivity" />
-        <activity android:name=".view.activities.MainActivity">
+        <activity android:name=".view.activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.activities.AlarmMeasureNotificationActivity" />
+        <activity android:name=".view.activities.AlarmMedicamentNotificationActivity" />
+        <activity android:name=".view.activities.MainActivity">
+
         </activity>
     </application>
 

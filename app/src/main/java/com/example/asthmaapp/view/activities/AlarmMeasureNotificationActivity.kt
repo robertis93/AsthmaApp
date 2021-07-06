@@ -90,9 +90,10 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
                 dozaMedicamnet.toInt(),
                 frequencyMedicament.toInt()
             )
-
-            mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
-            mDayMeasureViewModel.addMeasure(infoDay)
+            TODO("сохранить в бд")
+            
+            /*mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+            mDayMeasureViewModel.addMeasure(infoDay)*/
             //выйти из приложения
             this.finishAffinity()
         }

@@ -164,7 +164,8 @@ class UpdateMeasureFragment : Fragment() {
                 val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
                 val timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
                 updateMeasureAdapter.addData(timeAndMeasure)
-                mMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+                TODO()
+                /*mMeasureViewModel.addTimeAndMeasure(timeAndMeasure)*/
 
             } catch (e: Exception) {
                 val myDialogFragment = AddFragmentDialog("Вы забыли указать значение замера!")

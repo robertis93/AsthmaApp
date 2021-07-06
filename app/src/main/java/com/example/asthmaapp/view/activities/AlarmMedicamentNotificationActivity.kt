@@ -87,9 +87,9 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
                 dozaMedicament.toInt(),
                 frequencyMedicament.toInt()
             )
-
-            mDayMeasureViewModel.addMedicalTime(medicamentTime)
-            mDayMeasureViewModel.addMeasure(infoDay)
+            TODO( "в бд")
+            /*mDayMeasureViewModel.addMedicalTime(medicamentTime)
+            mDayMeasureViewModel.addMeasure(infoDay)*/
             //выйти из приложения
             this.finishAffinity()
             // WorkManager.getInstance(applicationContext).cancelWorkById()

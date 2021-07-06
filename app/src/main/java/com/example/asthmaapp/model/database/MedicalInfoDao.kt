@@ -26,4 +26,7 @@ interface MedicalInfoDao {
     @Query("Select * From medical_table")
     fun readAllData(): LiveData<List<MedicalInfo>>
 
+    @Query("Select * From medical_table")
+    suspend fun readAllDataSync(): List<MedicalInfo>
+
 }
