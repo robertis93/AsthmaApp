@@ -23,45 +23,45 @@
 
         <TextView
             android:id="@+id/dateTextView"
-            android:layout_marginTop="16dp"
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:text="24 sep 2021"
             android:textSize="24sp" />
 
 
         <TextView
             android:id="@+id/takeMedicamentTextView"
+            style="@style/Text.DarkGray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            style="@style/Text.DarkGray"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             android:text="@string/take_drugs"
             android:textSize="24sp" />
 
 
-            <TextView
-                android:id="@+id/timeAlarmText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="08:00"
-                style="@style/Text.DarkGray"
-                android:gravity="center"
-                android:layout_marginTop="16dp"
-                android:textSize="24sp" />
+        <TextView
+            android:id="@+id/timeAlarmText"
+            style="@style/Text.DarkGray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="08:00"
+            android:textSize="24sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveBtn"
+            style="@style/Button.Blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:backgroundTint="#03A9F4"
             android:text="@string/save_btn"
-            style="@style/Button.Blue"
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />

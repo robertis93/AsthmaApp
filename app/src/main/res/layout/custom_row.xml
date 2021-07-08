@@ -38,8 +38,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/blue_med"
-            />
+            android:background="@color/blue_med" />
 
         <TextView
             android:id="@+id/measuresTextView"
@@ -52,16 +51,16 @@
             android:text="@string/measure"
             android:textSize="20sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/light_blue_med"
-            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rowRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_blue_med" />
 
         <TextView
             android:id="@+id/timeDrugsTextView"
@@ -73,12 +72,6 @@
             android:gravity="center"
             android:text="@string/take_medicament"
             android:textSize="20sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/light_blue_med"
-            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timeMedicalRecyclerView"

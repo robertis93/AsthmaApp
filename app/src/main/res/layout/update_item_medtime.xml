@@ -10,16 +10,17 @@
     app:cardElevation="5dp">
 
     <LinearLayout
+        android:padding="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_marginStart="8dp"
             android:id="@+id/hourText"
             style="@style/Text.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="22"
             android:textSize="18sp" />
 
@@ -37,8 +38,8 @@
             style="@style/Text.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="44"
             android:layout_marginStart="8dp"
+            android:text="44"
             android:textSize="18sp" />
 
         <ImageView
@@ -46,18 +47,19 @@
             style="@style/Text.DarkGray"
             android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginStart="8dp"
+            android:layout_weight="1"
             android:textSize="18sp"
-            app:srcCompat="@drawable/edit_icon"/>
+            app:srcCompat="@drawable/edit_icon" />
 
         <ImageView
             android:id="@+id/deleteImage"
             style="@style/Text.DarkGray"
             android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
             android:textSize="18sp"
             app:srcCompat="@drawable/delete_24" />
     </LinearLayout>

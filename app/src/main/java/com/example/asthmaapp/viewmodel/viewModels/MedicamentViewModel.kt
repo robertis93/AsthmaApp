@@ -4,15 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.asthmaapp.model.database.MeasureDataBase
-import com.example.asthmaapp.model.models.MedicamentlInfo
+import com.example.asthmaapp.database.MeasureDataBase
+import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.viewmodel.repository.MedicalInfoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MedicalViewModel(application: Application) : AndroidViewModel(application) {
+class MedicamentViewModel(application: Application) : AndroidViewModel(application) {
 
-    val readAllData: LiveData<List<MedicamentlInfo>>
+    val readAllData: LiveData<List<MedicamentInfo>>
     private val repository: MedicalInfoRepository
 
     init {
@@ -21,21 +21,21 @@ class MedicalViewModel(application: Application) : AndroidViewModel(application)
         readAllData = repository.readAllData
     }
 
-    fun addMedicalInfo(medicamentlInfo: MedicamentlInfo) {
+    fun addMedicalInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addMedicalInfo(medicamentlInfo)
+            repository.addMedicalInfo(medicamentInfo)
         }
     }
 
-    fun updateMedicalInfo(medicamentlInfo: MedicamentlInfo) {
+    fun updateMedicalInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateMedicalInfo(medicamentlInfo)
+            repository.updateMedicalInfo(medicamentInfo)
         }
     }
 
-    fun deleteMedicalInfo(medicamentlInfo: MedicamentlInfo) {
+    fun deleteMedicalInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteMedicalInfo(medicamentlInfo)
+            repository.deleteMedicalInfo(medicamentInfo)
         }
     }
 

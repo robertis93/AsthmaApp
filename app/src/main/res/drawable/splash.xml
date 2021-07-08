@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@android:color/white" />
     <item
-        android:drawable="@drawable/ic_inhaler"
-        android:gravity="center"
         android:width="128dp"
         android:height="128dp"
-        android:text="AstmaApp"/>
+        android:drawable="@drawable/ic_inhaler"
+        android:gravity="center"
+        android:text="AstmaApp" />
 </layer-list>

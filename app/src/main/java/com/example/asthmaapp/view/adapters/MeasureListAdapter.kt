@@ -42,7 +42,8 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
 
         holder.binding.dayTextView.text = longToStringCalendar(dayCurrentItem.day.day)
         holder.itemView.setOnClickListener {
-            val action = MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
+            val action =
+                MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
             holder.binding.root.findNavController().navigate(action)
         }
 
@@ -50,7 +51,9 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
             object : MeasureAdapter.OnClickListener {
                 override fun actionClick() {
                     val action =
-                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
+                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
+                            dayCurrentItem
+                        )
                     holder.binding.root.findNavController().navigate(action)
                 }
             }
@@ -59,7 +62,9 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
             object : ListTimeTakeMedicamentAdapter.OnClickListener {
                 override fun actionClick() {
                     val action =
-                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
+                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
+                            dayCurrentItem
+                        )
                     holder.binding.root.findNavController().navigate(action)
                 }
             }
@@ -77,7 +82,8 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
             false
         )
 
-        val medTimeAdapter = ListTimeTakeMedicamentAdapter(timeDrugs, medTimeTakeMedicamentClickListener)
+        val medTimeAdapter =
+            ListTimeTakeMedicamentAdapter(timeDrugs, medTimeTakeMedicamentClickListener)
         val recyclerViewMedTime = holder.binding.timeMedicalRecyclerView
         recyclerViewMedTime.adapter = medTimeAdapter
         recyclerViewMedTime.layoutManager = GridLayoutManager(
@@ -87,6 +93,6 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
             false
         )
     }
-    
+
     class MeasureViewHolder(val binding: CustomRowBinding) : RecyclerView.ViewHolder(binding.root)
 }

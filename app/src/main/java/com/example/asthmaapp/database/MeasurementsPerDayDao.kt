@@ -1,12 +1,14 @@
-package com.example.asthmaapp.model.database
+package com.example.asthmaapp.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.asthmaapp.model.*
-
+import com.example.asthmaapp.model.MeasureOfDay
+import com.example.asthmaapp.model.MedWithMeasuresAndMedicamentTime
+import com.example.asthmaapp.model.MedicamentTime
+import com.example.asthmaapp.model.TimeAndMeasure
 
 @Dao
-interface DayDao {
+interface MeasurementsPerDayDao {
 
     @Query("SELECT * FROM medicament_day_table ORDER BY day")
     fun getMedicamentAndMeasures(): LiveData<List<MedWithMeasuresAndMedicamentTime>>
@@ -17,7 +19,6 @@ interface DayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTimeAndMeasure(timeAndMeasure: TimeAndMeasure)
 
-    //MeasureOfDay (Medicament class) update, delete
     @Query("SELECT * FROM medicament_day_table")
     fun readAllMedicament(): LiveData<List<MeasureOfDay>>
 
@@ -30,7 +31,6 @@ interface DayDao {
     @Query("DELETE FROM medicament_day_table")
     suspend fun deleteAllMeasure()
 
-    //TimeAndMeasure read, update, delete, deleteAll
     @Query("SELECT * FROM time_measure_table")
     fun readAllTimeAndMeasure(): LiveData<List<TimeAndMeasure>>
 
@@ -46,7 +46,6 @@ interface DayDao {
     @Query("DELETE FROM time_measure_table")
     suspend fun deleteAllTimeAndMeasure()
 
-    //MedicalTime read, add, update, delete
     @Query("SELECT * FROM medicament_time_table ")
     fun readAllMedicalTime(): LiveData<List<MedicamentTime>>
 
@@ -61,6 +60,5 @@ interface DayDao {
 
     @Query("DELETE FROM medicament_time_table")
     suspend fun deleteAllMedicalTime()
-
 }
 

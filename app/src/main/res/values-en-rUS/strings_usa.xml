@@ -32,7 +32,7 @@
     <string name="third_screen_yellow">if your measurement is colored yellow, then you should increase the dosage of the medication you are taking</string>
     <string name="diary">diary</string>
     <string name="notification">notification</string>
-    <string  name="medicament">medicament</string>
+    <string name="medicament">medicament</string>
     <string name="next">next</string>
     <string name="second_screen_desc">go to the \"alerts\" tab and set the alert time</string>
     <string name="first_screen_descr">go to the \"medicine\" tab and fill in the fields</string>

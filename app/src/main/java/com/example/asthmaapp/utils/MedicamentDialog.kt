@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.asthmaapp.R
 
-class MedicalDialog(var message: Int) : DialogFragment()  {
+class MedicamentDialog(var message: Int) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)

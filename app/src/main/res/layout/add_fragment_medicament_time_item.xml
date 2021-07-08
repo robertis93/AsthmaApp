@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rowLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -12,21 +11,21 @@
 
     <TextView
         android:id="@+id/timeMeasureText"
+        style="@style/Text.DarkGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="8:00"
-        android:textSize="18sp"
-        style="@style/Text.DarkGray" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/deleteAlarmIcon"
-        android:layout_marginStart="8dp"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
-        app:srcCompat="@drawable/delete_24"
-        />
+        android:background="?android:attr/selectableItemBackground"
+        app:srcCompat="@drawable/delete_24" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

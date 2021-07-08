@@ -25,14 +25,7 @@
             android:text="@string/select_time_notification"
             android:textSize="24sp" />
 
-        <View
-            android:layout_width="350dp"
-            android:layout_height="2dp"
-            android:layout_gravity="center"
-            android:background="@color/light_blue_med"
-            />
 
-        
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,7 +107,7 @@
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionBtnAlarm"
+                android:id="@+id/floating_action_btn_alarm_make_measure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -166,7 +159,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionBtnDrugs"
+                android:id="@+id/floatingActionBtnAlarmTakeMedicament"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"

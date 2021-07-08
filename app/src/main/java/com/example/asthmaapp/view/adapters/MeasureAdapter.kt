@@ -47,12 +47,13 @@ class MeasureAdapter(
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.red))
         holder.binding.measureText.text = currentItem.measure.toString()
         holder.itemView.setOnClickListener {
-            onClickListener?.actionClick()
+            onClickListener.actionClick()
         }
     }
 
     override fun getItemCount(): Int {
         return measures.size
     }
+
     class MeasureViewHolder(val binding: InnerItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

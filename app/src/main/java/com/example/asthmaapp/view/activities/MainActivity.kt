@@ -8,7 +8,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.asthmaapp.NavGraphDirections
 import com.example.asthmaapp.R
@@ -27,13 +26,8 @@ class MainActivity : AppCompatActivity() {
         val view = binding.getRoot()
         setContentView(view)
 
-
-
         val bottomNavigationView = binding.btnNavigationView
-        //ответственный чтобы заменять фрагменты в navhostfragment
 
-        // Метод setupWithNavController вешает листенер на BottomNavigationView и
-        // выполняет навигацию при нажатии на его элементы.
         bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->

@@ -10,7 +10,8 @@
         android:roundIcon="@drawable/ic_inhaler"
         android:supportsRtl="true"
         android:theme="@style/Theme.AsthmaApp">
-        <activity android:name=".view.activities.SplashScreenActivity"
+        <activity
+            android:name=".view.activities.SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

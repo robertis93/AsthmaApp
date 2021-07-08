@@ -20,13 +20,13 @@
 
     <TextView
         android:id="@+id/textDescribe"
+        style="@style/Text.Bold24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        style="@style/Text.Bold24"
         android:text="@string/third_screen_desc"
         android:textColor="@color/blue_med"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,11 +91,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/finishOnboardingBtn"
+        style="@style/Button.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="4dp"
-        style="@style/Button.Blue"
         android:text="@string/start_app"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,11 +104,11 @@
 
     <TextView
         android:id="@+id/textRedDescribe"
+        style="@style/Text"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="8dp"
-        style="@style/Text"
         android:text="@string/third_screen_red"
         android:textColor="@color/dark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,6 +116,7 @@
 
     <TextView
         android:id="@+id/textDescribeRed"
+        style="@style/Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -123,9 +124,8 @@
         android:background="@drawable/corner_rounded_red"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        style="@style/Text"
-        android:textColor="@color/black"
         android:text="@string/thirs_screen_example_red"
+        android:textColor="@color/black"
         app:cornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textYellow" />

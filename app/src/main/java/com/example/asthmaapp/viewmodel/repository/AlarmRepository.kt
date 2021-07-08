@@ -1,19 +1,22 @@
 package com.example.asthmaapp.viewmodel.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.asthmaapp.model.database.AlarmDao
-import com.example.asthmaapp.model.models.Alarm
+import com.example.asthmaapp.database.AlarmDao
+import com.example.asthmaapp.model.Alarm
+import com.example.asthmaapp.view.fragments.TypeAlarm
 
-
-//Репозиторий управляет запросами и позволяет использовать несколько бэкендов.
-// В наиболее распространенном примере
-// Репозиторий реализует логику принятия решения о том,
-// следует ли извлекать данные из сети или использовать результаты,
-// кэшированные в локальной базе данных
 class AlarmRepository(private val alarmDao: AlarmDao) {
 
+    //val readAllData: LiveData<List<Alarm>> = alarmDao.readAllData()
+    var getListAlarm: LiveData<List<Alarm>>? = null
 
-    val readAllData: LiveData<List<Alarm>> = alarmDao.readAllData()
+    fun getAlarms(context: Context, typeAlarm: TypeAlarm) : LiveData<List<Alarm>>? {
+
+        getListAlarm = alarmDao.readAllData(typeAlarm)
+
+        return getListAlarm
+    }
 
     suspend fun addAlarm(alarm: Alarm) {
         alarmDao.addAlarm(alarm)
@@ -30,6 +33,4 @@ class AlarmRepository(private val alarmDao: AlarmDao) {
     suspend fun deleteAllAlarm() {
         alarmDao.deleteAllAlarms()
     }
-
-
 }

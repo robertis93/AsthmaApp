@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 fun timeConvert(minute: Int): String {
     return if (minute < 10) {
         "0" + minute

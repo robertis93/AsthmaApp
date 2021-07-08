@@ -3,13 +3,10 @@ package com.example.asthmaapp.view.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,21 +18,24 @@ import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.utils.AddFragmentDialog
+import com.example.asthmaapp.utils.AddMeasureFragmentDialog
 import com.example.asthmaapp.view.adapters.AddMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
-import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
-class AddMeasuresFragment : Fragment() {
-    lateinit var binding: FragmentAddBinding
+class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
     private lateinit var idMed: String
     private var dayMilliseconds by Delegates.notNull<Long>()
-    private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
-    private lateinit var mMedicalViewModel: MedicalViewModel
+    private val dayMeasureViewModel: MeasureOfDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+    }
+    private val medicamentViewModel: MedicamentViewModel by lazy {
+        ViewModelProvider(this).get(MedicamentViewModel::class.java)
+    }
     private var dateMilli by Delegates.notNull<Long>()
     lateinit var timeAndMeasure: TimeAndMeasure
     private var yearMeasure by Delegates.notNull<Int>()
@@ -43,13 +43,8 @@ class AddMeasuresFragment : Fragment() {
     private var dayMeasure by Delegates.notNull<Int>()
     private val timeAndMeasureList = mutableListOf<TimeAndMeasure>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentAddBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
+        FragmentAddBinding.inflate(inflater)
 
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,15 +54,14 @@ class AddMeasuresFragment : Fragment() {
         val recyclerViewAdd = binding.recyclerMeasure
         recyclerViewAdd.adapter = addMeasureAdapter
         recyclerViewAdd.layoutManager =
-            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+            GridLayoutManager(binding.recyclerMed.context, 2, LinearLayoutManager.HORIZONTAL, false)
 
         val addMedicamentTimeAdapter = AddMedicamentTimeAdapter()
         val recyclerViewMed = binding.recyclerMed
         recyclerViewMed.adapter = addMedicamentTimeAdapter
         recyclerViewMed.layoutManager =
-            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+            GridLayoutManager(binding.recyclerMed.context, 2, LinearLayoutManager.HORIZONTAL, false)
 
-        //создаем настояющую дату для ограничения по датам DatePicker
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         dayMilliseconds = dateCalendar.time.time
         val yearToday: Int = dateCalendar.get(Calendar.YEAR)
@@ -75,27 +69,24 @@ class AddMeasuresFragment : Fragment() {
         val dayOfMonthToday: Int = dateCalendar.get(Calendar.DAY_OF_MONTH)
         val justDayCalendar: Calendar =
             GregorianCalendar(yearToday, monthToday, dayOfMonthToday)
-        val justDayMilli = justDayCalendar.time.time
+        val midnightDayMilliseconds = justDayCalendar.time.time
 
-        idMed = justDayMilli.toString()
+        idMed = midnightDayMilliseconds.toString()
 
         val currentDate = Date(dayMilliseconds)
         val dateFormat = SimpleDateFormat("dd MMM YYYY")
         val dayToday = dateFormat.format(currentDate)
         binding.dateTextView.text = dayToday
 
-        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-        mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-
-        mMedicalViewModel.readAllData.observe(
+        medicamentViewModel.readAllData.observe(
             viewLifecycleOwner,
             { listMedicalInfo ->
                 try {
-                    binding.nameMedical.setText(listMedicalInfo.last().nameOfMedicine)
-                    binding.editTextMedicalDoze.setText(listMedicalInfo.last().doseMedicine.toString())
+                    binding.nameMedical.setText(listMedicalInfo.last().name)
+                    binding.editTextMedicalDoze.setText(listMedicalInfo.last().dose.toString())
                 } catch (e: Exception) {
                     val myDialogFragment =
-                        AddFragmentDialog(R.string.you_forget_write_information_about_medication)
+                        AddMeasureFragmentDialog(R.string.you_forget_write_information_about_medication)
                     val fragmentManager = requireActivity().supportFragmentManager
                     myDialogFragment.show(fragmentManager, "myDialog")
                 }
@@ -106,7 +97,6 @@ class AddMeasuresFragment : Fragment() {
             changeDay()
         }
 
-        // Время и замер
         binding.addOneMeasureBtn.setOnClickListener {
             addTimeOfMeasure(addMeasureAdapter)
         }
@@ -116,11 +106,11 @@ class AddMeasuresFragment : Fragment() {
         }
 
         binding.saveBtn.setOnClickListener {
-            insertToDataToDataBase(addMeasureAdapter, addMedicamentTimeAdapter)
+            insertToDataBase(addMeasureAdapter, addMedicamentTimeAdapter)
         }
     }
 
-    private fun insertToDataToDataBase(
+    private fun insertToDataBase(
         addMeasureAdapter: AddMeasureAdapter,
         addMedicamentTimeAdapter: AddMedicamentTimeAdapter
     ) {
@@ -136,19 +126,19 @@ class AddMeasuresFragment : Fragment() {
             )
             val measuresOneDay = addMeasureAdapter.getData()
             for (measure in measuresOneDay) {
-                mDayMeasureViewModel.addTimeAndMeasure(measure)
+                dayMeasureViewModel.addTimeAndMeasure(measure)
             }
 
-            mDayMeasureViewModel.addMeasure(infoDay)
+            dayMeasureViewModel.addMeasure(infoDay)
 
             val medicamentTime = addMedicamentTimeAdapter.getDataMedTime()
             for (medicTime in medicamentTime) {
-                mDayMeasureViewModel.addMedicalTime(medicTime)
+                dayMeasureViewModel.addMedicalTime(medicTime)
             }
 
             findNavController().popBackStack()
         } catch (e: Exception) {
-            val myDialogFragment = AddFragmentDialog(R.string.you_dont_write_all_information)
+            val myDialogFragment = AddMeasureFragmentDialog(R.string.you_dont_write_all_information)
             val fragmentManager = requireActivity().supportFragmentManager
             myDialogFragment.show(fragmentManager, "myDialog")
         }
@@ -161,7 +151,6 @@ class AddMeasuresFragment : Fragment() {
         builder.setView(dialogFragment.root)
         builder.setTitle("Время приема лекарства")
 
-        //show dialog
         val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
 
@@ -201,8 +190,8 @@ class AddMeasuresFragment : Fragment() {
             dialogFragment.timePicker.is24HourView
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
-            val measurePicf = dialogFragment.measureDialog.text.toString().toInt()
-            timeAndMeasure = TimeAndMeasure(0, timeHour, timeMinute, measurePicf, idMed)
+            val measureWithPicflometr = dialogFragment.measureDialog.text.toString().toInt()
+            timeAndMeasure = TimeAndMeasure(0, idMed, timeHour, timeMinute, measureWithPicflometr)
             timeAndMeasureList.add(timeAndMeasure)
             addMeasureAdapter.addData(timeAndMeasure)
         }
@@ -212,15 +201,13 @@ class AddMeasuresFragment : Fragment() {
     }
 
     private fun changeDay() {
-        Log.v("myLogs", "AlarmFragment binding.floatingActionBtnAlarm.setOnClickListener ")
-        val cal = Calendar.getInstance()
-
+        val calendar = Calendar.getInstance()
         val dateSetListener =
             DatePickerDialog.OnDateSetListener { datePicker, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                cal.add(Calendar.DAY_OF_MONTH, 1)
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                calendar.add(Calendar.DAY_OF_MONTH, 1)
 
                 yearMeasure = datePicker.year
                 monthMeasure = datePicker.month
@@ -232,21 +219,21 @@ class AddMeasuresFragment : Fragment() {
 
                 idMed = dateMilli.toString()
                 dayMilliseconds = dateMilli
-                // format date
+
                 val currentDate = Date(dateMilli)
                 val dateFormat = SimpleDateFormat("dd MMM YYYY")
-                val ddate = dateFormat.format(currentDate)
+                val day = dateFormat.format(currentDate)
 
                 binding.dateTextView.visibility = View.VISIBLE
-                binding.dateTextView.text = ddate.toString()
+                binding.dateTextView.text = day.toString()
             }
 
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             dateSetListener,
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
         )
 
         datePickerDialog.datePicker.maxDate = dayMilliseconds

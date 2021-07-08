@@ -13,7 +13,7 @@
     <string name="per_in_day">р. в день</string>
     <string name="successful_added">"Успешно сохранено"</string>
     <string name="save_btn">Сохранить</string>
-    <string name="select_time_notification">Установите время оповещения</string>
+    <string name="select_time_notification">Установите время</string>
     <string name="need_take_time_between_measure_drugs">Должно пройти не менее 4 -х часов после принятия лекарства и замером</string>
     <string name="recommend_three_hours">Рекомендуется делать не менее 3 -х замеров в день</string>
     <string name="measure_alarm_frag">Замер пикфлометром</string>

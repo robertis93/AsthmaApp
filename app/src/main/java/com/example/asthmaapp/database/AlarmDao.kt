@@ -1,12 +1,10 @@
-package com.example.asthmaapp.model.database
+package com.example.asthmaapp.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.models.Alarm
+import com.example.asthmaapp.model.Alarm
+import com.example.asthmaapp.view.fragments.TypeAlarm
 
-
-//DAO (data access object)  отвечают за определение методов доступа к базе данных.
 @Dao
 interface AlarmDao {
 
@@ -22,8 +20,6 @@ interface AlarmDao {
     @Query("DELETE FROM alarm_table")
     suspend fun deleteAllAlarms()
 
-
-    @Query("Select * From alarm_table")
-    fun readAllData(): LiveData<List<Alarm>>
-
+    @Query("Select * From alarm_table WHERE typeAlarm == :alarm ")
+    fun readAllData(alarm : TypeAlarm): LiveData<List<Alarm>>
 }

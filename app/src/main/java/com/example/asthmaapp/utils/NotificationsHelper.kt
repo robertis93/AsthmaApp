@@ -6,58 +6,50 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.asthmaapp.view.activities.AlarmMeasureNotificationActivity
 import com.example.asthmaapp.view.activities.AlarmMedicamentNotificationActivity
 
-object  NotificationsHelper {
-    const val CHANNEL_ID = "1"
+object NotificationsHelper {
+    private lateinit var showMessage: String
+    private const val CHANNEL_ID = "1"
+
     fun showNotification(context: Context, message: String) {
         createNotificationChannel(context)
 
         var intent = Intent()
-        //intent для перехода при нажатие на уведомление
 
-        if (message == "Примите лекарство"){
-            Log.i("myLogs", "intent = Intent(context, MedicTimeAlarmActivityTest::class.java).apply ")
+
+        if (message == "MEDICAMENT") {
             intent = Intent(context, AlarmMedicamentNotificationActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                showMessage = "Примите лекарство"
             }
-        }
-        else if (message == "Сделайте замер") {
+        } else if (message == "MEASURE") {
             intent = Intent(context, AlarmMeasureNotificationActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                Log.i("myLogs", "intent =  Intent(context, AlarmActivityTest::class.java")
+                showMessage = "Сделайте замер"
             }
         }
-        // передаем время которое сейчас
-        //intent.putExtra("dateTime", LocalDateTime.now().toString())
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        // Создаём уведомление
         val notification =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(com.example.asthmaapp.R.drawable.ic_astmaicon)
                 .setContentTitle("Напоминание")
-                .setContentText(message)
+                .setContentText(showMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    //реакция на уведомление, Нажатие на уведомление
+                //реакция на уведомление, Нажатие на уведомление
                 .setContentIntent(pendingIntent)
                 .build()
-        val alarmId = 0   //доделать alarmId, это индификатор сообщения , для обработки клика сообщения
+        val alarmId =
+            0   //доделать alarmId, это индификатор сообщения , для обработки клика сообщения
         // посылаем уведомление
         NotificationManagerCompat.from(context).notify(alarmId, notification)
     }
 
-    //Начиная с Android 8 поддерживаются каналы уведомлений.
-    // Это нужно для того, чтобы пользователь смог отключить только те уведомления, которые ему не интересны.
-    // Например можно отключить все, что касается “новостей в приложении”,
-    // но оставить важные “системные” уведомления.
     private fun createNotificationChannel(context: Context) {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID, // зачем?? как дает уведомление?? Идентификатор канала. Должен быть уникальным для каждой упаковки.

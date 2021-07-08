@@ -23,13 +23,13 @@
 
         <TextView
             android:id="@+id/dateTextView"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:text="24 sep 2021"
-            android:textSize="24sp"
-            style="@style/Text"
-            android:layout_marginTop="16dp"/>
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -39,28 +39,28 @@
 
             <TextView
                 android:id="@+id/timeAlarmText"
+                style="@style/Text.DarkGray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="08:00"
-                style="@style/Text.DarkGray"
                 android:textSize="24sp" />
 
             <EditText
                 android:id="@+id/addMeasureText"
+                style="@style/Text.DarkGray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="24sp"
-                style="@style/Text.DarkGray"/>
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/lMinText"
+                style="@style/Text.DarkGray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/lmin"
-                android:textSize="16sp"
-                style="@style/Text.DarkGray"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,6 +78,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveBtn"
+            style="@style/Button.Blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -85,11 +86,9 @@
             android:backgroundTint="#03A9F4"
             android:text="@string/save_btn"
             android:textAllCaps="false"
-            style="@style/Button.Blue"
             app:backgroundTint="@color/blue_med"
             app:boxBackgroundColor="@color/white"
             app:cornerRadius="16dp" />
-
 
 
     </LinearLayout>

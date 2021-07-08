@@ -1,30 +1,25 @@
-package com.example.asthmaapp.model.database
+package com.example.asthmaapp.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.model.models.Alarm
-import com.example.asthmaapp.model.models.DrugsAlarm
-import com.example.asthmaapp.model.models.MedicamentlInfo
+import com.example.asthmaapp.model.*
 
-
-@Database(entities = [MeasureOfDay::class, TimeAndMeasure::class, MedicamentTime::class, Alarm::class, DrugsAlarm::class, MedicamentlInfo::class] , version = 1, exportSchema = false)
+@Database(
+    entities = [MeasureOfDay::class, TimeAndMeasure::class, MedicamentTime::class, Alarm::class, MedicamentInfo::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class MeasureDataBase : RoomDatabase() {
 
-    abstract fun MedAndMeasureDao() : DayDao
+    // TODO: rename to dayMeasureDao()
+    abstract fun medAndMeasureDao(): MeasurementsPerDayDao
     abstract fun alarmDao(): AlarmDao
-    abstract fun alarmDrugsDao(): AlarmDrugsDao
-    abstract fun medicalInfoDao(): MedicalInfoDao
+    // TODO: rename to medicamentInfoDao()
+    abstract fun medicalInfoDao(): MedicamentInfoDao
 
-
-    //Singleton, MeasureDataBase
     companion object {
-        // if the INSTANCE is not null, then return it,
-        // if it is, then create the database
         @Volatile
         private var INSTANCE: MeasureDataBase? = null
 

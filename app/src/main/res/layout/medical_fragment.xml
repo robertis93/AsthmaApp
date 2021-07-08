@@ -20,20 +20,20 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextMedicalInfo"
+            style="@style/Text.SemiBold18"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/Text.SemiBold18"/>
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextMedicalDoseLayout"
+        style="@style/Text.SemiBold18"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="24dp"
-        style="@style/Text.SemiBold18"
         android:hint="@string/quantity_take_medicament"
         app:boxBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +52,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveMedicalInfo"
+        style="@style/Button.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -59,7 +60,6 @@
         android:backgroundTint="#03A9F4"
         android:text="@string/save_btn"
         android:textAllCaps="false"
-        style="@style/Button.Blue"
         app:backgroundTint="@color/blue_med"
         app:cornerRadius="16dp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

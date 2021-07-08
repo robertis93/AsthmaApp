@@ -1,24 +1,21 @@
 package com.example.asthmaapp.view.fragments.onboarding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.example.asthmaapp.databinding.FragmentViewPagerBinding
+import com.example.asthmaapp.view.fragments.BaseFragment
 import com.example.asthmaapp.view.fragments.onboarding.screens.FirstScreen
 import com.example.asthmaapp.view.fragments.onboarding.screens.SecondScreen
 import com.example.asthmaapp.view.fragments.onboarding.screens.ThirdScreen
 
-class OnBoardingFragment : Fragment() {
+class OnBoardingFragment : BaseFragment<FragmentViewPagerBinding>() {
 
-    lateinit var binding: FragmentViewPagerBinding
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentViewPagerBinding.inflate(inflater, container, false)
+    override fun inflate(inflater: LayoutInflater) =
+        FragmentViewPagerBinding.inflate(inflater)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val springDotsIndicator = binding.springDotsIndicator
         val viewPager = binding.viewPager
 
@@ -36,6 +33,5 @@ class OnBoardingFragment : Fragment() {
         springDotsIndicator.setViewPager2(viewPager)
         // Страницы, выходящие за пределы этого ограничения, будут удалены из иерархии представлений
         binding.viewPager.offscreenPageLimit = 1
-        return binding.root
     }
 }

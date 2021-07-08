@@ -8,23 +8,20 @@ import com.example.asthmaapp.databinding.AddFragmentMedicamentTimeItemBinding
 import com.example.asthmaapp.model.MedicamentTime
 
 class AddMedicamentTimeAdapter() :
-    RecyclerView.Adapter<AddMedicamentTimeAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<AddMedicamentTimeAdapter.AddMedicamentViewHolder>() {
     private var measuresMedList = mutableListOf<MedicamentTime>()
 
-    class MyViewHolder(val binding: AddFragmentMedicamentTimeItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMedicamentViewHolder {
         val binding = AddFragmentMedicamentTimeItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return MyViewHolder(binding)
+        return AddMedicamentViewHolder(binding)
     }
 
     @SuppressLint("ResourceAsColor", "SetTextI18n")
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AddMedicamentViewHolder, position: Int) {
         val currentItem = measuresMedList[position]
         with(holder.binding) {
             timeMeasureText.text =
@@ -46,8 +43,7 @@ class AddMedicamentTimeAdapter() :
         notifyDataSetChanged()
     }
 
-    fun deleteDate(medicamentTime: MedicamentTime) {
-        // this.measuresMedList
+    private fun deleteDate(medicamentTime: MedicamentTime) {
         measuresMedList.remove(medicamentTime)
         notifyDataSetChanged()
     }
@@ -55,4 +51,7 @@ class AddMedicamentTimeAdapter() :
     fun getDataMedTime(): MutableList<MedicamentTime> {
         return measuresMedList
     }
+
+    class AddMedicamentViewHolder(val binding: AddFragmentMedicamentTimeItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

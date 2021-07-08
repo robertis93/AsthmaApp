@@ -7,9 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.AlarmMeasureNotificationActivityBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.model.models.MedicamentlInfo
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
-import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,10 +16,13 @@ import java.util.*
 class AlarmMeasureNotificationActivity : AppCompatActivity() {
 
     private lateinit var binding: AlarmMeasureNotificationActivityBinding
-    private lateinit var mMedicalViewModel: MedicalViewModel
-    private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
+    private val medicamentViewModel: MedicamentViewModel by lazy {
+        ViewModelProvider(this).get(MedicamentViewModel::class.java)
+    }
+    private val dayMeasureViewModel: MeasureOfDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+    }
     private lateinit var nameMedicament: String
-    private lateinit var dozaMedicamnet : String
     private lateinit var frequencyMedicament: String
 
     @SuppressLint("SimpleDateFormat")
@@ -29,67 +31,62 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
         binding = AlarmMeasureNotificationActivityBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot())
 
-        supportActionBar?.hide()
-        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-        mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        val dateMilli = dateCalendar.time.time
-        val year = dateCalendar.time.year
-        val month = dateCalendar.time.month
-        val day = dateCalendar.time.day
-        val timeMilli = dateCalendar.time.time
-        val dateFormatTime = SimpleDateFormat("HH:mm")
+        val currentDayMilliseconds = dateCalendar.time.time
+        val currentYear = dateCalendar.time.year
+        val currentMonth = dateCalendar.time.month
+        val currentDayOfMonth = dateCalendar.time.day
+
+        val dateFormatTimeHourAndMinute = SimpleDateFormat("HH:mm")
         val dateFormatTimeMinute = SimpleDateFormat("mm")
         val dateFormatTimeHour = SimpleDateFormat("HH")
-        val currentTime = Date(timeMilli)
-        val ttime = dateFormatTime.format(currentTime)
-        binding.timeAlarmText.setText(ttime)
+        val currentTimeFormatDate = Date(currentDayMilliseconds)
+        val currentTime = dateFormatTimeHourAndMinute.format(currentTimeFormatDate)
 
-        //format date
-        val currentDate = Date(dateMilli)
+        val currentDate = Date(currentDayMilliseconds)
         val dateFormat = SimpleDateFormat("dd MMM YYYY")
-        val ddate = dateFormat.format(currentDate)
+        val currentDay = dateFormat.format(currentDate)
 
-        val dateDayCalendar: Calendar = GregorianCalendar(year, month, day)
-        val dayMilliId = dateDayCalendar.time.time
-        // binding.textDate.setText(dayMilli.toString())
-        binding.dateTextView.setText(ddate)
+        val dateDayCalendar: Calendar =
+            GregorianCalendar(currentYear, currentMonth, currentDayOfMonth)
+        val dayMillisecondsId = dateDayCalendar.time.time
+        binding.dateTextView.text = currentDay
+        binding.timeAlarmText.text = currentTime
 
-        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-        //заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
-        mMedicalViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
-            nameMedicament = listMedicament.last().nameOfMedicine
-            frequencyMedicament = listMedicament.last().doseMedicine.toString()
-        })
+        medicamentViewModel.readAllData.observe(
+            this,
+            { listMedicament ->
+                nameMedicament = listMedicament.last().name
+                frequencyMedicament = listMedicament.last().dose.toString()
+            }
+        )
 
         binding.saveBtn.setOnClickListener {
-            val timeHour = dateFormatTimeHour.format(currentTime)
-            val timeMinute = dateFormatTimeMinute.format(currentTime)
+            val timeHour = dateFormatTimeHour.format(currentTimeFormatDate)
+            val timeMinute = dateFormatTimeMinute.format(currentTimeFormatDate)
             binding.addMeasureText.setFocusableInTouchMode(true);
             binding.addMeasureText.requestFocus();
-            val measurePicf = binding.addMeasureText.text.toString().toInt()
-            val idMed = UUID.randomUUID().toString()
-            //  val idMed
+            // TODO: Peakflowmeter or PeakFlowMeter
+            val measurePicflometr = binding.addMeasureText.text.toString().toInt()
+
             val timeAndMeasure =
                 TimeAndMeasure(
                     0,
+                    dayMillisecondsId.toString(),
                     timeHour.toInt(),
                     timeMinute.toInt(),
-                    measurePicf,
-                    dayMilliId.toString()
+                    measurePicflometr
                 )
 
-            val infoDay = MeasureOfDay(
-                dayMilliId.toString(),
-                dateMilli,
+            val measureOfDay = MeasureOfDay(
+                dayMillisecondsId.toString(),
+                currentDayMilliseconds,
                 nameMedicament,
-                dozaMedicamnet.toInt()
+                frequencyMedicament.toInt()
             )
 
-            mDayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
-            mDayMeasureViewModel.addMeasure(infoDay)
-            //выйти из приложения
+            dayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+            dayMeasureViewModel.addMeasure(measureOfDay)
             this.finishAffinity()
         }
     }

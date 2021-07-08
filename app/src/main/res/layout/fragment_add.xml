@@ -77,9 +77,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMeasure"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -116,8 +116,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"/>
 
 
         <com.google.android.material.textfield.TextInputLayout

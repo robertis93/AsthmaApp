@@ -7,9 +7,6 @@
     tools:context=".view.fragments.onboarding.screens.FirstScreen">
 
 
-
-
-
     <ImageView
         android:id="@+id/inhaleImageView"
         android:layout_width="198dp"
@@ -22,31 +19,30 @@
 
     <TextView
         android:id="@+id/describeTextView"
+        style="@style/Text.Bold24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="@string/first_screen_descr"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Text.Bold24"
+        android:gravity="center"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:gravity="center"
+        android:text="@string/first_screen_descr"
         android:textColor="@color/blue_med"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inhaleImageView" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/nextBtn"
+        style="@style/Button.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="4dp"
         android:text="@string/next"
         android:textAllCaps="false"
-        style="@style/Button.Blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,56 +1,44 @@
 package com.example.asthmaapp.view.adapters
 
-import android.util.Log
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.ItemAlarmBinding
-import com.example.asthmaapp.model.models.DrugsAlarm
+import com.example.asthmaapp.model.Alarm
 
 class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
     RecyclerView.Adapter<AlarmDrugsAdapter.AlarmViewHolder>() {
-    private var alarmsList = emptyList<DrugsAlarm>()
+    private var alarmMedicamentList = emptyList<Alarm>()
 
-    // определили интерфейс слушателя события нажатия
     interface OnAlarmDrugsClickListener {
-        fun onAlarmClick(drugsAlarm: DrugsAlarm, position: Int)
+        fun onAlarmClick(medicamentAlarm: Alarm, position: Int)
     }
 
-
-    class AlarmViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
-//внутренний класс ViewHolder описывает элементы представления списка и привязку их к RecyclerView
-    }
-
-    //создает ViewHolder и инициализирует views для списка
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
         val binding = ItemAlarmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AlarmViewHolder(binding)
     }
 
-    //связывает views с содержимым
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
-        Log.v("myLogs", "AlarmAdapter onBindViewHolder")
-
-        val currentItem = alarmsList[position]
-        //holder.timeTextView?.text = alarmes[position]
+        val currentItem = alarmMedicamentList[position]
         holder.binding.timeDayTextView.text =
-            "${currentItem.hour.toString()} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
+            "${currentItem.hour} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
         holder.binding.deleteIcon.setOnClickListener {
-            // вызываем метод слушателя, передавая ему данные
-            Log.v("myLogs", "AlarmAdapter setOnClickListener")
-            onClickAlarmDrugsListener?.onAlarmClick(currentItem, position)
+            onClickAlarmDrugsListener.onAlarmClick(currentItem, position)
             notifyDataSetChanged()
         }
     }
 
     override fun getItemCount(): Int {
-        return alarmsList.size
+        return alarmMedicamentList.size
     }
 
-    //передаем данные и оповещаем адаптер о необходимости обновления списка
-    fun refreshDrugAlarms(drugsAlarm: List<DrugsAlarm>) {
-        this.alarmsList = drugsAlarm
-        //указывает адаптеру, что полученные ранее данные изменились и следует перерисовать список на экране
+    fun refreshMedicamentAlarms(medicamentAlarm: List<Alarm>) {
+        this.alarmMedicamentList = medicamentAlarm
         notifyDataSetChanged()
     }
+
+    class AlarmViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root)
 }

@@ -2,36 +2,27 @@ package com.example.asthmaapp.viewmodel.repository
 
 import androidx.lifecycle.LiveData
 
-import com.example.asthmaapp.model.database.MedicalInfoDao
+import com.example.asthmaapp.database.MedicamentInfoDao
 
-import com.example.asthmaapp.model.models.MedicamentlInfo
+import com.example.asthmaapp.model.MedicamentInfo
 
+class MedicalInfoRepository(private val medicamentInfoDao: MedicamentInfoDao) {
 
-//Репозиторий управляет запросами и позволяет использовать несколько бэкендов.
-// В наиболее распространенном примере
-// Репозиторий реализует логику принятия решения о том,
-// следует ли извлекать данные из сети или использовать результаты,
-// кэшированные в локальной базе данных
-class MedicalInfoRepository(private val medicalInfoDao: MedicalInfoDao) {
+    val readAllData: LiveData<List<MedicamentInfo>> = medicamentInfoDao.readAllData()
 
-
-    val readAllData: LiveData<List<MedicamentlInfo>> = medicalInfoDao.readAllData()
-
-    suspend fun addMedicalInfo(medicamentlInfo: MedicamentlInfo) {
-        medicalInfoDao.addMedicalInfo(medicamentlInfo)
+    suspend fun addMedicalInfo(medicamentInfo: MedicamentInfo) {
+        medicamentInfoDao.addMedicalInfo(medicamentInfo)
     }
 
-    suspend fun updateMedicalInfo(medicamentlInfo: MedicamentlInfo) {
-        medicalInfoDao.updateMedicalInfo(medicamentlInfo)
+    suspend fun updateMedicalInfo(medicamentInfo: MedicamentInfo) {
+        medicamentInfoDao.updateMedicalInfo(medicamentInfo)
     }
 
-    suspend fun deleteMedicalInfo(medicamentlInfo: MedicamentlInfo) {
-        medicalInfoDao.deleteMedicalInfo(medicamentlInfo)
+    suspend fun deleteMedicalInfo(medicamentInfo: MedicamentInfo) {
+        medicamentInfoDao.deleteMedicalInfo(medicamentInfo)
     }
 
     suspend fun deleteAllMedicalInfo() {
-        medicalInfoDao.deleteAllMedicalInfo()
+        medicamentInfoDao.deleteAllMedicalInfo()
     }
-
-
 }

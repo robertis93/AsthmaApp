@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/describeTextView"
+        style="@style/Text.Bold24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -27,20 +28,19 @@
         android:paddingEnd="8dp"
         android:text="@string/second_screen_desc"
         android:textColor="@color/blue_med"
-        style="@style/Text.Bold24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageAlarm" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSecondScreen"
+        style="@style/Button.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="4dp"
         android:text="@string/next"
         android:textAllCaps="false"
-        style="@style/Button.Blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

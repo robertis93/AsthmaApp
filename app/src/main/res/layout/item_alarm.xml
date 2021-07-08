@@ -30,28 +30,29 @@
 
             <ImageView
                 android:id="@+id/alarmImageView"
+                style="@style/Text.DarkGray"
                 android:layout_width="42dp"
                 android:layout_height="match_parent"
-                style="@style/Text.DarkGray"
                 app:srcCompat="@drawable/ic_baseline_access_alarm_24" />
 
             <TextView
                 android:id="@+id/timeDayTextView"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="12:09"
-                android:textSize="18sp"
 
-                style="@style/Text"/>
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/deleteIcon"
+                style="@style/Text.DarkGray"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/delete_24"
                 android:layout_marginStart="8dp"
-                style="@style/Text.DarkGray"/>
+                android:background="?android:attr/selectableItemBackground"
+                app:srcCompat="@drawable/delete_24" />
 
 
         </LinearLayout>

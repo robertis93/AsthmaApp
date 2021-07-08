@@ -111,8 +111,12 @@
             app:argType="string"
             app:nullable="true" />
     </activity>
-    <action android:id="@+id/action_global_viewPagerFragment4" app:destination="@id/viewPagerFragment" />
-    <action android:id="@+id/action_global_listFragment2" app:destination="@id/listFragment" />
+    <action
+        android:id="@+id/action_global_viewPagerFragment4"
+        app:destination="@id/viewPagerFragment" />
+    <action
+        android:id="@+id/action_global_listFragment2"
+        app:destination="@id/listFragment" />
     <fragment
         android:id="@+id/firstScreen"
         android:name="com.example.asthmaapp.view.fragments.onboarding.screens.FirstScreen"

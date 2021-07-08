@@ -8,22 +8,22 @@ import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
 import com.example.asthmaapp.model.MeasureOfDay
 import com.example.asthmaapp.model.MedicamentTime
 import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
-import com.example.asthmaapp.viewmodel.viewModels.MedicalViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
     private lateinit var binding: TimeMedActivityAlarmTestBinding
     private lateinit var nameMedicament: String
-    private lateinit var dozaMedicament: String
+    private lateinit var doseMedicament: String
     private lateinit var frequencyMedicament: String
-
-    // инициализируем ViewModel ленивым способом
-    // private val mMedicalViewModel by lazy { ViewModelProviders.of(this).get(MedicalViewModel::class.java)}
-    private lateinit var mMedicalViewModel: MedicalViewModel
-    private lateinit var mDayMeasureViewModel: MeasureOfDayViewModel
+    private val medicamentViewModel: MedicamentViewModel by lazy {
+        ViewModelProvider(this).get(MedicamentViewModel::class.java)
+    }
+    private val dayMeasureViewModel: MeasureOfDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+    }
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,65 +31,54 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
         binding = TimeMedActivityAlarmTestBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot())
 
-        setContentView(binding.getRoot())
-        mDayMeasureViewModel = ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        val dateMilli = dateCalendar.time.time
-        val year = dateCalendar.time.year
-        val month = dateCalendar.time.month
-        val day = dateCalendar.time.day
+        val currentDayMilliseconds = dateCalendar.time.time
+        val currentYear = dateCalendar.time.year
+        val currentMonth = dateCalendar.time.month
+        val currentDayOfMonth = dateCalendar.time.day
 
-        val timeMilli = dateCalendar.time.time
-        val dateFormatTime = SimpleDateFormat("HH:mm")
+        val dateFormatTimeHourAndMinute = SimpleDateFormat("HH:mm")
         val dateFormatTimeMinute = SimpleDateFormat("mm")
         val dateFormatTimeHour = SimpleDateFormat("HH")
-        val currentTime = Date(timeMilli)
-        val ttime = dateFormatTime.format(currentTime)
-        binding.timeAlarmText.setText(ttime)
+        val currentTimeFormatDate = Date(currentDayMilliseconds)
+        val currentTime = dateFormatTimeHourAndMinute.format(currentTimeFormatDate)
+        binding.timeAlarmText.text = currentTime
 
-        //format date
-        val currentDate = Date(dateMilli)
-        val dateFormat = SimpleDateFormat("dd MMM YYYY")
-        val ddate = dateFormat.format(currentDate)
+        val dateFormatDayMonthYear = SimpleDateFormat("dd MMM YYYY")
+        val currentDate = dateFormatDayMonthYear.format(currentTimeFormatDate)
 
-        val dateDayCalendar: Calendar = GregorianCalendar(year, month, day)
-        val dayMilliId = dateDayCalendar.time.time
-        // binding.textDate.setText(dayMilli.toString())
-        binding.dateTextView.setText(ddate)
+        val dateDayCalendar: Calendar =
+            GregorianCalendar(currentYear, currentMonth, currentDayOfMonth)
+        val dayMidnightMilliseconds = dateDayCalendar.time.time
+        binding.dateTextView.text = currentDate
 
-        mMedicalViewModel = ViewModelProvider(this).get(MedicalViewModel::class.java)
-        //заполняем поля Edit последними значениями из базы данных чтобы пользователь видел, что он принимает
-
-        mMedicalViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
-            nameMedicament = listMedicament.last().nameOfMedicine
-            frequencyMedicament = listMedicament.last().doseMedicine.toString()
+        medicamentViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
+            nameMedicament = listMedicament.last().name
+            frequencyMedicament = listMedicament.last().dose.toString()
         })
 
         binding.saveBtn.setOnClickListener {
-            val timeHour = dateFormatTimeHour.format(currentTime)
-            val timeMinute = dateFormatTimeMinute.format(currentTime)
+            val timeHour = dateFormatTimeHour.format(currentTimeFormatDate)
+            val timeMinute = dateFormatTimeMinute.format(currentTimeFormatDate)
 
             val medicamentTime = MedicamentTime(
                 0,
                 timeHour.toInt(),
                 timeMinute.toInt(),
-                dateMilli,
-                dayMilliId.toString()
+                currentDayMilliseconds,
+                dayMidnightMilliseconds.toString()
             )
 
             val infoDay = MeasureOfDay(
-                dayMilliId.toString(),
-                dateMilli,
+                dayMidnightMilliseconds.toString(),
+                currentDayMilliseconds,
                 nameMedicament,
-                dozaMedicament.toInt()
+                frequencyMedicament.toInt()
             )
 
-            mDayMeasureViewModel.addMedicalTime(medicamentTime)
-            mDayMeasureViewModel.addMeasure(infoDay)
-            //выйти из приложения
+            dayMeasureViewModel.addMedicalTime(medicamentTime)
+            dayMeasureViewModel.addMeasure(infoDay)
             this.finishAffinity()
-            // WorkManager.getInstance(applicationContext).cancelWorkById()
         }
     }
 }
