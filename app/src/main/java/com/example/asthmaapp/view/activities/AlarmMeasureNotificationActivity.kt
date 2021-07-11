@@ -5,10 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.AlarmMeasureNotificationActivityBinding
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
-import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,12 +13,10 @@ import java.util.*
 class AlarmMeasureNotificationActivity : AppCompatActivity() {
 
     private lateinit var binding: AlarmMeasureNotificationActivityBinding
-    private val medicamentViewModel: MedicamentViewModel by lazy {
-        ViewModelProvider(this).get(MedicamentViewModel::class.java)
+    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
-    private val dayMeasureViewModel: MeasureOfDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
-    }
+
     private lateinit var nameMedicament: String
     private lateinit var frequencyMedicament: String
 
@@ -53,7 +48,7 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
         binding.dateTextView.text = currentDay
         binding.timeAlarmText.text = currentTime
 
-        medicamentViewModel.readAllData.observe(
+        measurementsPerDayViewModel.readAllData.observe(
             this,
             { listMedicament ->
                 nameMedicament = listMedicament.last().name
@@ -69,24 +64,24 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
             // TODO: Peakflowmeter or PeakFlowMeter
             val measurePicflometr = binding.addMeasureText.text.toString().toInt()
 
-            val timeAndMeasure =
-                TimeAndMeasure(
-                    0,
-                    dayMillisecondsId.toString(),
-                    timeHour.toInt(),
-                    timeMinute.toInt(),
-                    measurePicflometr
-                )
+//            val timeAndMeasure =
+//                TimeMakeMeasure(
+//                    0,
+//                    dayMillisecondsId,
+//                    timeHour.toInt(),
+//                    timeMinute.toInt(),
+//                    measurePicflometr
+//                )
 
-            val measureOfDay = MeasureOfDay(
-                dayMillisecondsId.toString(),
-                currentDayMilliseconds,
-                nameMedicament,
-                frequencyMedicament.toInt()
-            )
+//            val measureOfDay = MeasureOfDay(
+//                dayMillisecondsId.toString(),
+//                currentDayMilliseconds,
+//                nameMedicament,
+//                frequencyMedicament.toInt()
+//            )
 
-            dayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
-            dayMeasureViewModel.addMeasure(measureOfDay)
+          //  dayMeasureViewModel.addTimeAndMeasure(timeAndMeasure)
+         //   dayMeasureViewModel.addMeasure(measureOfDay)
             this.finishAffinity()
         }
     }

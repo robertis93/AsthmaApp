@@ -51,6 +51,6 @@
     <string name="you_dont_write_all_information">you didnot fill in all the fields</string>
     <string name="important_message">Important message!</string>
     <string name="you_forget_write_information_about_medication">"You forget write information about medication"</string>
-    <string name="message">Message!</string>
+    <string name="take_drugs">Take Medicament</string> <string name="message">Message!</string>
     <string name="ok_i_do_it">OK, I will do it now</string>
 </resources>

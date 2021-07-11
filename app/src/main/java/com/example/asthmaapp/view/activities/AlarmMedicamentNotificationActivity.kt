@@ -5,10 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
-import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,11 +15,9 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
     private lateinit var nameMedicament: String
     private lateinit var doseMedicament: String
     private lateinit var frequencyMedicament: String
-    private val medicamentViewModel: MedicamentViewModel by lazy {
-        ViewModelProvider(this).get(MedicamentViewModel::class.java)
-    }
-    private val dayMeasureViewModel: MeasureOfDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+
+    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -52,7 +47,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
         val dayMidnightMilliseconds = dateDayCalendar.time.time
         binding.dateTextView.text = currentDate
 
-        medicamentViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
+        measurementsPerDayViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
             nameMedicament = listMedicament.last().name
             frequencyMedicament = listMedicament.last().dose.toString()
         })
@@ -61,23 +56,23 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
             val timeHour = dateFormatTimeHour.format(currentTimeFormatDate)
             val timeMinute = dateFormatTimeMinute.format(currentTimeFormatDate)
 
-            val medicamentTime = MedicamentTime(
-                0,
-                timeHour.toInt(),
-                timeMinute.toInt(),
-                currentDayMilliseconds,
-                dayMidnightMilliseconds.toString()
-            )
+//            val medicamentTime = TimeTakeMedicament(
+//                0,
+//                timeHour.toInt(),
+//                timeMinute.toInt(),
+//                currentDayMilliseconds,
+//                dayMidnightMilliseconds.toString()
+//            )
 
-            val infoDay = MeasureOfDay(
-                dayMidnightMilliseconds.toString(),
-                currentDayMilliseconds,
-                nameMedicament,
-                frequencyMedicament.toInt()
-            )
+//            val infoDay = MeasureOfDay(
+//                dayMidnightMilliseconds.toString(),
+//                currentDayMilliseconds,
+//                nameMedicament,
+//                frequencyMedicament.toInt()
+//            )
 
-            dayMeasureViewModel.addMedicalTime(medicamentTime)
-            dayMeasureViewModel.addMeasure(infoDay)
+//            dayMeasureViewModel.addMedicalTime(medicamentTime)
+//            dayMeasureViewModel.addMeasure(infoDay)
             this.finishAffinity()
         }
     }

@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMedicamentTimeItemBinding
-import com.example.asthmaapp.model.MedicamentTime
+import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 
 class AddMedicamentTimeAdapter() :
     RecyclerView.Adapter<AddMedicamentTimeAdapter.AddMedicamentViewHolder>() {
-    private var measuresMedList = mutableListOf<MedicamentTime>()
+    private var measuresMedList = mutableListOf<TakeMedicamentTimeEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMedicamentViewHolder {
         val binding = AddFragmentMedicamentTimeItemBinding.inflate(
@@ -25,8 +25,8 @@ class AddMedicamentTimeAdapter() :
         val currentItem = measuresMedList[position]
         with(holder.binding) {
             timeMeasureText.text =
-                "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
-                    com.example.asthmaapp.utils.timeConvert(currentItem.minute)
+                "${com.example.asthmaapp.utils.timeConvert(currentItem.timeHour)} : ${
+                    com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
                 }"
             deleteAlarmIcon.setOnClickListener {
                 deleteDate(measuresMedList[position])
@@ -38,17 +38,17 @@ class AddMedicamentTimeAdapter() :
         return measuresMedList.size
     }
 
-    fun addData(medicamentTime: MedicamentTime) {
-        measuresMedList.add(medicamentTime)
+    fun addData(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
+        measuresMedList.add(takeMedicamentTimeEntity)
         notifyDataSetChanged()
     }
 
-    private fun deleteDate(medicamentTime: MedicamentTime) {
-        measuresMedList.remove(medicamentTime)
+    private fun deleteDate(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
+        measuresMedList.remove(takeMedicamentTimeEntity)
         notifyDataSetChanged()
     }
 
-    fun getDataMedTime(): MutableList<MedicamentTime> {
+    fun getListMedicamentTime(): MutableList<TakeMedicamentTimeEntity> {
         return measuresMedList
     }
 

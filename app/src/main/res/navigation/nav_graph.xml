@@ -45,7 +45,7 @@
             app:destination="@id/listFragment" />
         <argument
             android:name="currentItemDay"
-            app:argType="com.example.asthmaapp.model.MedWithMeasuresAndMedicamentTime" />
+            app:argType="com.example.asthmaapp.model.TakeMedicamentTimeEntity" />
     </fragment>
     <fragment
         android:id="@+id/alarmFragment"
@@ -73,21 +73,6 @@
     <action
         android:id="@+id/goToAddFragmentAction"
         app:destination="@id/addFragment" />
-    <fragment
-        android:id="@+id/helloFragment"
-        android:name="com.example.asthmaapp.view.fragments.HelloFragment"
-        android:label="HelloFragment">
-        <action
-            android:id="@+id/action_helloFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:popUpTo="@id/helloFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_helloFragment_to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment"
-            app:popUpTo="@id/helloFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
         android:name="com.example.asthmaapp.view.fragments.onboarding.OnBoardingFragment"

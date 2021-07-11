@@ -4,20 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.asthmaapp.model.*
+import com.example.asthmaapp.model.Alarm
+import com.example.asthmaapp.model.Measure
+import com.example.asthmaapp.model.MedicamentInfo
+import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 
 @Database(
-    entities = [MeasureOfDay::class, TimeAndMeasure::class, MedicamentTime::class, Alarm::class, MedicamentInfo::class],
+    entities = [Measure::class, TakeMedicamentTimeEntity::class, Alarm::class, MedicamentInfo::class],
     version = 1,
     exportSchema = false
 )
 abstract class MeasureDataBase : RoomDatabase() {
 
-    // TODO: rename to dayMeasureDao()
-    abstract fun medAndMeasureDao(): MeasurementsPerDayDao
+    abstract fun measurementsPerDayDao(): MeasurementsPerDayDao
     abstract fun alarmDao(): AlarmDao
-    // TODO: rename to medicamentInfoDao()
-    abstract fun medicalInfoDao(): MedicamentInfoDao
+    abstract fun medicamentInfoDao(): MedicamentInfoDao
 
     companion object {
         @Volatile

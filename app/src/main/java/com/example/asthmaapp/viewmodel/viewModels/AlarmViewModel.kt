@@ -14,18 +14,15 @@ import kotlinx.coroutines.launch
 
 class AlarmViewModel(application: Application) : AndroidViewModel(application) {
 
-    var readAllAlarms: LiveData<List<Alarm>>? = null
     private val repository: AlarmRepository
-
-    fun getListAlarm(context: Context, typeAlarm: TypeAlarm) : LiveData<List<Alarm>>? {
-        readAllAlarms = repository.getAlarms(context, typeAlarm)
-        return readAllAlarms
-    }
 
     init {
         val alarmDao = MeasureDataBase.getDataBase(application).alarmDao()
         repository = AlarmRepository(alarmDao)
-       // readAllData = repository.readAllData
+    }
+
+    fun getListAlarm(context: Context, typeAlarm: TypeAlarm): LiveData<List<Alarm>>? {
+        return repository.getAlarms(context, typeAlarm)
     }
 
     fun addAlarm(alarm: Alarm) {

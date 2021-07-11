@@ -3,32 +3,32 @@ package com.example.asthmaapp.view.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.CustomRowBinding
-import com.example.asthmaapp.model.MedWithMeasuresAndMedicamentTime
-import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.utils.longToStringCalendar
-import com.example.asthmaapp.view.fragments.MeasureListFragmentDirections
+import com.example.asthmaapp.model.Measure
+import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
+import com.example.asthmaapp.viewmodel.viewModels.TakeMedicamentTimeGroupByDate
 
 class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHolder>() {
 
-    private var dayMeasureList = emptyList<MedWithMeasuresAndMedicamentTime>()
-    private var timeMeasureList = emptyList<TimeAndMeasure>()
+    private var dayMedicamentList = listOf<MeasureWithTakeMedicamentTime>()
+    private var timeMeasureList = emptyList<Measure>()
+    private var emptytimeMeasureList = mutableListOf<TakeMedicamentTimeGroupByDate>()
 
-    fun setDayData(dayWithMeasures: List<MedWithMeasuresAndMedicamentTime>) {
-        this.dayMeasureList = dayWithMeasures
+
+    fun setData(dayWithMeasures: List<MeasureWithTakeMedicamentTime>) {
+        this.dayMedicamentList = dayWithMeasures
         notifyDataSetChanged()
     }
 
-    fun addTimeAndMeasure(timeAndMeasure: List<TimeAndMeasure>) {
-        this.timeMeasureList = timeAndMeasure
+    fun addMeasure(measure: List<Measure>) {
+        this.timeMeasureList = measure
     }
 
     override fun getItemCount(): Int {
-        return dayMeasureList.size
+        return dayMedicamentList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeasureViewHolder {
@@ -38,41 +38,48 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
-        val dayCurrentItem = dayMeasureList[position]
+        val dayCurrentItem = dayMedicamentList[position]
 
-        holder.binding.dayTextView.text = longToStringCalendar(dayCurrentItem.day.day)
-        holder.itemView.setOnClickListener {
-            val action =
-                MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
-            holder.binding.root.findNavController().navigate(action)
-        }
+        holder.binding.dayTextView.text = dayCurrentItem.date
+//        val adaaaa =dayCurrentItem.keys
+//        holder.itemView.setOnClickListener {
+//            val action =
+//                MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem.values.size)
+//            holder.binding.root.findNavController().navigate(action)
+//        }
 
         val measureClickListener: MeasureAdapter.OnClickListener =
             object : MeasureAdapter.OnClickListener {
                 override fun actionClick() {
-                    val action =
-                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
-                            dayCurrentItem
-                        )
-                    holder.binding.root.findNavController().navigate(action)
+//                    val action =
+//                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
+//                            dayCurrentItem
+//                        )
+//                    holder.binding.root.findNavController().navigate(action)
                 }
             }
 
         val medTimeTakeMedicamentClickListener: ListTimeTakeMedicamentAdapter.OnClickListener =
             object : ListTimeTakeMedicamentAdapter.OnClickListener {
                 override fun actionClick() {
-                    val action =
-                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
-                            dayCurrentItem
-                        )
-                    holder.binding.root.findNavController().navigate(action)
+//                    val action =
+//                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
+//                            dayCurrentItem
+//                        )
+                   // holder.binding.root.findNavController().navigate(action)
                 }
             }
 
-        val measuresAll = dayCurrentItem.measures
-        val timeDrugs = dayCurrentItem.medicamentTime
+     //   val measuresAll = dayMedicamentList
+        //val timeDrugs = dayCurrentItem.timeTakeMedicament
+//        val timeDrugs = dayMedicamentList
+//        for (time in timeDrugs){
+//            if (time.dateTimeStamp == adaaaa){
+//emptytimeMeasureList.add(time)
+//            }
+//        }
 
-        val measureAdapter = MeasureAdapter(measuresAll, timeMeasureList, measureClickListener)
+        val measureAdapter = MeasureAdapter(dayCurrentItem.measureList, timeMeasureList, measureClickListener)
         val recyclerView = holder.binding.rowRecyclerView
         recyclerView.adapter = measureAdapter
         recyclerView.layoutManager = GridLayoutManager(
@@ -83,7 +90,7 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
         )
 
         val medTimeAdapter =
-            ListTimeTakeMedicamentAdapter(timeDrugs, medTimeTakeMedicamentClickListener)
+            ListTimeTakeMedicamentAdapter(dayCurrentItem.takeMedicamentTimeList, medTimeTakeMedicamentClickListener)
         val recyclerViewMedTime = holder.binding.timeMedicalRecyclerView
         recyclerViewMedTime.adapter = medTimeAdapter
         recyclerViewMedTime.layoutManager = GridLayoutManager(

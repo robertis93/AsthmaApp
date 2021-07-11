@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.listFragment -> binding.btnNavigationView.visibility = View.VISIBLE
                 R.id.alarmFragment -> binding.btnNavigationView.visibility = View.VISIBLE
                 R.id.medicalFragment -> binding.btnNavigationView.visibility = View.VISIBLE
-                R.id.helloFragment -> binding.btnNavigationView.visibility = View.GONE
                 R.id.viewPagerFragment -> binding.btnNavigationView.visibility = View.INVISIBLE
             }
         }

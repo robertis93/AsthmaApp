@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.InnerItemMedtimeBinding
-import com.example.asthmaapp.model.MedicamentTime
+import com.example.asthmaapp.model.TakeMedicamentTime
 
 
 class ListTimeTakeMedicamentAdapter(
-    var timesMedicament: List<MedicamentTime>,
+    var timesTimeTakeMedicament: List<TakeMedicamentTime>,
     var onClickListener: OnClickListener
 ) :
     RecyclerView.Adapter<ListTimeTakeMedicamentAdapter.TimeTakeMedicamentViewHolder>() {
@@ -29,16 +29,16 @@ class ListTimeTakeMedicamentAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TimeTakeMedicamentViewHolder, position: Int) {
-        val currentItem = timesMedicament[position]
-        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
+        val currentItem = timesTimeTakeMedicament[position]
+        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTime.timeHour)
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTime.timeMinute)
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()
         }
     }
 
     override fun getItemCount(): Int {
-        return timesMedicament.size
+        return timesTimeTakeMedicament.size
     }
 
     class TimeTakeMedicamentViewHolder(val binding: InnerItemMedtimeBinding) :

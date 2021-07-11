@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMeasureItemBinding
-import com.example.asthmaapp.model.TimeAndMeasure
+import com.example.asthmaapp.model.Measure
 
 class AddMeasureAdapter() : RecyclerView.Adapter<AddMeasureAdapter.AddMeasureViewHolder>() {
-    private var measuresList = mutableListOf<TimeAndMeasure>()
+    private var measuresList = mutableListOf<Measure>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMeasureViewHolder {
         val binding = AddFragmentMeasureItemBinding.inflate(
@@ -24,8 +24,8 @@ class AddMeasureAdapter() : RecyclerView.Adapter<AddMeasureAdapter.AddMeasureVie
         val currentItem = measuresList[position]
         with(holder.binding) {
             timeMeasureText.text =
-                "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
-                    com.example.asthmaapp.utils.timeConvert(currentItem.minute)
+                "${com.example.asthmaapp.utils.timeConvert(currentItem.timeHour)} : ${
+                    com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
                 }"
             addMeasureText.text = currentItem.measure.toString()
             deleteAlarmIcon.setOnClickListener {
@@ -38,17 +38,17 @@ class AddMeasureAdapter() : RecyclerView.Adapter<AddMeasureAdapter.AddMeasureVie
         return measuresList.size
     }
 
-    fun addData(timeAndMeasure: TimeAndMeasure) {
-        measuresList.add(timeAndMeasure)
+    fun addMeasure(measure: Measure) {
+        measuresList.add(measure)
         notifyDataSetChanged()
     }
 
-    fun getData(): MutableList<TimeAndMeasure> {
+    fun getListMeasure(): MutableList<Measure> {
         return measuresList
     }
 
-    private fun deleteData(timeAndMeasure: TimeAndMeasure) {
-        measuresList.remove(timeAndMeasure)
+    private fun deleteData(measure: Measure) {
+        measuresList.remove(measure)
         notifyDataSetChanged()
     }
 

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.Alarm
 
-class AlarmDrugsAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
-    RecyclerView.Adapter<AlarmDrugsAdapter.AlarmViewHolder>() {
+class AlarmMedicamentAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
+    RecyclerView.Adapter<AlarmMedicamentAdapter.AlarmViewHolder>() {
     private var alarmMedicamentList = emptyList<Alarm>()
 
     interface OnAlarmDrugsClickListener {

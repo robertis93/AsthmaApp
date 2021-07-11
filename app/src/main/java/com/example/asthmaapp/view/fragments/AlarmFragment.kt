@@ -14,7 +14,7 @@ import androidx.work.*
 import com.example.asthmaapp.databinding.AlarmFragmentBinding
 import com.example.asthmaapp.model.Alarm
 import com.example.asthmaapp.utils.NotificationsHelper
-import com.example.asthmaapp.view.adapters.AlarmDrugsAdapter
+import com.example.asthmaapp.view.adapters.AlarmMedicamentAdapter
 import com.example.asthmaapp.view.adapters.MeasureAlarmAdapter
 import com.example.asthmaapp.view.adapters.MeasureAlarmAdapter.OnAlarmClickListener
 import com.example.asthmaapp.viewmodel.viewModels.AlarmViewModel
@@ -44,8 +44,8 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
                 }
             }
 
-        val alarmMedicamentDeleteClickListener: AlarmDrugsAdapter.OnAlarmDrugsClickListener =
-            object : AlarmDrugsAdapter.OnAlarmDrugsClickListener {
+        val alarmMedicamentDeleteClickListener: AlarmMedicamentAdapter.OnAlarmDrugsClickListener =
+            object : AlarmMedicamentAdapter.OnAlarmDrugsClickListener {
                 override fun onAlarmClick(medicamentAlarm: Alarm, position: Int) {
                     alarmViewModel.deleteAlarm(medicamentAlarm)
                     WorkManager.getInstance(requireContext())
@@ -64,7 +64,7 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
                 measureAlarmAdapter.refreshAlarms(alarm)
             })
 
-        val medicamentAlarmAdapter = AlarmDrugsAdapter(alarmMedicamentDeleteClickListener)
+        val medicamentAlarmAdapter = AlarmMedicamentAdapter(alarmMedicamentDeleteClickListener)
         val drugsRecyclerView = binding.drugsRecyclerView
         drugsRecyclerView.adapter = medicamentAlarmAdapter
         drugsRecyclerView.layoutManager =

@@ -6,13 +6,15 @@ import java.util.*
 
 fun timeConvert(minute: Int): String {
     return if (minute < 10) {
-        "0" + minute
-    } else
-        "${minute}"
+        "0$minute"
+    } else {
+        "$minute"
+    }
 }
-
+// TODO: add another DateSimpleFormat
+// TODO: use and rename val dateFormat = SimpleDateFormat("dd MMM YYYY")
 @SuppressLint("SimpleDateFormat")
-fun longToStringCalendar(millisecond: Long): String {
+fun millisecondsToStringDateDayMonthYear(millisecond: Long): String {
     //format date
     val currentDate = Date(millisecond)
     val dateFormat = SimpleDateFormat("dd MMM YYYY")

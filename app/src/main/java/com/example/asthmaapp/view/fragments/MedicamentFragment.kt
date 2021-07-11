@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.MedicalFragmentBinding
 import com.example.asthmaapp.model.MedicamentInfo
-import com.example.asthmaapp.utils.MedicamentDialog
-import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
+import com.example.asthmaapp.utils.SaveMedicamentDialog
+import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 
 class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
 
-    private val medicamentViewModel: MedicamentViewModel by lazy {
-        ViewModelProvider(this).get(MedicamentViewModel::class.java)
+    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
 
     override fun inflate(inflater: LayoutInflater): MedicalFragmentBinding =
@@ -25,7 +25,7 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        medicamentViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
+        measurementsPerDayViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
             if (medication.isNotEmpty()) {
                 binding.editTextMedicalInfo.setText(medication.last().name)
                 binding.editTextMedicalDose.setText(medication.last().dose.toString())
@@ -34,7 +34,7 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
 
         binding.btnSaveMedicalInfo.setOnClickListener {
             insertDataToDataBase()
-            val myDialogFragment = MedicamentDialog(R.string.successful_added)
+            val myDialogFragment = SaveMedicamentDialog(R.string.successful_added)
             val manager = activity?.getSupportFragmentManager()
             if (manager != null) {
                 myDialogFragment.show(manager, "myDialog")
@@ -53,6 +53,6 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
                 nameMedication,
                 doseMedication
             )
-        medicamentViewModel.addMedicalInfo(medicamentInfo)
+        measurementsPerDayViewModel.addMedicalInfo(medicamentInfo)
     }
 }

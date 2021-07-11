@@ -2,63 +2,72 @@ package com.example.asthmaapp.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedWithMeasuresAndMedicamentTime
-import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.model.TimeAndMeasure
+import com.example.asthmaapp.model.Measure
+import com.example.asthmaapp.model.MedicamentInfo
+import com.example.asthmaapp.model.TakeMedicamentTime
+import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 
 @Dao
 interface MeasurementsPerDayDao {
 
-    @Query("SELECT * FROM medicament_day_table ORDER BY day")
-    fun getMedicamentAndMeasures(): LiveData<List<MedWithMeasuresAndMedicamentTime>>
+    @Query("SELECT * FROM time_take_medicament_table ORDER BY id")
+    fun getAllTakeMedicamentTime(): LiveData<List<TakeMedicamentTime>>
+
+    @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimestamp")
+    fun getAllTakeMedicamentTimeList() : List<TakeMedicamentTime>
+
+    @Query("SELECT * FROM measure_table ORDER BY dateTimestamp")
+    fun getAllMeasureList() : List<Measure>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMedicament(measureOfDay: MeasureOfDay)
+    suspend fun insertMeasure(measure: Measure)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTimeAndMeasure(timeAndMeasure: TimeAndMeasure)
+    @Query("DELETE FROM time_take_medicament_table")
+    suspend fun deleteAllTimeTakeMedicament()
 
-    @Query("SELECT * FROM medicament_day_table")
-    fun readAllMedicament(): LiveData<List<MeasureOfDay>>
+    @Query("SELECT * FROM measure_table")
+    fun readAllMeasure(): LiveData<List<Measure>>
+
+    @Query("SELECT * FROM measure_table")
+    fun getAllMeasure(): List<Measure>
 
     @Update
-    suspend fun updateMedicament(measureOfDay: MeasureOfDay)
+    suspend fun updateMeasure(measure: Measure)
 
     @Delete
-    suspend fun deleteMedicament(measureOfDay: MeasureOfDay)
+    suspend fun deleteMeasure(measure: Measure)
 
-    @Query("DELETE FROM medicament_day_table")
+    @Query("DELETE FROM measure_table")
     suspend fun deleteAllMeasure()
 
-    @Query("SELECT * FROM time_measure_table")
-    fun readAllTimeAndMeasure(): LiveData<List<TimeAndMeasure>>
-
-    @Query("SELECT * FROM time_measure_table")
-    fun getAllTimeAndMeasure(): List<TimeAndMeasure>
-
-    @Update
-    suspend fun updateTimeAndMeasure(timeAndMeasure: TimeAndMeasure)
-
-    @Delete
-    suspend fun deleteTimeAndMeasure(timeAndMeasure: TimeAndMeasure)
-
-    @Query("DELETE FROM time_measure_table")
-    suspend fun deleteAllTimeAndMeasure()
-
-    @Query("SELECT * FROM medicament_time_table ")
-    fun readAllMedicalTime(): LiveData<List<MedicamentTime>>
+    @Query("SELECT * FROM time_take_medicament_table")
+    fun readAllTakeMedicamentTime(): LiveData<List<TakeMedicamentTimeEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addMedicalTime(medicamentTime: MedicamentTime)
+    suspend fun addTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
 
     @Update
-    suspend fun updateMedicalTime(medicamentTime: MedicamentTime)
+    suspend fun updateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
 
     @Delete
-    suspend fun deleteMedicalTime(medicamentTime: MedicamentTime)
+    suspend fun deleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
 
-    @Query("DELETE FROM medicament_time_table")
-    suspend fun deleteAllMedicalTime()
+    @Query("DELETE FROM time_take_medicament_table")
+    suspend fun deleteTakeMedicamentTime()
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addMedicamentInfo(medicamentInfo: MedicamentInfo)
+
+    @Update
+    suspend fun updateMedicamentInfo(medicamentInfo: MedicamentInfo)
+
+    @Delete
+    suspend fun deleteMedicamentInfo(medicamentInfo: MedicamentInfo)
+
+    @Query("DELETE FROM medicament_info_table")
+    suspend fun deleteAllMedicamentInfo()
+
+    @Query("SELECT * FROM medicament_info_table")
+    fun readAllMedicamentInfo(): LiveData<List<MedicamentInfo>>
 }
 

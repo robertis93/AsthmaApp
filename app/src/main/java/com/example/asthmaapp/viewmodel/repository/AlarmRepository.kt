@@ -8,14 +8,8 @@ import com.example.asthmaapp.view.fragments.TypeAlarm
 
 class AlarmRepository(private val alarmDao: AlarmDao) {
 
-    //val readAllData: LiveData<List<Alarm>> = alarmDao.readAllData()
-    var getListAlarm: LiveData<List<Alarm>>? = null
-
-    fun getAlarms(context: Context, typeAlarm: TypeAlarm) : LiveData<List<Alarm>>? {
-
-        getListAlarm = alarmDao.readAllData(typeAlarm)
-
-        return getListAlarm
+    fun getAlarms(context: Context, typeAlarm: TypeAlarm): LiveData<List<Alarm>>? {
+        return alarmDao.readAllData(typeAlarm)
     }
 
     suspend fun addAlarm(alarm: Alarm) {

@@ -13,46 +13,49 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentMeasureListBinding
 import com.example.asthmaapp.view.adapters.MeasureListAdapter
-import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 
 class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
-    private val measureViewModel: MeasureOfDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+    private val measureViewModel: MeasurementsPerDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
 
     override fun inflate(inflater: LayoutInflater): FragmentMeasureListBinding =
         FragmentMeasureListBinding.inflate(inflater)
 
-    // TODO: разделить логичные, простые, маленькие и понятные методы
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val adapter = MeasureListAdapter()
+        val measureListAdapter = MeasureListAdapter()
         val recyclerView = binding.measureListRecyclerView
-        recyclerView.adapter = adapter
+        recyclerView.adapter = measureListAdapter
         recyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        measureViewModel.readMedicamentAndMeasure.observe(viewLifecycleOwner, Observer { measure ->
-            adapter.setDayData(measure)
-            if (adapter.itemCount == 0) {
-                binding.addMeasureButton.visibility = View.VISIBLE
-                binding.listFragmentAddMeasure.visibility = View.VISIBLE
-                binding.addFloatingActionButton.visibility = View.GONE
-                binding.deleteFloatingActionButton.visibility = View.GONE
-            } else if (adapter.itemCount > 0) {
-                binding.addMeasureButton.visibility = View.GONE
-                binding.listFragmentAddMeasure.visibility = View.GONE
-                binding.addFloatingActionButton.visibility = View.VISIBLE
-                binding.deleteFloatingActionButton.visibility = View.VISIBLE
-            }
-        })
-
-        measureViewModel.readAllTimeAndMeasure.observe(
+        // TODO: как вообще  measureViewModel.getAll() они вместе работают
+        measureViewModel.takeMedicamentTimeGroupByDate.observe(
             viewLifecycleOwner,
-            { timeMeasure -> adapter.addTimeAndMeasure(timeMeasure) }
+            Observer { measure ->
+                measureListAdapter.setData(measure)
+                if (measureListAdapter.itemCount == 0) {
+                    binding.addMeasureButton.visibility = View.VISIBLE
+                    binding.listFragmentAddMeasure.visibility = View.VISIBLE
+                    binding.addFloatingActionButton.visibility = View.GONE
+                    binding.deleteFloatingActionButton.visibility = View.GONE
+                } else if (measureListAdapter.itemCount > 0) {
+                    binding.addMeasureButton.visibility = View.GONE
+                    binding.listFragmentAddMeasure.visibility = View.GONE
+                    binding.addFloatingActionButton.visibility = View.VISIBLE
+                    binding.deleteFloatingActionButton.visibility = View.VISIBLE
+                }
+            }
+        )
+
+        measureViewModel.readAllMeasure.observe(
+            viewLifecycleOwner,
+            { timeMeasure -> measureListAdapter.addMeasure(timeMeasure) }
         )
 
         binding.addMeasureButton.setOnClickListener {
@@ -66,6 +69,11 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
         binding.deleteFloatingActionButton.setOnClickListener {
             deleteAllMeasure()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        measureViewModel.getAll()
     }
 
     private fun deleteAllMeasure() {

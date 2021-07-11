@@ -15,33 +15,29 @@ import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentAddBinding
 import com.example.asthmaapp.databinding.LayoutDialogAddFragmentBinding
 import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
-import com.example.asthmaapp.model.MeasureOfDay
-import com.example.asthmaapp.model.MedicamentTime
-import com.example.asthmaapp.model.TimeAndMeasure
-import com.example.asthmaapp.utils.AddMeasureFragmentDialog
+import com.example.asthmaapp.model.Measure
+import com.example.asthmaapp.model.MedicamentInfo
+import com.example.asthmaapp.model.TakeMedicamentTimeEntity
+import com.example.asthmaapp.utils.AddMeasureDialog
 import com.example.asthmaapp.view.adapters.AddMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddMedicamentTimeAdapter
-import com.example.asthmaapp.viewmodel.viewModels.MeasureOfDayViewModel
-import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
 class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
-    private lateinit var idMed: String
-    private var dayMilliseconds by Delegates.notNull<Long>()
-    private val dayMeasureViewModel: MeasureOfDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasureOfDayViewModel::class.java)
+    private var idMedicament by Delegates.notNull<Int>()
+    private var currentDayTimeStamp by Delegates.notNull<Long>()
+    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
+        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
-    private val medicamentViewModel: MedicamentViewModel by lazy {
-        ViewModelProvider(this).get(MedicamentViewModel::class.java)
-    }
-    private var dateMilli by Delegates.notNull<Long>()
-    lateinit var timeAndMeasure: TimeAndMeasure
+    private var dateAfterChangedTimestamp by Delegates.notNull<Long>()
+    lateinit var measure: Measure
     private var yearMeasure by Delegates.notNull<Int>()
     private var monthMeasure by Delegates.notNull<Int>()
     private var dayMeasure by Delegates.notNull<Int>()
-    private val timeAndMeasureList = mutableListOf<TimeAndMeasure>()
+    private val timeAndMeasureList = mutableListOf<Measure>()
 
     override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
         FragmentAddBinding.inflate(inflater)
@@ -63,7 +59,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             GridLayoutManager(binding.recyclerMed.context, 2, LinearLayoutManager.HORIZONTAL, false)
 
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        dayMilliseconds = dateCalendar.time.time
+        currentDayTimeStamp = dateCalendar.time.time
         val yearToday: Int = dateCalendar.get(Calendar.YEAR)
         val monthToday: Int = dateCalendar.get(Calendar.MONTH)
         val dayOfMonthToday: Int = dateCalendar.get(Calendar.DAY_OF_MONTH)
@@ -71,22 +67,18 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             GregorianCalendar(yearToday, monthToday, dayOfMonthToday)
         val midnightDayMilliseconds = justDayCalendar.time.time
 
-        idMed = midnightDayMilliseconds.toString()
+        binding.dateTextView.text = com.example.asthmaapp.utils.millisecondsToStringDateDayMonthYear(currentDayTimeStamp)
 
-        val currentDate = Date(dayMilliseconds)
-        val dateFormat = SimpleDateFormat("dd MMM YYYY")
-        val dayToday = dateFormat.format(currentDate)
-        binding.dateTextView.text = dayToday
-
-        medicamentViewModel.readAllData.observe(
+        measurementsPerDayViewModel.readAllData.observe(
             viewLifecycleOwner,
             { listMedicalInfo ->
                 try {
                     binding.nameMedical.setText(listMedicalInfo.last().name)
                     binding.editTextMedicalDoze.setText(listMedicalInfo.last().dose.toString())
+                    idMedicament = listMedicalInfo.last().id
                 } catch (e: Exception) {
                     val myDialogFragment =
-                        AddMeasureFragmentDialog(R.string.you_forget_write_information_about_medication)
+                        AddMeasureDialog(R.string.you_forget_write_information_about_medication)
                     val fragmentManager = requireActivity().supportFragmentManager
                     myDialogFragment.show(fragmentManager, "myDialog")
                 }
@@ -96,9 +88,8 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         binding.changeDayButton.setOnClickListener {
             changeDay()
         }
-
         binding.addOneMeasureBtn.setOnClickListener {
-            addTimeOfMeasure(addMeasureAdapter)
+            addMeasure(addMeasureAdapter)
         }
 
         binding.addOneMedBtn.setOnClickListener {
@@ -115,30 +106,32 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         addMedicamentTimeAdapter: AddMedicamentTimeAdapter
     ) {
         try {
-            val nameMedicamentation = binding.nameMedical.text.toString()
-            val doza = binding.editTextMedicalDoze.text.toString().toInt()
+            val nameMedication = binding.nameMedical.text.toString()
+            val doseMedication = binding.editTextMedicalDoze.text.toString().toInt()
 
-            val infoDay = MeasureOfDay(
-                idMed,
-                dayMilliseconds,
-                nameMedicamentation,
-                doza
-            )
-            val measuresOneDay = addMeasureAdapter.getData()
-            for (measure in measuresOneDay) {
-                dayMeasureViewModel.addTimeAndMeasure(measure)
+            val medicamentInfo =
+                MedicamentInfo(
+                    0,
+                    nameMedication,
+                    doseMedication
+                )
+            measurementsPerDayViewModel.addMedicalInfo(medicamentInfo)
+
+            val measuresPerDay = addMeasureAdapter.getListMeasure()
+            for (measure in measuresPerDay) {
+                measurementsPerDayViewModel.addTimeAndMeasure(measure)
             }
 
-            dayMeasureViewModel.addMeasure(infoDay)
+           // dayMeasureViewModel.addMeasure(infoDay)
 
-            val medicamentTime = addMedicamentTimeAdapter.getDataMedTime()
-            for (medicTime in medicamentTime) {
-                dayMeasureViewModel.addMedicalTime(medicTime)
+            val medicamentTimePerDay = addMedicamentTimeAdapter.getListMedicamentTime()
+            for (medicamentTime in medicamentTimePerDay) {
+                measurementsPerDayViewModel.addMedicalTime(medicamentTime)
             }
 
             findNavController().popBackStack()
         } catch (e: Exception) {
-            val myDialogFragment = AddMeasureFragmentDialog(R.string.you_dont_write_all_information)
+            val myDialogFragment = AddMeasureDialog(R.string.you_dont_write_all_information)
             val fragmentManager = requireActivity().supportFragmentManager
             myDialogFragment.show(fragmentManager, "myDialog")
         }
@@ -160,7 +153,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
             val medicamentTime =
-                MedicamentTime(0, timeHour, timeMinute, dayMilliseconds, idMed)
+                TakeMedicamentTimeEntity(0, currentDayTimeStamp, timeHour, timeMinute, idMedicament)
             addMedicamentTimeAdapter.addData(medicamentTime)
         }
 
@@ -169,7 +162,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         }
     }
 
-    private fun addTimeOfMeasure(addMeasureAdapter: AddMeasureAdapter) {
+    private fun addMeasure(addMeasureAdapter: AddMeasureAdapter) {
         val builder = AlertDialog.Builder(requireContext())
         val layoutInflater = LayoutInflater.from(requireContext())
         val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
@@ -190,10 +183,10 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             dialogFragment.timePicker.is24HourView
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
-            val measureWithPicflometr = dialogFragment.measureDialog.text.toString().toInt()
-            timeAndMeasure = TimeAndMeasure(0, idMed, timeHour, timeMinute, measureWithPicflometr)
-            timeAndMeasureList.add(timeAndMeasure)
-            addMeasureAdapter.addData(timeAndMeasure)
+            val measureWithPeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
+            measure = Measure(0, currentDayTimeStamp, timeHour, timeMinute, measureWithPeakFlowMeter)
+            timeAndMeasureList.add(measure)
+            addMeasureAdapter.addMeasure(measure)
         }
         dialogFragment.cancelBtn.setOnClickListener {
             mAlertDialog.dismiss()
@@ -215,12 +208,12 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
                 val dateCalendar: Calendar =
                     GregorianCalendar(yearMeasure, monthMeasure, dayMeasure)
-                dateMilli = dateCalendar.time.time
+                dateAfterChangedTimestamp = dateCalendar.time.time
 
-                idMed = dateMilli.toString()
-                dayMilliseconds = dateMilli
+//                idMedicament = dateMilli.toString()
+                currentDayTimeStamp = dateAfterChangedTimestamp
 
-                val currentDate = Date(dateMilli)
+                val currentDate = Date(dateAfterChangedTimestamp)
                 val dateFormat = SimpleDateFormat("dd MMM YYYY")
                 val day = dateFormat.format(currentDate)
 
@@ -236,7 +229,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             calendar.get(Calendar.DAY_OF_MONTH)
         )
 
-        datePickerDialog.datePicker.maxDate = dayMilliseconds
+        datePickerDialog.datePicker.maxDate = currentDayTimeStamp
         datePickerDialog.show()
     }
 }

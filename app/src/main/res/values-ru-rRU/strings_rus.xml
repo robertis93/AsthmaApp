@@ -52,5 +52,6 @@
     <string name="you_forget_write_information_about_medication">"Вы не заполнили информацию о принимаемом лекарстве!"</string>
     <string name="important_message">Важное сообщение!</string>
     <string name="message">Сообщение!</string>
+    <string name="take_drugs">Примите лекарство</string>
     <string name="ok_i_do_it">"ОК, сейчас сделаю"</string>
 </resources>
