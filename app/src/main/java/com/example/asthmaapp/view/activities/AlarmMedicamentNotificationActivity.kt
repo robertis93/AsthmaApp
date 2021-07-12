@@ -47,7 +47,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
         val dayMidnightMilliseconds = dateDayCalendar.time.time
         binding.dateTextView.text = currentDate
 
-        measurementsPerDayViewModel.readAllData.observe(this, androidx.lifecycle.Observer { listMedicament ->
+        measurementsPerDayViewModel.getAllMedicamentInfo.observe(this, androidx.lifecycle.Observer { listMedicament ->
             nameMedicament = listMedicament.last().name
             frequencyMedicament = listMedicament.last().dose.toString()
         })

@@ -8,8 +8,8 @@ import com.example.asthmaapp.view.fragments.TypeAlarm
 
 class AlarmRepository(private val alarmDao: AlarmDao) {
 
-    fun getAlarms(context: Context, typeAlarm: TypeAlarm): LiveData<List<Alarm>>? {
-        return alarmDao.readAllData(typeAlarm)
+    fun getAllAlarms(context: Context, typeAlarm: TypeAlarm): LiveData<List<Alarm>>? {
+        return alarmDao.getAllAlarm(typeAlarm)
     }
 
     suspend fun addAlarm(alarm: Alarm) {
@@ -24,7 +24,7 @@ class AlarmRepository(private val alarmDao: AlarmDao) {
         alarmDao.deleteAlarm(alarm)
     }
 
-    suspend fun deleteAllAlarm() {
+    suspend fun deleteAllAlarms() {
         alarmDao.deleteAllAlarms()
     }
 }

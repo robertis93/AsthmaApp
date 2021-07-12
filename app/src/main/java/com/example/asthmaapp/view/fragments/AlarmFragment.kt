@@ -59,7 +59,7 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
         recyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        alarmViewModel.getListAlarm(requireContext(), TypeAlarm.MEASURE)
+        alarmViewModel.getAllAlarm(requireContext(), TypeAlarm.MEASURE)
             ?.observe(viewLifecycleOwner, Observer { alarm ->
                 measureAlarmAdapter.refreshAlarms(alarm)
             })
@@ -70,7 +70,7 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
         drugsRecyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        alarmViewModel.getListAlarm(requireContext(), TypeAlarm.MEDICAMENT)
+        alarmViewModel.getAllAlarm(requireContext(), TypeAlarm.MEDICAMENT)
             ?.observe(viewLifecycleOwner, Observer { alarm ->
                 medicamentAlarmAdapter.refreshMedicamentAlarms(alarm)
             })

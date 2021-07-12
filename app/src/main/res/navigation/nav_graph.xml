@@ -45,7 +45,7 @@
             app:destination="@id/listFragment" />
         <argument
             android:name="currentItemDay"
-            app:argType="com.example.asthmaapp.model.TakeMedicamentTimeEntity" />
+            app:argType="com.example.asthmaapp.model.MeasureWithTakeMedicamentTime" />
     </fragment>
     <fragment
         android:id="@+id/alarmFragment"

@@ -12,9 +12,9 @@ data class Measure(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val dateTimestamp: Long,
-    val timeHour: Int,
-    val timeMinute: Int,
-    val measure: Int
+    var timeHour: Int,
+    var timeMinute: Int,
+    var measure: Int
 ) : Parcelable
 
 @Parcelize
@@ -23,8 +23,8 @@ data class TakeMedicamentTimeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val dateTimestamp: Long,
-    val timeHour: Int,
-    val timeMinute: Int,
+    var timeHour: Int,
+    var timeMinute: Int,
     @ColumnInfo(name = "medicamentInfo_id")
     val medicamentInfoId: Int
 ) : Parcelable
@@ -51,23 +51,11 @@ data class TakeMedicamentTime(
 
 @Parcelize
 data class MeasureWithTakeMedicamentTime(
-    val date: String, // create from dateTimestamp
+    val dateTimestamp: Long, // create from dateTimestamp
     val measureList: List<Measure>,
     val takeMedicamentTimeList: List<TakeMedicamentTime>,
 ) : Parcelable
 
-/*
-@Parcelize
-data class TakeMedicamentTime(
-    @Embedded
-    val medicamentInfo: MedicamentInfo,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "medicamentInfo_id"
-    )
-    val takeMedicamentTime: List<TakeMedicamentTimeEntity>
-) : Parcelable
-*/
 
 
 

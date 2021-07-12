@@ -21,8 +21,8 @@ class AlarmViewModel(application: Application) : AndroidViewModel(application) {
         repository = AlarmRepository(alarmDao)
     }
 
-    fun getListAlarm(context: Context, typeAlarm: TypeAlarm): LiveData<List<Alarm>>? {
-        return repository.getAlarms(context, typeAlarm)
+    fun getAllAlarm(context: Context, typeAlarm: TypeAlarm): LiveData<List<Alarm>>? {
+        return repository.getAllAlarms(context, typeAlarm)
     }
 
     fun addAlarm(alarm: Alarm) {
@@ -45,7 +45,7 @@ class AlarmViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteAllAlarms() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllAlarm()
+            repository.deleteAllAlarms()
         }
     }
 }

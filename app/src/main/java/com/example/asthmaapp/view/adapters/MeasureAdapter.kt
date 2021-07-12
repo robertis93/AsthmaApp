@@ -30,20 +30,21 @@ class MeasureAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
         val currentItem = measures[position]
-//        var max = timeAndMeasureList[0].measure
-//        for (i in timeAndMeasureList.indices)
-//            if (timeAndMeasureList[i].measure > max)
-//                max = timeAndMeasureList[i].measure
-//
-//        val controlValue = max * 0.85
-//        val controlHighValue = max * 0.75
+        var max = timeAndMeasureList[0].measure
+        for (i in timeAndMeasureList.indices)
+            if (timeAndMeasureList[i].measure > max)
+                max = timeAndMeasureList[i].measure
+
+        val controlValue = max * 0.85
+        val controlHighValue = max * 0.75
 
         holder.binding.hourText.text = currentItem.timeHour.toString()
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
-        val measurenow = currentItem.measure
-      //  if (measurenow < controlValue)
+        holder.binding.minuteText.text =
+            com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
+        val measureNow = currentItem.measure
+        if (measureNow < controlValue)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))
-      //  if (measurenow < controlHighValue)
+        if (measureNow < controlHighValue)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.red))
         holder.binding.measureText.text = currentItem.measure.toString()
         holder.itemView.setOnClickListener {

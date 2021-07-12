@@ -25,7 +25,7 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        measurementsPerDayViewModel.readAllData.observe(viewLifecycleOwner, Observer { medication ->
+        measurementsPerDayViewModel.getAllMedicamentInfo.observe(viewLifecycleOwner, Observer { medication ->
             if (medication.isNotEmpty()) {
                 binding.editTextMedicalInfo.setText(medication.last().name)
                 binding.editTextMedicalDose.setText(medication.last().dose.toString())
@@ -33,7 +33,7 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
         })
 
         binding.btnSaveMedicalInfo.setOnClickListener {
-            insertDataToDataBase()
+            insertToDataBase()
             val myDialogFragment = SaveMedicamentDialog(R.string.successful_added)
             val manager = activity?.getSupportFragmentManager()
             if (manager != null) {
@@ -44,7 +44,7 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
         }
     }
 
-    private fun insertDataToDataBase() {
+    private fun insertToDataBase() {
         val nameMedication = binding.editTextMedicalInfo.text.toString()
         val doseMedication = binding.editTextMedicalDose.text.toString().toInt()
         val medicamentInfo =
@@ -53,6 +53,6 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
                 nameMedication,
                 doseMedication
             )
-        measurementsPerDayViewModel.addMedicalInfo(medicamentInfo)
+        measurementsPerDayViewModel.addMedicamentInfo(medicamentInfo)
     }
 }

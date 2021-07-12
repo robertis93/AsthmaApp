@@ -6,12 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.asthmaapp.database.MeasureDataBase
-import com.example.asthmaapp.model.*
+import com.example.asthmaapp.model.Measure
+import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
+import com.example.asthmaapp.model.MedicamentInfo
+import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.viewmodel.repository.MeasureRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
-typealias TakeMedicamentTimeGroupByDate = Map<String, List<TakeMedicamentTime>>
 
 class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(application) {
     private val measureRepository: MeasureRepository
@@ -22,22 +23,16 @@ class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(a
             MeasureRepository(measurementsPerDayDao)
     }
 
-    val readAllMeasure: LiveData<List<Measure>> =
-        measureRepository.readAllMeasure
-
-//    val takeMedicamentTimeGroupByDate: LiveData<TakeMedicamentTimeGroupByDate> =
-//        measurementsPerDayViewModelRepository.takeMedicamentTimeGroupByDate
+    val getAllMeasures: LiveData<List<Measure>> =
+        measureRepository.getAllMeasures
 
     val takeMedicamentTimeGroupByDate: MutableLiveData<List<MeasureWithTakeMedicamentTime>> =
         MutableLiveData()
-//    get() =
-//        measurementsPerDayViewModelRepository.getMeasureAndTakeMedicamentTimeGroupByDate()
 
-    val readAllData: LiveData<List<MedicamentInfo>> =
-        measureRepository.readAllData
+    val getAllMedicamentInfo: LiveData<List<MedicamentInfo>> =
+        measureRepository.getAllMedicamentInfo
 
-    // TODO: rename
-    fun getAll() {
+    fun getAllMeasuresAndTakeMedicamentTime() {
         viewModelScope.launch(Dispatchers.IO) {
             takeMedicamentTimeGroupByDate.postValue(measureRepository.getMeasureAndTakeMedicamentTimeGroupByDate())
         }
@@ -45,7 +40,25 @@ class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(a
 
     fun addTimeAndMeasure(measure: Measure) {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.addTimeAndMeasure(measure)
+            measureRepository.addMeasure(measure)
+        }
+    }
+
+    fun deleteAllTimeTakeMedicament() {
+        viewModelScope.launch(Dispatchers.IO) {
+            measureRepository.deleteAllTimeTakeMedicament()
+        }
+    }
+
+    fun updateMeasure(measure: Measure) {
+        viewModelScope.launch(Dispatchers.IO) {
+            measureRepository.updateMeasure(measure)
+        }
+    }
+
+    fun deleteMeasure(measure: Measure) {
+        viewModelScope.launch(Dispatchers.IO) {
+            measureRepository.deleteMeasure(measure)
         }
     }
 
@@ -55,69 +68,59 @@ class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(a
         }
     }
 
-    fun updateTimeMeasure(measure: Measure) {
+    fun addTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.updateTimeMeasure(measure)
+            measureRepository.addTakeMedicamentTime(takeMedicamentTimeEntity)
         }
     }
 
-    fun deleteTimeMeasure(measure: Measure) {
+    fun updateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteTimeMeasure(measure)
+            measureRepository.updateTakeMedicamentTime(takeMedicamentTimeEntity)
         }
     }
 
-    fun deleteAllTimeMeasure() {
+    fun deleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllTimeMeasure()
+            measureRepository.deleteTakeMedicamentTime(takeMedicamentTimeEntity)
         }
     }
 
-    fun addMedicalTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
+    fun deleteAllTakeMedicamentTime() {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.addMedicalTime(takeMedicamentTimeEntity)
+            measureRepository.deleteAllTakeMedicamentTime()
         }
     }
 
-    fun updateMedicalTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
+    fun addMedicamentInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.updateMedicalTime(takeMedicamentTimeEntity)
+            measureRepository.addMedicamentInfo(medicamentInfo)
         }
     }
 
-    fun deleteMedicalTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
+    fun updateMedicamentInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteMedicalTime(takeMedicamentTimeEntity)
+            measureRepository.updateMedicamentInfo(medicamentInfo)
         }
     }
 
-    fun deleteAllMedicalTime() {
+    fun deleteMedicamentInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllMedicalTime()
+            measureRepository.deleteMedicamentInfo(medicamentInfo)
         }
     }
 
-    fun addMedicalInfo(medicamentInfo: MedicamentInfo) {
+    fun deleteAllMedicamentInfo() {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.addMedicalInfo(medicamentInfo)
+            measureRepository.deleteAllMedicamentInfo()
         }
     }
 
-    fun updateMedicalInfo(medicamentInfo: MedicamentInfo) {
+    fun deleteAllMeasuresWithMedicaments() {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.updateMedicalInfo(medicamentInfo)
-        }
-    }
-
-    fun deleteMedicalInfo(medicamentInfo: MedicamentInfo) {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteMedicalInfo(medicamentInfo)
-        }
-    }
-
-    fun deleteAllMedicalInfo() {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllMedicalInfo()
+            measureRepository.deleteAllMeasure()
+            measureRepository.deleteAllTimeTakeMedicament()
+            getAllMeasuresAndTakeMedicamentTime()
         }
     }
 }

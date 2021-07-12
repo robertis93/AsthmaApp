@@ -21,5 +21,5 @@ interface AlarmDao {
     suspend fun deleteAllAlarms()
 
     @Query("Select * From alarm_table WHERE typeAlarm == :alarm ")
-    fun readAllData(alarm : TypeAlarm): LiveData<List<Alarm>>
+    fun getAllAlarm(alarm : TypeAlarm): LiveData<List<Alarm>>
 }

@@ -34,7 +34,6 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
         recyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        // TODO: как вообще  measureViewModel.getAll() они вместе работают
         measureViewModel.takeMedicamentTimeGroupByDate.observe(
             viewLifecycleOwner,
             Observer { measure ->
@@ -53,7 +52,7 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
             }
         )
 
-        measureViewModel.readAllMeasure.observe(
+        measureViewModel.getAllMeasures.observe(
             viewLifecycleOwner,
             { timeMeasure -> measureListAdapter.addMeasure(timeMeasure) }
         )
@@ -73,15 +72,13 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
     override fun onResume() {
         super.onResume()
-        measureViewModel.getAll()
+        measureViewModel.getAllMeasuresAndTakeMedicamentTime()
     }
 
     private fun deleteAllMeasure() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(R.string.yes) { _, _ ->
-            measureViewModel.deleteAllMeasure()
-            measureViewModel.deleteAllTimeMeasure()
-            measureViewModel.deleteAllMedicalTime()
+            measureViewModel.deleteAllMeasuresWithMedicaments()
 
             Toast.makeText(
                 requireContext(),

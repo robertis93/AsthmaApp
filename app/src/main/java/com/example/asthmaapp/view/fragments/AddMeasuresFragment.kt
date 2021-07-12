@@ -69,7 +69,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
         binding.dateTextView.text = com.example.asthmaapp.utils.millisecondsToStringDateDayMonthYear(currentDayTimeStamp)
 
-        measurementsPerDayViewModel.readAllData.observe(
+        measurementsPerDayViewModel.getAllMedicamentInfo.observe(
             viewLifecycleOwner,
             { listMedicalInfo ->
                 try {
@@ -115,7 +115,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
                     nameMedication,
                     doseMedication
                 )
-            measurementsPerDayViewModel.addMedicalInfo(medicamentInfo)
+            measurementsPerDayViewModel.addMedicamentInfo(medicamentInfo)
 
             val measuresPerDay = addMeasureAdapter.getListMeasure()
             for (measure in measuresPerDay) {
@@ -126,7 +126,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
             val medicamentTimePerDay = addMedicamentTimeAdapter.getListMedicamentTime()
             for (medicamentTime in medicamentTimePerDay) {
-                measurementsPerDayViewModel.addMedicalTime(medicamentTime)
+                measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
             }
 
             findNavController().popBackStack()

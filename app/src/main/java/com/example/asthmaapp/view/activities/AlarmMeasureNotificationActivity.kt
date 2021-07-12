@@ -48,7 +48,7 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
         binding.dateTextView.text = currentDay
         binding.timeAlarmText.text = currentTime
 
-        measurementsPerDayViewModel.readAllData.observe(
+        measurementsPerDayViewModel.getAllMedicamentInfo.observe(
             this,
             { listMedicament ->
                 nameMedicament = listMedicament.last().name

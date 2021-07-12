@@ -8,11 +8,11 @@ import com.example.asthmaapp.databinding.InnerItemMedtimeBinding
 import com.example.asthmaapp.model.TakeMedicamentTime
 
 
-class ListTimeTakeMedicamentAdapter(
+class ListTakeMedicamentTimeAdapter(
     var timesTimeTakeMedicament: List<TakeMedicamentTime>,
     var onClickListener: OnClickListener
 ) :
-    RecyclerView.Adapter<ListTimeTakeMedicamentAdapter.TimeTakeMedicamentViewHolder>() {
+    RecyclerView.Adapter<ListTakeMedicamentTimeAdapter.TimeTakeMedicamentViewHolder>() {
 
     interface OnClickListener {
         fun actionClick()
