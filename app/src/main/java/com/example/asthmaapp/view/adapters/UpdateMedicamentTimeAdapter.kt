@@ -16,9 +16,7 @@ class UpdateMedicamentTimeAdapter(
 ) :
     RecyclerView.Adapter<UpdateMedicamentTimeAdapter.UpdateMedicamentTimeViewHolder>() {
 
-    private val timeList = timesTakeMedicamentTimeEntity.toMutableList()
-    lateinit var timesTakeMedicamentTime: MutableList<TakeMedicamentTimeEntity>
-
+    private val timeList = timesTakeMedicamentTimeEntity.map { it.takeMedicamentTimeEntity }.toMutableList()
 
     interface OnClickListener {
         fun onDeleteClick(takeMedicamentTimeEntity: TakeMedicamentTimeEntity, position: Int)
@@ -39,16 +37,16 @@ class UpdateMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: UpdateMedicamentTimeViewHolder, position: Int) {
         val currentItem = timeList[position]
-        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTime.timeHour)
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTime.timeMinute)
+        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.timeHour)
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
 
         holder.binding.editAlarmImage.setOnClickListener {
-            editTimeAlarmMedicament(holder, position, currentItem.takeMedicamentTime)
+            editTimeAlarmMedicament(holder, position, currentItem)
         }
 
         holder.binding.deleteImage.setOnClickListener {
-            deleteData(currentItem.takeMedicamentTime)
-            onClickListener?.onDeleteClick(currentItem.takeMedicamentTime, position)
+            deleteData(currentItem)
+            onClickListener.onDeleteClick(currentItem, position)
         }
     }
 
@@ -79,8 +77,8 @@ class UpdateMedicamentTimeAdapter(
 
             holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(timeHour)
             holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(timeMinute)
-            timeList[position].takeMedicamentTime.timeHour = timeHour
-            timeList[position].takeMedicamentTime.timeMinute = timeMinute
+            timeList[position].timeHour = timeHour
+            timeList[position].timeMinute = timeMinute
         }
 
         dialogFragment.cancelBtn.setOnClickListener {
@@ -98,13 +96,12 @@ class UpdateMedicamentTimeAdapter(
         return timeList.size
     }
 
-
-    fun getData(): MutableList<TakeMedicamentTime> {
+    fun getData(): MutableList<TakeMedicamentTimeEntity> {
         return timeList
     }
 
     fun addData(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-        timesTakeMedicamentTime.add(takeMedicamentTimeEntity)
+        timeList.add(takeMedicamentTimeEntity)
         notifyDataSetChanged()
     }
 

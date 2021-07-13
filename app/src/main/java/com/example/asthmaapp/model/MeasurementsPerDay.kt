@@ -41,7 +41,7 @@ data class MedicamentInfo(
 @Parcelize
 data class TakeMedicamentTime(
     @Embedded
-    val takeMedicamentTime: TakeMedicamentTimeEntity,
+    val takeMedicamentTimeEntity: TakeMedicamentTimeEntity,
     @Relation(
         parentColumn = "medicamentInfo_id",
         entityColumn = "id"

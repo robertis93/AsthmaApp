@@ -25,7 +25,7 @@ class MeasureRepository(private val measurementsPerDayDao: MeasurementsPerDayDao
         val takeMedicamentTimeGroup = measurementsPerDayDao.getListTakeMedicamentTime()
             .groupBy {
                 val date =
-                    it.takeMedicamentTime.dateTimestamp
+                    it.takeMedicamentTimeEntity.dateTimestamp
                 date
             }
 

@@ -30,8 +30,8 @@ class ListTakeMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TimeTakeMedicamentViewHolder, position: Int) {
         val currentItem = timesTimeTakeMedicament[position]
-        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTime.timeHour)
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTime.timeMinute)
+        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTimeEntity.timeHour)
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.takeMedicamentTimeEntity.timeMinute)
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()
         }
