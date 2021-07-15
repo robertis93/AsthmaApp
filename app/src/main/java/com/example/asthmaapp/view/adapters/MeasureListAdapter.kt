@@ -40,7 +40,7 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
         val dayCurrentItem = dayMedicamentList[position]
 
         holder.binding.dayTextView.text =
-            com.example.asthmaapp.utils.millisecondsToStringDateDayMonthYear(dayCurrentItem.dateTimestamp)
+            com.example.asthmaapp.utils.millisecondsToStringDateDayMonthYear(dayCurrentItem.dateTimeStamp)
         holder.itemView.setOnClickListener {
             val action =
                 MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)

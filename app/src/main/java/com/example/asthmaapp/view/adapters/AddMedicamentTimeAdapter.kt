@@ -25,8 +25,8 @@ class AddMedicamentTimeAdapter() :
         val currentItem = measuresMedList[position]
         with(holder.binding) {
             timeMeasureText.text =
-                "${com.example.asthmaapp.utils.timeConvert(currentItem.timeHour)} : ${
-                    com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
+                "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
+                    com.example.asthmaapp.utils.timeConvert(currentItem.minute)
                 }"
             deleteAlarmIcon.setOnClickListener {
                 deleteDate(measuresMedList[position])

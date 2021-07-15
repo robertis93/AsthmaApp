@@ -24,8 +24,8 @@ class AddMeasureAdapter() : RecyclerView.Adapter<AddMeasureAdapter.AddMeasureVie
         val currentItem = measuresList[position]
         with(holder.binding) {
             timeMeasureText.text =
-                "${com.example.asthmaapp.utils.timeConvert(currentItem.timeHour)} : ${
-                    com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
+                "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
+                    com.example.asthmaapp.utils.timeConvert(currentItem.minute)
                 }"
             addMeasureText.text = currentItem.measure.toString()
             deleteAlarmIcon.setOnClickListener {

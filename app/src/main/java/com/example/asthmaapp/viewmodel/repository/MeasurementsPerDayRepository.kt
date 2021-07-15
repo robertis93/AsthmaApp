@@ -17,16 +17,12 @@ class MeasureRepository(private val measurementsPerDayDao: MeasurementsPerDayDao
     fun getMeasureAndTakeMedicamentTimeGroupByDate(): List<MeasureWithTakeMedicamentTime> {
         val measureGroup = measurementsPerDayDao.getListMeasure()
             .groupBy {
-                val date =
-                   it.dateTimestamp
-                date
+                it.dateTimestamp
             }
 
         val takeMedicamentTimeGroup = measurementsPerDayDao.getListTakeMedicamentTime()
             .groupBy {
-                val date =
-                    it.takeMedicamentTimeEntity.dateTimestamp
-                date
+                it.takeMedicamentTimeEntity.dateTimestamp
             }
 
         return (measureGroup.keys + takeMedicamentTimeGroup.keys).map { date ->

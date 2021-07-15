@@ -12,6 +12,7 @@ import com.example.asthmaapp.databinding.MedicalFragmentBinding
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.utils.SaveMedicamentDialog
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
+import java.util.*
 
 class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
 
@@ -47,9 +48,10 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
     private fun insertToDataBase() {
         val nameMedication = binding.editTextMedicalInfo.text.toString()
         val doseMedication = binding.editTextMedicalDose.text.toString().toInt()
+        val idMedication: String = UUID.randomUUID().toString()
         val medicamentInfo =
             MedicamentInfo(
-                0,
+                idMedication,
                 nameMedication,
                 doseMedication
             )

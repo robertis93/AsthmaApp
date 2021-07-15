@@ -43,7 +43,7 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/editAlarmImage"
+            android:id="@+id/editImage"
             style="@style/Text.DarkGray"
             android:layout_width="32dp"
             android:layout_height="match_parent"

@@ -29,8 +29,8 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
 
     private val args by navArgs<UpdateMeasureFragmentArgs>()
     private var dayTimeStamp by Delegates.notNull<Long>()
-    private var idMedicament by Delegates.notNull<Int>()
-    private val measureViewModel: MeasurementsPerDayViewModel by lazy {
+    private var idMedicament by Delegates.notNull<String>()
+    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
         ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
 
@@ -40,18 +40,21 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        dayTimeStamp = args.currentItemDay.dateTimestamp
+        dayTimeStamp = args.currentItemDay.dateTimeStamp
         binding.dateTextView.text =
             com.example.asthmaapp.utils.millisecondsToStringDateDayMonthYear(dayTimeStamp)
 
-        binding.nameMedical.setText(args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.name }.toString())
-        binding.editTextMedicalDoze.setText(args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.dose }.toString())
-        idMedicament = (args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.id }.toString().toInt())
+        val medicamentNameList = args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.name }
+        val medicamentNameSet = medicamentNameList.toSet().joinToString()
+        val medicamentDoseList = args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.dose }
+        val medicamentDoseSet = medicamentDoseList.toSet().joinToString()
+        binding.editTextNameMedicament.setText(medicamentNameSet)
+        binding.editTextMedicamentDose.setText(medicamentDoseSet)
 
-
+        idMedicament = args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.id }.toSet().joinToString()
         val deleteMeasureClickListener = object : UpdateMeasureAdapter.OnClickListener {
             override fun onDeleteClick(measure: Measure, position: Int) {
-                measureViewModel.deleteMeasure(measure)
+                measurementsPerDayViewModel.deleteMeasure(measure)
                 Toast.makeText(
                     requireContext(), "Успешно удалено",
                     Toast.LENGTH_SHORT
@@ -75,7 +78,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
                     takeMedicamentTime: TakeMedicamentTimeEntity,
                     position: Int
                 ) {
-                    measureViewModel.deleteTakeMedicamentTime(takeMedicamentTime)
+                    measurementsPerDayViewModel.deleteTakeMedicamentTime(takeMedicamentTime)
                     Toast.makeText(
                         requireContext(), "Успешно удалено",
                         Toast.LENGTH_SHORT
@@ -127,10 +130,10 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
                     dayTimeStamp,
                     timeHour,
                     timeMinute,
-                    idMedicament,
+                    dayTimeStamp.toString(),
                 )
             updateMedicamentTimeAdapter.addData(medicamentTime)
-            measureViewModel.addTakeMedicamentTime(medicamentTime)
+            measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
         }
         dialogFragment.cancelBtn.setOnClickListener {
             Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
@@ -160,7 +163,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
             val measureWithPeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
             val measure = Measure(0, dayTimeStamp, timeHour, timeMinute, measureWithPeakFlowMeter)
             updateMeasureAdapter.addMeasure(measure)
-            measureViewModel.addTimeAndMeasure(measure)
+            measurementsPerDayViewModel.addTimeAndMeasure(measure)
         }
         dialogFragment.cancelBtn.setOnClickListener {
             alertDialog.dismiss()
@@ -172,24 +175,23 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
         updateMedicamentTimeAdapter: UpdateMedicamentTimeAdapter
     ) {
 
-        val nameMedicament = binding.nameMedical.text.toString()
-        val doseMedicament = binding.editTextMedicalDoze.text.toString()
+        val nameMedicament = binding.editTextNameMedicament.text.toString()
+        val doseMedicament = binding.editTextMedicamentDose.text.toString()
         val medicamentInfo =
             MedicamentInfo(
                 idMedicament,
                 nameMedicament,
                 doseMedicament.toInt()
             )
-        measureViewModel.updateMedicamentInfo(medicamentInfo)
+        measurementsPerDayViewModel.updateMedicamentInfo(medicamentInfo)
 
         val listMeasure = updateMeasureAdapter.getAllMeasure()
         for (measure in listMeasure)
-            measureViewModel.updateMeasure(measure)
-//
-//        val timeInfo = updateMedicamentTimeAdapter.getData()
-//        for (time in timeInfo)
-//            measureViewModel.updateMedicalTime(time)
-//        measureViewModel.updateMeasure(updateMeasure)
+            measurementsPerDayViewModel.updateMeasure(measure)
+
+        val timeInfo = updateMedicamentTimeAdapter.getData()
+        for (time in timeInfo)
+            measurementsPerDayViewModel.updateTakeMedicamentTime(time)
         Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_updateFragment_to_listFragment)
     }

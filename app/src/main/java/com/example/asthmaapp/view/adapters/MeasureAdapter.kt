@@ -38,9 +38,9 @@ class MeasureAdapter(
         val controlValue = max * 0.85
         val controlHighValue = max * 0.75
 
-        holder.binding.hourText.text = currentItem.timeHour.toString()
+        holder.binding.hourText.text = currentItem.hour.toString()
         holder.binding.minuteText.text =
-            com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
+            com.example.asthmaapp.utils.timeConvert(currentItem.minute)
         val measureNow = currentItem.measure
         if (measureNow < controlValue)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))

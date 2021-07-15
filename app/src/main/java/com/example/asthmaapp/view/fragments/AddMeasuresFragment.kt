@@ -73,9 +73,8 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             viewLifecycleOwner,
             { listMedicalInfo ->
                 try {
-                    binding.nameMedical.setText(listMedicalInfo.last().name)
-                    binding.editTextMedicalDoze.setText(listMedicalInfo.last().dose.toString())
-                    idMedicament = listMedicalInfo.last().id
+                    binding.editTextNameMedicament.setText(listMedicalInfo.last().name)
+                    binding.editTextMedicamentDose.setText(listMedicalInfo.last().dose.toString())
                 } catch (e: Exception) {
                     val myDialogFragment =
                         AddMeasureDialog(R.string.you_forget_write_information_about_medication)
@@ -106,12 +105,12 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         addMedicamentTimeAdapter: AddMedicamentTimeAdapter
     ) {
         try {
-            val nameMedication = binding.nameMedical.text.toString()
-            val doseMedication = binding.editTextMedicalDoze.text.toString().toInt()
+            val nameMedication = binding.editTextNameMedicament.text.toString()
+            val doseMedication = binding.editTextMedicamentDose.text.toString().toInt()
 
             val medicamentInfo =
                 MedicamentInfo(
-                    0,
+                    currentDayTimeStamp.toString(),
                     nameMedication,
                     doseMedication
                 )
@@ -121,8 +120,6 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             for (measure in measuresPerDay) {
                 measurementsPerDayViewModel.addTimeAndMeasure(measure)
             }
-
-           // dayMeasureViewModel.addMeasure(infoDay)
 
             val medicamentTimePerDay = addMedicamentTimeAdapter.getListMedicamentTime()
             for (medicamentTime in medicamentTimePerDay) {
@@ -153,7 +150,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
             val medicamentTime =
-                TakeMedicamentTimeEntity(0, currentDayTimeStamp, timeHour, timeMinute, idMedicament)
+                TakeMedicamentTimeEntity(0, currentDayTimeStamp, timeHour, timeMinute, currentDayTimeStamp.toString())
             addMedicamentTimeAdapter.addData(medicamentTime)
         }
 

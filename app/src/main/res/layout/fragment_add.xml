@@ -133,7 +133,7 @@
             app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameMedical"
+                android:id="@+id/editTextNameMedicament"
                 style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -155,7 +155,7 @@
             app:suffixText="@string/mkg">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextMedicalDoze"
+                android:id="@+id/editTextMedicamentDose"
                 style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

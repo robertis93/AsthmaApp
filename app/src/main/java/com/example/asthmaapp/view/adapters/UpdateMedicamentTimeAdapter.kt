@@ -37,10 +37,10 @@ class UpdateMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: UpdateMedicamentTimeViewHolder, position: Int) {
         val currentItem = timeList[position]
-        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.timeHour)
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
+        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
 
-        holder.binding.editAlarmImage.setOnClickListener {
+        holder.binding.editImage.setOnClickListener {
             editTimeAlarmMedicament(holder, position, currentItem)
         }
 
@@ -56,8 +56,8 @@ class UpdateMedicamentTimeAdapter(
         currentItem: TakeMedicamentTimeEntity
     ) {
         val builder =
-            androidx.appcompat.app.AlertDialog.Builder(holder.binding.editAlarmImage.context)
-        val layoutInflater = LayoutInflater.from(holder.binding.editAlarmImage.context)
+            androidx.appcompat.app.AlertDialog.Builder(holder.binding.editImage.context)
+        val layoutInflater = LayoutInflater.from(holder.binding.editImage.context)
         val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
         dialogFragment.timePicker.is24HourView
         builder.setView(dialogFragment.root)
@@ -66,8 +66,8 @@ class UpdateMedicamentTimeAdapter(
         val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
 
-        dialogFragment.timePicker.hour = currentItem.timeHour
-        dialogFragment.timePicker.minute = currentItem.timeMinute
+        dialogFragment.timePicker.hour = currentItem.hour
+        dialogFragment.timePicker.minute = currentItem.minute
 
         dialogFragment.btnSave.setOnClickListener {
             alertDialog.dismiss()
@@ -77,8 +77,8 @@ class UpdateMedicamentTimeAdapter(
 
             holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(timeHour)
             holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(timeMinute)
-            timeList[position].timeHour = timeHour
-            timeList[position].timeMinute = timeMinute
+            timeList[position].hour = timeHour
+            timeList[position].minute = timeMinute
         }
 
         dialogFragment.cancelBtn.setOnClickListener {

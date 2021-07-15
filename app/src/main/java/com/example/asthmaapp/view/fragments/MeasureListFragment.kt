@@ -17,7 +17,7 @@ import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 
 class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
-    private val measureViewModel: MeasurementsPerDayViewModel by lazy {
+    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
         ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
 
@@ -34,7 +34,7 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
         recyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        measureViewModel.takeMedicamentTimeGroupByDate.observe(
+        measurementsPerDayViewModel.takeMedicamentTimeGroupByDate.observe(
             viewLifecycleOwner,
             Observer { measure ->
                 measureListAdapter.setData(measure)
@@ -52,7 +52,7 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
             }
         )
 
-        measureViewModel.getAllMeasures.observe(
+        measurementsPerDayViewModel.getAllMeasures.observe(
             viewLifecycleOwner,
             { timeMeasure -> measureListAdapter.addMeasure(timeMeasure) }
         )
@@ -72,13 +72,13 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
     override fun onResume() {
         super.onResume()
-        measureViewModel.getAllMeasuresAndTakeMedicamentTime()
+        measurementsPerDayViewModel.getAllMeasuresAndTakeMedicamentTime()
     }
 
     private fun deleteAllMeasure() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(R.string.yes) { _, _ ->
-            measureViewModel.deleteAllMeasuresWithMedicaments()
+            measurementsPerDayViewModel.deleteAllMeasuresWithMedicaments()
 
             Toast.makeText(
                 requireContext(),

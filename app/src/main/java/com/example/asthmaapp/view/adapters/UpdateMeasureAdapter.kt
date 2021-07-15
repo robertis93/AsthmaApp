@@ -37,11 +37,11 @@ class UpdateMeasureAdapter(
     override fun onBindViewHolder(holder: UpdateMeasureViewHolder, position: Int) {
         val currentItem = timeAndMeasureList[position]
 
-        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.timeHour)
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.timeMinute)
+        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
+        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
         holder.binding.measureText.text = currentItem.measure.toString()
 
-        holder.binding.editAlarmImage.setOnClickListener {
+        holder.binding.editImage.setOnClickListener {
             editTimeMeasure(holder, position, currentItem)
         }
         holder.binding.deleteIcon.setOnClickListener {
@@ -56,8 +56,8 @@ class UpdateMeasureAdapter(
         currentItem: Measure
     ) {
         val builder =
-            androidx.appcompat.app.AlertDialog.Builder(holder.binding.editAlarmImage.context)
-        val layoutInflater = LayoutInflater.from(holder.binding.editAlarmImage.context)
+            androidx.appcompat.app.AlertDialog.Builder(holder.binding.editImage.context)
+        val layoutInflater = LayoutInflater.from(holder.binding.editImage.context)
         val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
         dialogFragment.timePicker.is24HourView
         builder.setView(dialogFragment.root)
@@ -72,8 +72,8 @@ class UpdateMeasureAdapter(
             else dialogFragment.btnSave.isEnabled = false
         }
 
-        dialogFragment.timePicker.hour = currentItem.timeHour
-        dialogFragment.timePicker.minute = currentItem.timeMinute
+        dialogFragment.timePicker.hour = currentItem.hour
+        dialogFragment.timePicker.minute = currentItem.minute
         dialogFragment.measureDialog.setText(currentItem.measure.toString())
 
         dialogFragment.btnSave.setOnClickListener {
@@ -86,8 +86,8 @@ class UpdateMeasureAdapter(
             holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(timeHour)
             holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(timeMinute)
             holder.binding.measureText.text = measurePeakFlowMeter.toString()
-            timeAndMeasureList[position].timeHour = timeHour
-            timeAndMeasureList[position].timeMinute = timeMinute
+            timeAndMeasureList[position].hour = timeHour
+            timeAndMeasureList[position].minute = timeMinute
             timeAndMeasureList[position].measure = measurePeakFlowMeter
         }
 
