@@ -19,6 +19,8 @@ import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
+import com.example.asthmaapp.utils.DateUtil
+import com.example.asthmaapp.utils.DateUtil.dateStringToDayTimeStamp
 import com.example.asthmaapp.view.adapters.UpdateMeasureAdapter
 import com.example.asthmaapp.view.adapters.UpdateMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
@@ -40,9 +42,11 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        dayTimeStamp = args.currentItemDay.dateTimeStamp
-        binding.dateTextView.text =
-            com.example.asthmaapp.utils.millisecondsToStringDateDayMonthYear(dayTimeStamp)
+       // dayTimeStamp = args.currentItemDay.date
+        binding.dateTextView.text = args.currentItemDay.date
+
+        val currentDate = args.currentItemDay.date
+        dayTimeStamp = dateStringToDayTimeStamp(currentDate)
 
         val medicamentNameList = args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.name }
         val medicamentNameSet = medicamentNameList.toSet().joinToString()
@@ -124,13 +128,14 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
             mAlertDialog.dismiss()
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
+
+            val medicamentDayTimeStamp =
+                DateUtil.dayTimeStamp(dayTimeStamp, timeHour, timeMinute)
             val medicamentTime =
                 TakeMedicamentTimeEntity(
                     0,
-                    dayTimeStamp,
-                    timeHour,
-                    timeMinute,
-                    dayTimeStamp.toString(),
+                    medicamentDayTimeStamp,
+                    idMedicament,
                 )
             updateMedicamentTimeAdapter.addData(medicamentTime)
             measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
@@ -161,9 +166,13 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
             val measureWithPeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
-            val measure = Measure(0, dayTimeStamp, timeHour, timeMinute, measureWithPeakFlowMeter)
+
+            val measureDayTimeStamp =
+                DateUtil.dayTimeStamp(dayTimeStamp, timeHour, timeMinute)
+
+            val measure = Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
             updateMeasureAdapter.addMeasure(measure)
-            measurementsPerDayViewModel.addTimeAndMeasure(measure)
+            measurementsPerDayViewModel.addMeasure(measure)
         }
         dialogFragment.cancelBtn.setOnClickListener {
             alertDialog.dismiss()

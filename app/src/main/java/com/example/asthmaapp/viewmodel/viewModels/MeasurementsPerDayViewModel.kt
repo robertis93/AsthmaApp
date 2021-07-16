@@ -15,6 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(application) {
+
+    val date = MutableLiveData<Long>()
+    val measure = MutableLiveData<List<Measure>>()
+    val timeTakeMedicament = MutableLiveData<List<TakeMedicamentTimeEntity>>()
+    val medicamentInfo = MutableLiveData<MedicamentInfo>()
+
     private val measureRepository: MeasureRepository
 
     init {
@@ -38,7 +44,7 @@ class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(a
         }
     }
 
-    fun addTimeAndMeasure(measure: Measure) {
+    fun addMeasure(measure: Measure) {
         viewModelScope.launch(Dispatchers.IO) {
             measureRepository.addMeasure(measure)
         }

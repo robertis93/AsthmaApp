@@ -5,8 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
+import com.example.asthmaapp.model.MedicamentInfo
+import com.example.asthmaapp.model.TakeMedicamentTimeEntity
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatDayMonthYear
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHour
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatMinute
+import com.example.asthmaapp.utils.DateUtil.dayTimeStamp
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AlarmMedicamentNotificationActivity : AppCompatActivity() {
@@ -14,7 +20,6 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
     private lateinit var binding: TimeMedActivityAlarmTestBinding
     private lateinit var nameMedicament: String
     private lateinit var doseMedicament: String
-    private lateinit var frequencyMedicament: String
 
     private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
         ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
@@ -27,52 +32,39 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
         setContentView(binding.getRoot())
 
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        val currentDayMilliseconds = dateCalendar.time.time
-        val currentYear = dateCalendar.time.year
-        val currentMonth = dateCalendar.time.month
-        val currentDayOfMonth = dateCalendar.time.day
+        val dateTimeStamp = dateCalendar.time.time
+        val currentTime = dateTimeStampToSimpleDateFormatHourMinute(dateTimeStamp)
 
-        val dateFormatTimeHourAndMinute = SimpleDateFormat("HH:mm")
-        val dateFormatTimeMinute = SimpleDateFormat("mm")
-        val dateFormatTimeHour = SimpleDateFormat("HH")
-        val currentTimeFormatDate = Date(currentDayMilliseconds)
-        val currentTime = dateFormatTimeHourAndMinute.format(currentTimeFormatDate)
+        binding.dateTextView.text = dateTimeStampToSimpleDateFormatDayMonthYear(dateTimeStamp)
         binding.timeAlarmText.text = currentTime
 
-        val dateFormatDayMonthYear = SimpleDateFormat("dd MMM YYYY")
-        val currentDate = dateFormatDayMonthYear.format(currentTimeFormatDate)
-
-        val dateDayCalendar: Calendar =
-            GregorianCalendar(currentYear, currentMonth, currentDayOfMonth)
-        val dayMidnightMilliseconds = dateDayCalendar.time.time
-        binding.dateTextView.text = currentDate
-
-        measurementsPerDayViewModel.getAllMedicamentInfo.observe(this, androidx.lifecycle.Observer { listMedicament ->
-            nameMedicament = listMedicament.last().name
-            frequencyMedicament = listMedicament.last().dose.toString()
-        })
+        measurementsPerDayViewModel.getAllMedicamentInfo.observe(
+            this,
+            androidx.lifecycle.Observer { listMedicament ->
+                nameMedicament = listMedicament.last().name
+                doseMedicament = listMedicament.last().dose.toString()
+            })
 
         binding.saveBtn.setOnClickListener {
-            val timeHour = dateFormatTimeHour.format(currentTimeFormatDate)
-            val timeMinute = dateFormatTimeMinute.format(currentTimeFormatDate)
+            val timeHour = dateTimeStampToSimpleDateFormatHour(dateTimeStamp).toInt()
+            val timeMinute = dateTimeStampToSimpleDateFormatMinute(dateTimeStamp).toInt()
 
-//            val medicamentTime = TimeTakeMedicament(
-//                0,
-//                timeHour.toInt(),
-//                timeMinute.toInt(),
-//                currentDayMilliseconds,
-//                dayMidnightMilliseconds.toString()
-//            )
+            val medicamentDayTimeStamp = dayTimeStamp(dateTimeStamp, timeHour, timeMinute)
+            val medicamentTime =
+                TakeMedicamentTimeEntity(
+                    0,
+                    medicamentDayTimeStamp,
+                    dateTimeStamp.toString()
+                )
+            measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
 
-//            val infoDay = MeasureOfDay(
-//                dayMidnightMilliseconds.toString(),
-//                currentDayMilliseconds,
-//                nameMedicament,
-//                frequencyMedicament.toInt()
-//            )
-
-//            dayMeasureViewModel.addMedicalTime(medicamentTime)
-//            dayMeasureViewModel.addMeasure(infoDay)
+            val medicamentInfo =
+                MedicamentInfo(
+                    dateTimeStamp.toString(),
+                    nameMedicament,
+                    doseMedicament.toInt()
+                )
+            measurementsPerDayViewModel.addMedicamentInfo(medicamentInfo)
             this.finishAffinity()
         }
     }

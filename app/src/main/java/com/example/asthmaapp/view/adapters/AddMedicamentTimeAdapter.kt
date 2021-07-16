@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMedicamentTimeItemBinding
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
 
 class AddMedicamentTimeAdapter() :
     RecyclerView.Adapter<AddMedicamentTimeAdapter.AddMedicamentViewHolder>() {
@@ -25,9 +26,7 @@ class AddMedicamentTimeAdapter() :
         val currentItem = measuresMedList[position]
         with(holder.binding) {
             timeMeasureText.text =
-                "${com.example.asthmaapp.utils.timeConvert(currentItem.hour)} : ${
-                    com.example.asthmaapp.utils.timeConvert(currentItem.minute)
-                }"
+                "${dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimeStamp)}"
             deleteAlarmIcon.setOnClickListener {
                 deleteDate(measuresMedList[position])
             }

@@ -42,12 +42,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="12:09"
-
                 android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/deleteIcon"
-                style="@style/Text.DarkGray"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"

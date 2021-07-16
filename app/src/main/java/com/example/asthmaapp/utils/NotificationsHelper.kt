@@ -20,7 +20,6 @@ object NotificationsHelper {
 
         var intent = Intent()
 
-
         if (message == "MEDICAMENT") {
             intent = Intent(context, AlarmMedicamentNotificationActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

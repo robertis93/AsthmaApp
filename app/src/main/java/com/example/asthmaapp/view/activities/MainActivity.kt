@@ -43,12 +43,10 @@ class MainActivity : AppCompatActivity() {
             val action = NavGraphDirections.actionGlobalListFragment2()
             navController.navigate(action)
 
-
         } else {
             val action = NavGraphDirections.actionGlobalViewPagerFragment4()
             navController.navigate(action)
         }
-
     }
 
     private fun onBoardingFinished(): Boolean {

@@ -7,21 +7,22 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.asthmaapp.R
-import com.example.asthmaapp.databinding.MedicalFragmentBinding
+import com.example.asthmaapp.databinding.MedicamentFragmentBinding
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.utils.SaveMedicamentDialog
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 import java.util.*
 
-class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
+class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
 
     private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
         ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
     }
 
-    override fun inflate(inflater: LayoutInflater): MedicalFragmentBinding =
-        MedicalFragmentBinding.inflate(inflater)
+    override fun inflate(inflater: LayoutInflater): MedicamentFragmentBinding =
+        MedicamentFragmentBinding.inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,18 +43,19 @@ class MedicamentFragment : BaseFragment<MedicalFragmentBinding>() {
             }
             val hideKeyboard = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             hideKeyboard.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            findNavController().navigate(R.id.action_medicalFragment_to_alarmFragment)
         }
     }
 
     private fun insertToDataBase() {
-        val nameMedication = binding.editTextMedicalInfo.text.toString()
-        val doseMedication = binding.editTextMedicalDose.text.toString().toInt()
-        val idMedication: String = UUID.randomUUID().toString()
+        val nameMedicament = binding.editTextMedicalInfo.text.toString()
+        val doseMedicament = binding.editTextMedicalDose.text.toString().toInt()
+        val idMedicament: String = UUID.randomUUID().toString()
         val medicamentInfo =
             MedicamentInfo(
-                idMedication,
-                nameMedication,
-                doseMedication
+                idMedicament,
+                nameMedicament,
+                doseMedicament
             )
         measurementsPerDayViewModel.addMedicamentInfo(medicamentInfo)
     }

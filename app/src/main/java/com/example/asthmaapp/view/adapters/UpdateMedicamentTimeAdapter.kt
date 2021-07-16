@@ -9,6 +9,8 @@ import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.databinding.UpdateItemMedtimeBinding
 import com.example.asthmaapp.model.TakeMedicamentTime
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHour
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
 
 class UpdateMedicamentTimeAdapter(
     var timesTakeMedicamentTimeEntity: List<TakeMedicamentTime>,
@@ -37,9 +39,7 @@ class UpdateMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: UpdateMedicamentTimeViewHolder, position: Int) {
         val currentItem = timeList[position]
-        holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(currentItem.hour)
-        holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(currentItem.minute)
-
+        holder.binding.timeTextView.text = dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimeStamp)
         holder.binding.editImage.setOnClickListener {
             editTimeAlarmMedicament(holder, position, currentItem)
         }
@@ -66,8 +66,8 @@ class UpdateMedicamentTimeAdapter(
         val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
 
-        dialogFragment.timePicker.hour = currentItem.hour
-        dialogFragment.timePicker.minute = currentItem.minute
+        dialogFragment.timePicker.hour = dateTimeStampToSimpleDateFormatHour(currentItem.dateTimeStamp).toInt()
+        dialogFragment.timePicker.minute = dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimeStamp).toInt()
 
         dialogFragment.btnSave.setOnClickListener {
             alertDialog.dismiss()
@@ -75,10 +75,9 @@ class UpdateMedicamentTimeAdapter(
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
 
-            holder.binding.hourText.text = com.example.asthmaapp.utils.timeConvert(timeHour)
-            holder.binding.minuteText.text = com.example.asthmaapp.utils.timeConvert(timeMinute)
-            timeList[position].hour = timeHour
-            timeList[position].minute = timeMinute
+            holder.binding.timeTextView.text = "${timeHour} : ${timeMinute}"
+          //  timeList[position].dateTimeStamp = timeHour
+          //  timeList[position].minute = timeMinute
         }
 
         dialogFragment.cancelBtn.setOnClickListener {

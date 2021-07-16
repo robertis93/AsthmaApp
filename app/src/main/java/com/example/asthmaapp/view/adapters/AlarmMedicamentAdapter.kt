@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.Alarm
+import com.example.asthmaapp.utils.DateUtil.timeCorrectDisplay
 
 class AlarmMedicamentAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
     RecyclerView.Adapter<AlarmMedicamentAdapter.AlarmViewHolder>() {
@@ -24,7 +25,7 @@ class AlarmMedicamentAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickLis
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
         val currentItem = alarmMedicamentList[position]
         holder.binding.timeDayTextView.text =
-            "${currentItem.hour} : ${com.example.asthmaapp.utils.timeConvert(currentItem.minute)}"
+            "${timeCorrectDisplay(currentItem.hour)} : ${timeCorrectDisplay(currentItem.minute)}"
         holder.binding.deleteIcon.setOnClickListener {
             onClickAlarmDrugsListener.onAlarmClick(currentItem, position)
             notifyDataSetChanged()

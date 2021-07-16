@@ -10,14 +10,14 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 @Dao
 interface MeasurementsPerDayDao {
 
-    @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimestamp")
+    @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimeStamp")
     fun getAllTakeMedicamentTime(): LiveData<List<TakeMedicamentTime>>
 
-    @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimestamp")
-    fun getListTakeMedicamentTime() : List<TakeMedicamentTime>
+    @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimeStamp")
+    fun getListTakeMedicamentTime(): List<TakeMedicamentTime>
 
     @Query("SELECT * FROM measure_table ORDER BY dateTimestamp")
-    fun getListMeasure() : List<Measure>
+    fun getListMeasure(): List<Measure>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeasure(measure: Measure)

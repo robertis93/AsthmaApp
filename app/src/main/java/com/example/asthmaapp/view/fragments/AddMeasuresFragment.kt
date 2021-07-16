@@ -19,15 +19,15 @@ import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.AddMeasureDialog
+import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatDayMonthYear
+import com.example.asthmaapp.utils.DateUtil.dayTimeStamp
 import com.example.asthmaapp.view.adapters.AddMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
 
 class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
-    private var idMedicament by Delegates.notNull<Int>()
     private var currentDayTimeStamp by Delegates.notNull<Long>()
     private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
         ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
@@ -37,6 +37,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
     private var yearMeasure by Delegates.notNull<Int>()
     private var monthMeasure by Delegates.notNull<Int>()
     private var dayMeasure by Delegates.notNull<Int>()
+
     private val timeAndMeasureList = mutableListOf<Measure>()
 
     override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
@@ -60,14 +61,11 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         currentDayTimeStamp = dateCalendar.time.time
-        val yearToday: Int = dateCalendar.get(Calendar.YEAR)
-        val monthToday: Int = dateCalendar.get(Calendar.MONTH)
-        val dayOfMonthToday: Int = dateCalendar.get(Calendar.DAY_OF_MONTH)
-        val justDayCalendar: Calendar =
-            GregorianCalendar(yearToday, monthToday, dayOfMonthToday)
-        val midnightDayMilliseconds = justDayCalendar.time.time
 
-        binding.dateTextView.text = com.example.asthmaapp.utils.millisecondsToStringDateDayMonthYear(currentDayTimeStamp)
+        binding.dateTextView.text =
+            dateTimeStampToSimpleDateFormatDayMonthYear(
+                currentDayTimeStamp
+            )
 
         measurementsPerDayViewModel.getAllMedicamentInfo.observe(
             viewLifecycleOwner,
@@ -118,7 +116,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
             val measuresPerDay = addMeasureAdapter.getListMeasure()
             for (measure in measuresPerDay) {
-                measurementsPerDayViewModel.addTimeAndMeasure(measure)
+                measurementsPerDayViewModel.addMeasure(measure)
             }
 
             val medicamentTimePerDay = addMedicamentTimeAdapter.getListMedicamentTime()
@@ -149,8 +147,13 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             alertDialog.dismiss()
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
+            val medicamentDayTimeStamp = dayTimeStamp(currentDayTimeStamp, timeHour, timeMinute)
             val medicamentTime =
-                TakeMedicamentTimeEntity(0, currentDayTimeStamp, timeHour, timeMinute, currentDayTimeStamp.toString())
+                TakeMedicamentTimeEntity(
+                    0,
+                    medicamentDayTimeStamp,
+                    currentDayTimeStamp.toString()
+                )
             addMedicamentTimeAdapter.addData(medicamentTime)
         }
 
@@ -167,7 +170,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         builder.setView(dialogFragment.root)
         builder.setTitle(R.string.measure_alarm_frag)
 
-        val mAlertDialog = builder.show()
+        val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
 
         dialogFragment.measureDialog.doAfterTextChanged {
@@ -176,17 +179,20 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         }
 
         dialogFragment.btnSave.setOnClickListener {
-            mAlertDialog.dismiss()
+            alertDialog.dismiss()
             dialogFragment.timePicker.is24HourView
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
+            val measureDayTimeStamp = dayTimeStamp(currentDayTimeStamp, timeHour, timeMinute)
             val measureWithPeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
-            measure = Measure(0, currentDayTimeStamp, timeHour, timeMinute, measureWithPeakFlowMeter)
+
+            measure =
+                Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
             timeAndMeasureList.add(measure)
             addMeasureAdapter.addMeasure(measure)
         }
         dialogFragment.cancelBtn.setOnClickListener {
-            mAlertDialog.dismiss()
+            alertDialog.dismiss()
         }
     }
 
@@ -205,17 +211,14 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
                 val dateCalendar: Calendar =
                     GregorianCalendar(yearMeasure, monthMeasure, dayMeasure)
+
                 dateAfterChangedTimestamp = dateCalendar.time.time
 
-//                idMedicament = dateMilli.toString()
                 currentDayTimeStamp = dateAfterChangedTimestamp
 
-                val currentDate = Date(dateAfterChangedTimestamp)
-                val dateFormat = SimpleDateFormat("dd MMM YYYY")
-                val day = dateFormat.format(currentDate)
-
                 binding.dateTextView.visibility = View.VISIBLE
-                binding.dateTextView.text = day.toString()
+                binding.dateTextView.text =
+                    dateTimeStampToSimpleDateFormatDayMonthYear(dateAfterChangedTimestamp)
             }
 
         val datePickerDialog = DatePickerDialog(
