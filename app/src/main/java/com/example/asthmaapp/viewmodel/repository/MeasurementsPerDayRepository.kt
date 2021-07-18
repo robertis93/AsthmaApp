@@ -15,6 +15,9 @@ class MeasureRepository(private val measurementsPerDayDao: MeasurementsPerDayDao
     val getAllMedicamentInfo: LiveData<List<MedicamentInfo>> =
         measurementsPerDayDao.readAllMedicamentInfo()
 
+    suspend fun getAllMedicamentInfoSync(): List<MedicamentInfo> =
+        measurementsPerDayDao.readAllMedicamentInfoSync()
+
     fun getMeasureAndTakeMedicamentTimeGroupByDate(): List<MeasureWithTakeMedicamentTime> {
         val measureGroup = measurementsPerDayDao.getListMeasure()
             .groupBy {

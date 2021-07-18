@@ -39,7 +39,7 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
                 dateTimeStamp,
                 measurePeakFlowMeter
             )
-            measurementsPerDayViewModel.addMeasure(measure)
+           // measurementsPerDayViewModel.addMeasure(measure)
             this.finishAffinity()
         }
     }

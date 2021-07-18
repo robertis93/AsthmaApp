@@ -38,12 +38,12 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
         binding.dateTextView.text = dateTimeStampToSimpleDateFormatDayMonthYear(dateTimeStamp)
         binding.timeAlarmText.text = currentTime
 
-        measurementsPerDayViewModel.getAllMedicamentInfo.observe(
-            this,
-            androidx.lifecycle.Observer { listMedicament ->
-                nameMedicament = listMedicament.last().name
-                doseMedicament = listMedicament.last().dose.toString()
-            })
+//        measurementsPerDayViewModel.getAllMedicamentInfo.observe(
+//            this,
+//            androidx.lifecycle.Observer { listMedicament ->
+//                nameMedicament = listMedicament.last().name
+//                doseMedicament = listMedicament.last().dose.toString()
+//            })
 
         binding.saveBtn.setOnClickListener {
             val timeHour = dateTimeStampToSimpleDateFormatHour(dateTimeStamp).toInt()
@@ -56,7 +56,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
                     medicamentDayTimeStamp,
                     dateTimeStamp.toString()
                 )
-            measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
+         //   measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
 
             val medicamentInfo =
                 MedicamentInfo(
@@ -64,7 +64,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
                     nameMedicament,
                     doseMedicament.toInt()
                 )
-            measurementsPerDayViewModel.addMedicamentInfo(medicamentInfo)
+          //  measurementsPerDayViewModel.addMedicamentInfo(medicamentInfo)
             this.finishAffinity()
         }
     }

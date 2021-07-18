@@ -8,10 +8,12 @@ import com.example.asthmaapp.databinding.AddFragmentMedicamentTimeItemBinding
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
 
-class AddMedicamentTimeAdapter() :
+class AddMedicamentTimeAdapter(var measuresMedList: List<TakeMedicamentTimeEntity>, val onDeleteClickListener: DeleteClickListener) :
     RecyclerView.Adapter<AddMedicamentTimeAdapter.AddMedicamentViewHolder>() {
-    private var measuresMedList = mutableListOf<TakeMedicamentTimeEntity>()
 
+    interface DeleteClickListener {
+        fun onDeleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMedicamentViewHolder {
         val binding = AddFragmentMedicamentTimeItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -28,7 +30,7 @@ class AddMedicamentTimeAdapter() :
             timeMeasureText.text =
                 "${dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimeStamp)}"
             deleteAlarmIcon.setOnClickListener {
-                deleteDate(measuresMedList[position])
+                onDeleteClickListener.onDeleteTakeMedicamentTime(measuresMedList[position])
             }
         }
     }
@@ -37,19 +39,19 @@ class AddMedicamentTimeAdapter() :
         return measuresMedList.size
     }
 
-    fun addData(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-        measuresMedList.add(takeMedicamentTimeEntity)
-        notifyDataSetChanged()
-    }
-
-    private fun deleteDate(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-        measuresMedList.remove(takeMedicamentTimeEntity)
-        notifyDataSetChanged()
-    }
-
-    fun getListMedicamentTime(): MutableList<TakeMedicamentTimeEntity> {
-        return measuresMedList
-    }
+//    fun addData(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
+//        measuresMedList.add(takeMedicamentTimeEntity)
+//        notifyDataSetChanged()
+//    }
+//
+//    private fun deleteDate(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
+//        measuresMedList.remove(takeMedicamentTimeEntity)
+//        notifyDataSetChanged()
+//    }
+//
+//    fun getListMedicamentTime(): MutableList<TakeMedicamentTimeEntity> {
+//        return measuresMedList
+//    }
 
     class AddMedicamentViewHolder(val binding: AddFragmentMedicamentTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)

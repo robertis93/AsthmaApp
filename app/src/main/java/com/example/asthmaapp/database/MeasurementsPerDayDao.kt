@@ -69,5 +69,8 @@ interface MeasurementsPerDayDao {
 
     @Query("SELECT * FROM medicament_info_table")
     fun readAllMedicamentInfo(): LiveData<List<MedicamentInfo>>
+
+    @Query("SELECT * FROM medicament_info_table")
+    suspend fun readAllMedicamentInfoSync(): List<MedicamentInfo>
 }
 

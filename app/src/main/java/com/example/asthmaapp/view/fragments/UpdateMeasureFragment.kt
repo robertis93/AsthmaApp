@@ -138,7 +138,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
                     idMedicament,
                 )
             updateMedicamentTimeAdapter.addData(medicamentTime)
-            measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
+          //  measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
         }
         dialogFragment.cancelBtn.setOnClickListener {
             Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
@@ -172,7 +172,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
 
             val measure = Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
             updateMeasureAdapter.addMeasure(measure)
-            measurementsPerDayViewModel.addMeasure(measure)
+           // measurementsPerDayViewModel.addMeasure(measure)
         }
         dialogFragment.cancelBtn.setOnClickListener {
             alertDialog.dismiss()
