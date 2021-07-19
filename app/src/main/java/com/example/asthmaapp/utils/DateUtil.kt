@@ -9,19 +9,19 @@ object DateUtil {
     private val timeFormat = SimpleDateFormat("HH : mm")
 
     @SuppressLint("SimpleDateFormat")
-    fun dateTimeStampToSimpleDateFormatDayMonthYear(dayTimeStamp: Long): String {
+    fun timestampToDisplayDate(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
         return dateFormat.format(currentDate)
     }
 
-    fun dateTimeStampToSimpleDateFormatHourMinute(dayTimeStamp: Long): String {
+    fun timestampToDisplayTime(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
         return timeFormat.format(currentDate)
     }
 
-    fun dayTimeStamp(currentDayTimeStamp: Long, hour: Int, minute: Int): Long {
+    fun dayTimeStamp(dayTimeStamp: Long, hour: Int, minute: Int): Long {
         val cal = GregorianCalendar()
-        cal.timeInMillis = currentDayTimeStamp
+        cal.timeInMillis = dayTimeStamp
         val year = cal.get(Calendar.YEAR)
         val month = cal.get(Calendar.MONTH)
         val dayOfMonth = cal.get(Calendar.DAY_OF_MONTH)

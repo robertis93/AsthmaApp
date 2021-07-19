@@ -10,7 +10,7 @@ import com.example.asthmaapp.databinding.UpdateItemMedtimeBinding
 import com.example.asthmaapp.model.TakeMedicamentTime
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHour
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class UpdateMedicamentTimeAdapter(
     var timesTakeMedicamentTimeEntity: List<TakeMedicamentTime>,
@@ -39,7 +39,7 @@ class UpdateMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: UpdateMedicamentTimeViewHolder, position: Int) {
         val currentItem = timeList[position]
-        holder.binding.timeTextView.text = dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimeStamp)
+        holder.binding.timeTextView.text = timestampToDisplayTime(currentItem.dateTimeStamp)
         holder.binding.editImage.setOnClickListener {
             editTimeAlarmMedicament(holder, position, currentItem)
         }
@@ -67,7 +67,7 @@ class UpdateMedicamentTimeAdapter(
         dialogFragment.timePicker.setIs24HourView(true)
 
         dialogFragment.timePicker.hour = dateTimeStampToSimpleDateFormatHour(currentItem.dateTimeStamp).toInt()
-        dialogFragment.timePicker.minute = dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimeStamp).toInt()
+        dialogFragment.timePicker.minute = timestampToDisplayTime(currentItem.dateTimeStamp).toInt()
 
         dialogFragment.btnSave.setOnClickListener {
             alertDialog.dismiss()

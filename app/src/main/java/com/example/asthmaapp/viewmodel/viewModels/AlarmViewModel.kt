@@ -1,9 +1,8 @@
 package com.example.asthmaapp.viewmodel.viewModels
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.Alarm
@@ -13,39 +12,60 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AlarmViewModel(application: Application) : AndroidViewModel(application) {
+    val alarmMeasureListLiveData = MutableLiveData<List<Alarm>>()
+    val alarmMedicamentListLiveData = MutableLiveData<List<Alarm>>()
 
     private val repository: AlarmRepository
 
     init {
         val alarmDao = MeasureDataBase.getDataBase(application).alarmDao()
         repository = AlarmRepository(alarmDao)
+        getListAlarm()
     }
 
-    fun getAllAlarm(context: Context, typeAlarm: TypeAlarm): LiveData<List<Alarm>>? {
-        return repository.getAllAlarms(context, typeAlarm)
+    private fun getListAlarm() {
+        viewModelScope.launch {
+            alarmMeasureListLiveData.value = repository.getAllAlarms(TypeAlarm.MEASURE)
+            alarmMedicamentListLiveData.value = repository.getAllAlarms(TypeAlarm.MEDICAMENT)
+        }
     }
 
-    fun addAlarm(alarm: Alarm) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun addAlarm(id: String, hour: Int, minute: Int, alarmType: TypeAlarm) {
+        val alarm = Alarm(id, hour, minute, alarmType)
+        if (alarmType == TypeAlarm.MEASURE) {
+            alarmMeasureListLiveData.value?.let { listMeasure ->
+                val measureMutableList = listMeasure.toMutableList()
+                measureMutableList.add(alarm)
+                alarmMeasureListLiveData.value = measureMutableList
+            }
+        } else {
+            alarmMedicamentListLiveData.value?.let { listMeasure ->
+                val measureMutableList = listMeasure.toMutableList()
+                measureMutableList.add(alarm)
+                alarmMedicamentListLiveData.value = measureMutableList
+            }
+        }
+        viewModelScope.launch {
             repository.addAlarm(alarm)
         }
     }
 
-    fun updateAlarm(alarm: Alarm) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateAlarm(alarm)
-        }
-    }
-
     fun deleteAlarm(alarm: Alarm) {
+        if (alarm.typeAlarm == TypeAlarm.MEASURE) {
+            alarmMeasureListLiveData.value?.let { listAlarm ->
+                val measureMutableList = listAlarm.toMutableList()
+                measureMutableList.remove(alarm)
+                alarmMeasureListLiveData.value = measureMutableList
+            }
+        } else {
+            alarmMedicamentListLiveData.value?.let { listAlarm ->
+                val measureMutableList = listAlarm.toMutableList()
+                measureMutableList.remove(alarm)
+                alarmMedicamentListLiveData.value = measureMutableList
+            }
+        }
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAlarm(alarm)
-        }
-    }
-
-    fun deleteAllAlarms() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllAlarms()
         }
     }
 }

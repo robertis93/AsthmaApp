@@ -1,6 +1,5 @@
 package com.example.asthmaapp.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.asthmaapp.model.Alarm
 import com.example.asthmaapp.view.fragments.TypeAlarm
@@ -21,5 +20,5 @@ interface AlarmDao {
     suspend fun deleteAllAlarms()
 
     @Query("Select * From alarm_table WHERE typeAlarm == :alarm ")
-    fun getAllAlarm(alarm : TypeAlarm): LiveData<List<Alarm>>
+    suspend fun getAllAlarm(alarm : TypeAlarm): List<Alarm>
 }

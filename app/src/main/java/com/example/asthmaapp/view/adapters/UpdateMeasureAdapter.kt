@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.UpdateMeasuresInnerItemBinding
 import com.example.asthmaapp.model.Measure
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 
 class UpdateMeasureAdapter(
@@ -34,7 +34,7 @@ class UpdateMeasureAdapter(
     override fun onBindViewHolder(holder: UpdateMeasureViewHolder, position: Int) {
         val currentItem = timeAndMeasureList[position]
 
-        holder.binding.timeTextView.text = dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimestamp)
+        holder.binding.timeTextView.text = timestampToDisplayTime(currentItem.dateTimestamp)
         holder.binding.measureText.text = currentItem.measure.toString()
 
         holder.binding.editImage.setOnClickListener {

@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatDayMonthYear
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHour
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatMinute
 import com.example.asthmaapp.utils.DateUtil.dayTimeStamp
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
@@ -33,9 +33,9 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         val dateTimeStamp = dateCalendar.time.time
-        val currentTime = dateTimeStampToSimpleDateFormatHourMinute(dateTimeStamp)
+        val currentTime = timestampToDisplayTime(dateTimeStamp)
 
-        binding.dateTextView.text = dateTimeStampToSimpleDateFormatDayMonthYear(dateTimeStamp)
+        binding.dateTextView.text = timestampToDisplayDate(dateTimeStamp)
         binding.timeAlarmText.text = currentTime
 
 //        measurementsPerDayViewModel.getAllMedicamentInfo.observe(

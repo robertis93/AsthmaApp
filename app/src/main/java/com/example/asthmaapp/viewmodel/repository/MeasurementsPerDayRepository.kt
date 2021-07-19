@@ -3,7 +3,7 @@ package com.example.asthmaapp.viewmodel.repository
 import androidx.lifecycle.LiveData
 import com.example.asthmaapp.database.MeasurementsPerDayDao
 import com.example.asthmaapp.model.*
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatDayMonthYear
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 
 typealias TakeMedicamentTimeGroupByDate = Map<String, List<TakeMedicamentTime>>
 
@@ -21,16 +21,12 @@ class MeasureRepository(private val measurementsPerDayDao: MeasurementsPerDayDao
     fun getMeasureAndTakeMedicamentTimeGroupByDate(): List<MeasureWithTakeMedicamentTime> {
         val measureGroup = measurementsPerDayDao.getListMeasure()
             .groupBy {
-                val date =
-                    dateTimeStampToSimpleDateFormatDayMonthYear(it.dateTimestamp)
-                date
+                timestampToDisplayDate(it.dateTimestamp)
             }
 
         val takeMedicamentTimeGroup = measurementsPerDayDao.getListTakeMedicamentTime()
             .groupBy {
-                val date =
-                    dateTimeStampToSimpleDateFormatDayMonthYear(it.takeMedicamentTimeEntity.dateTimeStamp)
-                date
+                timestampToDisplayDate(it.takeMedicamentTimeEntity.dateTimeStamp)
             }
 
         return (measureGroup.keys + takeMedicamentTimeGroup.keys).map { date ->

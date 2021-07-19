@@ -8,9 +8,8 @@ import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.Alarm
 import com.example.asthmaapp.utils.DateUtil.timeCorrectDisplay
 
-class AlarmMedicamentAdapter(var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
+class AlarmMedicamentAdapter(var alarmMedicamentList : List<Alarm>, var onClickAlarmDrugsListener: OnAlarmDrugsClickListener) :
     RecyclerView.Adapter<AlarmMedicamentAdapter.AlarmViewHolder>() {
-    private var alarmMedicamentList = emptyList<Alarm>()
 
     interface OnAlarmDrugsClickListener {
         fun onAlarmClick(medicamentAlarm: Alarm, position: Int)

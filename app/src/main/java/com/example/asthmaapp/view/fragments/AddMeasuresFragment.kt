@@ -3,12 +3,14 @@ package com.example.asthmaapp.view.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,21 +20,13 @@ import com.example.asthmaapp.databinding.LayoutDialogAddFragmentBinding
 import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatDayMonthYear
-import com.example.asthmaapp.utils.DateUtil.dayTimeStamp
 import com.example.asthmaapp.view.adapters.AddMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 import java.util.*
-import kotlin.properties.Delegates
 
 class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
-    private var currentDayTimeStamp by Delegates.notNull<Long>()
-    private val viewModel: MeasurementsPerDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
-    }
-    private var dateAfterChangedTimestamp by Delegates.notNull<Long>()
-    lateinit var measure: Measure
+    val viewModel: MeasurementsPerDayViewModel by viewModels()
 
     override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
         FragmentAddBinding.inflate(inflater)
@@ -40,22 +34,63 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        currentDayTimeStamp = dateCalendar.time.time
 
+        setObservers()
 
+        binding.changeDayButton.setOnClickListener {
+            changeDay()
+        }
+        binding.addOneMeasureBtn.setOnClickListener {
+            addMeasure()
+        }
+
+        binding.addOneMedBtn.setOnClickListener {
+            addTimeTakeMedicament()
+        }
+
+        binding.saveBtn.setOnClickListener {
+            viewModel.save()
+            findNavController().popBackStack()
+        }
+
+        binding.editTextNameMedicament.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.changeMedicamentName(s.toString())
+            }
+
+        })
+
+        binding.editTextMedicamentDose.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.changeMedicamentDose(s.toString())
+            }
+        })
+    }
+
+    private fun setObservers() {
         val measureAdapterListener = object : AddMeasureAdapter.Listener {
             override fun onDeleteClick(measure: Measure) {
-                TODO()
+                viewModel.onDeleteMeasureClick(measure)
             }
         }
 
         val taleMedicamentAdapterListener = object : AddMedicamentTimeAdapter.DeleteClickListener {
             override fun onDeleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-                TODO("Not yet implemented")
+                viewModel.onDeleteMedicamentClick(takeMedicamentTimeEntity)
             }
         }
-
         viewModel.measureListLiveData.observe(viewLifecycleOwner) { measureList ->
             val addMeasureAdapter = AddMeasureAdapter(measureList, measureAdapterListener)
             val recyclerViewAdd = binding.recyclerMeasure
@@ -85,53 +120,17 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
         }
 
+        viewModel.dateLiveData.observe(viewLifecycleOwner) { date ->
+            binding.dateTextView.text = date
+        }
 
-//
-//        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-//        currentDayTimeStamp = dateCalendar.time.time
-
-        binding.dateTextView.text =
-            dateTimeStampToSimpleDateFormatDayMonthYear(
-                currentDayTimeStamp
-            )
-
-        viewModel.medicamentInfo.observe(
+        viewModel.medicamentInfoliveData.observe(
             viewLifecycleOwner,
             { medicamentInfo ->
-                    binding.editTextNameMedicament.setText(medicamentInfo.name)
-                    binding.editTextMedicamentDose.setText(medicamentInfo.dose)
-//                try {
-//                } catch (e: Exception) {
-//                    val myDialogFragment =
-//                        AddMeasureDialog(R.string.you_forget_write_information_about_medication)
-//                    val fragmentManager = requireActivity().supportFragmentManager
-//                    myDialogFragment.show(fragmentManager, "myDialog")
-//                }
+                binding.editTextNameMedicament.setText(medicamentInfo.name)
+                binding.editTextMedicamentDose.setText(medicamentInfo.dose.toString())
             }
         )
-
-        binding.changeDayButton.setOnClickListener {
-            changeDay()
-        }
-        binding.addOneMeasureBtn.setOnClickListener {
-            addMeasure()
-        }
-
-        binding.addOneMedBtn.setOnClickListener {
-               addTimeTakeMedicament()
-        }
-
-        binding.saveBtn.setOnClickListener {
-            viewModel.save()
-            findNavController().popBackStack()
-        }
-
-
-//        } catch (e: Exception) {
-//            val myDialogFragment = AddMeasureDialog(R.string.you_dont_write_all_information)
-//            val fragmentManager = requireActivity().supportFragmentManager
-//            myDialogFragment.show(fragmentManager, "myDialog")
-//        }
     }
 
     private fun addTimeTakeMedicament() {
@@ -145,13 +144,10 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         dialogFragment.timePicker.setIs24HourView(true)
 
         dialogFragment.btnSave.setOnClickListener {
-
             alertDialog.dismiss()
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
-            val medicamentDayTimeStamp = dayTimeStamp(currentDayTimeStamp, timeHour, timeMinute)
-          viewModel.addTakeMedicamentTime(medicamentDayTimeStamp, currentDayTimeStamp.toString())
-
+            viewModel.onAddTakeMedicamentTimeClick(timeHour, timeMinute)
         }
 
         dialogFragment.cancelBtn.setOnClickListener {
@@ -180,10 +176,8 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             dialogFragment.timePicker.is24HourView
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
-            val measureDayTimeStamp = dayTimeStamp(currentDayTimeStamp, timeHour, timeMinute)
             val measureWithPeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
-            viewModel.addMeasure(measureDayTimeStamp, measureWithPeakFlowMeter)
-
+            viewModel.onAddMeasureClick(timeHour, timeMinute, measureWithPeakFlowMeter)
         }
         dialogFragment.cancelBtn.setOnClickListener {
             alertDialog.dismiss()
@@ -206,14 +200,8 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
                 val dateCalendar: Calendar =
                     GregorianCalendar(yearMeasure, monthMeasure, dayMeasure)
 
-                dateAfterChangedTimestamp = dateCalendar.time.time
-                //viewModel.changeDate(dateAfterChangedTimestamp)
-
-                currentDayTimeStamp = dateAfterChangedTimestamp
-
-                binding.dateTextView.visibility = View.VISIBLE
-                binding.dateTextView.text =
-                    dateTimeStampToSimpleDateFormatDayMonthYear(dateAfterChangedTimestamp)
+                val dateAfterChangedTimestamp = dateCalendar.time.time
+                viewModel.changeDate(dateAfterChangedTimestamp)
             }
 
         val datePickerDialog = DatePickerDialog(
@@ -224,7 +212,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             calendar.get(Calendar.DAY_OF_MONTH)
         )
 
-        datePickerDialog.datePicker.maxDate = currentDayTimeStamp
+        datePickerDialog.datePicker.maxDate = viewModel.getMaxDateForDialog()
         datePickerDialog.show()
     }
 }

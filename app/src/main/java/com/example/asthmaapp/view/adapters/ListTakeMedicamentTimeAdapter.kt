@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.InnerItemMedtimeBinding
 import com.example.asthmaapp.model.TakeMedicamentTime
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 
 class ListTakeMedicamentTimeAdapter(
@@ -31,7 +31,7 @@ class ListTakeMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TimeTakeMedicamentViewHolder, position: Int) {
         val currentItem = timesTimeTakeMedicament[position]
-        holder.binding.timeTextView.text = dateTimeStampToSimpleDateFormatHourMinute(currentItem.takeMedicamentTimeEntity.dateTimeStamp)
+        holder.binding.timeTextView.text = timestampToDisplayTime(currentItem.takeMedicamentTimeEntity.dateTimeStamp)
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()
         }

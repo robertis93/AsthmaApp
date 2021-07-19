@@ -8,9 +8,8 @@ import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.Alarm
 import com.example.asthmaapp.utils.DateUtil.timeCorrectDisplay
 
-class MeasureAlarmAdapter(var onClickAlarmListener: OnAlarmClickListener) :
+class MeasureAlarmAdapter(var alarmsList : List<Alarm>, var onClickAlarmListener: OnAlarmClickListener) :
     RecyclerView.Adapter<MeasureAlarmAdapter.AlarmViewHolder>() {
-    private var alarmsList = emptyList<Alarm>()
 
     interface OnAlarmClickListener {
         fun onDeleteAlarmClick(alarm: Alarm, position: Int)

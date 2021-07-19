@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.InnerItemBinding
 import com.example.asthmaapp.model.Measure
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class MeasureAdapter(
     var measures: List<Measure>,
@@ -39,7 +39,7 @@ class MeasureAdapter(
         val controlHighValue = max * 0.75
 
         holder.binding.timeTextView.text =
-            dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimestamp)
+            timestampToDisplayTime(currentItem.dateTimestamp)
         val measureNow = currentItem.measure
         if (measureNow < controlValue)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.AddFragmentMeasureItemBinding
 import com.example.asthmaapp.model.Measure
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class AddMeasureAdapter(val measuresList: List<Measure>, val listener: Listener) :
     RecyclerView.Adapter<AddMeasureAdapter.AddMeasureViewHolder>() {
@@ -29,7 +29,7 @@ class AddMeasureAdapter(val measuresList: List<Measure>, val listener: Listener)
         val currentItem = measuresList[position]
         with(holder.binding) {
             timeMeasureText.text =
-                dateTimeStampToSimpleDateFormatHourMinute(currentItem.dateTimestamp)
+                timestampToDisplayTime(currentItem.dateTimestamp)
             addMeasureText.text = currentItem.measure.toString()
             deleteAlarmIcon.setOnClickListener {
                 listener.onDeleteClick(measuresList[position])

@@ -6,7 +6,6 @@ import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,28 +51,23 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
                         .cancelWorkById(UUID.fromString(medicamentAlarm.id))
                 }
             }
+        alarmViewModel.alarmMeasureListLiveData.observe(viewLifecycleOwner) { alarmMeasure ->
+            val measureAlarmAdapter =
+                MeasureAlarmAdapter(alarmMeasure, alarmMeasureDeleteClickListener)
+            val recyclerView = binding.recyclerAlarm
+            recyclerView.adapter = measureAlarmAdapter
+            recyclerView.layoutManager =
+                GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+        }
 
-        val measureAlarmAdapter = MeasureAlarmAdapter(alarmMeasureDeleteClickListener)
-        val recyclerView = binding.recyclerAlarm
-        recyclerView.adapter = measureAlarmAdapter
-        recyclerView.layoutManager =
-            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
-
-        alarmViewModel.getAllAlarm(requireContext(), TypeAlarm.MEASURE)
-            ?.observe(viewLifecycleOwner, Observer { alarm ->
-                measureAlarmAdapter.refreshAlarms(alarm)
-            })
-
-        val medicamentAlarmAdapter = AlarmMedicamentAdapter(alarmMedicamentDeleteClickListener)
-        val drugsRecyclerView = binding.drugsRecyclerView
-        drugsRecyclerView.adapter = medicamentAlarmAdapter
-        drugsRecyclerView.layoutManager =
-            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
-
-        alarmViewModel.getAllAlarm(requireContext(), TypeAlarm.MEDICAMENT)
-            ?.observe(viewLifecycleOwner, Observer { alarm ->
-                medicamentAlarmAdapter.refreshMedicamentAlarms(alarm)
-            })
+        alarmViewModel.alarmMedicamentListLiveData.observe(viewLifecycleOwner) { alarmMedicament ->
+            val medicamentAlarmAdapter =
+                AlarmMedicamentAdapter(alarmMedicament, alarmMedicamentDeleteClickListener)
+            val drugsRecyclerView = binding.drugsRecyclerView
+            drugsRecyclerView.adapter = medicamentAlarmAdapter
+            drugsRecyclerView.layoutManager =
+                GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+        }
 
         binding.floatingActionBtnAlarmMakeMeasure.setOnClickListener {
             addAlarm(TypeAlarm.MEASURE)
@@ -92,8 +86,7 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
             val hourAlarm = timePicker.hour
             val minuteAlarm = timePicker.minute
             val id = setAlarm(hourAlarm, minuteAlarm, alarmType)
-            val alarm = Alarm(id, hour, minute, alarmType)
-            alarmViewModel.addAlarm(alarm)
+            alarmViewModel.addAlarm(id, hour, minute, alarmType)
         }
         showTimePicker(timeSetListener, calendar)
     }
@@ -138,6 +131,7 @@ class ScheduleJob(val context: Context, params: WorkerParameters) : Worker(conte
         return Result.success()
     }
 }
+
 enum class TypeAlarm {
     MEASURE, MEDICAMENT
 }

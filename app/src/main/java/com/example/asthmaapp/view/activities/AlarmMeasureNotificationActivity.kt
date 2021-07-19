@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.AlarmMeasureNotificationActivityBinding
 import com.example.asthmaapp.model.Measure
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatDayMonthYear
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHourMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
 import java.util.*
 
@@ -25,9 +25,9 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
 
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         val dateTimeStamp = dateCalendar.time.time
-        val currentTime = dateTimeStampToSimpleDateFormatHourMinute(dateTimeStamp)
+        val currentTime = timestampToDisplayTime(dateTimeStamp)
 
-        binding.dateTextView.text = dateTimeStampToSimpleDateFormatDayMonthYear(dateTimeStamp)
+        binding.dateTextView.text = timestampToDisplayDate(dateTimeStamp)
         binding.timeAlarmText.text = currentTime
 
         binding.saveBtn.setOnClickListener {
