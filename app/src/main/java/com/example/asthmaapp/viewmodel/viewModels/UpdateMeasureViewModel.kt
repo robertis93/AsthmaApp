@@ -15,12 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(application) {
+class UpdateMeasureViewModel(application: Application) : AndroidViewModel(application) {
     val dateTimeStampLiveData = MutableLiveData<Long>()
     val dateLiveData = dateTimeStampLiveData.map { timestampToDisplayDate(it) }
     val measureListLiveData = MutableLiveData<List<Measure>>()
     val takeMedicamentTimeListLiveData = MutableLiveData<List<TakeMedicamentTimeEntity>>()
-    val medicamentInfoliveData = MutableLiveData<MedicamentInfo>()
+    val medicamentInfoLiveData = MutableLiveData<MedicamentInfo>()
     private val measureRepository: MeasureRepository
 
     init {
@@ -32,13 +32,17 @@ class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(a
         val currentDayTimeStamp = dateCalendar.time.time
         dateTimeStampLiveData.value = currentDayTimeStamp
 
+        getLastMedicament(currentDayTimeStamp)
+    }
+
+    private fun getLastMedicament(currentDayTimeStamp: Long) {
         viewModelScope.launch {
             val medicament = measureRepository.getAllMedicamentInfoSync()
             if (medicament.isNotEmpty()) {
                 val lastIndex = medicament.last()
                 val medicamentNew =
                     MedicamentInfo(currentDayTimeStamp.toString(), lastIndex.name, lastIndex.dose)
-                medicamentInfoliveData.value = medicamentNew
+                medicamentInfoLiveData.value = medicamentNew
             }
         }
     }
@@ -48,12 +52,12 @@ class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(a
     }
 
     fun changeMedicamentName(newName: String){
-        val oldMedicaentInfo = medicamentInfoliveData.value
-        medicamentInfoliveData.value = oldMedicaentInfo?.copy(name = newName)
+        val oldMedicamentInfo = medicamentInfoLiveData.value
+        medicamentInfoLiveData.value = oldMedicamentInfo?.copy(name = newName)
     }
     fun changeMedicamentDose(newDose: String){
-        val oldMedicaentInfo = medicamentInfoliveData.value
-        medicamentInfoliveData.value = oldMedicaentInfo?.copy(dose = newDose.toInt())
+        val oldMedicamentInfo = medicamentInfoLiveData.value
+        medicamentInfoLiveData.value = oldMedicamentInfo?.copy(dose = newDose.toInt())
     }
 
     fun getMaxDateForDialog(): Long{
@@ -102,7 +106,7 @@ class MeasurementsPerDayViewModel(application: Application) : AndroidViewModel(a
             TakeMedicamentTimeEntity(
                 0,
                 medicamentDayTimeStamp,
-                medicamentInfoliveData.value?.id!!
+                medicamentInfoLiveData.value?.id!!
             )
         takeMedicamentTimeListLiveData.value?.let { listMedicamentTime ->
             val takeMedicamentTimeMutableList = listMedicamentTime.toMutableList()

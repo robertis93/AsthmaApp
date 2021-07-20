@@ -8,13 +8,13 @@ import com.example.asthmaapp.databinding.AlarmMeasureNotificationActivityBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
-import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.AddMeasuresViewModel
 import java.util.*
 
 class AlarmMeasureNotificationActivity : AppCompatActivity() {
     private lateinit var binding: AlarmMeasureNotificationActivityBinding
-    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
+    private val addMeasuresViewModel: AddMeasuresViewModel by lazy {
+        ViewModelProvider(this).get(AddMeasuresViewModel::class.java)
     }
 
     @SuppressLint("SimpleDateFormat")

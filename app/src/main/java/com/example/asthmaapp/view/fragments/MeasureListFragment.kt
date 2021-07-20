@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentMeasureListBinding
 import com.example.asthmaapp.view.adapters.MeasureListAdapter
-import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MeasureListViewModel
 
 class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
-    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
+    private val measureListViewModel: MeasureListViewModel by lazy {
+        ViewModelProvider(this).get(MeasureListViewModel::class.java)
     }
 
     override fun inflate(inflater: LayoutInflater): FragmentMeasureListBinding =
@@ -34,7 +34,7 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
         recyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        measurementsPerDayViewModel.takeMedicamentTimeGroupByDate.observe(
+        measureListViewModel.takeMedicamentTimeGroupByDate.observe(
             viewLifecycleOwner,
             Observer { measure ->
                 measureListAdapter.setData(measure)
@@ -52,7 +52,7 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
             }
         )
 
-        measurementsPerDayViewModel.getAllMeasures.observe(
+        measureListViewModel.getAllMeasures.observe(
             viewLifecycleOwner,
             { timeMeasure -> measureListAdapter.addMeasure(timeMeasure) }
         )
@@ -72,13 +72,13 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
     override fun onResume() {
         super.onResume()
-        measurementsPerDayViewModel.getAllMeasuresAndTakeMedicamentTime()
+        measureListViewModel.getAllMeasuresAndTakeMedicamentTime()
     }
 
     private fun deleteAllMeasure() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(R.string.yes) { _, _ ->
-            measurementsPerDayViewModel.deleteAllMeasuresWithMedicaments()
+            measureListViewModel.deleteAllMeasuresWithMedicaments()
 
             Toast.makeText(
                 requireContext(),

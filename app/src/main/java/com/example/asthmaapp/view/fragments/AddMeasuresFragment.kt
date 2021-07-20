@@ -3,15 +3,12 @@ package com.example.asthmaapp.view.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
@@ -22,12 +19,13 @@ import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.view.adapters.AddMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddMedicamentTimeAdapter
-import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.AddMeasuresViewModel
 import java.util.*
 
 class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
-    val viewModel: MeasurementsPerDayViewModel by viewModels()
-
+    private val viewModel: AddMeasuresViewModel by lazy {
+        ViewModelProvider(this).get(AddMeasuresViewModel::class.java)
+    }
     override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
         FragmentAddBinding.inflate(inflater)
 
@@ -50,33 +48,16 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
         binding.saveBtn.setOnClickListener {
             viewModel.save()
-            findNavController().popBackStack()
+          //  findNavController().popBackStack()
         }
 
-        binding.editTextNameMedicament.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+        binding.editTextNameMedicament.doAfterTextChanged {
+            viewModel.changeMedicamentName(it.toString())
+        }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.changeMedicamentName(s.toString())
-            }
-
-        })
-
-        binding.editTextMedicamentDose.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.changeMedicamentDose(s.toString())
-            }
-        })
+        binding.editTextMedicamentDose.doAfterTextChanged {
+            viewModel.changeMedicamentDose(it.toString())
+        }
     }
 
     private fun setObservers() {
@@ -124,7 +105,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             binding.dateTextView.text = date
         }
 
-        viewModel.medicamentInfoliveData.observe(
+        viewModel.medicamentInfoLiveData.observe(
             viewLifecycleOwner,
             { medicamentInfo ->
                 binding.editTextNameMedicament.setText(medicamentInfo.name)

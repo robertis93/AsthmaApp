@@ -23,7 +23,7 @@ import com.example.asthmaapp.utils.DateUtil
 import com.example.asthmaapp.utils.DateUtil.dateStringToDayTimeStamp
 import com.example.asthmaapp.view.adapters.UpdateMeasureAdapter
 import com.example.asthmaapp.view.adapters.UpdateMedicamentTimeAdapter
-import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.UpdateMeasureViewModel
 import kotlin.properties.Delegates
 
 
@@ -32,8 +32,8 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
     private val args by navArgs<UpdateMeasureFragmentArgs>()
     private var dayTimeStamp by Delegates.notNull<Long>()
     private var idMedicament by Delegates.notNull<String>()
-    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
+    private val updateMeasureViewModel: UpdateMeasureViewModel by lazy {
+        ViewModelProvider(this).get(UpdateMeasureViewModel::class.java)
     }
 
     override fun inflate(inflater: LayoutInflater): FragmentUpdateBinding =
@@ -58,7 +58,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
         idMedicament = args.currentItemDay.takeMedicamentTimeList.map { it.medicamentInfo.id }.toSet().joinToString()
         val deleteMeasureClickListener = object : UpdateMeasureAdapter.OnClickListener {
             override fun onDeleteClick(measure: Measure, position: Int) {
-                measurementsPerDayViewModel.deleteMeasure(measure)
+                updateMeasureViewModel.deleteMeasure(measure)
                 Toast.makeText(
                     requireContext(), "Успешно удалено",
                     Toast.LENGTH_SHORT
@@ -82,7 +82,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
                     takeMedicamentTime: TakeMedicamentTimeEntity,
                     position: Int
                 ) {
-                    measurementsPerDayViewModel.deleteTakeMedicamentTime(takeMedicamentTime)
+                    updateMeasureViewModel.deleteTakeMedicamentTime(takeMedicamentTime)
                     Toast.makeText(
                         requireContext(), "Успешно удалено",
                         Toast.LENGTH_SHORT
@@ -192,15 +192,15 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
                 nameMedicament,
                 doseMedicament.toInt()
             )
-        measurementsPerDayViewModel.updateMedicamentInfo(medicamentInfo)
+        updateMeasureViewModel.updateMedicamentInfo(medicamentInfo)
 
         val listMeasure = updateMeasureAdapter.getAllMeasure()
         for (measure in listMeasure)
-            measurementsPerDayViewModel.updateMeasure(measure)
+            updateMeasureViewModel.updateMeasure(measure)
 
         val timeInfo = updateMedicamentTimeAdapter.getData()
         for (time in timeInfo)
-            measurementsPerDayViewModel.updateTakeMedicamentTime(time)
+            updateMeasureViewModel.updateTakeMedicamentTime(time)
         Toast.makeText(requireContext(), "Updated success", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_updateFragment_to_listFragment)
     }

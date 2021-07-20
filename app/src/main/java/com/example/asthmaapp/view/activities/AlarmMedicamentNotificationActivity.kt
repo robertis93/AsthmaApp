@@ -12,7 +12,7 @@ import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHour
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatMinute
 import com.example.asthmaapp.utils.DateUtil.dayTimeStamp
-import com.example.asthmaapp.viewmodel.viewModels.MeasurementsPerDayViewModel
+import com.example.asthmaapp.viewmodel.viewModels.AddMeasuresViewModel
 import java.util.*
 
 class AlarmMedicamentNotificationActivity : AppCompatActivity() {
@@ -21,8 +21,8 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
     private lateinit var nameMedicament: String
     private lateinit var doseMedicament: String
 
-    private val measurementsPerDayViewModel: MeasurementsPerDayViewModel by lazy {
-        ViewModelProvider(this).get(MeasurementsPerDayViewModel::class.java)
+    private val addMeasuresViewModel: AddMeasuresViewModel by lazy {
+        ViewModelProvider(this).get(AddMeasuresViewModel::class.java)
     }
 
     @SuppressLint("SimpleDateFormat")

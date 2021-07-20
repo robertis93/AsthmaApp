@@ -30,8 +30,8 @@ data class TakeMedicamentTimeEntity(
 data class MedicamentInfo(
     @PrimaryKey
     val id: String,
-    val name: String,
-    val dose: Int
+    var name: String,
+    var dose: Int
 ) : Parcelable
 
 @Parcelize
