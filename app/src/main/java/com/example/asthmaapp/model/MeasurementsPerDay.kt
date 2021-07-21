@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class Measure(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val dateTimestamp: Long,
+    var dateTimestamp: Long,
     var measure: Int
 ) : Parcelable
 

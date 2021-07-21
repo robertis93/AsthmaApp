@@ -2,7 +2,6 @@ package com.example.asthmaapp.view.fragments
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -59,7 +58,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
             override fun onDeleteClick(measure: Measure, position: Int) {
                 updateMeasureViewModel.deleteMeasure(measure)
                 Toast.makeText(
-                    requireContext(), "Успешно удалено",
+                    requireContext(), R.string.all_deleted,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -83,7 +82,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
                 ) {
                     updateMeasureViewModel.deleteTakeMedicamentTime(takeMedicamentTime)
                     Toast.makeText(
-                        requireContext(), "Успешно удалено",
+                        requireContext(), R.string.all_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -140,7 +139,6 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
           //  measurementsPerDayViewModel.addTakeMedicamentTime(medicamentTime)
         }
         dialogFragment.cancelBtn.setOnClickListener {
-            Log.v("myLogs", "AddFragment  dialogFragment.btnCansel.setOnClickListener ")
             mAlertDialog.dismiss()
         }
     }
@@ -155,9 +153,7 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
         val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
         dialogFragment.measureDialog.doAfterTextChanged { it: Editable? ->
-            if (dialogFragment.measureDialog.getText().toString().length > 1)
-                dialogFragment.btnSave.setEnabled(true)
-            else dialogFragment.btnSave.isEnabled = false
+            dialogFragment.btnSave.isEnabled = dialogFragment.measureDialog.text.toString().length > 1
         }
 
         dialogFragment.btnSave.setOnClickListener {

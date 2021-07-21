@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtil {
+    @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private val dateFormat = SimpleDateFormat("dd MMM YYYY")
+    @SuppressLint("SimpleDateFormat")
     private val timeFormat = SimpleDateFormat("HH : mm")
 
     @SuppressLint("SimpleDateFormat")
@@ -29,6 +31,16 @@ object DateUtil {
         return dateCalendar.time.time
     }
 
+    fun dayTimeStampWithNewTime(dayTimeStamp: Long, hour: Int, minute: Int): Long {
+        val cal = GregorianCalendar()
+        cal.timeInMillis = dayTimeStamp
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val dayOfMonth = cal.get(Calendar.DAY_OF_MONTH)
+        val dateCalendar: Calendar = GregorianCalendar(year, month, dayOfMonth, hour, minute)
+        return dateCalendar.time.time
+    }
+
     fun timeCorrectDisplay(minute: Int): String {
         return if (minute < 10) {
             "0$minute"
@@ -37,13 +49,15 @@ object DateUtil {
         }
     }
 
-    fun dateTimeStampToSimpleDateFormatHour(dayTimeStamp: Long): String {
+    @SuppressLint("SimpleDateFormat")
+    fun timestampToDisplayHour(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
         val dateFormat = SimpleDateFormat("HH")
         return dateFormat.format(currentDate)
     }
 
-    fun dateTimeStampToSimpleDateFormatMinute(dayTimeStamp: Long): String {
+    @SuppressLint("SimpleDateFormat")
+    fun timestampToDisplayMinute(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
         val dateFormat = SimpleDateFormat("mm")
         return dateFormat.format(currentDate)

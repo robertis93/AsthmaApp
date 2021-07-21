@@ -9,7 +9,7 @@ import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.databinding.UpdateItemMedtimeBinding
 import com.example.asthmaapp.model.TakeMedicamentTime
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHour
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayHour
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class UpdateMedicamentTimeAdapter(
@@ -66,7 +66,7 @@ class UpdateMedicamentTimeAdapter(
         val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
 
-        dialogFragment.timePicker.hour = dateTimeStampToSimpleDateFormatHour(currentItem.dateTimeStamp).toInt()
+        dialogFragment.timePicker.hour = timestampToDisplayHour(currentItem.dateTimeStamp).toInt()
         dialogFragment.timePicker.minute = timestampToDisplayTime(currentItem.dateTimeStamp).toInt()
 
         dialogFragment.btnSave.setOnClickListener {

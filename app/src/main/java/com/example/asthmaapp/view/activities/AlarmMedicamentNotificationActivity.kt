@@ -8,9 +8,9 @@ import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatHour
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayHour
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
-import com.example.asthmaapp.utils.DateUtil.dateTimeStampToSimpleDateFormatMinute
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayMinute
 import com.example.asthmaapp.utils.DateUtil.dayTimeStamp
 import com.example.asthmaapp.viewmodel.viewModels.AddMeasuresViewModel
 import java.util.*
@@ -46,8 +46,8 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 //            })
 
         binding.saveBtn.setOnClickListener {
-            val timeHour = dateTimeStampToSimpleDateFormatHour(dateTimeStamp).toInt()
-            val timeMinute = dateTimeStampToSimpleDateFormatMinute(dateTimeStamp).toInt()
+            val timeHour = timestampToDisplayHour(dateTimeStamp).toInt()
+            val timeMinute = timestampToDisplayMinute(dateTimeStamp).toInt()
 
             val medicamentDayTimeStamp = dayTimeStamp(dateTimeStamp, timeHour, timeMinute)
             val medicamentTime =

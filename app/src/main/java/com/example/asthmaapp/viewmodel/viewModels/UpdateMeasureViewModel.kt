@@ -145,11 +145,6 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
     }
 
 
-    fun deleteAllTimeTakeMedicament() {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllTimeTakeMedicament()
-        }
-    }
 
     fun updateMeasure(measure: Measure) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -163,11 +158,6 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun deleteAllMeasure() {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllMeasure()
-        }
-    }
 
     fun updateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -181,11 +171,7 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun deleteAllTakeMedicamentTime() {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllTakeMedicamentTime()
-        }
-    }
+
 
     fun addMedicamentInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -199,24 +185,5 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun deleteMedicamentInfo(medicamentInfo: MedicamentInfo) {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteMedicamentInfo(medicamentInfo)
-        }
-    }
-
-    fun deleteAllMedicamentInfo() {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllMedicamentInfo()
-        }
-    }
-
-    fun deleteAllMeasuresWithMedicaments() {
-        viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllMeasure()
-            measureRepository.deleteAllTimeTakeMedicament()
-            getAllMeasuresAndTakeMedicamentTime()
-        }
-    }
 }
 

@@ -22,7 +22,7 @@
     <string name="example_date">24 января 2020</string>
     <string name="mkg">мкг</string>
     <string name="yes">Да</string>
-    <string name="all_deleted">Все успешно удалено </string>
+    <string name="all_deleted">Успешно удалено </string>
     <string name="no">Нет</string>
     <string name="delete_it">Удалить все?</string>
     <string name="are_you_sure_delete_all">Вы действительно хотите все удалить ?</string>
