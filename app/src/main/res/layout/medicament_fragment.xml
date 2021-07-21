@@ -60,7 +60,6 @@
         android:backgroundTint="#03A9F4"
         android:text="@string/save_btn"
         android:textAllCaps="false"
-        android:enabled="false"
         app:backgroundTint="@color/blue_med"
         app:cornerRadius="16dp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

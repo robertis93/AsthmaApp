@@ -3,12 +3,13 @@ package com.example.asthmaapp.view.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
@@ -20,12 +21,16 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.view.adapters.AddMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.AddMeasuresViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
     private val viewModel: AddMeasuresViewModel by lazy {
         ViewModelProvider(this).get(AddMeasuresViewModel::class.java)
     }
+
     override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
         FragmentAddBinding.inflate(inflater)
 
@@ -34,6 +39,7 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setObservers()
+        setInitMedicament()
 
         binding.changeDayButton.setOnClickListener {
             changeDay()
@@ -47,22 +53,28 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         }
 
         binding.saveBtn.setOnClickListener {
-            viewModel.save()
-          //  findNavController().popBackStack()
+            lifecycleScope.launch(Dispatchers.IO) {
+                val medicamentName = binding.editTextNameMedicament.text.toString()
+                val medicamentDose = binding.editTextMedicamentDose.text.toString()
+                viewModel.save(medicamentName, medicamentDose)
+                withContext(Dispatchers.Main) {
+                    findNavController().popBackStack()
+                }
+            }
         }
+    }
 
-        binding.editTextNameMedicament.doAfterTextChanged {
-            viewModel.changeMedicamentName(it.toString())
-        }
-
-        binding.editTextMedicamentDose.doAfterTextChanged {
-            viewModel.changeMedicamentDose(it.toString())
+    private fun setInitMedicament() {
+        lifecycleScope.launch {
+            val medicamentInfo = viewModel.getInitMedicamentInfo()
+            binding.editTextNameMedicament.setText(medicamentInfo?.name)
+            binding.editTextMedicamentDose.setText(medicamentInfo?.dose.toString())
         }
     }
 
     private fun setObservers() {
-        val measureAdapterListener = object : AddMeasureAdapter.Listener {
-            override fun onDeleteClick(measure: Measure) {
+        val measureAdapterListener = object : AddMeasureAdapter.DeleteListener {
+            override fun onDeleteMeasureClick(measure: Measure) {
                 viewModel.onDeleteMeasureClick(measure)
             }
         }
@@ -78,12 +90,11 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             recyclerViewAdd.layoutManager =
                 GridLayoutManager(
                     binding.recyclerMed.context,
-                    2,
+                    4,
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
             recyclerViewAdd.adapter = addMeasureAdapter
-            Log.i("myLogs", " AddMeasure viewModel.measureListLiveData.observe")
         }
 
         viewModel.takeMedicamentTimeListLiveData.observe(viewLifecycleOwner) {
@@ -104,14 +115,6 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         viewModel.dateLiveData.observe(viewLifecycleOwner) { date ->
             binding.dateTextView.text = date
         }
-
-        viewModel.medicamentInfoLiveData.observe(
-            viewLifecycleOwner,
-            { medicamentInfo ->
-                binding.editTextNameMedicament.setText(medicamentInfo.name)
-                binding.editTextMedicamentDose.setText(medicamentInfo.dose.toString())
-            }
-        )
     }
 
     private fun addTimeTakeMedicament() {

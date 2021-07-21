@@ -8,12 +8,16 @@ import com.example.asthmaapp.databinding.AddFragmentMedicamentTimeItemBinding
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
-class AddMedicamentTimeAdapter(var measuresMedList: List<TakeMedicamentTimeEntity>, val onDeleteClickListener: DeleteClickListener) :
+class AddMedicamentTimeAdapter(
+    var measuresMedList: List<TakeMedicamentTimeEntity>,
+    val onDeleteClickListener: DeleteClickListener
+) :
     RecyclerView.Adapter<AddMedicamentTimeAdapter.AddMedicamentViewHolder>() {
 
     interface DeleteClickListener {
         fun onDeleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMedicamentViewHolder {
         val binding = AddFragmentMedicamentTimeItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -38,20 +42,6 @@ class AddMedicamentTimeAdapter(var measuresMedList: List<TakeMedicamentTimeEntit
     override fun getItemCount(): Int {
         return measuresMedList.size
     }
-
-//    fun addData(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-//        measuresMedList.add(takeMedicamentTimeEntity)
-//        notifyDataSetChanged()
-//    }
-//
-//    private fun deleteDate(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-//        measuresMedList.remove(takeMedicamentTimeEntity)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun getListMedicamentTime(): MutableList<TakeMedicamentTimeEntity> {
-//        return measuresMedList
-//    }
 
     class AddMedicamentViewHolder(val binding: AddFragmentMedicamentTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)

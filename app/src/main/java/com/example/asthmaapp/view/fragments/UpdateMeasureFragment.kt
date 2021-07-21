@@ -42,7 +42,6 @@ class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-       // dayTimeStamp = args.currentItemDay.date
         binding.dateTextView.text = args.currentItemDay.date
 
         val currentDate = args.currentItemDay.date

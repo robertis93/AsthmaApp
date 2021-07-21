@@ -8,11 +8,11 @@ import com.example.asthmaapp.databinding.AddFragmentMeasureItemBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
-class AddMeasureAdapter(val measuresList: List<Measure>, val listener: Listener) :
+class AddMeasureAdapter(val measuresList: List<Measure>, val listener: DeleteListener) :
     RecyclerView.Adapter<AddMeasureAdapter.AddMeasureViewHolder>() {
 
-    interface Listener {
-        fun onDeleteClick(measure: Measure)
+    interface DeleteListener {
+        fun onDeleteMeasureClick(measure: Measure)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMeasureViewHolder {
@@ -32,7 +32,7 @@ class AddMeasureAdapter(val measuresList: List<Measure>, val listener: Listener)
                 timestampToDisplayTime(currentItem.dateTimestamp)
             addMeasureText.text = currentItem.measure.toString()
             deleteAlarmIcon.setOnClickListener {
-                listener.onDeleteClick(measuresList[position])
+                listener.onDeleteMeasureClick(measuresList[position])
             }
         }
     }
@@ -40,20 +40,6 @@ class AddMeasureAdapter(val measuresList: List<Measure>, val listener: Listener)
     override fun getItemCount(): Int {
         return measuresList.size
     }
-
-//    fun addMeasure(measure: Measure) {
-//        measuresList.add(measure)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun getListMeasure(): MutableList<Measure> {
-//        return measuresList
-//    }
-//
-//    private fun deleteData(measure: Measure) {
-//        measuresList.remove(measure)
-//        notifyDataSetChanged()
-//    }
 
     class AddMeasureViewHolder(val binding: AddFragmentMeasureItemBinding) :
         RecyclerView.ViewHolder(binding.root)

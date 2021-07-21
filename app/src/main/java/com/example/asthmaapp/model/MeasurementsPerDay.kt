@@ -52,17 +52,6 @@ data class MeasureWithTakeMedicamentTime(
     val takeMedicamentTimeList: List<TakeMedicamentTime>,
 ) : Parcelable
 
-@Parcelize
-data class MeasureWithTime(
-    val date: String,
-    val measureList: List<Measure>,
-) : Parcelable
-
-@Parcelize
-data class TakeMedicamentWithTime(
-    val date: String,
-    val takeMedicamentTimeList: List<TakeMedicamentTime>,
-) : Parcelable
 
 
 
