@@ -11,7 +11,7 @@
         android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:paddingBottom="32dp"
-        tools:context=".view.fragments.AddMeasuresFragment">
+        tools:context=".view.fragments.AddAndUpdateMeasuresFragment">
 
         <LinearLayout
             android:layout_width="wrap_content"

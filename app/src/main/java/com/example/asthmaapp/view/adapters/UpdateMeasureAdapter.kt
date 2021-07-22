@@ -43,7 +43,7 @@ class UpdateMeasureAdapter(
         val currentItem = timeAndMeasureList[position]
 
         holder.binding.timeTextView.text = timestampToDisplayTime(currentItem.dateTimestamp)
-        holder.binding.measureText.text = currentItem.measure.toString()
+        holder.binding.measureText.text = currentItem.value.toString()
 
         holder.binding.editImage.setOnClickListener {
             editTimeMeasure(holder, position, currentItem)
@@ -76,7 +76,7 @@ class UpdateMeasureAdapter(
 
         dialogFragment.timePicker.hour = timestampToDisplayHour(currentItem.dateTimestamp).toInt()
         dialogFragment.timePicker.minute = timestampToDisplayMinute(currentItem.dateTimestamp).toInt()
-        dialogFragment.measureDialog.setText(currentItem.measure.toString())
+        dialogFragment.measureDialog.setText(currentItem.value.toString())
 
         dialogFragment.btnSave.setOnClickListener {
             alertDialog.dismiss()
@@ -88,7 +88,7 @@ class UpdateMeasureAdapter(
             holder.binding.timeTextView.text = " ${ timeCorrectDisplay(timeHour)} : ${timeCorrectDisplay(timeMinute)} "
             holder.binding.measureText.text = measurePeakFlowMeter.toString()
             timeAndMeasureList[position].dateTimestamp = dayTimeStampWithNewTime(currentItem.dateTimestamp,timeHour, timeMinute)
-            timeAndMeasureList[position].measure = measurePeakFlowMeter
+            timeAndMeasureList[position].value = measurePeakFlowMeter
         }
 
         dialogFragment.cancelBtn.setOnClickListener {

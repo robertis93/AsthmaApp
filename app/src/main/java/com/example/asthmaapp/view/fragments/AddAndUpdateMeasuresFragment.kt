@@ -3,13 +3,15 @@ package com.example.asthmaapp.view.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
@@ -18,17 +20,25 @@ import com.example.asthmaapp.databinding.LayoutDialogAddFragmentBinding
 import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
-import com.example.asthmaapp.view.adapters.AddMeasureAdapter
+import com.example.asthmaapp.utils.DateUtil
+import com.example.asthmaapp.view.adapters.AddAndUpdateMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddMedicamentTimeAdapter
-import com.example.asthmaapp.viewmodel.viewModels.AddMeasuresViewModel
+import com.example.asthmaapp.viewmodel.viewModels.AddAndUpdateMeasureViewModelFactory
+import com.example.asthmaapp.viewmodel.viewModels.AddAndUpdateMeasuresViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
-    private val viewModel: AddMeasuresViewModel by lazy {
-        ViewModelProvider(this).get(AddMeasuresViewModel::class.java)
+class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
+
+    val args:AddAndUpdateMeasuresFragmentArgs by navArgs()
+    private val viewModel: AddAndUpdateMeasuresViewModel by viewModels {
+        val mode = if (args.currentItemDay != null)
+            AddAndUpdateMeasuresViewModel.Mode.Update(args.currentItemDay!!)
+        else
+            AddAndUpdateMeasuresViewModel.Mode.Add
+        AddAndUpdateMeasureViewModelFactory(requireActivity().application, mode)
     }
 
     override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
@@ -73,9 +83,13 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
     }
 
     private fun setObservers() {
-        val measureAdapterListener = object : AddMeasureAdapter.DeleteListener {
+        val measureAdapterListener = object : AddAndUpdateMeasureAdapter.DeleteListener {
             override fun onDeleteMeasureClick(measure: Measure) {
                 viewModel.onDeleteMeasureClick(measure)
+            }
+
+            override fun onUpdateMeasureClick(measure: Measure, position: Int) {
+                updateTimeMeasure(measure, position)
             }
         }
 
@@ -85,7 +99,8 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             }
         }
         viewModel.measureListLiveData.observe(viewLifecycleOwner) { measureList ->
-            val addMeasureAdapter = AddMeasureAdapter(measureList, measureAdapterListener)
+            val updateMode = args.currentItemDay != null
+            val addMeasureAdapter = AddAndUpdateMeasureAdapter(measureList, measureAdapterListener, updateMode)
             val recyclerViewAdd = binding.recyclerMeasure
             recyclerViewAdd.layoutManager =
                 GridLayoutManager(
@@ -198,5 +213,49 @@ class AddMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
         datePickerDialog.datePicker.maxDate = viewModel.getMaxDateForDialog()
         datePickerDialog.show()
+    }
+
+    private fun updateTimeMeasure(currentItem: Measure, position: Int) {
+        val builder =
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        val layoutInflater = LayoutInflater.from(requireContext())
+        val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
+        dialogFragment.timePicker.is24HourView
+        builder.setView(dialogFragment.root)
+        builder.setTitle(R.string.measure_alarm_frag)
+
+        val alertDialog = builder.show()
+        dialogFragment.timePicker.setIs24HourView(true)
+
+        dialogFragment.measureDialog.doAfterTextChanged { it: Editable? ->
+            dialogFragment.btnSave.isEnabled = dialogFragment.measureDialog.getText().toString().length > 1
+        }
+
+        dialogFragment.timePicker.hour = DateUtil.timestampToDisplayHour(currentItem.dateTimestamp).toInt()
+        dialogFragment.timePicker.minute = DateUtil.timestampToDisplayMinute(currentItem.dateTimestamp)
+            .toInt()
+        dialogFragment.measureDialog.setText(currentItem.value.toString())
+
+        dialogFragment.btnSave.setOnClickListener {
+            alertDialog.dismiss()
+            dialogFragment.timePicker.is24HourView
+            val timeHour = dialogFragment.timePicker.hour
+            val timeMinute = dialogFragment.timePicker.minute
+            val measurePeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
+            viewModel.onUpdateMeasureClick(position, timeHour, timeMinute, measurePeakFlowMeter)
+           /* holder.binding.timeTextView.text = " ${DateUtil.timeCorrectDisplay(timeHour)} : ${
+                DateUtil.timeCorrectDisplay(
+                    timeMinute
+                )
+            } "
+            holder.binding.measureText.text = measurePeakFlowMeter.toString()
+            timeAndMeasureList[position].dateTimestamp =
+                DateUtil.dayTimeStampWithNewTime(currentItem.dateTimestamp, timeHour, timeMinute)
+            timeAndMeasureList[position].value = measurePeakFlowMeter*/
+        }
+
+        dialogFragment.cancelBtn.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 }

@@ -25,15 +25,15 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.asthmaapp.view.fragments.AddMeasuresFragment"
+        android:name="com.example.asthmaapp.view.fragments.AddAndUpdateMeasuresFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />
         <argument
-            android:name="dateTime"
-            app:argType="string"
+            android:name="currentItemDay"
+            app:argType="com.example.asthmaapp.model.MeasureWithTakeMedicamentTime"
             app:nullable="true" />
     </fragment>
     <fragment

@@ -12,7 +12,7 @@ data class Measure(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     var dateTimestamp: Long,
-    var measure: Int
+    var value: Int
 ) : Parcelable
 
 @Parcelize

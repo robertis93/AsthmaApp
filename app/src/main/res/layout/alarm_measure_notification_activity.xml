@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingBottom="32sp"
-        tools:context=".view.fragments.AddMeasuresFragment">
+        tools:context=".view.fragments.AddAndUpdateMeasuresFragment">
 
         <ImageView
             android:id="@+id/alarmImage"

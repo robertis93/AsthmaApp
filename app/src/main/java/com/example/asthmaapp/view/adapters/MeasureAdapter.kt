@@ -33,7 +33,7 @@ class MeasureAdapter(
         val color = viewModel.getColorForMeasure(currentItem)
         if (color != null)
             holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(color))
-        holder.binding.measureText.text = currentItem.measure.toString()
+        holder.binding.measureText.text = currentItem.value.toString()
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()
         }

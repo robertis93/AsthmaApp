@@ -12,7 +12,7 @@
         android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:paddingBottom="32sp"
-        tools:context=".view.fragments.AddMeasuresFragment">
+        tools:context=".view.fragments.AddAndUpdateMeasuresFragment">
 
         <TextView
             android:id="@+id/dateTextView"

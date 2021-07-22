@@ -1,19 +1,24 @@
 package com.example.asthmaapp.viewmodel.viewModels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.Measure
+import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil
+import com.example.asthmaapp.utils.DateUtil.dateStringToDayTimeStamp
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 import com.example.asthmaapp.viewmodel.repository.MeasureRepository
 import java.util.*
 
-class AddMeasuresViewModel(application: Application) : AndroidViewModel(application) {
+class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) : AndroidViewModel(application) {
+    sealed class Mode{
+        object Add: Mode()
+        class Update(val measureWithTakeMedicamentTime: MeasureWithTakeMedicamentTime): Mode()
+    }
+
     val dateTimeStampLiveData = MutableLiveData<Long>()
     val dateLiveData = dateTimeStampLiveData.map { timestampToDisplayDate(it) }
     val measureListLiveData = MutableLiveData<List<Measure>>()
@@ -27,18 +32,37 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
         measureRepository =
             MeasureRepository(measurementsPerDayDao)
 
-        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        val currentDayTimeStamp = dateCalendar.time.time
-        dateTimeStampLiveData.value = currentDayTimeStamp
+        val dayTimeStamp = when (mode) {
+            is Mode.Add -> GregorianCalendar(TimeZone.getTimeZone("GMT+5")).time.time
+            is Mode.Update -> dateStringToDayTimeStamp(mode.measureWithTakeMedicamentTime.date)
+        }
+        dateTimeStampLiveData.value = dayTimeStamp
+
+        if(mode is Mode.Update) {
+            measureListLiveData.value = mode.measureWithTakeMedicamentTime.measureList
+            takeMedicamentTimeListLiveData.value =
+                mode.measureWithTakeMedicamentTime.takeMedicamentTimeList.map { it.takeMedicamentTimeEntity }
+        }
     }
 
     suspend fun getInitMedicamentInfo(): MedicamentInfo? {
-        val medicament = measureRepository.getAllMedicamentInfoSync()
-        return if (medicament.isNotEmpty()) {
-            medicament.last()
-        } else {
-            null
+        return when(mode){
+            is Mode.Add -> {
+                val medicament = measureRepository.getAllMedicamentInfoSync()
+                if (medicament.isNotEmpty())
+                    medicament.last()
+                else
+                    null
+            }
+            is Mode.Update ->{
+                val medicamentInfoList = mode.measureWithTakeMedicamentTime.takeMedicamentTimeList
+                if (medicamentInfoList.isNotEmpty())
+                    medicamentInfoList.first().medicamentInfo
+                else
+                    null
+            }
         }
+
     }
 
     fun changeDate(newDate: Long) {
@@ -77,6 +101,16 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
         measureListLiveData.value = measureMutableList
     }
 
+    fun onUpdateMeasureClick(index: Int, timeHour: Int, timeMinute: Int, measureWithPeakFlowMeter: Int) {
+        val measureDayTimeStamp =
+            DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!, timeHour, timeMinute)
+        val measure =
+            Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
+        val measureMutableList = measureListLiveData.value?.toMutableList() ?: mutableListOf()
+        measureMutableList[index].value = measure.value
+        measureListLiveData.value = measureMutableList
+    }
+
     fun onDeleteMeasureClick(measure: Measure) {
         measureListLiveData.value?.let { listMeasure ->
             val measureMutableList = listMeasure.toMutableList()
@@ -109,3 +143,10 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
     }
 }
 
+class AddAndUpdateMeasureViewModelFactory(
+    private val application: Application,
+    private val mode: AddAndUpdateMeasuresViewModel.Mode
+): ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+        AddAndUpdateMeasuresViewModel(application, mode) as T
+}

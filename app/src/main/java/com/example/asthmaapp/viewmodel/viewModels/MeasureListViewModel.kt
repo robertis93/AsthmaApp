@@ -35,13 +35,13 @@ class MeasureListViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun getColorForMeasure(measure: Measure): Int? {
-        val maxMeasure = getAllMeasures.value?.maxByOrNull { it.measure }
+        val maxMeasure = getAllMeasures.value?.maxByOrNull { it.value }
         if (maxMeasure == null) return null
 
-        val controlValue = maxMeasure.measure * 0.85
-        val controlHighValue = maxMeasure.measure * 0.75
+        val controlValue = maxMeasure.value * 0.85
+        val controlHighValue = maxMeasure.value * 0.75
 
-        val measureNow = measure.measure
+        val measureNow = measure.value
         return when {
             measureNow < controlValue -> R.color.yelow
             measureNow < controlHighValue -> R.color.red
