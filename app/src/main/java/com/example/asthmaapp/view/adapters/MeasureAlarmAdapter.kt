@@ -8,7 +8,10 @@ import com.example.asthmaapp.databinding.ItemAlarmBinding
 import com.example.asthmaapp.model.Alarm
 import com.example.asthmaapp.utils.DateUtil.timeCorrectDisplay
 
-class MeasureAlarmAdapter(var alarmsList : List<Alarm>, var onClickAlarmListener: OnAlarmClickListener) :
+class MeasureAlarmAdapter(
+    var alarmsList: List<Alarm>,
+    var onClickAlarmListener: OnAlarmClickListener
+) :
     RecyclerView.Adapter<MeasureAlarmAdapter.AlarmViewHolder>() {
 
     interface OnAlarmClickListener {
@@ -33,11 +36,6 @@ class MeasureAlarmAdapter(var alarmsList : List<Alarm>, var onClickAlarmListener
 
     override fun getItemCount(): Int {
         return alarmsList.size
-    }
-
-    fun refreshAlarms(alarm: List<Alarm>) {
-        this.alarmsList = alarm
-        notifyDataSetChanged()
     }
 
     class AlarmViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root)

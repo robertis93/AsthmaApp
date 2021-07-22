@@ -53,4 +53,5 @@
     <string name="you_forget_write_information_about_medication">"You forget write information about medication"</string>
     <string name="take_drugs">Take Medicament</string> <string name="message">Message!</string>
     <string name="ok_i_do_it">OK, I will do it now</string>
+    <string name="app_description">"Notification of medication intake and time of measurement of expiratory flow rate using a peakflometer</string>
 </resources>

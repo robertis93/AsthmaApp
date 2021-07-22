@@ -14,15 +14,7 @@ class AlarmRepository(private val alarmDao: AlarmDao) {
         alarmDao.addAlarm(alarm)
     }
 
-    suspend fun updateAlarm(alarm: Alarm) {
-        alarmDao.updateAlarm(alarm)
-    }
-
     suspend fun deleteAlarm(alarm: Alarm) {
         alarmDao.deleteAlarm(alarm)
-    }
-
-    suspend fun deleteAllAlarms() {
-        alarmDao.deleteAllAlarms()
     }
 }

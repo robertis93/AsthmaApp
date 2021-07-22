@@ -5,16 +5,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.asthmaapp.databinding.AlarmMeasureNotificationActivityBinding
-import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
-import com.example.asthmaapp.viewmodel.viewModels.AddMeasuresViewModel
+import com.example.asthmaapp.viewmodel.viewModels.NotificationsViewModel
 import java.util.*
 
 class AlarmMeasureNotificationActivity : AppCompatActivity() {
     private lateinit var binding: AlarmMeasureNotificationActivityBinding
-    private val addMeasuresViewModel: AddMeasuresViewModel by lazy {
-        ViewModelProvider(this).get(AddMeasuresViewModel::class.java)
+    private val viewModel: NotificationsViewModel by lazy {
+        ViewModelProvider(this).get(NotificationsViewModel::class.java)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -34,12 +33,8 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
             binding.addMeasureText.isFocusableInTouchMode = true
             binding.addMeasureText.requestFocus()
             val measurePeakFlowMeter = binding.addMeasureText.text.toString().toInt()
-            val measure = Measure(
-                0,
-                dateTimeStamp,
-                measurePeakFlowMeter
-            )
-           // measurementsPerDayViewModel.addMeasure(measure)
+
+           viewModel.addMeasure(dateTimeStamp, measurePeakFlowMeter)
             this.finishAffinity()
         }
     }

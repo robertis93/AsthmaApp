@@ -23,8 +23,6 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
     val takeMedicamentTimeListLiveData = MutableLiveData<List<TakeMedicamentTimeEntity>>()
     val medicamentInfoLiveData = MutableLiveData<MedicamentInfo>()
 
-    private val measureMutableList = mutableListOf<Measure>()
-    private val takeMedicamentTimeMutableList = mutableListOf<TakeMedicamentTimeEntity>()
     private val measureRepository: MeasureRepository
 
     init {
@@ -35,29 +33,14 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
         val currentDayTimeStamp = dateCalendar.time.time
         dateTimeStampLiveData.value = currentDayTimeStamp
-
-        //getLastMedicament(currentDayTimeStamp)
     }
 
-    // TODO : Maybe Delete
-    //опять таки то, что можно было two-way databinding сделать
     suspend fun getInitMedicamentInfo(): MedicamentInfo? {
         val medicament = measureRepository.getAllMedicamentInfoSync()
         return if (medicament.isNotEmpty()) {
             medicament.last()
-        } else
+        } else {
             null
-    }
-
-    private fun getLastMedicament(currentDayTimeStamp: Long) {
-        viewModelScope.launch {
-            val medicament = measureRepository.getAllMedicamentInfoSync()
-            if (medicament.isNotEmpty()) {
-                val lastIndex = medicament.last()
-                val medicamentNew =
-                    MedicamentInfo(currentDayTimeStamp.toString(), lastIndex.name, lastIndex.dose)
-                medicamentInfoLiveData.value = medicamentNew
-            }
         }
     }
 
@@ -87,15 +70,12 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-
     fun onAddMeasureClick(timeHour: Int, timeMinute: Int, measureWithPeakFlowMeter: Int) {
         val measureDayTimeStamp =
             DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!, timeHour, timeMinute)
         val measure =
             Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
-//        measureMutableList.add(measure)
-//        measureListLiveData.value = measureMutableList
-        //здесь я протупил. если делать с let, то первая запись никогда не появится
+
         val measureMutableList = measureListLiveData.value?.toMutableList() ?: mutableListOf()
         measureMutableList.add(measure)
         measureListLiveData.value = measureMutableList
@@ -122,7 +102,6 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
             takeMedicamentTimeListLiveData.value?.toMutableList() ?: mutableListOf()
         takeMedicamentTimeMutableList.add(medicamentTime)
         takeMedicamentTimeListLiveData.value = takeMedicamentTimeMutableList
-
     }
 
     fun onDeleteMedicamentClick(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
@@ -132,7 +111,5 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
             takeMedicamentTimeListLiveData.value = takeMedicamentTimeMutableList
         }
     }
-
-
 }
 

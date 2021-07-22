@@ -9,6 +9,10 @@ object DateUtil {
     private val dateFormat = SimpleDateFormat("dd MMM YYYY")
     @SuppressLint("SimpleDateFormat")
     private val timeFormat = SimpleDateFormat("HH : mm")
+    @SuppressLint("SimpleDateFormat")
+    private val justHour = SimpleDateFormat("HH")
+    @SuppressLint("SimpleDateFormat")
+    private val justMinute = SimpleDateFormat("mm")
 
     @SuppressLint("SimpleDateFormat")
     fun timestampToDisplayDate(dayTimeStamp: Long): String {
@@ -52,22 +56,19 @@ object DateUtil {
     @SuppressLint("SimpleDateFormat")
     fun timestampToDisplayHour(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
-        val dateFormat = SimpleDateFormat("HH")
-        return dateFormat.format(currentDate)
+        return justHour.format(currentDate)
     }
 
     @SuppressLint("SimpleDateFormat")
     fun timestampToDisplayMinute(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
-        val dateFormat = SimpleDateFormat("mm")
-        return dateFormat.format(currentDate)
+        return justMinute.format(currentDate)
     }
 
     fun dateStringToDayTimeStamp(date: String): Long {
         val day: Date = dateFormat.parse(date)
         return day.time
     }
-
 }
 
 

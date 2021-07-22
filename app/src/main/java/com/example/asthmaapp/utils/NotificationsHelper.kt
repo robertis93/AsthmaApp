@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.asthmaapp.R
 import com.example.asthmaapp.view.activities.AlarmMeasureNotificationActivity
 import com.example.asthmaapp.view.activities.AlarmMedicamentNotificationActivity
 
@@ -39,7 +40,6 @@ object NotificationsHelper {
                 .setContentTitle("Напоминание")
                 .setContentText(showMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                //реакция на уведомление, Нажатие на уведомление
                 .setContentIntent(pendingIntent)
                 .build()
         val alarmId =
@@ -52,13 +52,12 @@ object NotificationsHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID, // зачем?? как дает уведомление?? Идентификатор канала. Должен быть уникальным для каждой упаковки.
-                "уведовление",
+                R.string.notification.toString(),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
                 description =
-                    "уведомление о приеме лекарства и времени замера скорости выдоха при помощи пикфлометра"
+                    R.string.app_description.toString()
             }
-            // Register the channel with the system
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)

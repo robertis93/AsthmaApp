@@ -26,7 +26,7 @@ import com.example.asthmaapp.viewmodel.viewModels.UpdateMeasureViewModel
 import kotlin.properties.Delegates
 
 
-class UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
+class  UpdateMeasureFragment : BaseFragment<FragmentUpdateBinding>() {
 
     private val args by navArgs<UpdateMeasureFragmentArgs>()
     private var dayTimeStamp by Delegates.notNull<Long>()

@@ -55,4 +55,5 @@
     <string name="ok_i_do_it">"ОК, сейчас сделаю"</string>
     <string name="you_forget_write_information_about_medication">"Вы не заполнили информацию о принимаемом лекарстве!"</string>
     <string name="take_drugs">Примите лекарство</string>
+    <string name="app_description">Уведомление о приеме лекарства и времени замера скорости выдоха при помощи пикфлометра</string>
 </resources>

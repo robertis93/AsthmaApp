@@ -126,8 +126,6 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
 
 
 
-
-
     //for list fragment
     val getAllMeasures: LiveData<List<Measure>> =
         measureRepository.getAllMeasures
@@ -144,8 +142,6 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-
-
     fun updateMeasure(measure: Measure) {
         viewModelScope.launch(Dispatchers.IO) {
             measureRepository.updateMeasure(measure)
@@ -157,7 +153,6 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
             measureRepository.deleteMeasure(measure)
         }
     }
-
 
     fun updateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -171,8 +166,6 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-
-
     fun addMedicamentInfo(medicamentInfo: MedicamentInfo) {
         viewModelScope.launch(Dispatchers.IO) {
             measureRepository.addMedicamentInfo(medicamentInfo)
@@ -184,6 +177,5 @@ class UpdateMeasureViewModel(application: Application) : AndroidViewModel(applic
             measureRepository.updateMedicamentInfo(medicamentInfo)
         }
     }
-
 }
 
