@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
 import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MedicamentInfo
@@ -12,8 +11,6 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 import com.example.asthmaapp.viewmodel.repository.MeasureRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 class AddMeasuresViewModel(application: Application) : AndroidViewModel(application) {
@@ -53,22 +50,21 @@ class AddMeasuresViewModel(application: Application) : AndroidViewModel(applicat
         return dateCalendar.time.time
     }
 
-    fun save(medicamentName: String, medicamentDose: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val medicamentInfo = MedicamentInfo(
-                dateTimeStampLiveData.value.toString(),
-                medicamentName,
-                medicamentDose.toIntOrNull() ?: 0
-            )
-            measureRepository.addMedicamentInfo(medicamentInfo)
-            for (measure in measureListLiveData.value ?: emptyList()) {
-                measureRepository.addMeasure(measure)
-            }
-            for (takeMedicamentTime in takeMedicamentTimeListLiveData.value ?: emptyList()) {
-                measureRepository.addTakeMedicamentTime(takeMedicamentTime)
-            }
+    suspend fun save(medicamentName: String, medicamentDose: String) {
+        val medicamentInfo = MedicamentInfo(
+            dateTimeStampLiveData.value.toString(),
+            medicamentName,
+            medicamentDose.toIntOrNull() ?: 0
+        )
+        measureRepository.addMedicamentInfo(medicamentInfo)
+        for (measure in measureListLiveData.value ?: emptyList()) {
+            measureRepository.addMeasure(measure)
+        }
+        for (takeMedicamentTime in takeMedicamentTimeListLiveData.value ?: emptyList()) {
+            measureRepository.addTakeMedicamentTime(takeMedicamentTime)
         }
     }
+
 
     fun onAddMeasureClick(timeHour: Int, timeMinute: Int, measureWithPeakFlowMeter: Int) {
         val measureDayTimeStamp =
