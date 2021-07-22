@@ -28,7 +28,7 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val measureListAdapter = MeasureListAdapter()
+        val measureListAdapter = MeasureListAdapter(measureListViewModel)
         val recyclerView = binding.measureListRecyclerView
         recyclerView.adapter = measureListAdapter
         recyclerView.layoutManager =
@@ -52,10 +52,10 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
             }
         )
 
-        measureListViewModel.getAllMeasures.observe(
-            viewLifecycleOwner,
-            { timeMeasure -> measureListAdapter.addMeasure(timeMeasure) }
-        )
+        measureListViewModel.getAllMeasures.observe(viewLifecycleOwner) {
+                timeMeasure -> measureListAdapter.addMeasures(timeMeasure)
+        }
+
 
         binding.addMeasureButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)

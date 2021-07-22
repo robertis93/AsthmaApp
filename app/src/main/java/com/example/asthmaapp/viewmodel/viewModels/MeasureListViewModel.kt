@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.asthmaapp.R
 import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
@@ -30,6 +31,21 @@ class MeasureListViewModel(application: Application) : AndroidViewModel(applicat
     fun getAllMeasuresAndTakeMedicamentTime() {
         viewModelScope.launch(Dispatchers.IO) {
             takeMedicamentTimeGroupByDate.postValue(measureRepository.getMeasureAndTakeMedicamentTimeGroupByDate())
+        }
+    }
+
+    fun getColorForMeasure(measure: Measure): Int? {
+        val maxMeasure = getAllMeasures.value?.maxByOrNull { it.measure }
+        if (maxMeasure == null) return null
+
+        val controlValue = maxMeasure.measure * 0.85
+        val controlHighValue = maxMeasure.measure * 0.75
+
+        val measureNow = measure.measure
+        return when {
+            measureNow < controlValue -> R.color.yelow
+            measureNow < controlHighValue -> R.color.red
+            else -> null
         }
     }
 

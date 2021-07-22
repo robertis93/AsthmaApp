@@ -11,23 +11,24 @@ import com.example.asthmaapp.databinding.CustomRowBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
 import com.example.asthmaapp.view.fragments.MeasureListFragmentDirections
+import com.example.asthmaapp.viewmodel.viewModels.MeasureListViewModel
 
-class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHolder>() {
+class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHolder>() {
 
-    private var dayMedicamentList = listOf<MeasureWithTakeMedicamentTime>()
+    private var dayMeasureAndMedicamentList = listOf<MeasureWithTakeMedicamentTime>()
     private var listMeasure = emptyList<Measure>()
 
     fun setData(dayWithMeasures: List<MeasureWithTakeMedicamentTime>) {
-        this.dayMedicamentList = dayWithMeasures
+        this.dayMeasureAndMedicamentList = dayWithMeasures
         notifyDataSetChanged()
     }
 
-    fun addMeasure(measure: List<Measure>) {
-        this.listMeasure = measure
+    fun addMeasures(measures: List<Measure>) {
+        this.listMeasure = measures
     }
 
     override fun getItemCount(): Int {
-        return dayMedicamentList.size
+        return dayMeasureAndMedicamentList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeasureViewHolder {
@@ -37,7 +38,7 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
-        val dayCurrentItem = dayMedicamentList[position]
+        val dayCurrentItem = dayMeasureAndMedicamentList[position]
 
         holder.binding.dayTextView.text =
             dayCurrentItem.date
@@ -69,7 +70,7 @@ class MeasureListAdapter : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHo
             }
 
         val measureAdapter =
-            MeasureAdapter(dayCurrentItem.measureList, listMeasure, toUpdateMeasureFragmentFromMeasureClickListener)
+            MeasureAdapter(dayCurrentItem.measureList, viewModel, toUpdateMeasureFragmentFromMeasureClickListener)
         val recyclerView = holder.binding.rowRecyclerView
         recyclerView.adapter = measureAdapter
         recyclerView.layoutManager = GridLayoutManager(

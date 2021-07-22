@@ -4,19 +4,17 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.InnerItemBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
+import com.example.asthmaapp.viewmodel.viewModels.MeasureListViewModel
 
 class MeasureAdapter(
     var measures: List<Measure>,
-    measure: List<Measure>,
+    val viewModel: MeasureListViewModel,
     var onClickListener: OnClickListener
 ) :
     RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() {
-
-    private val timeAndMeasureList = measure
 
     interface OnClickListener {
         fun actionClick()
@@ -30,21 +28,11 @@ class MeasureAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
         val currentItem = measures[position]
-        var max = timeAndMeasureList[0].measure
-        for (i in timeAndMeasureList.indices)
-            if (timeAndMeasureList[i].measure > max)
-                max = timeAndMeasureList[i].measure
-
-        val controlValue = max * 0.85
-        val controlHighValue = max * 0.75
-
         holder.binding.timeTextView.text =
             timestampToDisplayTime(currentItem.dateTimestamp)
-        val measureNow = currentItem.measure
-        if (measureNow < controlValue)
-            holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.yelow))
-        if (measureNow < controlHighValue)
-            holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(R.color.red))
+        val color = viewModel.getColorForMeasure(currentItem)
+        if (color != null)
+            holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(color))
         holder.binding.measureText.text = currentItem.measure.toString()
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()

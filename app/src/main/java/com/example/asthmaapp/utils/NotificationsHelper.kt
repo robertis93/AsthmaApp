@@ -42,9 +42,7 @@ object NotificationsHelper {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .build()
-        val alarmId =
-            0   //доделать alarmId, это индификатор сообщения , для обработки клика сообщения
-        // посылаем уведомление
+        val alarmId = 0
         NotificationManagerCompat.from(context).notify(alarmId, notification)
     }
 
@@ -52,11 +50,11 @@ object NotificationsHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID, // зачем?? как дает уведомление?? Идентификатор канала. Должен быть уникальным для каждой упаковки.
-                R.string.notification.toString(),
+                context.getString(R.string.notification),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
                 description =
-                    R.string.app_description.toString()
+                    context.getString(R.string.app_description)
             }
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
