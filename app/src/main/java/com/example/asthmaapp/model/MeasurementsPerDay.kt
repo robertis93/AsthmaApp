@@ -20,7 +20,7 @@ data class Measure(
 data class TakeMedicamentTimeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val dateTimeStamp: Long,
+    var dateTimeStamp: Long,
     @ColumnInfo(name = "medicamentInfo_id")
     val medicamentInfoId: String
 ) : Parcelable

@@ -9,7 +9,11 @@ import com.example.asthmaapp.databinding.UpdateMeasuresInnerItemBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
-class AddAndUpdateMeasureAdapter(val measuresList: List<Measure>, val listener: DeleteListener, val isInUpdateMode: Boolean = false) :
+class AddAndUpdateMeasureAdapter(
+    val measuresList: List<Measure>,
+    val listener: DeleteListener,
+    val isInUpdateMode: Boolean = false
+) :
     RecyclerView.Adapter<AddAndUpdateMeasureAdapter.AddMeasureViewHolder>() {
 
     interface DeleteListener {
@@ -36,7 +40,7 @@ class AddAndUpdateMeasureAdapter(val measuresList: List<Measure>, val listener: 
             deleteIcon.setOnClickListener {
                 listener.onDeleteMeasureClick(measuresList[position])
             }
-            editImage.visibility = if(isInUpdateMode)
+            editImage.visibility = if (isInUpdateMode)
                 View.VISIBLE
             else
                 View.GONE

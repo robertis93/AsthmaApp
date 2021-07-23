@@ -13,7 +13,7 @@ import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 import com.example.asthmaapp.viewmodel.repository.MeasureRepository
 import java.util.*
 
-class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) : AndroidViewModel(application) {
+class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode): AndroidViewModel(application) {
     sealed class Mode{
         object Add: Mode()
         class Update(val measureWithTakeMedicamentTime: MeasureWithTakeMedicamentTime): Mode()
@@ -95,7 +95,6 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) : 
             DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!, timeHour, timeMinute)
         val measure =
             Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
-
         val measureMutableList = measureListLiveData.value?.toMutableList() ?: mutableListOf()
         measureMutableList.add(measure)
         measureListLiveData.value = measureMutableList
@@ -131,6 +130,21 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) : 
         val takeMedicamentTimeMutableList =
             takeMedicamentTimeListLiveData.value?.toMutableList() ?: mutableListOf()
         takeMedicamentTimeMutableList.add(medicamentTime)
+        takeMedicamentTimeListLiveData.value = takeMedicamentTimeMutableList
+    }
+
+    fun onUpdateTakeMedicamentTimeClick(index: Int, timeHour: Int, timeMinute: Int) {
+        val medicamentDayTimeStamp =
+            DateUtil.dayTimeStamp(dateTimeStampLiveData.value ?: 0, timeHour, timeMinute)
+        val medicamentTime =
+            TakeMedicamentTimeEntity(
+                0,
+                medicamentDayTimeStamp,
+                dateTimeStampLiveData.value.toString()
+            )
+        val takeMedicamentTimeMutableList =
+            takeMedicamentTimeListLiveData.value?.toMutableList() ?: mutableListOf()
+        takeMedicamentTimeMutableList[index].dateTimeStamp = medicamentTime.dateTimeStamp
         takeMedicamentTimeListLiveData.value = takeMedicamentTimeMutableList
     }
 
