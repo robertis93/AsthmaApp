@@ -20,7 +20,7 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
             MeasureRepository(measurementsPerDayDao)
     }
 
-    fun addMeasure(dateTimeStamp : Long, measurePeakFlowMeter : Int) {
+    fun addMeasure(dateTimeStamp: Long, measurePeakFlowMeter: Int) {
         val measure = Measure(
             0,
             dateTimeStamp,
@@ -43,8 +43,10 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun addTakeMedicament(dateTimeStamp: Long, nameMedicament: String,
-                          doseMedicament: String) {
+    fun addTakeMedicament(
+        dateTimeStamp: Long, nameMedicament: String,
+        doseMedicament: String
+    ) {
         val medicamentInfo =
             MedicamentInfo(
                 dateTimeStamp.toString(),
@@ -64,6 +66,5 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
             null
         }
     }
-
 }
 

@@ -18,18 +18,16 @@ object NotificationsHelper {
 
     fun showNotification(context: Context, message: String) {
         createNotificationChannel(context)
-
         var intent = Intent()
-
         if (message == "MEDICAMENT") {
             intent = Intent(context, AlarmMedicamentNotificationActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                showMessage = "Примите лекарство"
+                showMessage = context.getString(R.string.take_drugs)
             }
         } else if (message == "MEASURE") {
             intent = Intent(context, AlarmMeasureNotificationActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                showMessage = "Сделайте замер"
+                showMessage = context.getString(R.string.take_measure)
             }
         }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
@@ -37,7 +35,7 @@ object NotificationsHelper {
         val notification =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(com.example.asthmaapp.R.drawable.ic_astmaicon)
-                .setContentTitle("Напоминание")
+                .setContentTitle(context.getString(R.string.notification))
                 .setContentText(showMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
@@ -49,7 +47,7 @@ object NotificationsHelper {
     private fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                CHANNEL_ID, // зачем?? как дает уведомление?? Идентификатор канала. Должен быть уникальным для каждой упаковки.
+                CHANNEL_ID,
                 context.getString(R.string.notification),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {

@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.MedicamentFragmentBinding
-import com.example.asthmaapp.utils.SaveMedicamentDialog
 import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
 import kotlinx.coroutines.launch
 
@@ -32,11 +31,6 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
             val medicamentName = binding.editTextMedicamentName.text.toString()
             val medicamentDose = binding.editTextMedicamentDose.text.toString()
             medicamentViewModel.addMedicamentInfo(medicamentName, medicamentDose)
-            val myDialogFragment = SaveMedicamentDialog(R.string.successful_added)
-            val manager = activity?.supportFragmentManager
-            if (manager != null) {
-                myDialogFragment.show(manager, "myDialog")
-            }
             val hideKeyboard =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             hideKeyboard.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)

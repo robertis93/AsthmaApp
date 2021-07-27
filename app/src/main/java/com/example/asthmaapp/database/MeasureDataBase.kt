@@ -16,7 +16,7 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 )
 abstract class MeasureDataBase : RoomDatabase() {
 
-    abstract fun measurementsPerDayDao(): MeasurementsPerDayDao
+    abstract fun measurementsPerDayDao(): InformationPerDayDao
     abstract fun alarmDao(): AlarmDao
     abstract fun medicamentInfoDao(): MedicamentInfoDao
 

@@ -108,12 +108,11 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
         val now = LocalDateTime.now()
         var alarmTime =
             LocalDateTime.of(LocalDateTime.now().toLocalDate(), LocalTime.of(hour, minute))
-        if (alarmTime.isBefore(now)) // для переноса на завтра, если время уже прошло
+        if (alarmTime.isBefore(now))
             alarmTime = LocalDateTime.of(now.toLocalDate().plusDays(1), LocalTime.of(hour, minute))
         val workRequest = PeriodicWorkRequest.Builder(ScheduleJob::class.java, 1, TimeUnit.DAYS)
-            .setInputData( //передача данных в запрос SheduleJob
+            .setInputData(
                 workDataOf(
-                    //передача по ключу
                     "message" to message.toString(),
                 )
             )

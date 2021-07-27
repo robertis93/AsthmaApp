@@ -8,7 +8,7 @@ import com.example.asthmaapp.model.TakeMedicamentTime
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 
 @Dao
-interface MeasurementsPerDayDao {
+interface InformationPerDayDao {
 
     @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimeStamp")
     fun getAllTakeMedicamentTime(): LiveData<List<TakeMedicamentTime>>

@@ -5,6 +5,7 @@
     <string name="description_app"> С помощью пикфлоуметрии можно осуществлять контроль самостоятельно за своим состоянием</string>
     <string name="select_day">Установить дату</string>
     <string name="time_measure">Время замера</string>
+    <string name="take_measure">Сделайте замер</string>
     <string name="time_take_medicament">Время приема лекарства</string>
     <string name="write_name_medicament">Название лекарства</string>
     <string name="quantity_medicament">Кол- во лекарства</string>
@@ -17,7 +18,7 @@
     <string name="recommend_three_hours">Рекомендуется делать не менее 3 -х замеров в день</string>
     <string name="measure_alarm_frag">Замер пикфлометром</string>
     <string name="take_medicament">Прием лекарства</string>
-    <string name="neem">Название лекарства</string>
+    <string name="name_medicament">Название лекарства</string>
     <string name="example_date">24 января 2020</string>
     <string name="mkg">мкг</string>
     <string name="yes">Да</string>
@@ -25,11 +26,11 @@
     <string name="no">Нет</string>
     <string name="delete_it">Удалить все?</string>
     <string name="are_you_sure_delete_all">Вы действительно хотите все удалить ?</string>
-    <string name="canсel">ОТМЕНА</string>
+    <string name="cansel">ОТМЕНА</string>
     <string name="third_screen_desc">Не пропускайте замеры и вовремя принимайте лекарства и чувствуйте себя хорошо</string>
     <string name="start_app">Начать</string>
-    <string name="third_screen_red">Если ваш замер закрашен красным цветом, то немедленно примите бронхорасширяющий препарат и обратитесь к врачу</string>
-    <string name="third_screen_yellow">Если ваш замер закрашен желтым цветом, то Вам следует увеличить дозировку базового лекарства</string>
+    <string name="third_screen_red">Если ваш замер выделен красным цветом, то немедленно примите бронхорасширяющий препарат и обратитесь к врачу</string>
+    <string name="third_screen_yellow">Если ваш замер выделен желтым цветом, то Вам следует увеличить дозировку базового лекарства</string>
     <string name="diary">Дневник</string>
     <string name="notification">Оповещения</string>
     <string name="medicament">Лекарство</string>
@@ -37,13 +38,12 @@
     <string name="second_screen_desc">Перейдите во вкладку \"Оповещения\" и установите время, чтобы не пропускать замеры и прием лекарства</string>
     <string name="first_screen_descr">Перейдите во вкладку \"Лекарство\" и заполните характеристики принимаемого лекарства</string>
     <string name="third_screen_example_yellow">150 л/мин</string>
-    <string name="thirs_screen_example_red">80 л/мин</string>
+    <string name="third_screen_example_red">80 л/мин</string>
     <string name="list_fragment_add_first_measure">У Вас нет ни одного замера, добавьте хотя бы один</string>
     <string name="add">Добавить</string>
     <string name="quantity_take_medicament">Кол-во принимаемого лекарства</string>
     <string name="add_measure">Добавить замер</string>
     <string name="delete">Удалить</string>
-    <string name="lpermin">л/мин</string>
     <string name="l_per_min">л/мин</string>
     <string name="measure">Замеры</string>
     <string name="notif">Оповещения</string>

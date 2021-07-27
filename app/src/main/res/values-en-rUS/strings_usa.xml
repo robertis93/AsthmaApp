@@ -5,6 +5,7 @@
     <string name="description_app"> With the help of peak flowmetry, you can monitor your condition independently</string>
     <string name="select_day">Select day</string>
     <string name="time_measure"> time measure</string>
+    <string name="take_measure">Take a measure</string>
     <string name="time_take_medicament">time take a medicament</string>
     <string name="write_name_medicament">enter the name of the medicine</string>
     <string name="quantity_medicament">Amount of medication</string>
@@ -17,7 +18,7 @@
     <string name="recommend_three_hours">it is recommended to make at least 3 measurements per day</string>
     <string name="measure_alarm_frag">measuring with a picflometer</string>
     <string name="take_medicament">taking medication</string>
-    <string name="neem">Name of the medication</string>
+    <string name="name_medicament">Name of the medication</string>
     <string name="example_date">January 24, 2020</string>
     <string name="mkg">January 24, 2020</string>
     <string name="yes">yes</string>
@@ -25,7 +26,7 @@
     <string name="no">No</string>
     <string name="delete_it">Delete all?</string>
     <string name="are_you_sure_delete_all">Do you really want to delete everything ?</string>
-    <string name="canсel">cancel</string>
+    <string name="cansel">cancel</string>
     <string name="third_screen_desc">Do not miss the measurements and take your medications on time and feel good</string>
     <string name="start_app">start app</string>
     <string name="third_screen_red">if your measurement is colored red, then you should increase the dosage of the medication you are taking</string>
@@ -37,7 +38,7 @@
     <string name="second_screen_desc">go to the \"alerts\" tab and set the alert time</string>
     <string name="first_screen_descr">go to the \"medicine\" tab and fill in the fields</string>
     <string name="third_screen_example_yellow">150 l / min</string>
-    <string name="thirs_screen_example_red">80 l / min</string>
+    <string name="third_screen_example_red">80 l / min</string>
     <string name="list_fragment_add_first_measure">You don not have any measurements, add at least one</string>
     <string name="add">add</string>
     <string name="quantity_take_medicament">enter the number of medications you are taking</string>

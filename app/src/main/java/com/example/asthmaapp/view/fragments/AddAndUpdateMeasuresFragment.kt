@@ -77,7 +77,9 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         lifecycleScope.launch {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
             binding.editTextNameMedicament.setText(medicamentInfo?.name)
-            binding.editTextMedicamentDose.setText(medicamentInfo?.dose.toString())
+            if (medicamentInfo != null) {
+                binding.editTextMedicamentDose.setText(medicamentInfo?.dose.toString())
+            }
         }
     }
 
@@ -88,7 +90,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             }
 
             override fun onUpdateMeasureClick(measure: Measure, position: Int) {
-                updateTimeMeasure(measure, position)
+                updateMeasure(measure, position)
             }
         }
 
@@ -185,7 +187,6 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
         dialogFragment.btnSave.setOnClickListener {
             alertDialog.dismiss()
-            dialogFragment.timePicker.is24HourView
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
             val measureWithPeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
@@ -228,9 +229,8 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         datePickerDialog.show()
     }
 
-    private fun updateTimeMeasure(currentItem: Measure, position: Int) {
-        val builder =
-            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+    private fun updateMeasure(currentItem: Measure, position: Int) {
+        val builder = AlertDialog.Builder(requireContext())
         val layoutInflater = LayoutInflater.from(requireContext())
         val dialogFragment = LayoutDialogAddFragmentBinding.inflate(layoutInflater)
         dialogFragment.timePicker.is24HourView
@@ -242,7 +242,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
 
         dialogFragment.measureDialog.doAfterTextChanged { it: Editable? ->
             dialogFragment.btnSave.isEnabled =
-                dialogFragment.measureDialog.getText().toString().length > 1
+                dialogFragment.measureDialog.text.toString().length > 1
         }
 
         dialogFragment.timePicker.hour =
@@ -259,15 +259,6 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             val timeMinute = dialogFragment.timePicker.minute
             val measurePeakFlowMeter = dialogFragment.measureDialog.text.toString().toInt()
             viewModel.onUpdateMeasureClick(position, timeHour, timeMinute, measurePeakFlowMeter)
-            /* holder.binding.timeTextView.text = " ${DateUtil.timeCorrectDisplay(timeHour)} : ${
-                 DateUtil.timeCorrectDisplay(
-                     timeMinute
-                 )
-             } "
-             holder.binding.measureText.text = measurePeakFlowMeter.toString()
-             timeAndMeasureList[position].dateTimestamp =
-                 DateUtil.dayTimeStampWithNewTime(currentItem.dateTimestamp, timeHour, timeMinute)
-             timeAndMeasureList[position].value = measurePeakFlowMeter*/
         }
 
         dialogFragment.cancelBtn.setOnClickListener {
@@ -276,8 +267,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
     }
 
     private fun updateTakeMedicamentTime(currentItem: TakeMedicamentTimeEntity, position: Int) {
-        val builder =
-            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        val builder = AlertDialog.Builder(requireContext())
         val layoutInflater = LayoutInflater.from(requireContext())
         val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
         dialogFragment.timePicker.is24HourView
@@ -290,7 +280,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         dialogFragment.timePicker.hour =
             DateUtil.timestampToDisplayHour(currentItem.dateTimeStamp).toInt()
         dialogFragment.timePicker.minute =
-            DateUtil.timestampToDisplayTime(currentItem.dateTimeStamp)
+            DateUtil.timestampToDisplayMinute(currentItem.dateTimeStamp)
                 .toInt()
 
         dialogFragment.btnSave.setOnClickListener {

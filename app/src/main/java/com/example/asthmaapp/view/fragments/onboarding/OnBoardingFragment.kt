@@ -31,7 +31,6 @@ class OnBoardingFragment : BaseFragment<FragmentViewPagerBinding>() {
         )
         binding.viewPager.adapter = adapter
         springDotsIndicator.setViewPager2(viewPager)
-        // Страницы, выходящие за пределы этого ограничения, будут удалены из иерархии представлений
         binding.viewPager.offscreenPageLimit = 1
     }
 }

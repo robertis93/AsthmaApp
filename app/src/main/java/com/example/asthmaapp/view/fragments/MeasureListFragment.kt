@@ -56,7 +56,6 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
                 timeMeasure -> measureListAdapter.addMeasures(timeMeasure)
         }
 
-
         binding.addMeasureButton.setOnClickListener {
             val action = MeasureListFragmentDirections.actionListFragmentToAddFragment(null)
             findNavController().navigate(action)

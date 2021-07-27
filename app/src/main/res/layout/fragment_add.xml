@@ -136,7 +136,7 @@
                 android:id="@+id/editTextNameMedicament"
                 style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

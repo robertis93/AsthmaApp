@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.onboarding.screens.ThirdScreen">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/happyImageView"
         android:layout_width="198dp"
@@ -124,7 +122,7 @@
         android:background="@drawable/corner_rounded_red"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="@string/thirs_screen_example_red"
+        android:text="@string/third_screen_example_red"
         android:textColor="@color/black"
         app:cornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"

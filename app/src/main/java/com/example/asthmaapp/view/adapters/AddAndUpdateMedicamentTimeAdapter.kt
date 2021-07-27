@@ -38,7 +38,7 @@ class AddAndUpdateMedicamentTimeAdapter(
             timeTextView.text =
                 timestampToDisplayTime(currentItem.dateTimeStamp)
             deleteImage.setOnClickListener {
-                onclickListener.onUpdateTakeMedicamentTime(currentItem, position)
+                onclickListener.onDeleteTakeMedicamentTime(measuresMedList[position])
             }
             editImage.visibility = if (isInUpdateMode)
                 View.VISIBLE
