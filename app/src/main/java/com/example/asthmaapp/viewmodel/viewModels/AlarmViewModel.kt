@@ -68,4 +68,16 @@ class AlarmViewModel(application: Application) : AndroidViewModel(application) {
             repository.deleteAlarm(alarm)
         }
     }
+
+    fun checkMeasureAlarm(hour: Int, minute: Int): Boolean? {
+        return alarmMeasureListLiveData.value?.map { alarm -> alarm.hour }
+            ?.contains(hour) == true && alarmMeasureListLiveData.value?.map { alarm -> alarm.minute }
+            ?.contains(minute) == true
+    }
+
+    fun checkMedicamentAlarm(hour: Int, minute: Int): Boolean? {
+        return alarmMedicamentListLiveData.value?.map { alarm -> alarm.hour }
+            ?.contains(hour) == true && alarmMedicamentListLiveData.value?.map { alarm -> alarm.minute }
+            ?.contains(minute) == true
+    }
 }

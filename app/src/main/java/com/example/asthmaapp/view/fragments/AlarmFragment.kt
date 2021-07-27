@@ -86,7 +86,16 @@ class AlarmFragment : BaseFragment<AlarmFragmentBinding>() {
             val hourAlarm = timePicker.hour
             val minuteAlarm = timePicker.minute
             val id = setAlarm(hourAlarm, minuteAlarm, alarmType)
-            alarmViewModel.addAlarm(id, hour, minute, alarmType)
+            if (alarmType == TypeAlarm.MEASURE) {
+                if (alarmViewModel.checkMeasureAlarm(hour, minute) == false) {
+                    alarmViewModel.addAlarm(id, hour, minute, alarmType)
+                }
+            }
+            else {
+                if (alarmViewModel.checkMedicamentAlarm(hour, minute) == false) {
+                    alarmViewModel.addAlarm(id, hour, minute, alarmType)
+                }
+            }
         }
         showTimePicker(timeSetListener, calendar)
     }
