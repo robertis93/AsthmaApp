@@ -58,11 +58,13 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
 
         binding.addMeasureButton.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+            val action = MeasureListFragmentDirections.actionListFragmentToAddFragment(null)
+            findNavController().navigate(action)
         }
 
         binding.addFloatingActionButton.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+            val action = MeasureListFragmentDirections.actionListFragmentToAddFragment(null)
+            findNavController().navigate(action)
         }
 
         binding.deleteFloatingActionButton.setOnClickListener {

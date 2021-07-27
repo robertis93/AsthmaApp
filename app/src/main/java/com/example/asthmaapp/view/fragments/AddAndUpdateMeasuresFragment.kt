@@ -31,12 +31,11 @@ import kotlinx.coroutines.withContext
 import java.util.*
 
 class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
-
-    val args: AddAndUpdateMeasuresFragmentArgs by navArgs()
+    private val args by navArgs<AddAndUpdateMeasuresFragmentArgs>()
     private val viewModel: AddAndUpdateMeasuresViewModel by viewModels {
-        val mode = if (args.currentItemDay != null)
+        val mode = if (args.currentItemDay != null) {
             AddAndUpdateMeasuresViewModel.Mode.Update(args.currentItemDay!!)
-        else
+        } else
             AddAndUpdateMeasuresViewModel.Mode.Add
         AddAndUpdateMeasureViewModelFactory(requireActivity().application, mode)
     }
@@ -106,6 +105,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
                     updateTakeMedicamentTime(takeMedicamentTimeEntity, position)
                 }
             }
+
         viewModel.measureListLiveData.observe(viewLifecycleOwner) { measureList ->
             val updateMeasureMode = args.currentItemDay != null
             val addMeasureAdapter =

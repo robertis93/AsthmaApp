@@ -5,12 +5,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtil {
-    @SuppressLint("SimpleDateFormat", "WeekBasedYear")
-    private val dateFormat = SimpleDateFormat("dd MMM YYYY")
+    @SuppressLint("SimpleDateFormat")
+    private val dateFormat = SimpleDateFormat("dd MMM yyyy")
+
     @SuppressLint("SimpleDateFormat")
     private val timeFormat = SimpleDateFormat("HH : mm")
+
     @SuppressLint("SimpleDateFormat")
     private val justHour = SimpleDateFormat("HH")
+
     @SuppressLint("SimpleDateFormat")
     private val justMinute = SimpleDateFormat("mm")
 

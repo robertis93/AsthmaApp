@@ -44,7 +44,7 @@ class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Ada
             dayCurrentItem.date
         holder.itemView.setOnClickListener {
             val action =
-                MeasureListFragmentDirections.actionListFragmentToUpdateFragment(dayCurrentItem)
+                MeasureListFragmentDirections.actionListFragmentToAddFragment(dayCurrentItem)
             holder.binding.root.findNavController().navigate(action)
         }
 
@@ -52,9 +52,7 @@ class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Ada
             object : MeasureAdapter.OnClickListener {
                 override fun actionClick() {
                     val action =
-                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
-                            dayCurrentItem
-                        )
+                        MeasureListFragmentDirections.actionListFragmentToAddFragment(dayCurrentItem)
                     holder.binding.root.findNavController().navigate(action)
                 }
             }
@@ -62,7 +60,7 @@ class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Ada
             object : ListTakeMedicamentTimeAdapter.OnClickListener {
                 override fun actionClick() {
                     val action =
-                        MeasureListFragmentDirections.actionListFragmentToUpdateFragment(
+                        MeasureListFragmentDirections.actionListFragmentToAddFragment(
                             dayCurrentItem
                         )
                     holder.binding.root.findNavController().navigate(action)
