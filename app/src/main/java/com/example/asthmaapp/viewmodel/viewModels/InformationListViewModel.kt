@@ -9,28 +9,28 @@ import com.example.asthmaapp.R
 import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
-import com.example.asthmaapp.viewmodel.repository.MeasureRepository
+import com.example.asthmaapp.viewmodel.repository.InformationPerDayRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class InformationListViewModel(application: Application) : AndroidViewModel(application) {
-    private val measureRepository: MeasureRepository
+    private val informationPerDayRepository: InformationPerDayRepository
 
     init {
         val measurementsPerDayDao = MeasureDataBase.getDataBase(application).measurementsPerDayDao()
-        measureRepository =
-            MeasureRepository(measurementsPerDayDao)
+        informationPerDayRepository =
+            InformationPerDayRepository(measurementsPerDayDao)
     }
 
     val getAllMeasures: LiveData<List<Measure>> =
-        measureRepository.getAllMeasures
+        informationPerDayRepository.getAllMeasures
 
     val takeMedicamentTimeGroupByDate: MutableLiveData<List<MeasureWithTakeMedicamentTime>> =
         MutableLiveData()
 
     fun getAllMeasuresAndTakeMedicamentTime() {
         viewModelScope.launch(Dispatchers.IO) {
-            takeMedicamentTimeGroupByDate.postValue(measureRepository.getMeasureAndTakeMedicamentTimeGroupByDate())
+            takeMedicamentTimeGroupByDate.postValue(informationPerDayRepository.getMeasureAndTakeMedicamentTimeGroupByDate())
         }
     }
 
@@ -50,8 +50,8 @@ class InformationListViewModel(application: Application) : AndroidViewModel(appl
 
     fun deleteAllMeasuresWithMedicaments() {
         viewModelScope.launch(Dispatchers.IO) {
-            measureRepository.deleteAllMeasure()
-            measureRepository.deleteAllTimeTakeMedicament()
+            informationPerDayRepository.deleteAllMeasure()
+            informationPerDayRepository.deleteAllTimeTakeMedicament()
             getAllMeasuresAndTakeMedicamentTime()
         }
     }

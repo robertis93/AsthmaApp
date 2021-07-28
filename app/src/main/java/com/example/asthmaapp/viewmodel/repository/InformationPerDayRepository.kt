@@ -7,7 +7,7 @@ import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 
 typealias TakeMedicamentTimeGroupByDate = Map<String, List<TakeMedicamentTime>>
 
-class MeasureRepository(private val informationPerDayDao: InformationPerDayDao) {
+class InformationPerDayRepository(private val informationPerDayDao: InformationPerDayDao) {
 
     val getAllMeasures: LiveData<List<Measure>> =
         informationPerDayDao.readAllMeasure()
