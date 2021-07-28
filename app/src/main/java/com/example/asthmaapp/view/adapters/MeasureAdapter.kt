@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.InnerItemBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
-import com.example.asthmaapp.viewmodel.viewModels.MeasureListViewModel
+import com.example.asthmaapp.viewmodel.viewModels.InformationListViewModel
 
 class MeasureAdapter(
-    var measures: List<Measure>,
-    val viewModel: MeasureListViewModel,
-    var onClickListener: OnClickListener
+    private var measures: List<Measure>,
+    val viewModel: InformationListViewModel,
+    private var onClickListener: OnClickListener
 ) :
     RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() {
 

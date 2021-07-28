@@ -23,10 +23,10 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
-        val dateTimeStamp = dateCalendar.time.time
-        val currentTime = timestampToDisplayTime(dateTimeStamp)
+        val dateTimestamp = dateCalendar.time.time
+        val currentTime = timestampToDisplayTime(dateTimestamp)
 
-        binding.dateTextView.text = timestampToDisplayDate(dateTimeStamp)
+        binding.dateTextView.text = timestampToDisplayDate(dateTimestamp)
         binding.timeAlarmText.text = currentTime
 
         binding.saveBtn.setOnClickListener {
@@ -34,7 +34,7 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
             binding.addMeasureText.requestFocus()
             val measurePeakFlowMeter = binding.addMeasureText.text.toString().toInt()
 
-           viewModel.addMeasure(dateTimeStamp, measurePeakFlowMeter)
+           viewModel.addMeasure(dateTimestamp, measurePeakFlowMeter)
             this.finishAffinity()
         }
     }

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.onboarding.screens.FirstScreen">
 
-
     <ImageView
         android:id="@+id/inhaleImageView"
         android:layout_width="198dp"
@@ -44,5 +43,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,7 +78,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
             binding.editTextNameMedicament.setText(medicamentInfo?.name)
             if (medicamentInfo != null) {
-                binding.editTextMedicamentDose.setText(medicamentInfo?.dose.toString())
+                binding.editTextMedicamentDose.setText(medicamentInfo.dose.toString())
             }
         }
     }
@@ -278,9 +278,9 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         dialogFragment.timePicker.setIs24HourView(true)
 
         dialogFragment.timePicker.hour =
-            DateUtil.timestampToDisplayHour(currentItem.dateTimeStamp).toInt()
+            DateUtil.timestampToDisplayHour(currentItem.dateTimestamp).toInt()
         dialogFragment.timePicker.minute =
-            DateUtil.timestampToDisplayMinute(currentItem.dateTimeStamp)
+            DateUtil.timestampToDisplayMinute(currentItem.dateTimestamp)
                 .toInt()
 
         dialogFragment.btnSave.setOnClickListener {

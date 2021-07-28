@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asthmaapp.databinding.CustomRowBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
-import com.example.asthmaapp.view.fragments.MeasureListFragmentDirections
-import com.example.asthmaapp.viewmodel.viewModels.MeasureListViewModel
+import com.example.asthmaapp.view.fragments.InformationListFragmentDirections
+import com.example.asthmaapp.viewmodel.viewModels.InformationListViewModel
 
-class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHolder>() {
+class MeasureListAdapter(val viewModel: InformationListViewModel) : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHolder>() {
 
     private var dayMeasureAndMedicamentList = listOf<MeasureWithTakeMedicamentTime>()
     private var listMeasure = emptyList<Measure>()
@@ -44,7 +44,7 @@ class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Ada
             dayCurrentItem.date
         holder.itemView.setOnClickListener {
             val action =
-                MeasureListFragmentDirections.actionListFragmentToAddFragment(dayCurrentItem)
+                InformationListFragmentDirections.actionListFragmentToAddFragment(dayCurrentItem)
             holder.binding.root.findNavController().navigate(action)
         }
 
@@ -52,7 +52,7 @@ class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Ada
             object : MeasureAdapter.OnClickListener {
                 override fun actionClick() {
                     val action =
-                        MeasureListFragmentDirections.actionListFragmentToAddFragment(dayCurrentItem)
+                        InformationListFragmentDirections.actionListFragmentToAddFragment(dayCurrentItem)
                     holder.binding.root.findNavController().navigate(action)
                 }
             }
@@ -60,7 +60,7 @@ class MeasureListAdapter(val viewModel: MeasureListViewModel) : RecyclerView.Ada
             object : ListTakeMedicamentTimeAdapter.OnClickListener {
                 override fun actionClick() {
                     val action =
-                        MeasureListFragmentDirections.actionListFragmentToAddFragment(
+                        InformationListFragmentDirections.actionListFragmentToAddFragment(
                             dayCurrentItem
                         )
                     holder.binding.root.findNavController().navigate(action)

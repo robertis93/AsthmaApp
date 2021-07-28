@@ -12,7 +12,7 @@ import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 class AddAndUpdateMeasureAdapter(
     val measuresList: List<Measure>,
     val listener: DeleteListener,
-    val isInUpdateMode: Boolean = false
+    private val isInUpdateMode: Boolean = false
 ) :
     RecyclerView.Adapter<AddAndUpdateMeasureAdapter.AddMeasureViewHolder>() {
 

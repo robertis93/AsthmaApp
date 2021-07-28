@@ -10,7 +10,7 @@ import com.example.asthmaapp.utils.DateUtil.timeCorrectDisplay
 
 class MeasureAlarmAdapter(
     var alarmsList: List<Alarm>,
-    var onClickAlarmListener: OnAlarmClickListener
+    private var onClickAlarmListener: OnAlarmClickListener
 ) :
     RecyclerView.Adapter<MeasureAlarmAdapter.AlarmViewHolder>() {
 

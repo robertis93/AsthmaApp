@@ -9,8 +9,8 @@ import com.example.asthmaapp.model.Alarm
 import com.example.asthmaapp.utils.DateUtil.timeCorrectDisplay
 
 class AlarmMedicamentAdapter(
-    var alarmMedicamentList: List<Alarm>,
-    var onClickAlarmDrugsListener: OnAlarmDrugsClickListener
+    private var alarmMedicamentList: List<Alarm>,
+    private var onClickAlarmDrugsListener: OnAlarmDrugsClickListener
 ) :
     RecyclerView.Adapter<AlarmMedicamentAdapter.AlarmViewHolder>() {
 

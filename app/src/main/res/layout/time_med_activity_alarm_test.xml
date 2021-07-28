@@ -53,6 +53,50 @@
             android:text="08:00"
             android:textSize="24sp" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameMedicamentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
+            android:background="@color/black_gray"
+            android:hint="@string/write_name_medicament"
+            android:visibility="gone"
+            app:boxBackgroundColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNameMedicament"
+                style="@style/Text.SemiBold18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextMedicalDoseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
+            android:hint="@string/quantity_take_medicament"
+            android:visibility="gone"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:suffixText="@string/mkg">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextMedicamentDose"
+                style="@style/Text.SemiBold18"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:visibility="gone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveBtn"
             style="@style/Button.Blue"
@@ -65,7 +109,6 @@
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
-
     </LinearLayout>
 </ScrollView>
 

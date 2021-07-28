@@ -42,6 +42,5 @@
             android:text="@string/ok"
             android:textAllCaps="false"
             app:cornerRadius="16dp" />
-
     </LinearLayout>
 </LinearLayout>

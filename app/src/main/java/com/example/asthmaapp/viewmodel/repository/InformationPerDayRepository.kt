@@ -12,8 +12,8 @@ class MeasureRepository(private val informationPerDayDao: InformationPerDayDao) 
     val getAllMeasures: LiveData<List<Measure>> =
         informationPerDayDao.readAllMeasure()
 
-    suspend fun getAllMedicamentInfoSync(): List<MedicamentInfo> =
-        informationPerDayDao.readAllMedicamentInfoSync()
+    suspend fun getListMedicamentInfo(): List<MedicamentInfo> =
+        informationPerDayDao.getListMedicamentInfo()
 
     fun getMeasureAndTakeMedicamentTimeGroupByDate(): List<MeasureWithTakeMedicamentTime> {
         val measureGroup = informationPerDayDao.getListMeasure()
@@ -23,7 +23,7 @@ class MeasureRepository(private val informationPerDayDao: InformationPerDayDao) 
 
         val takeMedicamentTimeGroup = informationPerDayDao.getListTakeMedicamentTime()
             .groupBy {
-                timestampToDisplayDate(it.takeMedicamentTimeEntity.dateTimeStamp)
+                timestampToDisplayDate(it.takeMedicamentTimeEntity.dateTimestamp)
             }
 
         return (measureGroup.keys + takeMedicamentTimeGroup.keys).map { date ->
@@ -39,11 +39,7 @@ class MeasureRepository(private val informationPerDayDao: InformationPerDayDao) 
     }
 
     suspend fun deleteAllTimeTakeMedicament() {
-        informationPerDayDao.deleteAllTimeTakeMedicament()
-    }
-
-    suspend fun updateMeasure(measure: Measure) {
-        informationPerDayDao.updateMeasure(measure)
+        informationPerDayDao.deleteAllTakeMedicamentTime()
     }
 
     suspend fun deleteMeasure(measure: Measure) {
@@ -58,15 +54,15 @@ class MeasureRepository(private val informationPerDayDao: InformationPerDayDao) 
         informationPerDayDao.addTakeMedicamentTime(takeMedicamentTimeEntity)
     }
 
-    suspend fun updateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-        informationPerDayDao.updateTakeMedicamentTime(takeMedicamentTimeEntity)
-    }
-
     suspend fun deleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
         informationPerDayDao.deleteTakeMedicamentTime(takeMedicamentTimeEntity)
     }
 
     suspend fun addMedicamentInfo(medicamentInfo: MedicamentInfo) {
         informationPerDayDao.addMedicamentInfo(medicamentInfo)
+    }
+
+    suspend fun updateMedicament(medicamentInfo: MedicamentInfo) {
+        informationPerDayDao.updateMedicamentInfo(medicamentInfo)
     }
 }

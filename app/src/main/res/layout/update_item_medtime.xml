@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="22"
             android:padding="4dp"
+            android:text="22"
             android:textSize="18sp" />
 
         <ImageView
@@ -46,5 +46,4 @@
             android:textSize="18sp"
             app:srcCompat="@drawable/delete_24" />
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

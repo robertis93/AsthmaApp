@@ -13,7 +13,7 @@ import com.example.asthmaapp.viewmodel.repository.MeasureRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MeasureListViewModel(application: Application) : AndroidViewModel(application) {
+class InformationListViewModel(application: Application) : AndroidViewModel(application) {
     private val measureRepository: MeasureRepository
 
     init {

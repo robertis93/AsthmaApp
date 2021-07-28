@@ -16,11 +16,11 @@ data class Measure(
 ) : Parcelable
 
 @Parcelize
-@Entity(tableName = "time_take_medicament_table")
+@Entity(tableName = "take_medicament_time_table")
 data class TakeMedicamentTimeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    var dateTimeStamp: Long,
+    var dateTimestamp: Long,
     @ColumnInfo(name = "medicamentInfo_id")
     val medicamentInfoId: String
 ) : Parcelable

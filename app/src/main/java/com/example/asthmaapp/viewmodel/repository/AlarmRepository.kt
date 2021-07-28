@@ -7,7 +7,7 @@ import com.example.asthmaapp.view.fragments.TypeAlarm
 class AlarmRepository(private val alarmDao: AlarmDao) {
 
     suspend fun getAllAlarms(typeAlarm: TypeAlarm): List<Alarm>? {
-        return alarmDao.getAllAlarm(typeAlarm)
+        return alarmDao.getListAlarm(typeAlarm)
     }
 
     suspend fun addAlarm(alarm: Alarm) {

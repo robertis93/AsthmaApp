@@ -59,7 +59,7 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
     }
 
     suspend fun getInitMedicamentInfo(): MedicamentInfo? {
-        val medicament = measureRepository.getAllMedicamentInfoSync()
+        val medicament = measureRepository.getListMedicamentInfo()
         return if (medicament.isNotEmpty()) {
             medicament.last()
         } else {

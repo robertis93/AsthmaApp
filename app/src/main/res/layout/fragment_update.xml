@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="4dp"
-            android:background="@color/light_blue_med"></View>
+            android:background="@color/light_blue_med" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -61,10 +61,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/timeMeasureTextView"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMeasure"
@@ -72,7 +69,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp" />
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -108,14 +104,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="8dp" />
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameMedicalLayout"
@@ -134,7 +128,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextMedicalDozeLayout"
@@ -172,7 +165,5 @@
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
-
-
     </LinearLayout>
 </ScrollView>

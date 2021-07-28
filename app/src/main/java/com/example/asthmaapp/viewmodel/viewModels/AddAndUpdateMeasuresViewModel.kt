@@ -51,7 +51,7 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
     suspend fun getInitMedicamentInfo(): MedicamentInfo? {
         return when (mode) {
             is Mode.Add -> {
-                val medicament = measureRepository.getAllMedicamentInfoSync()
+                val medicament = measureRepository.getListMedicamentInfo()
                 if (medicament.isNotEmpty())
                     medicament.last()
                 else
@@ -82,7 +82,12 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
             medicamentName,
             medicamentDose.toIntOrNull() ?: 0
         )
-        measureRepository.addMedicamentInfo(medicamentInfo)
+        if (mode is Mode.Update) {
+            measureRepository.updateMedicament(medicamentInfo)
+        }
+        else {
+            measureRepository.addMedicamentInfo(medicamentInfo)
+        }
         for (measure in measureListLiveData.value ?: emptyList()) {
             measureRepository.addMeasure(measure)
         }
@@ -96,13 +101,9 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
             DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!, timeHour, timeMinute)
         val measure =
             Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
-        if (measureListLiveData.value?.map { measureDayTimeStamp}
-                ?.contains(measureDayTimeStamp) == true)
-        else {
             val measureMutableList = measureListLiveData.value?.toMutableList() ?: mutableListOf()
             measureMutableList.add(measure)
             measureListLiveData.value = measureMutableList
-        }
     }
 
     fun onAddTakeMedicamentTimeClick(timeHour: Int, timeMinute: Int) {
@@ -114,14 +115,10 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
                 medicamentDayTimeStamp,
                 dateTimeStampLiveData.value.toString()
             )
-        if (takeMedicamentTimeListLiveData.value?.map { medicamentDayTimeStamp}
-                ?.contains(medicamentDayTimeStamp) == true)
-        else {
             val takeMedicamentTimeMutableList =
                 takeMedicamentTimeListLiveData.value?.toMutableList() ?: mutableListOf()
             takeMedicamentTimeMutableList.add(medicamentTime)
             takeMedicamentTimeListLiveData.value = takeMedicamentTimeMutableList
-        }
     }
 
     fun onUpdateTakeMedicamentTimeClick(
@@ -139,7 +136,7 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
             )
         val takeMedicamentTimeMutableList =
             takeMedicamentTimeListLiveData.value?.toMutableList() ?: mutableListOf()
-        takeMedicamentTimeMutableList[index].dateTimeStamp = medicamentTime.dateTimeStamp
+        takeMedicamentTimeMutableList[index].dateTimestamp = medicamentTime.dateTimestamp
         takeMedicamentTimeListLiveData.value = takeMedicamentTimeMutableList
     }
 

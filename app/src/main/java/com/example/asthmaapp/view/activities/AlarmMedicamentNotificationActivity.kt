@@ -2,7 +2,9 @@ package com.example.asthmaapp.view.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
@@ -39,8 +41,21 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
-            nameMedicament = medicamentInfo?.name.toString()
-            doseMedicament = medicamentInfo?.dose.toString()
+            if (medicamentInfo != null) {
+                nameMedicament = medicamentInfo?.name.toString()
+                doseMedicament = medicamentInfo?.dose.toString()
+            } else {
+                binding.editTextMedicalDoseLayout.visibility = View.VISIBLE
+                binding.editTextMedicamentDose.visibility = View.VISIBLE
+                binding.editTextNameMedicament.visibility = View.VISIBLE
+                binding.nameMedicamentLayout.visibility = View.VISIBLE
+                binding.editTextNameMedicament.doAfterTextChanged {
+                    nameMedicament = it.toString()
+                }
+                binding.editTextMedicamentDose.doAfterTextChanged {
+                    doseMedicament = it.toString()
+                }
+            }
         }
 
         binding.saveBtn.setOnClickListener {

@@ -89,8 +89,6 @@
             app:backgroundTint="@color/blue_med"
             app:boxBackgroundColor="@color/white"
             app:cornerRadius="16dp" />
-
-
     </LinearLayout>
 </ScrollView>
 

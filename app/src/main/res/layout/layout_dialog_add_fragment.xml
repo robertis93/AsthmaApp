@@ -7,7 +7,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
@@ -17,8 +16,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeTextView"
         tools:ignore="UnknownId" />
-
-    L
 
     <EditText
         android:id="@+id/measureDialog"
@@ -64,7 +61,5 @@
             android:text="@string/ok"
             android:textAllCaps="false"
             app:cornerRadius="16dp" />
-
-
     </LinearLayout>
 </LinearLayout>

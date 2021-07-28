@@ -11,7 +11,7 @@ import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class ListTakeMedicamentTimeAdapter(
     private var timesTimeTakeMedicament: List<TakeMedicamentTime>,
-    var onClickListener: OnClickListener
+    private var onClickListener: OnClickListener
 ) :
     RecyclerView.Adapter<ListTakeMedicamentTimeAdapter.TimeTakeMedicamentViewHolder>() {
 
@@ -31,7 +31,7 @@ class ListTakeMedicamentTimeAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TimeTakeMedicamentViewHolder, position: Int) {
         val currentItem = timesTimeTakeMedicament[position]
-        holder.binding.timeTextView.text = timestampToDisplayTime(currentItem.takeMedicamentTimeEntity.dateTimeStamp)
+        holder.binding.timeTextView.text = timestampToDisplayTime(currentItem.takeMedicamentTimeEntity.dateTimestamp)
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()
         }

@@ -10,10 +10,10 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 @Dao
 interface InformationPerDayDao {
 
-    @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimeStamp")
+    @Query("SELECT * FROM take_medicament_time_table ORDER BY dateTimeStamp")
     fun getAllTakeMedicamentTime(): LiveData<List<TakeMedicamentTime>>
 
-    @Query("SELECT * FROM time_take_medicament_table ORDER BY dateTimeStamp")
+    @Query("SELECT * FROM take_medicament_time_table ORDER BY dateTimeStamp")
     fun getListTakeMedicamentTime(): List<TakeMedicamentTime>
 
     @Query("SELECT * FROM measure_table ORDER BY dateTimestamp")
@@ -22,14 +22,11 @@ interface InformationPerDayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeasure(measure: Measure)
 
-    @Query("DELETE FROM time_take_medicament_table")
-    suspend fun deleteAllTimeTakeMedicament()
+    @Query("DELETE FROM take_medicament_time_table")
+    suspend fun deleteAllTakeMedicamentTime()
 
     @Query("SELECT * FROM measure_table")
     fun readAllMeasure(): LiveData<List<Measure>>
-
-    @Query("SELECT * FROM measure_table ORDER BY dateTimestamp")
-    fun getAllMeasure(): List<Measure>
 
     @Update
     suspend fun updateMeasure(measure: Measure)
@@ -40,9 +37,6 @@ interface InformationPerDayDao {
     @Query("DELETE FROM measure_table")
     suspend fun deleteAllMeasure()
 
-    @Query("SELECT * FROM time_take_medicament_table")
-    fun readAllTakeMedicamentTime(): LiveData<List<TakeMedicamentTimeEntity>>
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
 
@@ -52,7 +46,7 @@ interface InformationPerDayDao {
     @Delete
     suspend fun deleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
 
-    @Query("DELETE FROM time_take_medicament_table")
+    @Query("DELETE FROM take_medicament_time_table")
     suspend fun deleteTakeMedicamentTime()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -68,9 +62,6 @@ interface InformationPerDayDao {
     suspend fun deleteAllMedicamentInfo()
 
     @Query("SELECT * FROM medicament_info_table")
-    fun readAllMedicamentInfo(): LiveData<List<MedicamentInfo>>
-
-    @Query("SELECT * FROM medicament_info_table")
-    suspend fun readAllMedicamentInfoSync(): List<MedicamentInfo>
+    suspend fun getListMedicamentInfo(): List<MedicamentInfo>
 }
 

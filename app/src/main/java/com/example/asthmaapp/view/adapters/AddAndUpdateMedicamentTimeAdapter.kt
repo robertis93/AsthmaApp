@@ -10,9 +10,9 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class AddAndUpdateMedicamentTimeAdapter(
-    var measuresMedList: List<TakeMedicamentTimeEntity>,
-    val onclickListener: ClickListener,
-    val isInUpdateMode: Boolean = false
+    private var measuresMedList: List<TakeMedicamentTimeEntity>,
+    private val onclickListener: ClickListener,
+    private val isInUpdateMode: Boolean = false
 ) :
     RecyclerView.Adapter<AddAndUpdateMedicamentTimeAdapter.AddMedicamentViewHolder>() {
 
@@ -36,7 +36,7 @@ class AddAndUpdateMedicamentTimeAdapter(
         val currentItem = measuresMedList[position]
         with(holder.binding) {
             timeTextView.text =
-                timestampToDisplayTime(currentItem.dateTimeStamp)
+                timestampToDisplayTime(currentItem.dateTimestamp)
             deleteImage.setOnClickListener {
                 onclickListener.onDeleteTakeMedicamentTime(measuresMedList[position])
             }

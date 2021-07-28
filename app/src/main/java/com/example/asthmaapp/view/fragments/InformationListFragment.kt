@@ -11,30 +11,30 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
-import com.example.asthmaapp.databinding.FragmentMeasureListBinding
+import com.example.asthmaapp.databinding.FragmentInformationListBinding
 import com.example.asthmaapp.view.adapters.MeasureListAdapter
-import com.example.asthmaapp.viewmodel.viewModels.MeasureListViewModel
+import com.example.asthmaapp.viewmodel.viewModels.InformationListViewModel
 
-class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
+class InformationListFragment : BaseFragment<FragmentInformationListBinding>() {
 
-    private val measureListViewModel: MeasureListViewModel by lazy {
-        ViewModelProvider(this).get(MeasureListViewModel::class.java)
+    private val informationListViewModel: InformationListViewModel by lazy {
+        ViewModelProvider(this).get(InformationListViewModel::class.java)
     }
 
-    override fun inflate(inflater: LayoutInflater): FragmentMeasureListBinding =
-        FragmentMeasureListBinding.inflate(inflater)
+    override fun inflate(inflater: LayoutInflater): FragmentInformationListBinding =
+        FragmentInformationListBinding.inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val measureListAdapter = MeasureListAdapter(measureListViewModel)
+        val measureListAdapter = MeasureListAdapter(informationListViewModel)
         val recyclerView = binding.measureListRecyclerView
         recyclerView.adapter = measureListAdapter
         recyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        measureListViewModel.takeMedicamentTimeGroupByDate.observe(
+        informationListViewModel.takeMedicamentTimeGroupByDate.observe(
             viewLifecycleOwner,
             Observer { measure ->
                 measureListAdapter.setData(measure)
@@ -52,17 +52,17 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
             }
         )
 
-        measureListViewModel.getAllMeasures.observe(viewLifecycleOwner) {
+        informationListViewModel.getAllMeasures.observe(viewLifecycleOwner) {
                 timeMeasure -> measureListAdapter.addMeasures(timeMeasure)
         }
 
         binding.addMeasureButton.setOnClickListener {
-            val action = MeasureListFragmentDirections.actionListFragmentToAddFragment(null)
+            val action = InformationListFragmentDirections.actionListFragmentToAddFragment(null)
             findNavController().navigate(action)
         }
 
         binding.addFloatingActionButton.setOnClickListener {
-            val action = MeasureListFragmentDirections.actionListFragmentToAddFragment(null)
+            val action = InformationListFragmentDirections.actionListFragmentToAddFragment(null)
             findNavController().navigate(action)
         }
 
@@ -73,13 +73,13 @@ class MeasureListFragment : BaseFragment<FragmentMeasureListBinding>() {
 
     override fun onResume() {
         super.onResume()
-        measureListViewModel.getAllMeasuresAndTakeMedicamentTime()
+        informationListViewModel.getAllMeasuresAndTakeMedicamentTime()
     }
 
     private fun deleteAllMeasure() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(R.string.yes) { _, _ ->
-            measureListViewModel.deleteAllMeasuresWithMedicaments()
+            informationListViewModel.deleteAllMeasuresWithMedicaments()
 
             Toast.makeText(
                 requireContext(),

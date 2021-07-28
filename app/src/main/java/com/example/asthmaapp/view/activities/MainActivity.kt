@@ -57,9 +57,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val actionBar: ActionBar? = actionBar
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(false) // Disable the button
-            actionBar.setDisplayHomeAsUpEnabled(false) // Remove the left caret
-            actionBar.setDisplayShowHomeEnabled(false) // Remove the icon
+            actionBar.setHomeButtonEnabled(false)
+            actionBar.setDisplayHomeAsUpEnabled(false)
+            actionBar.setDisplayShowHomeEnabled(false)
         }
         return super.onCreateOptionsMenu(menu)
     }

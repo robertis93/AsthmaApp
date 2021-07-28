@@ -21,6 +21,4 @@ class SecondScreen : BaseFragment<FragmentSecondScreenBinding>() {
             viewPager?.currentItem = 2
         }
     }
-
-
 }
