@@ -32,8 +32,8 @@ class MeasureAdapter(
             timestampToDisplayTime(currentItem.dateTimestamp)
         val color = viewModel.getColorForMeasure(currentItem)
         if (color != null)
-            holder.binding.measureText.setBackgroundColor(holder.itemView.context.getColor(color))
-        holder.binding.measureText.text = currentItem.value.toString()
+            holder.binding.measuresTextView.setBackgroundColor(holder.itemView.context.getColor(color))
+        holder.binding.measuresTextView.text = currentItem.value.toString()
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()
         }

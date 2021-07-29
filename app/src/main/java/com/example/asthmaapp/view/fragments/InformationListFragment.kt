@@ -39,15 +39,15 @@ class InformationListFragment : BaseFragment<FragmentInformationListBinding>() {
             Observer { measure ->
                 measureListAdapter.setData(measure)
                 if (measureListAdapter.itemCount == 0) {
-                    binding.addMeasureButton.visibility = View.VISIBLE
+                    binding.addMeasureBtn.visibility = View.VISIBLE
                     binding.listFragmentAddMeasure.visibility = View.VISIBLE
-                    binding.addFloatingActionButton.visibility = View.GONE
-                    binding.deleteFloatingActionButton.visibility = View.GONE
+                    binding.addFloatingActionBtn.visibility = View.GONE
+                    binding.deleteFloatingActionBtn.visibility = View.GONE
                 } else if (measureListAdapter.itemCount > 0) {
-                    binding.addMeasureButton.visibility = View.GONE
+                    binding.addMeasureBtn.visibility = View.GONE
                     binding.listFragmentAddMeasure.visibility = View.GONE
-                    binding.addFloatingActionButton.visibility = View.VISIBLE
-                    binding.deleteFloatingActionButton.visibility = View.VISIBLE
+                    binding.addFloatingActionBtn.visibility = View.VISIBLE
+                    binding.deleteFloatingActionBtn.visibility = View.VISIBLE
                 }
             }
         )
@@ -56,17 +56,17 @@ class InformationListFragment : BaseFragment<FragmentInformationListBinding>() {
                 timeMeasure -> measureListAdapter.addMeasures(timeMeasure)
         }
 
-        binding.addMeasureButton.setOnClickListener {
+        binding.addMeasureBtn.setOnClickListener {
             val action = InformationListFragmentDirections.actionListFragmentToAddFragment(null)
             findNavController().navigate(action)
         }
 
-        binding.addFloatingActionButton.setOnClickListener {
+        binding.addFloatingActionBtn.setOnClickListener {
             val action = InformationListFragmentDirections.actionListFragmentToAddFragment(null)
             findNavController().navigate(action)
         }
 
-        binding.deleteFloatingActionButton.setOnClickListener {
+        binding.deleteFloatingActionBtn.setOnClickListener {
             deleteAllMeasure()
         }
     }

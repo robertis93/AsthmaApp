@@ -7,17 +7,18 @@ import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MedicamentInfo
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
-import com.example.asthmaapp.viewmodel.repository.InformationPerDayRepository
+import com.example.asthmaapp.viewmodel.repository.MedicamentAnalysesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NotificationsViewModel(application: Application) : AndroidViewModel(application) {
-    private val informationPerDayRepository: InformationPerDayRepository
+    private val medicamentAnalysesRepository: MedicamentAnalysesRepository
 
     init {
         val measurementsPerDayDao = MeasureDataBase.getDataBase(application).measurementsPerDayDao()
-        informationPerDayRepository =
-            InformationPerDayRepository(measurementsPerDayDao)
+        val medicamentDao = MeasureDataBase.getDataBase(application).medicamentInfoDao()
+        medicamentAnalysesRepository =
+            MedicamentAnalysesRepository(measurementsPerDayDao, medicamentDao)
     }
 
     fun addMeasure(dateTimeStamp: Long, measurePeakFlowMeter: Int) {
@@ -27,7 +28,7 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
             measurePeakFlowMeter
         )
         viewModelScope.launch(Dispatchers.IO) {
-            informationPerDayRepository.addMeasure(measure)
+            medicamentAnalysesRepository.addMeasure(measure)
         }
     }
 
@@ -39,7 +40,7 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
                 dateTimeStamp.toString()
             )
         viewModelScope.launch(Dispatchers.IO) {
-            informationPerDayRepository.addTakeMedicamentTime(medicamentTime)
+            medicamentAnalysesRepository.addTakeMedicamentTime(medicamentTime)
         }
     }
 
@@ -54,12 +55,12 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
                 doseMedicament.toInt()
             )
         viewModelScope.launch(Dispatchers.IO) {
-            informationPerDayRepository.addMedicamentInfo(medicamentInfo)
+            medicamentAnalysesRepository.addMedicamentInfo(medicamentInfo)
         }
     }
 
     suspend fun getInitMedicamentInfo(): MedicamentInfo? {
-        val medicament = informationPerDayRepository.getListMedicamentInfo()
+        val medicament = medicamentAnalysesRepository.getListMedicamentInfo()
         return if (medicament.isNotEmpty()) {
             medicament.last()
         } else {

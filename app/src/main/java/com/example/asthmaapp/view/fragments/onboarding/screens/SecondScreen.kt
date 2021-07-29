@@ -17,7 +17,7 @@ class SecondScreen : BaseFragment<FragmentSecondScreenBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)
-        binding.btnSecondScreen.setOnClickListener {
+        binding.toSecondScreenBtn.setOnClickListener {
             viewPager?.currentItem = 2
         }
     }

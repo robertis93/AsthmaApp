@@ -7,7 +7,7 @@
     <string name="time_measure"> time measure</string>
     <string name="take_measure">Take a measure</string>
     <string name="time_take_medicament">time take a medicament</string>
-    <string name="write_name_medicament">enter the name of the medicine</string>
+    <string name="write_name_medicament">enter the name of the medicine <font color='#FF0000'>*</font></string>
     <string name="quantity_medicament">Amount of medication</string>
     <string name="frequency">receiving frequency</string>
     <string name="per_in_day"> times a day</string>
@@ -41,10 +41,9 @@
     <string name="third_screen_example_red">80 l / min</string>
     <string name="list_fragment_add_first_measure">You don not have any measurements, add at least one</string>
     <string name="add">add</string>
-    <string name="quantity_take_medicament">enter the number of medications you are taking</string>
+    <string name="quantity_take_medicament">enter the number of medications you are taking <font color='#FF0000'>*</font> </string>
     <string name="add_measure">Add a measurement</string>
     <string name="delete">delete</string>
-    <string name="lpermin">l/min</string>
     <string name="l_per_min">l/min</string>
     <string name="measure">measurements</string>
     <string name="notif">alerts</string>

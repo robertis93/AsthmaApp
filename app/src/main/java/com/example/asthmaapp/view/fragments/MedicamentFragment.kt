@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.MedicamentFragmentBinding
+import com.example.asthmaapp.utils.DateUtil.checkingEnableButton
 import com.example.asthmaapp.viewmodel.viewModels.MedicamentViewModel
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setInitMedicament()
+        checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.btnSaveMedicamentInfo)
 
         binding.btnSaveMedicamentInfo.setOnClickListener {
             val medicamentName = binding.editTextMedicamentName.text.toString()
@@ -41,9 +43,11 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
     private fun setInitMedicament() {
         lifecycleScope.launch {
             val medicamentInfo = medicamentViewModel.getInitMedicamentInfo()
-            binding.editTextMedicamentName.setText(medicamentInfo?.name)
             if (medicamentInfo != null) {
                 binding.editTextMedicamentDose.setText(medicamentInfo.dose.toString())
+                binding.editTextMedicamentName.setText(medicamentInfo.name)
+            } else {
+                checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.btnSaveMedicamentInfo)
             }
         }
     }

@@ -11,7 +11,7 @@
         android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:paddingBottom="32dp"
-        tools:context=".view.fragments.AddAndUpdateMeasuresFragment">
+        tools:context=".view.fragments.MedicamentAnalysesFragment">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
                 android:textSize="24sp" />
 
             <ImageButton
-                android:id="@+id/changeDayButton"
+                android:id="@+id/changeDayBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addOneMedBtn"
+                android:id="@+id/addOneTakeMedicamentTimeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -122,7 +122,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameMedicalLayout"
+            android:id="@+id/nameMedicamentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -133,7 +133,7 @@
             app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextNameMedicament"
+                android:id="@+id/nameMedicamentEditText"
                 style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -141,7 +141,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextMedicalDozeLayout"
+            android:id="@+id/editTextMedicalDoseLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -155,7 +155,7 @@
             app:suffixText="@string/mkg">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextMedicamentDose"
+                android:id="@+id/medicamentDoseEditText"
                 style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

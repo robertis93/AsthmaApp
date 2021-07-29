@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingBottom="32sp"
-        tools:context=".view.fragments.AddAndUpdateMeasuresFragment">
+        tools:context=".view.fragments.MedicamentAnalysesFragment">
 
         <ImageView
             android:id="@+id/alarmImage"
@@ -66,7 +66,7 @@
             app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextNameMedicament"
+                android:id="@+id/editTextMedicamentName"
                 style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,7 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:backgroundTint="#03A9F4"
+            android:backgroundTint="@color/color_state_material_button"
+            android:enabled="false"
             android:text="@string/save_btn"
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"

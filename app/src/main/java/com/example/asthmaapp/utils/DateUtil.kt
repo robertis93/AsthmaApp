@@ -1,6 +1,9 @@
 package com.example.asthmaapp.utils
 
 import android.annotation.SuppressLint
+import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,6 +74,17 @@ object DateUtil {
     fun dateStringToDayTimeStamp(date: String): Long {
         val day: Date = dateFormat.parse(date)
         return day.time
+    }
+
+    fun checkingEnableButton(medicamentNameEditText: TextInputEditText, medicamentDoseEditText: TextInputEditText, btnSave: MaterialButton) {
+        medicamentNameEditText.doAfterTextChanged {
+            btnSave.isEnabled =
+                medicamentDoseEditText.text.toString().length in 2..5 && medicamentNameEditText.text.toString().length > 1
+        }
+        medicamentDoseEditText.doAfterTextChanged {
+            btnSave.isEnabled =
+                medicamentDoseEditText.text.toString().length in 2..5 && medicamentNameEditText.text.toString().length > 1
+        }
     }
 }
 

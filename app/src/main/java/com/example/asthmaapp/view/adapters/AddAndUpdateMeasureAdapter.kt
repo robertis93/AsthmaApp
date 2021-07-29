@@ -11,12 +11,12 @@ import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class AddAndUpdateMeasureAdapter(
     val measuresList: List<Measure>,
-    val listener: DeleteListener,
-    private val isInUpdateMode: Boolean = false
+    val listener: ClickListener,
+    private val isInUpdateMode: Boolean/*TODO: use Mode*/ = false
 ) :
     RecyclerView.Adapter<AddAndUpdateMeasureAdapter.AddMeasureViewHolder>() {
 
-    interface DeleteListener {
+    interface ClickListener {
         fun onDeleteMeasureClick(measure: Measure)
         fun onUpdateMeasureClick(measure: Measure, position: Int)
     }
@@ -40,11 +40,11 @@ class AddAndUpdateMeasureAdapter(
             deleteIcon.setOnClickListener {
                 listener.onDeleteMeasureClick(measuresList[position])
             }
-            editImage.visibility = if (isInUpdateMode)
+            editIcon.visibility = if (isInUpdateMode)
                 View.VISIBLE
             else
                 View.GONE
-            editImage.setOnClickListener {
+            editIcon.setOnClickListener {
                 listener.onUpdateMeasureClick(currentItem, position)
             }
         }

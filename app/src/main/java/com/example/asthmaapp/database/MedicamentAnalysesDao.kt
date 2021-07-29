@@ -8,7 +8,7 @@ import com.example.asthmaapp.model.TakeMedicamentTime
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 
 @Dao
-interface InformationPerDayDao {
+interface MedicamentAnalysesDao {
 
     @Query("SELECT * FROM take_medicament_time_table ORDER BY dateTimeStamp")
     fun getAllTakeMedicamentTime(): LiveData<List<TakeMedicamentTime>>
@@ -40,9 +40,6 @@ interface InformationPerDayDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
 
-    @Update
-    suspend fun updateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
-
     @Delete
     suspend fun deleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
 
@@ -51,9 +48,6 @@ interface InformationPerDayDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMedicamentInfo(medicamentInfo: MedicamentInfo)
-
-    @Update
-    suspend fun updateMedicamentInfo(medicamentInfo: MedicamentInfo)
 
     @Delete
     suspend fun deleteMedicamentInfo(medicamentInfo: MedicamentInfo)

@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/addMeasureButton"
+        android:id="@+id/addMeasureBtn"
         style="@style/Button.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/listFragmentAddMeasure" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addFloatingActionButton"
+        android:id="@+id/addFloatingActionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -61,10 +61,10 @@
         android:src="@drawable/ic_baseline_add_white"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/deleteFloatingActionButton" />
+        app:layout_constraintEnd_toStartOf="@+id/deleteFloatingActionBtn" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/deleteFloatingActionButton"
+        android:id="@+id/deleteFloatingActionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

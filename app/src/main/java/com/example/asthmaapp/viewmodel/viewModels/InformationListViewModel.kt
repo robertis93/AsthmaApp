@@ -9,28 +9,29 @@ import com.example.asthmaapp.R
 import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
-import com.example.asthmaapp.viewmodel.repository.InformationPerDayRepository
+import com.example.asthmaapp.viewmodel.repository.MedicamentAnalysesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class InformationListViewModel(application: Application) : AndroidViewModel(application) {
-    private val informationPerDayRepository: InformationPerDayRepository
+    private val medicamentAnalysesRepository: MedicamentAnalysesRepository
 
     init {
         val measurementsPerDayDao = MeasureDataBase.getDataBase(application).measurementsPerDayDao()
-        informationPerDayRepository =
-            InformationPerDayRepository(measurementsPerDayDao)
+        val medicamentDao = MeasureDataBase.getDataBase(application).medicamentInfoDao()
+        medicamentAnalysesRepository =
+            MedicamentAnalysesRepository(measurementsPerDayDao, medicamentDao)
     }
 
     val getAllMeasures: LiveData<List<Measure>> =
-        informationPerDayRepository.getAllMeasures
+        medicamentAnalysesRepository.getAllMeasures
 
     val takeMedicamentTimeGroupByDate: MutableLiveData<List<MeasureWithTakeMedicamentTime>> =
         MutableLiveData()
 
     fun getAllMeasuresAndTakeMedicamentTime() {
         viewModelScope.launch(Dispatchers.IO) {
-            takeMedicamentTimeGroupByDate.postValue(informationPerDayRepository.getMeasureAndTakeMedicamentTimeGroupByDate())
+            takeMedicamentTimeGroupByDate.postValue(medicamentAnalysesRepository.getMeasureAndTakeMedicamentTimeGroupByDate())
         }
     }
 
@@ -50,8 +51,8 @@ class InformationListViewModel(application: Application) : AndroidViewModel(appl
 
     fun deleteAllMeasuresWithMedicaments() {
         viewModelScope.launch(Dispatchers.IO) {
-            informationPerDayRepository.deleteAllMeasure()
-            informationPerDayRepository.deleteAllTimeTakeMedicament()
+            medicamentAnalysesRepository.deleteAllMeasure()
+            medicamentAnalysesRepository.deleteAllTimeTakeMedicament()
             getAllMeasuresAndTakeMedicamentTime()
         }
     }

@@ -22,7 +22,7 @@ class AlarmMeasureNotificationActivity : AppCompatActivity() {
         binding = AlarmMeasureNotificationActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
+        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT"))
         val dateTimestamp = dateCalendar.time.time
         val currentTime = timestampToDisplayTime(dateTimestamp)
 

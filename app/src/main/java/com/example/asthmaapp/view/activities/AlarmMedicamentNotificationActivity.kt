@@ -8,6 +8,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.asthmaapp.databinding.TimeMedActivityAlarmTestBinding
+import com.example.asthmaapp.utils.DateUtil.checkingEnableButton
 import com.example.asthmaapp.utils.DateUtil.dayTimeStamp
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayHour
@@ -32,12 +33,13 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
         binding = TimeMedActivityAlarmTestBinding.inflate(getLayoutInflater())
         setContentView(binding.getRoot())
 
-        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
+        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT"))
         val dateTimeStamp = dateCalendar.time.time
         val currentTime = timestampToDisplayTime(dateTimeStamp)
 
         binding.dateTextView.text = timestampToDisplayDate(dateTimeStamp)
         binding.timeAlarmText.text = currentTime
+            checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.saveBtn)
 
         lifecycleScope.launch {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
@@ -47,9 +49,10 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
             } else {
                 binding.editTextMedicalDoseLayout.visibility = View.VISIBLE
                 binding.editTextMedicamentDose.visibility = View.VISIBLE
-                binding.editTextNameMedicament.visibility = View.VISIBLE
+                binding.editTextMedicamentName.visibility = View.VISIBLE
                 binding.nameMedicamentLayout.visibility = View.VISIBLE
-                binding.editTextNameMedicament.doAfterTextChanged {
+
+                binding.editTextMedicamentName.doAfterTextChanged {
                     nameMedicament = it.toString()
                 }
                 binding.editTextMedicamentDose.doAfterTextChanged {
@@ -68,4 +71,16 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
             this.finishAffinity()
         }
     }
+
+//    private fun checkingEnableButton() {
+//        val z = binding.editTextMedicamentName
+//        binding.editTextMedicamentName.doAfterTextChanged {
+//            binding.saveBtn.isEnabled =
+//                binding.editTextMedicamentDose.text.toString().length in 2..5 && binding.editTextMedicamentName.text.toString().length > 1
+//        }
+//        binding.editTextMedicamentDose.doAfterTextChanged {
+//            binding.saveBtn.isEnabled =
+//                binding.editTextMedicamentDose.text.toString().length in 2..5 && binding.editTextMedicamentName.text.toString().length > 1
+//        }
+//    }
 }

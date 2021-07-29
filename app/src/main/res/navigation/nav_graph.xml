@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.asthmaapp.view.fragments.AddAndUpdateMeasuresFragment"
+        android:name="com.example.asthmaapp.view.fragments.MedicamentAnalysesFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add">
         <action

@@ -12,7 +12,7 @@
         android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:paddingBottom="32sp"
-        tools:context=".view.fragments.AddAndUpdateMeasuresFragment">
+        tools:context=".view.fragments.MedicamentAnalysesFragment">
 
         <TextView
             android:id="@+id/dateTextView"
@@ -105,14 +105,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerMed"
+            android:id="@+id/recyclerTakeMedicamentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="8dp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameMedicalLayout"
+            android:id="@+id/nameMedicamentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -130,7 +130,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextMedicalDozeLayout"
+            android:id="@+id/editTextMedicamentDoseLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"

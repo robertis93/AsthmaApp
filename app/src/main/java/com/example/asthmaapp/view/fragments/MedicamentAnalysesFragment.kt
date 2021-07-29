@@ -1,6 +1,5 @@
 package com.example.asthmaapp.view.fragments
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
@@ -24,67 +23,67 @@ import com.example.asthmaapp.utils.DateUtil
 import com.example.asthmaapp.view.adapters.AddAndUpdateMeasureAdapter
 import com.example.asthmaapp.view.adapters.AddAndUpdateMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.AddAndUpdateMeasureViewModelFactory
-import com.example.asthmaapp.viewmodel.viewModels.AddAndUpdateMeasuresViewModel
+import com.example.asthmaapp.viewmodel.viewModels.MedicamentAnalysesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
-    private val args by navArgs<AddAndUpdateMeasuresFragmentArgs>()
-    private val viewModel: AddAndUpdateMeasuresViewModel by viewModels {
+class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
+    private val args by navArgs<MedicamentAnalysesFragmentArgs>()
+    private val viewModel: MedicamentAnalysesViewModel by viewModels {
         val mode = if (args.currentItemDay != null) {
-            AddAndUpdateMeasuresViewModel.Mode.Update(args.currentItemDay!!)
-        } else
-            AddAndUpdateMeasuresViewModel.Mode.Add
+            MedicamentAnalysesViewModel.Mode.Update(args.currentItemDay!!)
+        } else {
+            MedicamentAnalysesViewModel.Mode.Add
+        }
         AddAndUpdateMeasureViewModelFactory(requireActivity().application, mode)
     }
 
     override fun inflate(inflater: LayoutInflater): FragmentAddBinding =
         FragmentAddBinding.inflate(inflater)
 
-    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setObservers()
-        setInitMedicament()
-
-        binding.changeDayButton.setOnClickListener {
+        binding.changeDayBtn.setOnClickListener {
             changeDay()
         }
         binding.addOneMeasureBtn.setOnClickListener {
             addMeasure()
         }
 
-        binding.addOneMedBtn.setOnClickListener {
+        binding.addOneTakeMedicamentTimeBtn.setOnClickListener {
             addTimeTakeMedicament()
         }
 
         binding.saveBtn.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                val medicamentName = binding.editTextNameMedicament.text.toString()
-                val medicamentDose = binding.editTextMedicamentDose.text.toString()
+                val medicamentName = binding.nameMedicamentEditText.text.toString()
+                val medicamentDose = binding.medicamentDoseEditText.text.toString()
                 viewModel.save(medicamentName, medicamentDose)
                 withContext(Dispatchers.Main) {
                     findNavController().popBackStack()
                 }
             }
         }
+
+        initObservers()
+        getMedicamentInfo()
     }
 
-    private fun setInitMedicament() {
+    private fun getMedicamentInfo() {
         lifecycleScope.launch {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
-            binding.editTextNameMedicament.setText(medicamentInfo?.name)
+            binding.nameMedicamentEditText.setText(medicamentInfo?.name)
             if (medicamentInfo != null) {
-                binding.editTextMedicamentDose.setText(medicamentInfo.dose.toString())
+                binding.medicamentDoseEditText.setText(medicamentInfo.dose.toString())
             }
         }
     }
 
-    private fun setObservers() {
-        val measureAdapterListener = object : AddAndUpdateMeasureAdapter.DeleteListener {
+    private fun initObservers() {
+        val measureAdapterListener = object : AddAndUpdateMeasureAdapter.ClickListener {
             override fun onDeleteMeasureClick(measure: Measure) {
                 viewModel.onDeleteMeasureClick(measure)
             }
@@ -94,7 +93,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             }
         }
 
-        val taleMedicamentAdapterListener =
+        val takeMedicamentAdapterListener =
             object : AddAndUpdateMedicamentTimeAdapter.ClickListener {
                 override fun onDeleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
                     viewModel.onDeleteMedicamentClick(takeMedicamentTimeEntity)
@@ -128,13 +127,13 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             val addMedicamentTimeAdapter =
                 AddAndUpdateMedicamentTimeAdapter(
                     it,
-                    taleMedicamentAdapterListener,
+                    takeMedicamentAdapterListener,
                     updateMedicamentMode
                 )
             val recyclerViewMed = binding.recyclerMed
             recyclerViewMed.layoutManager =
                 GridLayoutManager(
-                    binding.recyclerMed.context,
+                    context,
                     2,
                     LinearLayoutManager.HORIZONTAL,
                     false
@@ -157,7 +156,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)
 
-        dialogFragment.btnSave.setOnClickListener {
+        dialogFragment.saveBtn.setOnClickListener {
             alertDialog.dismiss()
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
@@ -181,11 +180,11 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         dialogFragment.timePicker.setIs24HourView(true)
 
         dialogFragment.measureDialog.doAfterTextChanged {
-            dialogFragment.btnSave.isEnabled =
-                dialogFragment.measureDialog.text.toString().length > 1
+            dialogFragment.saveBtn.isEnabled =
+                dialogFragment.measureDialog.text.toString().length in 2..4
         }
 
-        dialogFragment.btnSave.setOnClickListener {
+        dialogFragment.saveBtn.setOnClickListener {
             alertDialog.dismiss()
             val timeHour = dialogFragment.timePicker.hour
             val timeMinute = dialogFragment.timePicker.minute
@@ -241,7 +240,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
         dialogFragment.timePicker.setIs24HourView(true)
 
         dialogFragment.measureDialog.doAfterTextChanged { it: Editable? ->
-            dialogFragment.btnSave.isEnabled =
+            dialogFragment.saveBtn.isEnabled =
                 dialogFragment.measureDialog.text.toString().length > 1
         }
 
@@ -252,7 +251,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
                 .toInt()
         dialogFragment.measureDialog.setText(currentItem.value.toString())
 
-        dialogFragment.btnSave.setOnClickListener {
+        dialogFragment.saveBtn.setOnClickListener {
             alertDialog.dismiss()
             dialogFragment.timePicker.is24HourView
             val timeHour = dialogFragment.timePicker.hour
@@ -283,7 +282,7 @@ class AddAndUpdateMeasuresFragment : BaseFragment<FragmentAddBinding>() {
             DateUtil.timestampToDisplayMinute(currentItem.dateTimestamp)
                 .toInt()
 
-        dialogFragment.btnSave.setOnClickListener {
+        dialogFragment.saveBtn.setOnClickListener {
             alertDialog.dismiss()
             dialogFragment.timePicker.is24HourView
             val timeHour = dialogFragment.timePicker.hour

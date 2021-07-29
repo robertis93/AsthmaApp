@@ -7,7 +7,7 @@
     <string name="time_measure">Время замера</string>
     <string name="take_measure">Сделайте замер</string>
     <string name="time_take_medicament">Время приема лекарства</string>
-    <string name="write_name_medicament">Название лекарства</string>
+    <string name="write_name_medicament">Название лекарства <font color='#FF0000'>*</font></string>
     <string name="quantity_medicament">Кол- во лекарства</string>
     <string name="frequency">Частота приема</string>
     <string name="successful_added">"Успешно сохранено"</string>
@@ -41,7 +41,7 @@
     <string name="third_screen_example_red">80 л/мин</string>
     <string name="list_fragment_add_first_measure">У Вас нет ни одного замера, добавьте хотя бы один</string>
     <string name="add">Добавить</string>
-    <string name="quantity_take_medicament">Кол-во принимаемого лекарства</string>
+    <string name="quantity_take_medicament">Кол-во принимаемого лекарства <font color='#FF0000'>*</font></string>
     <string name="add_measure">Добавить замер</string>
     <string name="delete">Удалить</string>
     <string name="l_per_min">л/мин</string>

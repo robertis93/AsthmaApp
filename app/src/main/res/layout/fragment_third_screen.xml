@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textDescribe"
+        android:id="@+id/describeTextView"
         style="@style/Text.Bold24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:textColor="@color/black"
         app:cornerRadius="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDescribe" />
+        app:layout_constraintTop_toBottomOf="@+id/describeTextView" />
 
     <TextView
         android:id="@+id/textYellowDescribe"
@@ -59,7 +59,7 @@
         android:textColor="@color/dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/textYellow"
-        app:layout_constraintTop_toBottomOf="@+id/textDescribe" />
+        app:layout_constraintTop_toBottomOf="@+id/describeTextView" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -82,7 +82,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDescribe">
+        app:layout_constraintTop_toBottomOf="@+id/describeTextView">
 
 
     </LinearLayout>

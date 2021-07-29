@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-        android:id="@+id/spring_dots_indicator"
+        android:id="@+id/springDotsIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#03A9F4"
