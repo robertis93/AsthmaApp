@@ -9,12 +9,12 @@ import com.example.asthmaapp.databinding.UpdateMeasuresInnerItemBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
-class AddAndUpdateMeasureAdapter(
+class EditMeasureAdapter(
     val measuresList: List<Measure>,
     val listener: ClickListener,
     private val isInUpdateMode: Boolean/*TODO: use Mode*/ = false
 ) :
-    RecyclerView.Adapter<AddAndUpdateMeasureAdapter.AddMeasureViewHolder>() {
+    RecyclerView.Adapter<EditMeasureAdapter.AddMeasureViewHolder>() {
 
     interface ClickListener {
         fun onDeleteMeasureClick(measure: Measure)

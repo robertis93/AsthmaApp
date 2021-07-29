@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.asthmaapp.R
 import com.example.asthmaapp.databinding.FragmentInformationListBinding
-import com.example.asthmaapp.view.adapters.MeasureListAdapter
+import com.example.asthmaapp.view.adapters.MedicamentAnalysesAdapter
 import com.example.asthmaapp.viewmodel.viewModels.InformationListViewModel
 
 class InformationListFragment : BaseFragment<FragmentInformationListBinding>() {
@@ -28,7 +28,7 @@ class InformationListFragment : BaseFragment<FragmentInformationListBinding>() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val measureListAdapter = MeasureListAdapter(informationListViewModel)
+        val measureListAdapter = MedicamentAnalysesAdapter(informationListViewModel)
         val recyclerView = binding.measureListRecyclerView
         recyclerView.adapter = measureListAdapter
         recyclerView.layoutManager =

@@ -13,7 +13,7 @@ import com.example.asthmaapp.model.MeasureWithTakeMedicamentTime
 import com.example.asthmaapp.view.fragments.InformationListFragmentDirections
 import com.example.asthmaapp.viewmodel.viewModels.InformationListViewModel
 
-class MeasureListAdapter(val viewModel: InformationListViewModel) : RecyclerView.Adapter<MeasureListAdapter.MeasureViewHolder>() {
+class MedicamentAnalysesAdapter(val viewModel: InformationListViewModel) : RecyclerView.Adapter<MedicamentAnalysesAdapter.MeasureViewHolder>() {
 
     private var dayMeasureAndMedicamentList = listOf<MeasureWithTakeMedicamentTime>()
     private var listMeasure = emptyList<Measure>()

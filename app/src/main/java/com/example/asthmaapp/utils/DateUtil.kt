@@ -41,15 +41,6 @@ object DateUtil {
         return dateCalendar.time.time
     }
 
-    fun dayTimeStampWithNewTime(dayTimeStamp: Long, hour: Int, minute: Int): Long {
-        val cal = GregorianCalendar()
-        cal.timeInMillis = dayTimeStamp
-        val year = cal.get(Calendar.YEAR)
-        val month = cal.get(Calendar.MONTH)
-        val dayOfMonth = cal.get(Calendar.DAY_OF_MONTH)
-        val dateCalendar: Calendar = GregorianCalendar(year, month, dayOfMonth, hour, minute)
-        return dateCalendar.time.time
-    }
 
     fun timeCorrectDisplay(minute: Int): String {
         return if (minute < 10) {

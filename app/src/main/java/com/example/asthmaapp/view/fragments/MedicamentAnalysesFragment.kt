@@ -20,8 +20,8 @@ import com.example.asthmaapp.databinding.LayoutDialogMedicalAddFragmentBinding
 import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil
-import com.example.asthmaapp.view.adapters.AddAndUpdateMeasureAdapter
-import com.example.asthmaapp.view.adapters.AddAndUpdateMedicamentTimeAdapter
+import com.example.asthmaapp.view.adapters.EditMeasureAdapter
+import com.example.asthmaapp.view.adapters.EditTakeMedicamentTimeAdapter
 import com.example.asthmaapp.viewmodel.viewModels.AddAndUpdateMeasureViewModelFactory
 import com.example.asthmaapp.viewmodel.viewModels.MedicamentAnalysesViewModel
 import kotlinx.coroutines.Dispatchers
@@ -83,7 +83,7 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
     }
 
     private fun initObservers() {
-        val measureAdapterListener = object : AddAndUpdateMeasureAdapter.ClickListener {
+        val measureAdapterListener = object : EditMeasureAdapter.ClickListener {
             override fun onDeleteMeasureClick(measure: Measure) {
                 viewModel.onDeleteMeasureClick(measure)
             }
@@ -94,7 +94,7 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
         }
 
         val takeMedicamentAdapterListener =
-            object : AddAndUpdateMedicamentTimeAdapter.ClickListener {
+            object : EditTakeMedicamentTimeAdapter.ClickListener {
                 override fun onDeleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
                     viewModel.onDeleteMedicamentClick(takeMedicamentTimeEntity)
                 }
@@ -110,7 +110,7 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
         viewModel.measureListLiveData.observe(viewLifecycleOwner) { measureList ->
             val updateMeasureMode = args.currentItemDay != null
             val addMeasureAdapter =
-                AddAndUpdateMeasureAdapter(measureList, measureAdapterListener, updateMeasureMode)
+                EditMeasureAdapter(measureList, measureAdapterListener, updateMeasureMode)
             val recyclerViewAdd = binding.recyclerMeasure
             recyclerViewAdd.layoutManager =
                 GridLayoutManager(
@@ -125,7 +125,7 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
         viewModel.takeMedicamentTimeListLiveData.observe(viewLifecycleOwner) {
             val updateMedicamentMode = args.currentItemDay != null
             val addMedicamentTimeAdapter =
-                AddAndUpdateMedicamentTimeAdapter(
+                EditTakeMedicamentTimeAdapter(
                     it,
                     takeMedicamentAdapterListener,
                     updateMedicamentMode

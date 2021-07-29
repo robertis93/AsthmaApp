@@ -9,18 +9,17 @@ import com.example.asthmaapp.databinding.UpdateItemMedtimeBinding
 import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
-class AddAndUpdateMedicamentTimeAdapter(
+class EditTakeMedicamentTimeAdapter(
     private var measuresMedList: List<TakeMedicamentTimeEntity>,
     private val onclickListener: ClickListener,
     private val isInUpdateMode: Boolean = false
 ) :
-    RecyclerView.Adapter<AddAndUpdateMedicamentTimeAdapter.AddMedicamentViewHolder>() {
+    RecyclerView.Adapter<EditTakeMedicamentTimeAdapter.AddMedicamentViewHolder>() {
 
     interface ClickListener {
         fun onDeleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
         fun onUpdateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity, position: Int)
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMedicamentViewHolder {
         val binding = UpdateItemMedtimeBinding.inflate(
