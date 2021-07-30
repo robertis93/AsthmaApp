@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AsthmaApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="description_app">With the help of peakflowmetry, you can monitor your condition independently</string>
     <string name="select_day">Select day</string>
@@ -26,7 +25,7 @@
     <string name="no">No</string>
     <string name="delete_it">Delete all?</string>
     <string name="are_you_sure_delete_all">Do you really want to delete everything ?</string>
-    <string name="cansel">Cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="third_screen_desc">Do not miss the measurements and take your medicaments on time and feel good</string>
     <string name="start_app">Start app</string>
     <string name="third_screen_red">If your measurement is colored red, then you should increase the dosage of the medicament you are taking</string>

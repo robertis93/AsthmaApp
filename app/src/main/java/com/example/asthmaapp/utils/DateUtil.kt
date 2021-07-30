@@ -15,10 +15,10 @@ object DateUtil {
     private val timeFormat = SimpleDateFormat("HH : mm")
 
     @SuppressLint("SimpleDateFormat")
-    private val justHour = SimpleDateFormat("HH")
+    private val hourFormat = SimpleDateFormat("HH")
 
     @SuppressLint("SimpleDateFormat")
-    private val justMinute = SimpleDateFormat("mm")
+    private val minuteFormat = SimpleDateFormat("mm")
 
     @SuppressLint("SimpleDateFormat")
     fun timestampToDisplayDate(dayTimeStamp: Long): String {
@@ -53,13 +53,13 @@ object DateUtil {
     @SuppressLint("SimpleDateFormat")
     fun timestampToDisplayHour(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
-        return justHour.format(currentDate)
+        return hourFormat.format(currentDate)
     }
 
     @SuppressLint("SimpleDateFormat")
     fun timestampToDisplayMinute(dayTimeStamp: Long): String {
         val currentDate = Date(dayTimeStamp)
-        return justMinute.format(currentDate)
+        return minuteFormat.format(currentDate)
     }
 
     fun dateStringToDayTimeStamp(date: String): Long {
@@ -70,11 +70,11 @@ object DateUtil {
     fun checkingEnableButton(medicamentNameEditText: TextInputEditText, medicamentDoseEditText: TextInputEditText, btnSave: MaterialButton) {
         medicamentNameEditText.doAfterTextChanged {
             btnSave.isEnabled =
-                medicamentDoseEditText.text.toString().length in 2..5 && medicamentNameEditText.text.toString().length > 1
+                medicamentDoseEditText.text.toString().length in 2..5 && medicamentNameEditText.text.toString().length in 2..20
         }
         medicamentDoseEditText.doAfterTextChanged {
             btnSave.isEnabled =
-                medicamentDoseEditText.text.toString().length in 2..5 && medicamentNameEditText.text.toString().length > 1
+                medicamentDoseEditText.text.toString().length in 2..5 && medicamentNameEditText.text.toString().length in 2..20
         }
     }
 }

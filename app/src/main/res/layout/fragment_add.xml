@@ -155,7 +155,7 @@
             app:suffixText="@string/mkg">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/medicamentDoseEditText"
+                android:id="@+id/doseMedicamentEditText"
                 style="@style/Text.SemiBold18"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -170,7 +170,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="#03A9F4"
+            android:backgroundTint="@color/color_state_material_button"
+            android:enabled="false"
             android:text="@string/save_btn"
             android:textAllCaps="false"
             app:backgroundTint="@color/blue_med"

@@ -44,8 +44,9 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
             if (medicamentInfo != null) {
-                nameMedicament = medicamentInfo?.name.toString()
-                doseMedicament = medicamentInfo?.dose.toString()
+                binding.saveBtn.isEnabled = true
+                nameMedicament = medicamentInfo.name
+                doseMedicament = medicamentInfo.dose.toString()
             } else {
                 binding.editTextMedicalDoseLayout.visibility = View.VISIBLE
                 binding.editTextMedicamentDose.visibility = View.VISIBLE

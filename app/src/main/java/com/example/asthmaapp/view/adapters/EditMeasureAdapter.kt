@@ -11,7 +11,7 @@ import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class EditMeasureAdapter(
     val measuresList: List<Measure>,
-    val listener: ClickListener,
+    private val listener: ClickListener,
     private val isInUpdateMode: Boolean/*TODO: use Mode*/ = false
 ) :
     RecyclerView.Adapter<EditMeasureAdapter.AddMeasureViewHolder>() {

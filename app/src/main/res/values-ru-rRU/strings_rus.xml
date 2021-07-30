@@ -26,7 +26,7 @@
     <string name="no">Нет</string>
     <string name="delete_it">Удалить все?</string>
     <string name="are_you_sure_delete_all">Вы действительно хотите все удалить ?</string>
-    <string name="cansel">ОТМЕНА</string>
+    <string name="cancel">ОТМЕНА</string>
     <string name="third_screen_desc">Не пропускайте замеры и вовремя принимайте лекарства и чувствуйте себя хорошо</string>
     <string name="start_app">Начать</string>
     <string name="third_screen_red">Если ваш замер выделен красным цветом, то немедленно примите бронхорасширяющий препарат и обратитесь к врачу</string>

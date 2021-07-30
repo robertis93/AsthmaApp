@@ -57,10 +57,16 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
             addTimeTakeMedicament()
         }
 
+        DateUtil.checkingEnableButton(
+            binding.nameMedicamentEditText,
+            binding.doseMedicamentEditText,
+            binding.saveBtn
+        )
+
         binding.saveBtn.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val medicamentName = binding.nameMedicamentEditText.text.toString()
-                val medicamentDose = binding.medicamentDoseEditText.text.toString()
+                val medicamentDose = binding.doseMedicamentEditText.text.toString()
                 viewModel.save(medicamentName, medicamentDose)
                 withContext(Dispatchers.Main) {
                     findNavController().popBackStack()
@@ -77,7 +83,7 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
             binding.nameMedicamentEditText.setText(medicamentInfo?.name)
             if (medicamentInfo != null) {
-                binding.medicamentDoseEditText.setText(medicamentInfo.dose.toString())
+                binding.doseMedicamentEditText.setText(medicamentInfo.dose.toString())
             }
         }
     }
@@ -151,7 +157,7 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
         val layoutInflater = LayoutInflater.from(requireContext())
         val dialogFragment = LayoutDialogMedicalAddFragmentBinding.inflate(layoutInflater)
         builder.setView(dialogFragment.root)
-        builder.setTitle("Время приема лекарства")
+        builder.setTitle(getString(R.string.take_medicament))
 
         val alertDialog = builder.show()
         dialogFragment.timePicker.setIs24HourView(true)

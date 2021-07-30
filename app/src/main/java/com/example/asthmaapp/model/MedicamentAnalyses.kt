@@ -22,7 +22,7 @@ data class TakeMedicamentTimeEntity(
     val id: Int,
     var dateTimestamp: Long,
     @ColumnInfo(name = "medicamentInfo_id")
-    val medicamentInfoId: String
+    var medicamentInfoId: String
 ) : Parcelable
 
 @Parcelize

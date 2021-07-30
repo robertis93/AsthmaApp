@@ -27,9 +27,9 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setInitMedicament()
-        checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.btnSaveMedicamentInfo)
+        checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.saveBtn)
 
-        binding.btnSaveMedicamentInfo.setOnClickListener {
+        binding.saveBtn.setOnClickListener {
             val medicamentName = binding.editTextMedicamentName.text.toString()
             val medicamentDose = binding.editTextMedicamentDose.text.toString()
             medicamentViewModel.addMedicamentInfo(medicamentName, medicamentDose)
@@ -47,7 +47,7 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
                 binding.editTextMedicamentDose.setText(medicamentInfo.dose.toString())
                 binding.editTextMedicamentName.setText(medicamentInfo.name)
             } else {
-                checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.btnSaveMedicamentInfo)
+                checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.saveBtn)
             }
         }
     }

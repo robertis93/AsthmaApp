@@ -10,6 +10,8 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil
 import com.example.asthmaapp.utils.DateUtil.dateStringToDayTimeStamp
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayHour
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayMinute
 import com.example.asthmaapp.viewmodel.repository.MedicamentAnalysesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -92,9 +94,18 @@ class MedicamentAnalysesViewModel(application: Application, private val mode: Mo
             medicamentAnalysesRepository.addMedicamentInfo(medicamentInfo)
         }
         for (measure in measureListLiveData.value ?: emptyList()) {
+            val hour = timestampToDisplayHour(measure.dateTimestamp)
+            val minute = timestampToDisplayMinute(measure.dateTimestamp)
+            measure.dateTimestamp =
+                DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!, hour.toInt(), minute.toInt())
             medicamentAnalysesRepository.addMeasure(measure)
         }
         for (takeMedicamentTime in takeMedicamentTimeListLiveData.value ?: emptyList()) {
+            val hour = timestampToDisplayHour(takeMedicamentTime.dateTimestamp)
+            val minute = timestampToDisplayMinute(takeMedicamentTime.dateTimestamp)
+            takeMedicamentTime.dateTimestamp =
+                DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!.toLong(), hour.toInt(), minute.toInt())
+            takeMedicamentTime.medicamentInfoId = dateTimeStampLiveData.value.toString()
             medicamentAnalysesRepository.addTakeMedicamentTime(takeMedicamentTime)
         }
     }
