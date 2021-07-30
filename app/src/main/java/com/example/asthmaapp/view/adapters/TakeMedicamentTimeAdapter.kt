@@ -9,11 +9,11 @@ import com.example.asthmaapp.model.TakeMedicamentTime
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 
-class ListTakeMedicamentTimeAdapter(
-    private var timesTimeTakeMedicament: List<TakeMedicamentTime>,
+class TakeMedicamentTimeAdapter(
+    private var takeMedicamentTimeList: List<TakeMedicamentTime>,
     private var onClickListener: OnClickListener
 ) :
-    RecyclerView.Adapter<ListTakeMedicamentTimeAdapter.TimeTakeMedicamentViewHolder>() {
+    RecyclerView.Adapter<TakeMedicamentTimeAdapter.TimeTakeMedicamentViewHolder>() {
 
     interface OnClickListener {
         fun actionClick()
@@ -30,7 +30,7 @@ class ListTakeMedicamentTimeAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: TimeTakeMedicamentViewHolder, position: Int) {
-        val currentItem = timesTimeTakeMedicament[position]
+        val currentItem = takeMedicamentTimeList[position]
         holder.binding.timeTextView.text = timestampToDisplayTime(currentItem.takeMedicamentTimeEntity.dateTimestamp)
         holder.itemView.setOnClickListener {
             onClickListener.actionClick()
@@ -38,7 +38,7 @@ class ListTakeMedicamentTimeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return timesTimeTakeMedicament.size
+        return takeMedicamentTimeList.size
     }
 
     class TimeTakeMedicamentViewHolder(val binding: InnerItemMedtimeBinding) :

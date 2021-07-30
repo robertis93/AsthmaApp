@@ -10,7 +10,7 @@ import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 import com.example.asthmaapp.viewmodel.viewModels.InformationListViewModel
 
 class MeasureAdapter(
-    private var measures: List<Measure>,
+    private var measureList: List<Measure>,
     val viewModel: InformationListViewModel,
     private var onClickListener: OnClickListener
 ) :
@@ -27,7 +27,7 @@ class MeasureAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
-        val currentItem = measures[position]
+        val currentItem = measureList[position]
         holder.binding.timeTextView.text =
             timestampToDisplayTime(currentItem.dateTimestamp)
         val color = viewModel.getColorForMeasure(currentItem)
@@ -40,7 +40,7 @@ class MeasureAdapter(
     }
 
     override fun getItemCount(): Int {
-        return measures.size
+        return measureList.size
     }
 
     class MeasureViewHolder(val binding: InnerItemBinding) : RecyclerView.ViewHolder(binding.root)

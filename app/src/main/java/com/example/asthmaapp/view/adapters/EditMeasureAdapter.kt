@@ -10,11 +10,12 @@ import com.example.asthmaapp.model.Measure
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class EditMeasureAdapter(
-    val measuresList: List<Measure>,
-    private val listener: ClickListener,
-    private val isInUpdateMode: Boolean/*TODO: use Mode*/ = false
+    private val listener: EditTakeMedicamentTimeAdapter.ClickListener,
+    private val isInUpdateMode: Boolean = false
 ) :
     RecyclerView.Adapter<EditMeasureAdapter.AddMeasureViewHolder>() {
+
+    private var measureList = emptyList<Measure>()
 
     interface ClickListener {
         fun onDeleteMeasureClick(measure: Measure)
@@ -32,13 +33,13 @@ class EditMeasureAdapter(
 
     @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: AddMeasureViewHolder, position: Int) {
-        val currentItem = measuresList[position]
+        val currentItem = measureList[position]
         with(holder.binding) {
             timeTextView.text =
                 timestampToDisplayTime(currentItem.dateTimestamp)
             measureText.text = currentItem.value.toString()
             deleteIcon.setOnClickListener {
-                listener.onDeleteMeasureClick(measuresList[position])
+                listener.onDeleteMeasureClick(measureList[position])
             }
             editIcon.visibility = if (isInUpdateMode)
                 View.VISIBLE
@@ -51,7 +52,12 @@ class EditMeasureAdapter(
     }
 
     override fun getItemCount(): Int {
-        return measuresList.size
+        return measureList.size
+    }
+
+    fun setData(measures: List<Measure>) {
+        this.measureList = measures
+        notifyDataSetChanged()
     }
 
     class AddMeasureViewHolder(val binding: UpdateMeasuresInnerItemBinding) :

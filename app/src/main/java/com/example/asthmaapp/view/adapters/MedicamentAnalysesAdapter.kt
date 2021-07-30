@@ -16,7 +16,7 @@ import com.example.asthmaapp.viewmodel.viewModels.InformationListViewModel
 class MedicamentAnalysesAdapter(val viewModel: InformationListViewModel) : RecyclerView.Adapter<MedicamentAnalysesAdapter.MeasureViewHolder>() {
 
     private var dayMeasureAndMedicamentList = listOf<MeasureWithTakeMedicamentTime>()
-    private var listMeasure = emptyList<Measure>()
+    private var measureList = emptyList<Measure>()
 
     fun setData(dayWithMeasures: List<MeasureWithTakeMedicamentTime>) {
         this.dayMeasureAndMedicamentList = dayWithMeasures
@@ -24,7 +24,7 @@ class MedicamentAnalysesAdapter(val viewModel: InformationListViewModel) : Recyc
     }
 
     fun addMeasures(measures: List<Measure>) {
-        this.listMeasure = measures
+        this.measureList = measures
     }
 
     override fun getItemCount(): Int {
@@ -56,8 +56,8 @@ class MedicamentAnalysesAdapter(val viewModel: InformationListViewModel) : Recyc
                     holder.binding.root.findNavController().navigate(action)
                 }
             }
-        val toUpdateMeasureFragmentFromTakeMedicamentClickListenerTime: ListTakeMedicamentTimeAdapter.OnClickListener =
-            object : ListTakeMedicamentTimeAdapter.OnClickListener {
+        val toUpdateMeasureFragmentFromTakeMedicamentClickListenerTime: TakeMedicamentTimeAdapter.OnClickListener =
+            object : TakeMedicamentTimeAdapter.OnClickListener {
                 override fun actionClick() {
                     val action =
                         InformationListFragmentDirections.actionListFragmentToAddFragment(
@@ -79,7 +79,7 @@ class MedicamentAnalysesAdapter(val viewModel: InformationListViewModel) : Recyc
         )
 
         val listTakeMedicamentTimeAdapter =
-            ListTakeMedicamentTimeAdapter(
+            TakeMedicamentTimeAdapter(
                 dayCurrentItem.takeMedicamentTimeList,
                 toUpdateMeasureFragmentFromTakeMedicamentClickListenerTime
             )

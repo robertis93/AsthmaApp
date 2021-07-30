@@ -113,38 +113,41 @@ class MedicamentAnalysesFragment : BaseFragment<FragmentAddBinding>() {
                 }
             }
 
+        val updateMeasureMode = args.currentItemDay != null
+        val editMeasureAdapter =
+            EditMeasureAdapter(measureAdapterListener, updateMeasureMode)
+        val editMeasureRecyclerView = binding.measureRecyclerView
+        editMeasureRecyclerView.adapter = editMeasureAdapter
+        editMeasureRecyclerView.layoutManager =
+            GridLayoutManager(
+                context,
+                4,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+        val updateMedicamentMode = args.currentItemDay != null
+        val editTakeMedicamentTimeAdapter =
+            EditTakeMedicamentTimeAdapter(
+                takeMedicamentAdapterListener,
+                updateMedicamentMode
+            )
+        val editTakeMedicamentTimeRecyclerView = binding.takeMedicamentTimeRecyclerView
+        editTakeMedicamentTimeRecyclerView.adapter = editTakeMedicamentTimeAdapter
+        editTakeMedicamentTimeRecyclerView.layoutManager =
+            GridLayoutManager(
+                context,
+                2,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
         viewModel.measureListLiveData.observe(viewLifecycleOwner) { measureList ->
-            val updateMeasureMode = args.currentItemDay != null
-            val addMeasureAdapter =
-                EditMeasureAdapter(measureList, measureAdapterListener, updateMeasureMode)
-            val recyclerViewAdd = binding.recyclerMeasure
-            recyclerViewAdd.layoutManager =
-                GridLayoutManager(
-                    binding.recyclerMed.context,
-                    4,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            recyclerViewAdd.adapter = addMeasureAdapter
+            editMeasureAdapter.setData(measureList)
         }
 
-        viewModel.takeMedicamentTimeListLiveData.observe(viewLifecycleOwner) {
-            val updateMedicamentMode = args.currentItemDay != null
-            val addMedicamentTimeAdapter =
-                EditTakeMedicamentTimeAdapter(
-                    it,
-                    takeMedicamentAdapterListener,
-                    updateMedicamentMode
-                )
-            val recyclerViewMed = binding.recyclerMed
-            recyclerViewMed.layoutManager =
-                GridLayoutManager(
-                    context,
-                    2,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            recyclerViewMed.adapter = addMedicamentTimeAdapter
+        viewModel.takeMedicamentTimeListLiveData.observe(viewLifecycleOwner) { takeMedicamentTimeList ->
+            editTakeMedicamentTimeAdapter.setData(takeMedicamentTimeList)
         }
 
         viewModel.dateLiveData.observe(viewLifecycleOwner) { date ->

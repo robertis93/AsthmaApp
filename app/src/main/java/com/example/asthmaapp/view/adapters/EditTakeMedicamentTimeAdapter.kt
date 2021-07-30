@@ -10,12 +10,12 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayTime
 
 class EditTakeMedicamentTimeAdapter(
-    private var measuresMedList: List<TakeMedicamentTimeEntity>,
     private val onclickListener: ClickListener,
     private val isInUpdateMode: Boolean = false
 ) :
     RecyclerView.Adapter<EditTakeMedicamentTimeAdapter.AddMedicamentViewHolder>() {
 
+    private var takeMedicamentTimeList = emptyList<TakeMedicamentTimeEntity>()
     interface ClickListener {
         fun onDeleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity)
         fun onUpdateTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity, position: Int)
@@ -32,12 +32,12 @@ class EditTakeMedicamentTimeAdapter(
 
     @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: AddMedicamentViewHolder, position: Int) {
-        val currentItem = measuresMedList[position]
+        val currentItem = takeMedicamentTimeList[position]
         with(holder.binding) {
             timeTextView.text =
                 timestampToDisplayTime(currentItem.dateTimestamp)
             deleteImage.setOnClickListener {
-                onclickListener.onDeleteTakeMedicamentTime(measuresMedList[position])
+                onclickListener.onDeleteTakeMedicamentTime(takeMedicamentTimeList[position])
             }
             editImage.visibility = if (isInUpdateMode)
                 View.VISIBLE
@@ -50,7 +50,11 @@ class EditTakeMedicamentTimeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return measuresMedList.size
+        return takeMedicamentTimeList.size
+    }
+    fun setData(takeMedicamentTimes: List<TakeMedicamentTimeEntity>) {
+        this.takeMedicamentTimeList = takeMedicamentTimes
+        notifyDataSetChanged()
     }
 
     class AddMedicamentViewHolder(val binding: UpdateItemMedtimeBinding) :
