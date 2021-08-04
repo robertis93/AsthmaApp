@@ -11,9 +11,9 @@
     <string name="frequency">Receiving frequency</string>
     <string name="per_in_day">Times a day</string>
     <string name="save_btn">Save</string>
-    <string name="successful_added">"Successful added"</string>
+    <string name="successful_added">"Successfully added"</string>
     <string name="select_time_notification">Set the notification time</string>
-    <string name="need_take_time_between_measure_drugs">It should take at least 4 hours after taking the medicament and measuring</string>
+    <string name="need_take_time_between_measure_drugs">It should take at least 4 hours after to taking the medicament and measuring</string>
     <string name="recommend_three_hours">It is recommended to make at least 3 measurements per day</string>
     <string name="measure_alarm_frag">Measuring</string>
     <string name="take_medicament">Taking medicament</string>
@@ -34,7 +34,7 @@
     <string name="notification">Notification</string>
     <string name="medicament">Medicament</string>
     <string name="next">Next</string>
-    <string name="second_screen_desc">Go to the \"alerts\" tab and set the alert time</string>
+    <string name="second_screen_desc">Go to the \"alerts\" tab and set the notification time</string>
     <string name="first_screen_descr">Go to the \"medicine\" tab and fill in the fields</string>
     <string name="third_screen_example_yellow">150 l / min</string>
     <string name="third_screen_example_red">80 l / min</string>

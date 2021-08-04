@@ -4,12 +4,17 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-parcelize'
-
-
-
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\Robert\\Desktop\\keystorefile.jks')
+            keyPassword 'Iskhakov1993!'
+            storePassword 'Iskhakov1993!'
+            keyAlias 'key0'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
     buildFeatures {
@@ -17,12 +22,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.asthmaapp"
-        minSdkVersion 26
+        applicationId "com.rightname.asthmaapp"
+        minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
+        versionCode 3
+        versionName "3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,11 +34,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -78,7 +83,6 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
 
     //Testing
-
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "androidx.room:room-testing:2.2.6"
     testImplementation "com.google.truth:truth:1.1.2"
@@ -94,28 +98,15 @@ dependencies {
     //work manager
     implementation "androidx.work:work-runtime-ktx:2.6.0-alpha02"
 
-    //json
     implementation 'com.google.code.gson:gson:2.8.6'
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.4.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
-
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-
-    //datavae
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
-//indicator onBoarding
     implementation 'com.tbuonomo:dotsindicator:4.2'
-
     implementation 'com.github.imtuann:FloatingActionButtonExpandable:1.1.2'
-
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-
-
-
-
-
 }

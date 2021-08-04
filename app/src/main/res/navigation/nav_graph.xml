@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.asthmaapp.view.fragments.InformationListFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.InformationListFragment"
         android:label="@string/diary"
         tools:layout="@layout/fragment_information_list">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.asthmaapp.view.fragments.MedicamentAnalysesFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.MedicamentAnalysesFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add">
         <action
@@ -30,12 +30,12 @@
             app:destination="@id/listFragment" />
         <argument
             android:name="currentItemDay"
-            app:argType="com.example.asthmaapp.model.MeasureWithTakeMedicamentTime"
+            app:argType="com.rightname.asthmaapp.model.MeasureWithTakeMedicamentTime"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/alarmFragment"
-        android:name="com.example.asthmaapp.view.fragments.AlarmFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.AlarmFragment"
         android:label="@string/notif">
         <action
             android:id="@+id/action_alarmFragment_to_listFragment"
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/medicalFragment"
-        android:name="com.example.asthmaapp.view.fragments.MedicamentFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.MedicamentFragment"
         android:label="@string/medicament"
         tools:layout="@layout/medicament_fragment">
         <action
@@ -61,7 +61,7 @@
         app:destination="@id/addFragment" />
     <fragment
         android:id="@+id/viewPagerFragment"
-        android:name="com.example.asthmaapp.view.fragments.onboarding.OnBoardingFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.onboarding.OnBoardingFragment"
         android:label="fragment_view_pager"
         tools:layout="@layout/fragment_view_pager">
         <action
