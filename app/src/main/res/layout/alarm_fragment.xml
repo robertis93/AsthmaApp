@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="16dp"
-                android:layout_marginStart="18dp"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/blue_med"
                 android:contentDescription="@string/add"
                 android:src="@drawable/ic_baseline_add_white"

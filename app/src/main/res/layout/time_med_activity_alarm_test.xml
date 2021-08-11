@@ -108,7 +108,6 @@
             android:enabled="false"
             android:text="@string/save_btn"
             android:textAllCaps="false"
-            app:backgroundTint="@color/blue_med"
             app:cornerRadius="16dp" />
     </LinearLayout>
 </ScrollView>

@@ -20,7 +20,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextMedicamentName"
-            style="@style/Text.SemiBold18"
+            style="@style/Text.SemiBold16"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -42,7 +42,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextMedicamentDose"
-            style="@style/Text.SemiBold18"
+            style="@style/Text.SemiBold16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="numberDecimal" />

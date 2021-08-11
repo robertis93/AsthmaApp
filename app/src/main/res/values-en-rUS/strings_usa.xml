@@ -5,7 +5,7 @@
     <string name="select_day">Select day</string>
     <string name="time_measure">Time measure</string>
     <string name="take_measure">Take a measure</string>
-    <string name="time_take_medicament">Take a medicament time</string>
+    <string name="time_take_medicament">Take a medicament</string>
     <string name="write_name_medicament">Name of the medicament<font color='#FF0000'>*</font></string>
     <string name="quantity_medicament">Amount of the medicament</string>
     <string name="frequency">Receiving frequency</string>
@@ -16,7 +16,7 @@
     <string name="need_take_time_between_measure_drugs">It should take at least 4 hours after to taking the medicament and measuring</string>
     <string name="recommend_three_hours">It is recommended to make at least 3 measurements per day</string>
     <string name="measure_alarm_frag">Measuring</string>
-    <string name="take_medicament">Taking medicament</string>
+    <string name="take_medicament">Medicament</string>
     <string name="name_medicament">Name of the medicament</string>
     <string name="example_date">January 24, 2020</string>
     <string name="mkg">mkg.</string>

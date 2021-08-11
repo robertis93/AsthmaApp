@@ -8,6 +8,7 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_inhaler"
+        android:icon="@drawable/ic_inhaler"
         android:supportsRtl="true"
         android:theme="@style/Theme.AsthmaApp">
         <activity

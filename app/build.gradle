@@ -9,7 +9,7 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\Robert\\Desktop\\keystorefile.jks')
+            storeFile file('C:\\Users\\Robert\\Desktop\\keysighnedfile.jks')
             keyPassword 'Iskhakov1993!'
             storePassword 'Iskhakov1993!'
             keyAlias 'key0'
@@ -23,18 +23,23 @@ android {
 
     defaultConfig {
         applicationId "com.rightname.asthmaapp"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 30
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
         }
     }
     compileOptions {

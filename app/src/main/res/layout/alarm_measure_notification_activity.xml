@@ -83,11 +83,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:backgroundTint="#03A9F4"
+            android:backgroundTint="@color/color_state_material_button"
+            android:enabled="false"
             android:text="@string/save_btn"
             android:textAllCaps="false"
-            app:backgroundTint="@color/blue_med"
-            app:boxBackgroundColor="@color/white"
             app:cornerRadius="16dp" />
     </LinearLayout>
 </ScrollView>
