@@ -1,4 +1,4 @@
-package com.example.asthmaapp
+package com.rightname.asthmaapp
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

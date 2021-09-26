@@ -1,266 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AddFragment">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        android:paddingBottom="32sp"
+        tools:context=".view.fragments.MedicamentAnalysesFragment">
 
-        <EditText
-            android:id="@+id/editTextDateUpdate"
+        <TextView
+            android:id="@+id/dateTextView"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:inputType="date"
-            android:text="22 января 2021"
+            android:text="@string/example_date"
+            android:textSize="24sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/light_blue_med" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/timeMeasureTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="8dp"
+                android:text="@string/time_measure"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addOneMeasureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/timeMeasureTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/timeTakeMedicamentTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="@string/time_take_medicament"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addTimeTakeMedicamentBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="@color/blue_med"
+                android:contentDescription="@string/add"
+                android:src="@drawable/ic_baseline_add_white"
+                android:tint="@color/white"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/timeTakeMedicamentTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerTakeMedicamentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="8dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameMedicamentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
+            android:background="@color/black_gray"
+            android:hint="@string/write_name_medicament"
+            app:boxBackgroundColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNameMedicament"
+                style="@style/Text.SemiBold18"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextMedicamentDoseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
+            android:hint="@string/quantity_take_medicament"
+            app:boxBackgroundColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:suffixText="@string/mkg">
 
-        <LinearLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextMedicamentDose"
+                style="@style/Text.SemiBold18"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveBtn"
+            style="@style/Button.Blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/time1Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:inputType="number"
-                android:text="08:00"
-                tools:layout_editor_absoluteX="-8dp"
-                tools:layout_editor_absoluteY="120dp" />
-
-            <EditText
-                android:id="@+id/editTextNumber2Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="100"
-                tools:layout_editor_absoluteX="191dp"
-                tools:layout_editor_absoluteY="116dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/time2Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="15:00"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="204dp" />
-
-            <EditText
-                android:id="@+id/editTextNumber4Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="120"
-                tools:layout_editor_absoluteX="216dp"
-                tools:layout_editor_absoluteY="196dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/time3Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="23:00"
-                tools:layout_editor_absoluteX="-8dp"
-                tools:layout_editor_absoluteY="311dp" />
-
-            <EditText
-                android:id="@+id/editTextNumber6Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="99"
-                tools:layout_editor_absoluteX="211dp"
-                tools:layout_editor_absoluteY="315dp" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_marginTop="12dp"
-            android:id="@+id/gragsUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:inputType="textPersonName"
-            android:text="Прием лекарства"
-            android:textSize="24sp"
-            />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Лекарство:"
-                android:textSize="24sp"
-                android:layout_marginEnd="24sp"/>
-
-        <EditText
-            android:id="@+id/editTextTextPersonName2Update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:inputType="textPersonName"
-            android:text="Intal"
-             />
-
-        </LinearLayout>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Планировалось"
-    android:textSize="24sp"
-    android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editTextNumber8Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="250"
-                tools:layout_editor_absoluteX="218dp"
-                tools:layout_editor_absoluteY="501dp" />
-
-
-            <TextView
-                android:id="@+id/textView3Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="мкг/доза"
-                tools:layout_editor_absoluteX="269dp"
-                tools:layout_editor_absoluteY="433dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editTextNumber7Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="2"
-                tools:layout_editor_absoluteY="501dp" />
-
-            <TextView
-                android:id="@+id/textView2Update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="раз в день"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="438dp" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Планировалось"
-            android:textSize="24sp"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/dozaDidUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="250"
-                tools:layout_editor_absoluteX="218dp"
-                tools:layout_editor_absoluteY="501dp" />
-
-
-            <TextView
-                android:id="@+id/mdPerDayUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="мкг/доза"
-                tools:layout_editor_absoluteX="269dp"
-                tools:layout_editor_absoluteY="433dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/didPerDayUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="2"
-                tools:layout_editor_absoluteY="501dp" />
-
-            <TextView
-                android:id="@+id/PerDayUpdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="раз в день"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="438dp" />
-
-        </LinearLayout>
-
-
-
-
-
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="54dp"
+            android:backgroundTint="#03A9F4"
+            android:text="@string/save_btn"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/blue_med"
+            app:cornerRadius="16dp" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/saveBtnUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

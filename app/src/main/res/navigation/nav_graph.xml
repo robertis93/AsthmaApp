@@ -7,34 +7,76 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.asthmaapp.list.ListFragment"
-        android:label="fragment_list"
-        tools:layout="@layout/fragment_list" >
+        android:name="com.rightname.asthmaapp.view.fragments.InformationListFragment"
+        android:label="@string/diary"
+        tools:layout="@layout/fragment_information_list">
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment" />
         <action
-            android:id="@+id/action_listFragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
+            android:id="@+id/action_listFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_medicalFragment"
+            app:destination="@id/medicalFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.example.asthmaapp.AddFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.MedicamentAnalysesFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" >
+        tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />
+        <argument
+            android:name="currentItemDay"
+            app:argType="com.rightname.asthmaapp.model.MeasureWithTakeMedicamentTime"
+            app:nullable="true" />
     </fragment>
     <fragment
-        android:id="@+id/updateFragment"
-        android:name="com.example.asthmaapp.update.UpdateFragment"
-        android:label="UpdateFragment" >
+        android:id="@+id/alarmFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.AlarmFragment"
+        android:label="@string/notif">
         <action
-            android:id="@+id/action_updateFragment_to_listFragment"
+            android:id="@+id/action_alarmFragment_to_listFragment"
             app:destination="@id/listFragment" />
-        <argument
-            android:name="currentMeasure"
-            app:argType="com.example.asthmaapp.model.MeasureOfDay" />
+        <action
+            android:id="@+id/action_alarmFragment_to_medicalFragment"
+            app:destination="@id/medicalFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/medicalFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.MedicamentFragment"
+        android:label="@string/medicament"
+        tools:layout="@layout/medicament_fragment">
+        <action
+            android:id="@+id/action_medicalFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_medicalFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
+    </fragment>
+    <action
+        android:id="@+id/goToAddFragmentAction"
+        app:destination="@id/addFragment" />
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.rightname.asthmaapp.view.fragments.onboarding.OnBoardingFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager">
+        <action
+            android:id="@+id/action_viewPagerFragment_to_listFragment"
+            app:destination="@id/listFragment"
+            app:popUpTo="@id/viewPagerFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_medicalFragment"
+            app:destination="@id/medicalFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_viewPagerFragment4"
+        app:destination="@id/viewPagerFragment" />
+    <action
+        android:id="@+id/action_global_listFragment2"
+        app:destination="@id/listFragment" />
 </navigation>

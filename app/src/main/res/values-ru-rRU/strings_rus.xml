@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">AsthmaApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="description_app"> С помощью пикфлоуметрии можно осуществлять контроль самостоятельно за своим состоянием</string>
+    <string name="select_day">Установить дату</string>
+    <string name="time_measure">Время замера</string>
+    <string name="take_measure">Сделайте замер</string>
+    <string name="time_take_medicament">Время приема лекарства</string>
+    <string name="write_name_medicament">Название лекарства <font color='#FF0000'>*</font></string>
+    <string name="quantity_medicament">Кол- во лекарства</string>
+    <string name="frequency">Частота приема</string>
+    <string name="successful_added">"Успешно сохранено"</string>
+    <string name="per_in_day">р. в день</string>
+    <string name="save_btn">Сохранить</string>
+    <string name="select_time_notification">Установите время</string>
+    <string name="need_take_time_between_measure_drugs">Должно пройти не менее 4 -х часов после принятия лекарства и замером</string>
+    <string name="recommend_three_hours">Рекомендуется делать не менее 3 -х замеров в день</string>
+    <string name="measure_alarm_frag">Замер пикфлометром</string>
+    <string name="take_medicament">Прием лекарства</string>
+    <string name="name_medicament">Название лекарства</string>
+    <string name="example_date">24 января 2020</string>
+    <string name="mkg">мкг</string>
+    <string name="yes">Да</string>
+    <string name="all_deleted">Все успешно удалено </string>
+    <string name="no">Нет</string>
+    <string name="delete_it">Удалить все?</string>
+    <string name="are_you_sure_delete_all">Вы действительно хотите все удалить ?</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="third_screen_desc">Не пропускайте замеры и вовремя принимайте лекарства и чувствуйте себя хорошо</string>
+    <string name="start_app">Начать</string>
+    <string name="third_screen_red">Если ваш замер выделен красным цветом, то немедленно примите бронхорасширяющий препарат и обратитесь к врачу</string>
+    <string name="third_screen_yellow">Если ваш замер выделен желтым цветом, то Вам следует увеличить дозировку базового лекарства</string>
+    <string name="diary">Дневник</string>
+    <string name="notification">Оповещения</string>
+    <string name="medicament">Лекарство</string>
+    <string name="next">Далее</string>
+    <string name="second_screen_desc">Перейдите во вкладку \"Оповещения\" и установите время, чтобы не пропускать замеры и прием лекарства</string>
+    <string name="first_screen_descr">Перейдите во вкладку \"Лекарство\" и заполните характеристики принимаемого лекарства</string>
+    <string name="third_screen_example_yellow">450 л/мин</string>
+    <string name="third_screen_example_red">380 л/мин</string>
+    <string name="list_fragment_add_first_measure">У Вас нет ни одного замера, добавьте хотя бы один</string>
+    <string name="add">Добавить</string>
+    <string name="quantity_take_medicament">Кол-во принимаемого лекарства <font color='#FF0000'>*</font></string>
+    <string name="add_measure">Добавить замер</string>
+    <string name="delete">Удалить</string>
+    <string name="l_per_min">л/мин</string>
+    <string name="measure">Замеры</string>
+    <string name="notif">Оповещения</string>
+    <string name="you_dont_write_all_information">Вы заполнили не все поля!</string>
+    <string name="lmin">л/мин</string>
+    <string name="you_forget_write_information_about_medication">"Вы не заполнили информацию о принимаемом лекарстве!"</string>
+    <string name="important_message">Важное сообщение!</string>
+    <string name="message">Сообщение!</string>
+    <string name="take_drugs">Примите лекарство</string>
+    <string name="ok_i_do_it">"ОК, сейчас сделаю"</string>
+    <string name="app_description">Уведомление о приеме лекарства и времени замера скорости выдоха при помощи пикфлометра</string>
+</resources>
