@@ -1,27 +1,28 @@
 package com.example.asthmaapp.viewmodel.repository
 
 import androidx.lifecycle.LiveData
-import com.example.asthmaapp.database.InformationPerDayDao
+import com.example.asthmaapp.database.MedicamentAnalysesDao
+import com.example.asthmaapp.database.MedicamentInfoDao
 import com.example.asthmaapp.model.*
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
 
 typealias TakeMedicamentTimeGroupByDate = Map<String, List<TakeMedicamentTime>>
 
-class InformationPerDayRepository(private val informationPerDayDao: InformationPerDayDao) {
+class MedicamentAnalysesRepository(private val medicamentAnalysesDao: MedicamentAnalysesDao, private val medicamentInfoDao: MedicamentInfoDao) {
 
     val getAllMeasures: LiveData<List<Measure>> =
-        informationPerDayDao.readAllMeasure()
+        medicamentAnalysesDao.readAllMeasure()
 
     suspend fun getListMedicamentInfo(): List<MedicamentInfo> =
-        informationPerDayDao.getListMedicamentInfo()
+        medicamentAnalysesDao.getListMedicamentInfo()
 
     fun getMeasureAndTakeMedicamentTimeGroupByDate(): List<MeasureWithTakeMedicamentTime> {
-        val measureGroup = informationPerDayDao.getListMeasure()
+        val measureGroup = medicamentAnalysesDao.getListMeasure()
             .groupBy {
                 timestampToDisplayDate(it.dateTimestamp)
             }
 
-        val takeMedicamentTimeGroup = informationPerDayDao.getListTakeMedicamentTime()
+        val takeMedicamentTimeGroup = medicamentAnalysesDao.getListTakeMedicamentTime()
             .groupBy {
                 timestampToDisplayDate(it.takeMedicamentTimeEntity.dateTimestamp)
             }
@@ -35,34 +36,34 @@ class InformationPerDayRepository(private val informationPerDayDao: InformationP
     }
 
     suspend fun addMeasure(measure: Measure) {
-        informationPerDayDao.insertMeasure(measure)
+        medicamentAnalysesDao.insertMeasure(measure)
     }
 
     suspend fun deleteAllTimeTakeMedicament() {
-        informationPerDayDao.deleteAllTakeMedicamentTime()
+        medicamentAnalysesDao.deleteAllTakeMedicamentTime()
     }
 
     suspend fun deleteMeasure(measure: Measure) {
-        informationPerDayDao.deleteMeasure(measure)
+        medicamentAnalysesDao.deleteMeasure(measure)
     }
 
     suspend fun deleteAllMeasure() {
-        informationPerDayDao.deleteAllMeasure()
+        medicamentAnalysesDao.deleteAllMeasure()
     }
 
     suspend fun addTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-        informationPerDayDao.addTakeMedicamentTime(takeMedicamentTimeEntity)
+        medicamentAnalysesDao.addTakeMedicamentTime(takeMedicamentTimeEntity)
     }
 
     suspend fun deleteTakeMedicamentTime(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
-        informationPerDayDao.deleteTakeMedicamentTime(takeMedicamentTimeEntity)
+        medicamentAnalysesDao.deleteTakeMedicamentTime(takeMedicamentTimeEntity)
     }
 
     suspend fun addMedicamentInfo(medicamentInfo: MedicamentInfo) {
-        informationPerDayDao.addMedicamentInfo(medicamentInfo)
+        medicamentInfoDao.addMedicamentInfo(medicamentInfo)
     }
 
     suspend fun updateMedicament(medicamentInfo: MedicamentInfo) {
-        informationPerDayDao.updateMedicamentInfo(medicamentInfo)
+        medicamentInfoDao.updateMedicamentInfo(medicamentInfo)
     }
 }

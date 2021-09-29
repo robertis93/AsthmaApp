@@ -38,8 +38,8 @@
     <string name="next">Далее</string>
     <string name="second_screen_desc">Перейдите во вкладку \"Оповещения\" и установите время, чтобы не пропускать замеры и прием лекарства</string>
     <string name="first_screen_descr">Перейдите во вкладку \"Лекарство\" и заполните характеристики принимаемого лекарства</string>
-    <string name="third_screen_example_yellow">450 л/мин</string>
-    <string name="third_screen_example_red">380 л/мин</string>
+    <string name="third_screen_example_yellow">150 л/мин</string>
+    <string name="third_screen_example_red">80 л/мин</string>
     <string name="list_fragment_add_first_measure">У Вас нет ни одного замера, добавьте хотя бы один</string>
     <string name="add">Добавить</string>
     <string name="quantity_take_medicament">Кол-во принимаемого лекарства <font color='#FF0000'>*</font></string>

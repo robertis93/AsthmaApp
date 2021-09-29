@@ -1,4 +1,15 @@
-package com.rightname.asthmaapp.database
+package com.example.asthmaapp.database
+
+import android.content.Context
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.asthmaapp.model.MedicamentInfo
+import junit.framework.TestCase
+import kotlinx.coroutines.runBlocking
+import org.junit.*
+import org.junit.runner.RunWith
+import com.google.common.truth.Truth.assertThat as assertThat1
 
 
 //RunWith ннотации RunWith указывается так называемый Runner,

@@ -10,14 +10,17 @@ import com.example.asthmaapp.model.TakeMedicamentTimeEntity
 import com.example.asthmaapp.utils.DateUtil
 import com.example.asthmaapp.utils.DateUtil.dateStringToDayTimeStamp
 import com.example.asthmaapp.utils.DateUtil.timestampToDisplayDate
-import com.example.asthmaapp.viewmodel.repository.InformationPerDayRepository
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayHour
+import com.example.asthmaapp.utils.DateUtil.timestampToDisplayMinute
+import com.example.asthmaapp.viewmodel.repository.MedicamentAnalysesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.Serializable
 import java.util.*
 
-class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
+class MedicamentAnalysesViewModel(application: Application, private val mode: Mode) :
     AndroidViewModel(application) {
-    sealed class Mode {
+    sealed class Mode : Serializable {
         object Add : Mode()
         class Update(val measureWithTakeMedicamentTime: MeasureWithTakeMedicamentTime) : Mode()
     }
@@ -28,15 +31,16 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
     val takeMedicamentTimeListLiveData = MutableLiveData<List<TakeMedicamentTimeEntity>>()
     val medicamentInfoLiveData = MutableLiveData<MedicamentInfo>()
 
-    private val informationPerDayRepository: InformationPerDayRepository
+    private val medicamentAnalysesRepository: MedicamentAnalysesRepository
 
     init {
         val measurementsPerDayDao = MeasureDataBase.getDataBase(application).measurementsPerDayDao()
-        informationPerDayRepository =
-            InformationPerDayRepository(measurementsPerDayDao)
+        val medicamentDao = MeasureDataBase.getDataBase(application).medicamentInfoDao()
+        medicamentAnalysesRepository =
+            MedicamentAnalysesRepository(measurementsPerDayDao, medicamentDao)
 
         val dayTimeStamp = when (mode) {
-            is Mode.Add -> GregorianCalendar(TimeZone.getTimeZone("GMT+5")).time.time
+            is Mode.Add -> GregorianCalendar(TimeZone.getTimeZone("GMT")).time.time
             is Mode.Update -> dateStringToDayTimeStamp(mode.measureWithTakeMedicamentTime.date)
         }
         dateTimeStampLiveData.value = dayTimeStamp
@@ -51,18 +55,20 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
     suspend fun getInitMedicamentInfo(): MedicamentInfo? {
         return when (mode) {
             is Mode.Add -> {
-                val medicament = informationPerDayRepository.getListMedicamentInfo()
+                val medicament = medicamentAnalysesRepository.getListMedicamentInfo()
                 if (medicament.isNotEmpty())
                     medicament.last()
-                else
+                else {
                     null
+                }
             }
             is Mode.Update -> {
                 val medicamentInfoList = mode.measureWithTakeMedicamentTime.takeMedicamentTimeList
                 if (medicamentInfoList.isNotEmpty())
                     medicamentInfoList.first().medicamentInfo
-                else
+                else {
                     null
+                }
             }
         }
     }
@@ -72,7 +78,7 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
     }
 
     fun getMaxDateForDialog(): Long {
-        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT+5"))
+        val dateCalendar: Calendar = GregorianCalendar(TimeZone.getTimeZone("GMT"))
         return dateCalendar.time.time
     }
 
@@ -83,23 +89,31 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
             medicamentDose.toIntOrNull() ?: 0
         )
         if (mode is Mode.Update) {
-            informationPerDayRepository.updateMedicament(medicamentInfo)
+            medicamentAnalysesRepository.updateMedicament(medicamentInfo)
         } else {
-            informationPerDayRepository.addMedicamentInfo(medicamentInfo)
+            medicamentAnalysesRepository.addMedicamentInfo(medicamentInfo)
         }
         for (measure in measureListLiveData.value ?: emptyList()) {
-            informationPerDayRepository.addMeasure(measure)
+            val hour = timestampToDisplayHour(measure.dateTimestamp)
+            val minute = timestampToDisplayMinute(measure.dateTimestamp)
+            measure.dateTimestamp =
+                DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!, hour.toInt(), minute.toInt())
+            medicamentAnalysesRepository.addMeasure(measure)
         }
         for (takeMedicamentTime in takeMedicamentTimeListLiveData.value ?: emptyList()) {
-            informationPerDayRepository.addTakeMedicamentTime(takeMedicamentTime)
+            val hour = timestampToDisplayHour(takeMedicamentTime.dateTimestamp)
+            val minute = timestampToDisplayMinute(takeMedicamentTime.dateTimestamp)
+            takeMedicamentTime.dateTimestamp =
+                DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!.toLong(), hour.toInt(), minute.toInt())
+            takeMedicamentTime.medicamentInfoId = dateTimeStampLiveData.value.toString()
+            medicamentAnalysesRepository.addTakeMedicamentTime(takeMedicamentTime)
         }
     }
 
     fun onAddMeasureClick(timeHour: Int, timeMinute: Int, measureWithPeakFlowMeter: Int) {
         val measureDayTimeStamp =
             DateUtil.dayTimeStamp(dateTimeStampLiveData.value!!, timeHour, timeMinute)
-        val measure =
-            Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
+        val measure = Measure(0, measureDayTimeStamp, measureWithPeakFlowMeter)
         val measureMutableList = measureListLiveData.value?.toMutableList() ?: mutableListOf()
         measureMutableList.add(measure)
         measureListLiveData.value = measureMutableList
@@ -157,7 +171,7 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
 
     fun onDeleteMedicamentClick(takeMedicamentTimeEntity: TakeMedicamentTimeEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            informationPerDayRepository.deleteTakeMedicamentTime(takeMedicamentTimeEntity)
+            medicamentAnalysesRepository.deleteTakeMedicamentTime(takeMedicamentTimeEntity)
         }
         takeMedicamentTimeListLiveData.value?.let { listMedicamentTime ->
             val takeMedicamentTimeMutableList = listMedicamentTime.toMutableList()
@@ -168,7 +182,7 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
 
     fun onDeleteMeasureClick(measure: Measure) {
         viewModelScope.launch(Dispatchers.IO) {
-            informationPerDayRepository.deleteMeasure(measure)
+            medicamentAnalysesRepository.deleteMeasure(measure)
         }
         measureListLiveData.value?.let { listMeasure ->
             val measureMutableList = listMeasure.toMutableList()
@@ -180,8 +194,8 @@ class AddAndUpdateMeasuresViewModel(application: Application, val mode: Mode) :
 
 class AddAndUpdateMeasureViewModelFactory(
     private val application: Application,
-    private val mode: AddAndUpdateMeasuresViewModel.Mode
+    private val mode: MedicamentAnalysesViewModel.Mode
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        AddAndUpdateMeasuresViewModel(application, mode) as T
+        MedicamentAnalysesViewModel(application, mode) as T
 }

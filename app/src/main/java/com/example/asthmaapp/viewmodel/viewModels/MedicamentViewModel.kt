@@ -5,22 +5,23 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.asthmaapp.database.MeasureDataBase
 import com.example.asthmaapp.model.MedicamentInfo
-import com.example.asthmaapp.viewmodel.repository.InformationPerDayRepository
+import com.example.asthmaapp.viewmodel.repository.MedicamentAnalysesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
 class MedicamentViewModel(application: Application) : AndroidViewModel(application) {
-    private val informationPerDayRepository: InformationPerDayRepository
+    private val medicamentAnalysesRepository: MedicamentAnalysesRepository
 
     init {
         val measurementsPerDayDao = MeasureDataBase.getDataBase(application).measurementsPerDayDao()
-        informationPerDayRepository =
-            InformationPerDayRepository(measurementsPerDayDao)
+        val medicamentDao = MeasureDataBase.getDataBase(application).medicamentInfoDao()
+        medicamentAnalysesRepository =
+            MedicamentAnalysesRepository(measurementsPerDayDao, medicamentDao)
     }
 
     suspend fun getInitMedicamentInfo(): MedicamentInfo? {
-        val medicament = informationPerDayRepository.getListMedicamentInfo()
+        val medicament = medicamentAnalysesRepository.getListMedicamentInfo()
         return if (medicament.isNotEmpty()) {
             medicament.last()
         } else
@@ -32,7 +33,7 @@ class MedicamentViewModel(application: Application) : AndroidViewModel(applicati
             val idMedicament: String = UUID.randomUUID().toString()
             val medicamentInfo =
                 MedicamentInfo(idMedicament, medicamentName, medicamentDose.toInt())
-            informationPerDayRepository.addMedicamentInfo(medicamentInfo)
+            medicamentAnalysesRepository.addMedicamentInfo(medicamentInfo)
         }
     }
 }

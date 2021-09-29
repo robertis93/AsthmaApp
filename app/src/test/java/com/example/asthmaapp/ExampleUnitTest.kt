@@ -1,4 +1,4 @@
-package com.rightname.asthmaapp
+package com.example.asthmaapp
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
