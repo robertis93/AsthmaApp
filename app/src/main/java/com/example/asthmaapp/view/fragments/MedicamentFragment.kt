@@ -2,6 +2,7 @@ package com.example.asthmaapp.view.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.method.DigitsKeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -28,6 +29,8 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
 
         setInitMedicament()
         checkingEnableButton(binding.medicamentNameEditText, binding.medicamentDoseEditText, binding.saveBtn)
+        binding.medicamentDoseEditText.keyListener = DigitsKeyListener.getInstance("0123456789")
+
 
         binding.saveBtn.setOnClickListener {
             val medicamentName = binding.medicamentNameEditText.text.toString()
