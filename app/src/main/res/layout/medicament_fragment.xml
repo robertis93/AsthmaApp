@@ -8,7 +8,7 @@
     tools:context=".view.fragments.MedicamentFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextMedicamentInfoLayout"
+        android:id="@+id/medicamentInfoLayoutEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
@@ -19,14 +19,14 @@
         app:boxBackgroundColor="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextMedicamentName"
+            android:id="@+id/medicamentNameEditText"
             style="@style/Text.SemiBold18"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextMedicamentDoseLayout"
+        android:id="@+id/medicamentDoseLayoutEditText"
         style="@style/Text.SemiBold18"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,11 +41,13 @@
         app:suffixText="@string/mkg">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextMedicamentDose"
+            android:id="@+id/medicamentDoseEditText"
             style="@style/Text.SemiBold18"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="numberDecimal" />
+            android:digits="0123456789"
+            android:inputType="number"
+            android:maxLength="4" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

@@ -39,7 +39,7 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
 
         binding.dateTextView.text = timestampToDisplayDate(dateTimeStamp)
         binding.timeAlarmText.text = currentTime
-            checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.saveBtn)
+            checkingEnableButton(binding.medicamentNameEditText, binding.medicamentDoseEditText, binding.saveBtn)
 
         lifecycleScope.launch {
             val medicamentInfo = viewModel.getInitMedicamentInfo()
@@ -49,14 +49,14 @@ class AlarmMedicamentNotificationActivity : AppCompatActivity() {
                 doseMedicament = medicamentInfo.dose.toString()
             } else {
                 binding.editTextMedicalDoseLayout.visibility = View.VISIBLE
-                binding.editTextMedicamentDose.visibility = View.VISIBLE
-                binding.editTextMedicamentName.visibility = View.VISIBLE
+                binding.medicamentDoseEditText.visibility = View.VISIBLE
+                binding.medicamentNameEditText.visibility = View.VISIBLE
                 binding.nameMedicamentLayout.visibility = View.VISIBLE
 
-                binding.editTextMedicamentName.doAfterTextChanged {
+                binding.medicamentNameEditText.doAfterTextChanged {
                     nameMedicament = it.toString()
                 }
-                binding.editTextMedicamentDose.doAfterTextChanged {
+                binding.medicamentDoseEditText.doAfterTextChanged {
                     doseMedicament = it.toString()
                 }
             }

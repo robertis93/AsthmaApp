@@ -27,11 +27,11 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setInitMedicament()
-        checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.saveBtn)
+        checkingEnableButton(binding.medicamentNameEditText, binding.medicamentDoseEditText, binding.saveBtn)
 
         binding.saveBtn.setOnClickListener {
-            val medicamentName = binding.editTextMedicamentName.text.toString()
-            val medicamentDose = binding.editTextMedicamentDose.text.toString()
+            val medicamentName = binding.medicamentNameEditText.text.toString()
+            val medicamentDose = binding.medicamentDoseEditText.text.toString()
             medicamentViewModel.addMedicamentInfo(medicamentName, medicamentDose)
             val hideKeyboard =
                 context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -44,10 +44,10 @@ class MedicamentFragment : BaseFragment<MedicamentFragmentBinding>() {
         lifecycleScope.launch {
             val medicamentInfo = medicamentViewModel.getInitMedicamentInfo()
             if (medicamentInfo != null) {
-                binding.editTextMedicamentDose.setText(medicamentInfo.dose.toString())
-                binding.editTextMedicamentName.setText(medicamentInfo.name)
+                binding.medicamentDoseEditText.setText(medicamentInfo.dose.toString())
+                binding.medicamentNameEditText.setText(medicamentInfo.name)
             } else {
-                checkingEnableButton(binding.editTextMedicamentName, binding.editTextMedicamentDose, binding.saveBtn)
+                checkingEnableButton(binding.medicamentNameEditText, binding.medicamentDoseEditText, binding.saveBtn)
             }
         }
     }
