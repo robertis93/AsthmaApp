@@ -35,6 +35,8 @@
         android:layout_marginRight="24dp"
         android:hint="@string/quantity_take_medicament"
         app:boxBackgroundColor="@color/white"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -45,8 +47,8 @@
             style="@style/Text.SemiBold18"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:digits="0123456789.,$"
-            android:maxLength="4" />
+            android:digits="0123456789"
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
